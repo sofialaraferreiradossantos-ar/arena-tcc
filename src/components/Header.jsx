@@ -1,7 +1,7 @@
 import { FaBars } from 'react-icons/fa'
-
 import styles from '../styles/home.module.css'
-import logo from '.'
+import logo from '../assets/logo.jpeg'
+
 function Header() {
   return (
     <div className={styles.topHeader}>
@@ -11,8 +11,8 @@ function Header() {
       <div className={styles.logoArea}>
 
         <img
-          src="https://i.imgur.com/eJw8m8x.png"
-          alt="logo"
+          src={logo}
+          alt=""
         />
 
         <h2>
@@ -22,6 +22,7 @@ function Header() {
       </div>
 
     </div>
+    
   )
 }
 
