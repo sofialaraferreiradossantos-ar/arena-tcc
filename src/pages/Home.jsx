@@ -2,9 +2,10 @@ import styles from '../styles/home.module.css'
 
 import Header from '../components/Header.jsx'
 import CategoryButtons from '../components/CategoryButtons.jsx'
-import SearchBar from '../components/SearchBar.jsx'
+import SearchBar from '../components/Searchbar.jsx'
 import QuadrasSection from '../components/QuadrasSection.jsx'
 import Pagination from '../components/Pagination.jsx'
+
 
 function Home() {
   return (
