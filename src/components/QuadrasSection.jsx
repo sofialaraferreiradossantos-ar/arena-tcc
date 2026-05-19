@@ -1,25 +1,19 @@
-import styles from '../styles/home.module.css'
+import styles from '../../styles/quadras.module.css'
 
-import QuadraCard from './QuadraCard.jsx'
+import QuadraCard from './QuadraCard'
 
-function QuadrasSection() {
+function QuadrasSection({ quadras }) {
   return (
     <div className={styles.quadrasSection}>
 
-      <QuadraCard
-        title="Quadra 1"
-        available={true}
-      />
-
-      <QuadraCard
-        title="Quadra 2"
-        available={false}
-      />
-
-      <QuadraCard
-        title="Quadra 3"
-        available={true}
-      />
+      {quadras.map((quadra) => (
+        <QuadraCard
+          key={quadra.id}
+          title={quadra.title}
+          image={quadra.image}
+          available={quadra.available}
+        />
+      ))}
 
     </div>
   )
