@@ -6,6 +6,7 @@ import SearchBar from '../components/quadras/SearchBar.jsx'
 import QuadrasSection from '../components/quadras/QuadrasSection.jsx'
 import Pagination from '../components/quadras/Pagination.jsx'
 
+import { quadrasMckp } from '../mockup/dados.js';
 
 function Home() {
   return (
@@ -19,7 +20,7 @@ function Home() {
 
         <SearchBar />
 
-        <QuadrasSection />
+        <QuadrasSection quadras={quadrasMckp} />
 
         <Pagination />
 
