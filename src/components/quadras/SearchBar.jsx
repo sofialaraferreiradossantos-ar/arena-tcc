@@ -19,7 +19,9 @@ function SearchBar({
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <FaChevronDown className={styles.arrowIcon} />
+      <FaChevronDown className={styles.arrowIcon} 
+      
+      />
 
     </div>
   )
