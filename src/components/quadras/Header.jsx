@@ -1,6 +1,6 @@
 import { FaBars } from 'react-icons/fa'
-import styles from '../styles/home.module.css'
-import logo from '../assets/logo.jpeg'
+import styles from "../../styles/home.module.css"
+import logo from "../../assets/logo.jpeg"
 
 function Header() {
   return (

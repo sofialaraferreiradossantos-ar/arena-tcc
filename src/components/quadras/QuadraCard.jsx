@@ -1,5 +1,5 @@
-import styles from '../styles/home.module.css'
-import quadra from '../assets/quadra.jpeg'
+import styles from "../../styles/home.module.css";
+import quadra from"../../assets/quadra.jpeg";
 
 function QuadraCard({ title, available }) {
   return (
