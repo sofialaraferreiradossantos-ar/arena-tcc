@@ -23,7 +23,7 @@ function Header() {
       className={styles.closeMenu}
       onClick={() => setMenuAberto(false)}
     >
-      ⬅️
+      
     </button>
 
     <img src={logo} alt="" />

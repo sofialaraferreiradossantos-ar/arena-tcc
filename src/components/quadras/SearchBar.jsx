@@ -1,7 +1,7 @@
 import { FaSearch } from 'react-icons/fa'
 import { FaChevronDown } from 'react-icons/fa'
 
-import styles from '../../styles/quadras.module.css'
+import styles from '../../styles/home.module.css'
 
 function SearchBar({
   search,

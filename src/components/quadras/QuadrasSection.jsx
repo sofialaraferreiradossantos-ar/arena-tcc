@@ -1,4 +1,4 @@
-import styles from '../../styles/quadras.module.css'
+import styles from '../../styles/home.module.css'
 
 import QuadraCard from './QuadraCard'
 

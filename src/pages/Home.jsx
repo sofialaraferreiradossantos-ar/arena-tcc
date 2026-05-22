@@ -7,6 +7,7 @@ import QuadrasSection from '../components/quadras/QuadrasSection.jsx'
 import Pagination from '../components/quadras/Pagination.jsx'
 
 import { quadrasMckp } from '../mockup/dados.js';
+const [pagina, setPagina] = useState(1);
 
 function Home() {
   return (
@@ -22,7 +23,10 @@ function Home() {
 
         <QuadrasSection quadras={quadrasMckp} />
 
-        <Pagination />
+     <Pagination
+  pagina={pagina}
+  setPagina={setPagina}
+/>
 
       </div>
 

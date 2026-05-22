@@ -12,6 +12,12 @@ export const quadrasMckp = [
     }, 
     {
         id: 2, 
+        title: 'Quadra coberta',
+        image: quadraCoberta, 
+        available: true
+    }, 
+    {
+        id: 3, 
         title: 'Quadra descoberta',
         image: quadraDesoberta, 
         available: false
