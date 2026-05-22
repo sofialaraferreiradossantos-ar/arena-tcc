@@ -14,7 +14,9 @@ function SearchBar() {
         placeholder="Pesquisar Quadras..."
       />
 
-      <FaChevronDown className={styles.arrowIcon} />
+      <FaChevronDown className={styles.arrowIcon} 
+      
+      />
 
     </div>
   )
