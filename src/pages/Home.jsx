@@ -1,10 +1,10 @@
 import styles from '../styles/home.module.css'
 
-import Header from '../components/quadra/Header.jsx'
-import CategoryButtons from '../components/quadra/CategoryButtons.jsx'
-import SearchBar from '../components/SearchBar.jsx'
-import QuadrasSection from '../components/quadra/QuadrasSection.jsx'
-import Pagination from '../components/quadra/Pagination.jsx'
+import Header from '../components/quadras/Header.jsx'
+import CategoryButtons from '../components/quadras/CategoryButtons.jsx'
+import SearchBar from '../components/quadras/SearchBar.jsx'
+import QuadrasSection from '../components/quadras/QuadrasSection.jsx'
+import Pagination from '../components/quadras/Pagination.jsx'
 
 
 function Home() {
