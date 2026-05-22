@@ -16,19 +16,26 @@ function Header() {
         onClick={() => setMenuAberto(!menuAberto)}
       />
 
-      {menuAberto && (
-        <div className={styles.sidebarMenu}>
+{menuAberto && (
+  <div className={styles.sidebarMenu}>
 
-          <img src={logo} alt="" />
+    <button
+      className={styles.closeMenu}
+      onClick={() => setMenuAberto(false)}
+    >
+      ⬅️
+    </button>
 
-          <a href="">🏠 Início</a>
-          <a href="">⚽ Quadras</a>
-          <a href="">📅 Agendamentos</a>
-          <a href="">🏆 Torneios</a>
-          <a href="">💳 Pagamento</a>
+    <img src={logo} alt="" />
 
-        </div>
-      )}
+    <a href="">🏠 Início</a>
+    <a href="">⚽ Quadras</a>
+    <a href="">📅 Agendamentos</a>
+    <a href="">🏆 Torneios</a>
+    <a href="">💳 Pagamento</a>
+
+  </div>
+)}
 
       <div className={styles.logoArea}>
 

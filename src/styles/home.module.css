@@ -206,3 +206,12 @@
 .activeDot {
   background-color: #ff8800;
 }
+
+.closeMenu{
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  align-self: flex-end;
+}
