@@ -1,9 +1,16 @@
 import styles from "../../styles/home.module.css";
-import quadra from"../../assets/quadra.jpeg";
+import quadra from "../../assets/quadra.jpeg";
+import { useNavigate } from "react-router-dom";
 
 function QuadraCard({ title, available }) {
+  const navigate = useNavigate();
   return (
-    <div className={styles.quadraCard}>
+   
+   <div
+  className={styles.quadraCard}
+  onClick={() => navigate("/quadra")}
+  style={{ cursor: "pointer" }}
+>
 
       <img
         src={quadra}
