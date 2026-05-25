@@ -16,6 +16,8 @@ function Header() {
         onClick={() => setMenuAberto(!menuAberto)}
       />
 
+
+
 {menuAberto && (
   <div className={styles.sidebarMenu}>
 

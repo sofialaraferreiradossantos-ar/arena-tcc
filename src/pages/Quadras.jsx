@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import styles from '../styles/quadras.module.css'
+import styles from '../styles/home.module.css'
 
 import Header from '../components/quadras/Header'
 import CategoryButtons from '../components/quadras/CategoryButtons'

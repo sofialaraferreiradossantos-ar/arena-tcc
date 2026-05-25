@@ -1,294 +1,350 @@
+/* ================================
+   CONTAINER PRINCIPAL
+================================ */
+
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: black;
+  background: black;
 }
 
 .app {
   width: 100%;
   min-height: 100vh;
-  background-color: black;
-
-  padding: 30px 60px;
+  padding: 20px 30px;
+  background: black;
 }
 
-/* HEADER */
+/* ================================
+   HEADER
+================================ */
 
 .topHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .menuIcon {
+  position: absolute;
+  left: 0;
   color: #ff8800;
-  font-size: 52px;
-  margin-top: 10px;
+  font-size: 32px;
   cursor: pointer;
 }
 
 .logoArea {
   text-align: center;
-  flex: 1;
 }
 
 .logoArea img {
-  width: 120px;
+  width: 80px;
 }
 
 .logoArea h2 {
   color: white;
-  margin-top: 12px;
-  font-size: 42px;
+  margin-top: 8px;
+  font-size: 28px;
 }
 
 .logoArea span {
   color: #ff8800;
 }
 
-/* MENU */
+/* ================================
+   BOTÕES DE CATEGORIA
+================================ */
+
+.categoryButtons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.categoryButtons button {
+  width: 190px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ff8800;
+  background: transparent;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.activeBtn {
+  background: #ff8800;
+}
+
+/* ================================
+   BUSCA
+================================ */
+
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: 650px;
+  margin-top: 30px;
+  background: #1f1f1f;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+}
+
+.searchBar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+.searchIcon,
+.arrowIcon {
+  color: #888;
+  font-size: 15px;
+}
+
+.selectQuadra {
+  width: 220px;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ff8800;
+  background: #1f1f1f;
+  color: white;
+  font-size: 14px;
+}
+
+/* ================================
+   CARDS DE QUADRAS
+================================ */
+
+.quadrasSection {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.quadraCard {
+  width: 220px;
+  background: #181818;
+  border: 1px solid #ff8800;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.quadraCard img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.quadraCard h3 {
+  color: white;
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.quadraCard p {
+  color: white;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.quadraCard span {
+  color: #bdbdbd;
+  font-size: 12px;
+}
+
+.status {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.available {
+  color: #35d04d;
+}
+
+.unavailable {
+  color: #ff3b3b;
+}
+
+/* ================================
+   PAGINAÇÃO
+================================ */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 35px;
+  padding-bottom: 30px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
+
+.activeDot {
+  background: #ff8800;
+}
+
+/* ================================
+   SIDEBAR
+================================ */
 
 .sidebarMenu {
   position: fixed;
   top: 0;
   left: 0;
-
-  width: 290px;
+  width: 210px;
   height: 100vh;
-
   background: #0b0b0b;
-
-  padding: 35px 30px;
-
+  padding: 25px 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  gap: 28px;
-
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-
+  gap: 20px;
   z-index: 999;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 
 .sidebarMenu img {
-  width: 140px;
-  margin-bottom: 30px;
+  width: 90px;
+  margin: 0 auto 20px auto;
 }
 
 .sidebarMenu a {
   color: white;
   text-decoration: none;
-  font-size: 22px;
-
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  gap: 16px;
-
-  padding: 12px 18px;
-  border-radius: 10px;
-
-  transition: 0.3s;
+  font-size: 15px;
 }
 
-.sidebarMenu a:hover {
-  background-color: #1f1f1f;
-  color: #ff8800;
+/* ================================
+   TABLET — até 1024px
+================================ */
+
+@media (max-width: 1024px) {
+  .quadraCard {
+    width: calc(50% - 20px);
+    max-width: 300px;
+  }
+
+  .categoryButtons button {
+    width: 160px;
+    font-size: 14px;
+  }
 }
 
-/* BUTTONS */
+/* ================================
+   MOBILE — até 768px
+================================ */
 
-.categoryButtons {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 45px;
+@media (max-width: 768px) {
+  /* Sidebar some; ícone de menu abre/fecha */
+  .sidebarMenu {
+    transform: translateX(-100%);
+    width: 75vw;
+    max-width: 260px;
+  }
+
+  .sidebarMenu.open {
+    transform: translateX(0);
+  }
+
+  /* Conteúdo ocupa tela toda */
+  .app {
+    padding: 16px;
+  }
+
+  .logoArea h2 {
+    font-size: 22px;
+  }
+
+  .logoArea img {
+    width: 60px;
+  }
+
+  .categoryButtons {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .categoryButtons button {
+    width: 140px;
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .searchBar {
+    padding: 10px 14px;
+    margin-top: 20px;
+  }
+
+  .selectQuadra {
+    width: 100%;
+    max-width: 650px;
+  }
+
+  /* Cards 1 por linha */
+  .quadrasSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .quadraCard {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .quadraCard img {
+    height: 160px;
+  }
 }
 
-.categoryButtons button {
-  width: 300px;
-  padding: 15px;
+/* ================================
+   MOBILE PEQUENO — até 480px
+================================ */
 
-  border-radius: 12px;
-  border: 1px solid #ff8800;
+@media (max-width: 480px) {
+  .categoryButtons {
+    flex-direction: column;
+    align-items: center;
+  }
 
-  background-color: transparent;
-  color: white;
+  .categoryButtons button {
+    width: 100%;
+    max-width: 300px;
+  }
 
-  font-size: 18px;
-  font-weight: bold;
+  .logoArea h2 {
+    font-size: 18px;
+  }
 
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.categoryButtons button:hover {
-  transform: scale(1.03);
-}
-
-.activeBtn {
-  background-color: #ff8800 !important;
-}
-
-/* SEARCH */
-
-.searchBar {
-  width: 100%;
-  max-width: 900px;
-
-  margin: 45px auto;
-
-  background-color: #1f1f1f;
-  border-radius: 30px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 16px 24px;
-}
-
-.searchIcon {
-  color: #8a8a8a;
-  font-size: 22px;
-}
-
-.arrowIcon {
-  color: #8a8a8a;
-  font-size: 22px;
-}
-
-.searchBar input {
-  flex: 1;
-
-  background-color: transparent;
-  border: none;
-  outline: none;
-
-  color: white;
-
-  margin: 0 14px;
-
-  font-size: 17px;
-}
-
-/* CARDS */
-
-.quadrasSection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 40px;
-
-  margin-top: 60px;
-
-  flex-wrap: wrap;
-}
-
-.quadraCard {
-  width: 300px;
-
-  background-color: #1b1b1b;
-  border: 1px solid #ff8800;
-
-  border-radius: 18px;
-
-  padding: 18px;
-
-  text-align: center;
-
-  transition: 0.3s;
-}
-
-.quadraCard:hover {
-  transform: translateY(-5px);
-}
-
-.quadraCard img {
-  width: 100%;
-  height: 180px;
-
-  object-fit: cover;
-
-  border-radius: 12px;
-}
-
-.quadraCard h3 {
-  color: white;
-
-  margin-top: 18px;
-
-  font-size: 28px;
-}
-
-.quadraCard p {
-  color: white;
-
-  margin-top: 14px;
-
-  font-size: 18px;
-}
-
-.quadraCard span {
-  color: #c7c7c7;
-
-  font-size: 16px;
-}
-
-.status {
-  margin-top: 22px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.available {
-  color: #38d64b;
-}
-
-.unavailable {
-  color: #ff3131;
-}
-
-/* PAGINATION */
-
-.pagination {
-  display: flex;
-  justify-content: center;
-
-  gap: 14px;
-
-  margin-top: 50px;
-}
-
-.dot {
-  width: 14px;
-  height: 14px;
-
-  border-radius: 50%;
-
-  background-color: white;
-}
-
-.activeDot {
-  background-color: #ff8800;
-}
-
-.closeMenu {
-  background: transparent;
-  border: none;
-
-  color: white;
-
-  font-size: 32px;
-
-  cursor: pointer;
-
-  align-self: flex-end;
+  .menuIcon {
+    font-size: 26px;
+  }
 }
