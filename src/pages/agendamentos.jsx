@@ -1,46 +1,45 @@
-import styles from '../styles/agendamentos.module.css'
+import { useState } from "react";
+import styles from "../styles/agendamentos.module.css";
+import HeaderAgendamentos from "../components/agendamento/HeaderAgendamentos";
+import AgendamentoTabs from "../components/agendamento/AgendamentoTabs";
+import AgendamentoCard from "../components/agendamento/AgendamentoCard";
 
-import Sidebar from '../components/Sidebar'
-import HeaderAgendamento from '../components/Agendamentos/HeaderAgendamento'
-import AgendamentoTabs from '../components/Agendamentos/AgendamentoTabs'
-import AgendamentoCard from '../components/Agendamentos/AgendamentoCard'
+const todosAgendamentos = [
+  { id: 1, quadra: "Quadra 1", data: "15/02/2026", horario: "18:00 - 19:30", tipo: "anterior" },
+  { id: 2, quadra: "Quadra 2", data: "17/02/2026", horario: "20:00 - 21:30", tipo: "proximo" },
+  { id: 3, quadra: "Quadra 3", data: "17/02/2026", horario: "20:00 - 21:30", tipo: "proximo" },
+];
 
 function Agendamentos() {
+  const [tabAtiva, setTabAtiva] = useState("anterior");
+  const [agendamentos, setAgendamentos] = useState(todosAgendamentos);
+
+  const filtrados = agendamentos.filter((a) => a.tipo === tabAtiva);
+
+  function cancelar(id) {
+    setAgendamentos(agendamentos.filter((a) => a.id !== id));
+  }
+
   return (
-    <div className={styles.container}>
-
-      <div className={styles.app}>
-
-        <HeaderAgendamento />
-
-        <AgendamentoTabs />
-
-        <div className={styles.cardsArea}>
-
+    <div className={styles.mainContent}>
+      <HeaderAgendamentos />
+      <AgendamentoTabs tabAtiva={tabAtiva} onTabChange={setTabAtiva} />
+      <div className={styles.cardsArea}>
+        {filtrados.length === 0 && (
+          <p style={{ color: "white" }}>Nenhum agendamento encontrado.</p>
+        )}
+        {filtrados.map((a) => (
           <AgendamentoCard
-            quadra="Quadra 1"
-            data="15/02/2026"
-            hora="18:00 - 19:30"
+            key={a.id}
+            quadra={a.quadra}
+            data={a.data}
+            horario={a.horario}
+            onCancelar={() => cancelar(a.id)}
           />
-
-          <AgendamentoCard
-            quadra="Quadra 2"
-            data="17/02/2026"
-            hora="20:00 - 21:30"
-          />
-
-          <AgendamentoCard
-            quadra="Quadra 3"
-            data="17/02/2026"
-            hora="20:00 - 21:30"
-          />
-
-        </div>
-
+        ))}
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Agendamentos
+export default Agendamentos;

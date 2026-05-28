@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import AgendamentoSucesso from './pages/AgendamentoSucesso.jsx'
-
+import Agendamentos from './pages/Agendamentos.jsx'
 
 import {
   BrowserRouter,
@@ -20,6 +20,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/" element={<App />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
+   <Route path="/agendamentos" element={<Agendamentos />} /> 
 </Routes>
     </BrowserRouter>
   </StrictMode>,
