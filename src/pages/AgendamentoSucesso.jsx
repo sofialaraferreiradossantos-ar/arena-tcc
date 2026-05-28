@@ -1,6 +1,6 @@
-import styles from "../styles/quadras.module.css";
+import styles from "../styles/agendamentos.module.css";
 
-import quadra from "../assets/quadra.jpeg";
+import quadra from "../mockup/imagens/quadra.jpeg";
 
 function AgendamentoSucesso() {
   return (

@@ -1,8 +1,9 @@
 import styles from '../styles/agendamentos.module.css'
 
-import HeaderAgendamento from '../components/agendamentos/HeaderAgendamento'
-import AgendamentoTabs from '../components/agendamentos/AgendamentoTabs'
-import AgendamentoCard from '../components/agendamentos/AgendamentoCard'
+import Sidebar from '../components/Sidebar'
+import HeaderAgendamento from '../components/Agendamentos/HeaderAgendamento'
+import AgendamentoTabs from '../components/Agendamentos/AgendamentoTabs'
+import AgendamentoCard from '../components/Agendamentos/AgendamentoCard'
 
 function Agendamentos() {
   return (
