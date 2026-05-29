@@ -9,8 +9,12 @@ function Header() {
   const [menuAberto, setMenuAberto] = useState(false)
 
   return (
-    <>
-    {}
+       <div className={styles.topHeader}>
+
+      <FaBars
+        className={styles.menuIcon}
+        onClick={() => setMenuAberto(!menuAberto)}
+      />
 
 
 {menuAberto && (
