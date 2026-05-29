@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import AgendamentoSucesso from './pages/AgendamentoSucesso.jsx'
 import Agendamentos from './pages/Agendamentos.jsx'
+import Cadastro from './components/quadras/Cadastro.jsx'
 
 import {
   BrowserRouter,
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/quadra" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
    <Route path="/agendamentos" element={<Agendamentos />} /> 
+  <Route path="/cadastro" element={<Cadastro />} />
 </Routes>
     </BrowserRouter>
   </StrictMode>,
