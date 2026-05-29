@@ -9,23 +9,19 @@ function Header() {
   const [menuAberto, setMenuAberto] = useState(false)
 
   return (
-    <div className={styles.topHeader}>
-
-      <FaBars
-        className={styles.menuIcon}
-        onClick={() => setMenuAberto(!menuAberto)}
-      />
-
+    <>
+    {}
 
 
 {menuAberto && (
   <div className={styles.sidebarMenu}>
 
     <button
+    
       className={styles.closeMenu}
       onClick={() => setMenuAberto(false)}
     >
-      
+      x
     </button>
 
     <img src={logo} alt="" />
@@ -38,7 +34,7 @@ function Header() {
 
   </div>
 )}
-
+       {/*HEADER*/}
       <div className={styles.logoArea}>
 
         <img
