@@ -1,63 +1,66 @@
 import { Link } from "react-router-dom";
+import styles from "../../styles/home.module.css";
 
 export default function Cadastro() {
   return (
-    <div className="container">
+    <div className={styles.container}>
 
-      <div className="app">
+      <div className={styles.app}>
 
-        <div className="topHeader">
+        <div className={styles.topHeader}>
 
-          <div className="logoArea">
-            {/* <img src="" alt="logo" /> */}
+          <div className={styles.logoArea}>
 
             <h2>
               Criar <span>Conta</span>
             </h2>
+
           </div>
 
         </div>
 
-        <div className="quadraCard cadastroCard">
+        <div className={`${styles.quadraCard} ${styles.cadastroCard}`}>
 
-          <h2 className="cadastroTitle">
+          <h2 className={styles.cadastroTitle}>
             Cadastro de usuário
           </h2>
 
           <input
             type="text"
             placeholder="Nome"
-            className="cadastroInput"
+            className={styles.cadastroInput}
           />
 
           <input
             type="email"
             placeholder="Email"
-            className="cadastroInput"
+            className={styles.cadastroInput}
           />
 
           <input
             type="password"
             placeholder="Senha"
-            className="cadastroInput"
+            className={styles.cadastroInput}
           />
 
           <input
             type="password"
             placeholder="Confirmar senha"
-            className="cadastroInput"
+            className={styles.cadastroInput}
           />
 
-          <button className="activeBtn cadastroButton">
+          <button
+            className={`${styles.activeBtn} ${styles.cadastroButton}`}
+          >
             Cadastrar
           </button>
 
-          <p className="cadastroText">
+          <p className={styles.cadastroText}>
             Já tem conta?{" "}
 
             <Link
               to="/"
-              className="cadastroLink"
+              className={styles.cadastroLink}
             >
               entrar
             </Link>

@@ -1,36 +1,84 @@
 import { Link } from "react-router-dom";
+import styles from "../../styles/home.module.css";
 
 export default function Login() {
   return (
-    <div className="page-center">
-      {/*<img src="" alt="background" className="background" />*/}
+    <div className={styles.container}>
+      <div className={styles.app}>
 
-      <div className="card">
-        <h2 className="title">Login</h2>
-
-        <input type="email" placeholder="Email" className="input" />
-
-        <div className="password-box">
-          <input type="password" placeholder="Senha" className="input" />
+        <div className={styles.topHeader}>
+          <div className={styles.logoArea}>
+            <h2>
+              Arena <span>Beach</span>
+            </h2>
+          </div>
         </div>
 
-        <button className="button">Entrar</button>
+        <div className={`${styles.quadraCard} ${styles.loginCard}`}>
 
-        <div className="links">
-          <p>Esqueceu a senha?</p>
-          <p>
-            Não tem conta?{" "}
-            <Link to="/cadastro" className="link-destaque">
-              cadastre-se
-            </Link>
-          </p>
-          <p>
-            <Link to="/sobre" className="link-destaque">
-              Sobre
-            </Link>
-          </p>
-          <Link to="/Home" className="link-destaque">Home</Link>
+          <h2 className={styles.loginTitle}>
+            Login
+          </h2>
+
+          <input
+            type="email"
+            placeholder="Email"
+            className={styles.loginInput}
+          />
+
+          <input
+            type="password"
+            placeholder="Senha"
+            className={styles.loginInput}
+          />
+
+          <button
+            className={`${styles.activeBtn} ${styles.loginButton}`}
+          >
+            Entrar
+          </button>
+
+          <div className={styles.loginLinks}>
+            <p>
+              <Link
+                to="/recuperar-senha"
+                className={styles.loginLink}
+              >
+                Esqueceu a senha?
+              </Link>
+            </p>
+
+            <p>
+              Não tem conta?{" "}
+              <Link
+                to="/cadastro"
+                className={styles.loginLink}
+              >
+                cadastre-se
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/sobre"
+                className={styles.loginLink}
+              >
+                Sobre
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/home"
+                className={styles.loginLink}
+              >
+                Home
+              </Link>
+            </p>
+          </div>
+
         </div>
+
       </div>
     </div>
   );

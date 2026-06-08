@@ -4,6 +4,8 @@ import './index.css'
 import AgendamentoSucesso from './pages/AgendamentoSucesso.jsx'
 import Agendamentos from './pages/Agendamentos.jsx'
 import Cadastro from './components/quadras/Cadastro.jsx'
+import Home from './components/quadras/Home.jsx'
+import Login from './components/quadras/Login.jsx'
 
 import {
   BrowserRouter,
@@ -23,6 +25,8 @@ createRoot(document.getElementById('root')).render(
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
    <Route path="/agendamentos" element={<Agendamentos />} /> 
   <Route path="/cadastro" element={<Cadastro />} />
+  <Route path="/home" element={<Home />} />
+  <Route path="/login" element={<Login />} />
 </Routes>
     </BrowserRouter>
   </StrictMode>,
