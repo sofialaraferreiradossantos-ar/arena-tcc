@@ -1,0 +1,173 @@
+.pageWrapper {
+  display: flex;
+  min-height: 100vh;
+  background: black;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  position: relative;
+}
+
+.menuIcon {
+  color: #ff8800;
+  font-size: 32px;
+  align-self: flex-start;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* CONTAINER ESTILO CELULAR */
+.phoneContainer {
+  border: 2px solid #4a90d9;
+  border-radius: 30px;
+  padding: 30px 25px;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  width: 80px;
+}
+
+.phoneContainer h2 {
+  color: white;
+  font-size: 22px;
+  text-align: center;
+}
+
+.phoneContainer h2 span {
+  color: #ff8800;
+}
+
+/* CARDS */
+.cardsArea {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.card {
+  background: #1a1a1a;
+  border: 1px solid #ff8800;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardInfo {
+  flex: 1;
+}
+
+.cardInfo h3 {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.cardInfo p {
+  color: #ccc;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.cardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardRight img {
+  width: 90px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cardRight button {
+  background: #ff8800;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* BOTÃO INSCREVER */
+.inscricaoBtn {
+  width: 100%;
+  padding: 14px;
+  background: #ff8800;
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.inscricaoBtn:hover {
+  background: #e07700;
+}
+
+/* SIDEBAR */
+.sidebarMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 210px;
+  height: 100vh;
+  background: #0b0b0b;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 999;
+}
+
+.sidebarMenu img {
+  width: 80px;
+  margin: 0 auto;
+  display: block;
+}
+
+.sidebarMenu a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.sidebarMenu a:hover {
+  background: #ff8800;
+}
+
+.closeMenu {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  align-self: flex-end;
+}
