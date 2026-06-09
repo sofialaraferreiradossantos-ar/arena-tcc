@@ -331,7 +331,6 @@
 
 .sidebarMenu {
   position: fixed;
-
   top: 0;
   left: 0;
 
@@ -358,7 +357,7 @@
   transform: translateX(-100%);
 }
 
-.sidebarMenu.open {
+.open {
   transform: translateX(0);
 }
 
@@ -369,17 +368,13 @@
 
 .sidebarMenu a {
   color: white;
-
   text-decoration: none;
-
   font-size: 15px;
-
   transition: 0.3s;
 }
 
 .sidebarMenu a:hover {
   color: #ff8800;
-
   transform: translateX(5px);
 }
 
@@ -826,5 +821,75 @@
 }
 
 .loginLink:hover {
+  color: #ffaa33;
+}
+
+/* ================================
+   SOBRE
+================================ */
+
+.sobreCard {
+  width: 100%;
+  max-width: 800px;
+
+  margin-top: 40px;
+
+  padding: 35px;
+
+  text-align: center;
+}
+
+.sobreTitulo {
+  color: white;
+  font-size: 38px;
+
+  margin-bottom: 15px;
+}
+
+.sobreTitulo span {
+  color: #ff8800;
+}
+
+.sobreDescricao {
+  color: #bdbdbd;
+
+  font-size: 16px;
+
+  margin-bottom: 30px;
+}
+
+.sobreSecao {
+  margin-top: 25px;
+
+  text-align: left;
+}
+
+.sobreSecao h3 {
+  color: #ff8800;
+
+  margin-bottom: 10px;
+}
+
+.sobreSecao p {
+  color: white;
+
+  line-height: 1.7;
+}
+
+.sobreLink {
+  display: inline-block;
+
+  margin-top: 30px;
+
+  color: #ff8800;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  transition: 0.3s;
+}
+
+.sobreLink:hover {
   color: #ffaa33;
 }
