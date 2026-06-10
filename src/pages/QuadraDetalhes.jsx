@@ -8,16 +8,39 @@ function QuadraDetalhes() {
   const imagens = [quadra, quadra, quadra];
 
   const [imagemAtiva, setImagemAtiva] = useState(imagens[0]);
+  const [menuAberto, setMenuAberto] = useState(false);
 
   return (
     <div className={styles.detailsContainer}>
+
       {/* MENU */}
-      <div className={styles.menuIcon}>
+      <div
+        className={`${styles.menuIcon} ${
+          menuAberto ? styles.menuIconOpen : ""
+        }`}
+        onClick={() => setMenuAberto(!menuAberto)}
+      >
         ☰
       </div>
 
+      {/* SIDEBAR */}
+      <div
+        className={`${styles.sidebarMenu} ${
+          menuAberto ? styles.open : ""
+        }`}
+      >
+        <a href="/">🏠 Início</a>
+        <a href="/agendamentos">📅 Agendamentos</a>
+        <a href="/quadra">🏐 Quadras</a>
+        <a href="/sucesso">✅ Sucesso</a>
+      </div>
+
       {/* LOGO */}
-      <img src={logo} alt="Arena Beach" className={styles.logoDetails} />
+      <img
+        src={logo}
+        alt="Arena Beach"
+        className={styles.logoDetails}
+      />
 
       {/* TITULO */}
       <h1 className={styles.titleDetails}>
@@ -25,6 +48,7 @@ function QuadraDetalhes() {
       </h1>
 
       <div className={styles.detailsContent}>
+
         {/* GALERIA */}
         <div className={styles.galleryBox}>
           <img
@@ -40,7 +64,9 @@ function QuadraDetalhes() {
                 src={img}
                 alt="thumb"
                 className={`${styles.thumb} ${
-                  imagemAtiva === img ? styles.activeThumb : ""
+                  imagemAtiva === img
+                    ? styles.activeThumb
+                    : ""
                 }`}
                 onClick={() => setImagemAtiva(img)}
               />
@@ -56,15 +82,21 @@ function QuadraDetalhes() {
             <h3>Sobre a quadra</h3>
 
             <p>
-              A quadra conta com iluminação LED, ambiente climatizado.
-              Possui opções para agendamentos de evento, torneios e jogos
+              A quadra conta com iluminação LED,
+              ambiente climatizado. Possui opções
+              para agendamentos de evento,
+              torneios e jogos.
             </p>
           </div>
 
           <div className={styles.horario}>
-            <strong>Horario de Funcionamento:</strong> 06:00 às 23:00
+            <strong>
+              Horário de Funcionamento:
+            </strong>{" "}
+            06:00 às 23:00
           </div>
         </div>
+
       </div>
     </div>
   );
