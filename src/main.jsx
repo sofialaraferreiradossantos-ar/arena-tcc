@@ -7,6 +7,8 @@ import Cadastro from './components/quadras/Cadastro.jsx'
 import Home from './components/quadras/Home.jsx'
 import Login from './components/quadras/Login.jsx'
 import Sobre from './components/quadras/sobre.jsx'
+import Torneios from './pages/Torneios.jsx' 
+import InscricaoTorneio from './pages/InscricaoTorneio.jsx'
 
 import {
   BrowserRouter,
@@ -29,6 +31,8 @@ createRoot(document.getElementById('root')).render(
   <Route path="/home" element={<Home />} />
   <Route path="/login" element={<Login />} />
   <Route path="/sobre" element={<Sobre />} />
+   <Route path="/torneios" element={<Torneios />} /> 
+   <Route path="/inscricao-torneio" element={<InscricaoTorneio />} />
 </Routes>
     </BrowserRouter>
   </StrictMode>,
