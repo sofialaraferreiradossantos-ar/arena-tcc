@@ -4,16 +4,17 @@ import styles from "../styles/torneios.module.css";
 import logo from "../assets/logo.jpeg";
 import TorneioCard from "../components/torneios/TorneioCard";
 import quadra1 from "../mockup/imagens/quadraCoberta.jpg";
+import { useNavigate } from "react-router-dom";  
 
 const torneios = [
-  { id: 1, nome: "Torneio de Futevôlei Pro", data: "25/05 a 28/05", local: "Beach Tennis Arena 1", imagem: quadra1 },
-  { id: 2, nome: "Torneio de Futevôlei Pro", data: "25/05 a 28/05", local: "Beach Tennis Arena 1", imagem: quadra1 },
-  { id: 3, nome: "Torneio de Futevôlei Pro", data: "25/05 a 28/05", local: "Beach Tennis Arena 1", imagem: quadra1 },
+  { id: 1, nome: "Torneio de Futevôlei Pro", data: "25/05 a 25/06", local: "Beach Tennis Arena 1", imagem: quadra1 },
+  { id: 2, nome: "Torneio de Futevôlei Pro", data: "14/06 a 24/06", local: "Beach Tennis Arena 1", imagem: quadra1 },
+  { id: 3, nome: "Torneio de Futevôlei Pro", data: "30/05 a 30/06", local: "Beach Tennis Arena 1", imagem: quadra1 },
 ];
 
 function Torneios() {
   const [menuAberto, setMenuAberto] = useState(false);
-
+ const navigate = useNavigate(); 
   return (
     <div className={styles.pageWrapper}>
 
@@ -52,7 +53,12 @@ function Torneios() {
             ))}
           </div>
 
-          <button className={styles.inscricaoBtn}>Inscrever-se</button>
+          <button
+            className={styles.inscricaoBtn}
+            onClick={() => navigate("/inscricao-torneio")}
+          >
+            Inscrever-se
+          </button>
         </div>
 
       </div>
