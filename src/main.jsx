@@ -9,6 +9,8 @@ import Login from './components/quadras/Login.jsx'
 import Sobre from './components/quadras/sobre.jsx'
 import Torneios from './pages/Torneios.jsx' 
 import InscricaoTorneio from './pages/InscricaoTorneio.jsx'
+import Pagamento from './pages/pagamento.jsx'
+import PagamentoCartao from './pages/pagamentoCartao.jsx'
 
 import {
   BrowserRouter,
@@ -33,6 +35,8 @@ createRoot(document.getElementById('root')).render(
   <Route path="/sobre" element={<Sobre />} />
    <Route path="/torneios" element={<Torneios />} /> 
    <Route path="/inscricao-torneio" element={<InscricaoTorneio />} />
+   <Route path="/pagamento" element={<Pagamento />} />
+   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
 </Routes>
     </BrowserRouter>
   </StrictMode>,
