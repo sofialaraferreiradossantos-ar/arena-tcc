@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../styles/quadras.module.css";
 
 import logo from "../assets/logo.jpeg";
@@ -13,7 +14,7 @@ function QuadraDetalhes() {
   return (
     <div className={styles.detailsContainer}>
 
-      {/* MENU */}
+      {/* BOTÃO MENU */}
       <div
         className={`${styles.menuIcon} ${
           menuAberto ? styles.menuIconOpen : ""
@@ -29,10 +30,27 @@ function QuadraDetalhes() {
           menuAberto ? styles.open : ""
         }`}
       >
-        <a href="/">🏠 Início</a>
-        <a href="/agendamentos">📅 Agendamentos</a>
-        <a href="/quadra">🏐 Quadras</a>
-        <a href="/sucesso">✅ Sucesso</a>
+        <Link to="/home">🏠 Início</Link>
+
+        <Link to="/quadra">
+          🏐 Quadras
+        </Link>
+
+        <Link to="/agendamentos">
+          📅 Agendamentos
+        </Link>
+
+        <Link to="/torneios">
+          🏆 Torneios
+        </Link>
+
+        <Link to="/pagamento">
+          💳 Pagamento
+        </Link>
+
+        <Link to="/cadastro">
+          🚪 Sair
+        </Link>
       </div>
 
       {/* LOGO */}

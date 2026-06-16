@@ -1,15 +1,36 @@
+import { useState } from "react";
 import styles from "../styles/home.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function PagamentoCartao() {
   const navigate = useNavigate();
 
+  const [menuAberto, setMenuAberto] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.app}>
 
+        {/* MENU LATERAL */}
+        <div
+          className={`${styles.sidebarMenu} ${
+            menuAberto ? styles.open : ""
+          }`}
+        >
+          <a href="/home">🏠 Início</a>
+          <a href="/quadra">🏐 Quadras</a>
+          <a href="/agendamentos">📅 Agendamentos</a>
+          <a href="/torneios">🏆 Torneios</a>
+          <a href="/pagamento">💳 Pagamento</a>
+        </div>
+
         <div className={styles.topHeader}>
-          <div className={styles.menuIcon}>☰</div>
+          <div
+            className={styles.menuIcon}
+            onClick={() => setMenuAberto(!menuAberto)}
+          >
+            ☰
+          </div>
 
           <div className={styles.logoArea}>
             <h2>
@@ -107,7 +128,8 @@ export default function PagamentoCartao() {
             <p>📅 17/02/2026</p>
             <p>🕐 11:00 - 12:00</p>
 
-            <button className={styles.confirmarPagamento}>
+            <button className={styles.confirmarPagamento}
+            onClick={() => navigate("/home")}>
               Confirmar pagamento
             </button>
           </div>

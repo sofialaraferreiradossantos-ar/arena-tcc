@@ -4,13 +4,35 @@ import { useNavigate } from "react-router-dom";
 
 export default function Pagamento() {
   const [metodo, setMetodo] = useState("pix");
+  const [menuAberto, setMenuAberto] = useState(false);
+
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
       <div className={styles.app}>
 
+        {/* MENU LATERAL */}
+        <div
+          className={`${styles.sidebarMenu} ${
+            menuAberto ? styles.open : ""
+          }`}
+        >
+          <a href="/home">🏠 Início</a>
+          <a href="/quadra">🏐 Quadras</a>
+          <a href="/agendamentos">📅 Agendamentos</a>
+          <a href="/torneios">🏆 Torneios</a>
+          <a href="/pagamento">💳 Pagamento</a>
+        </div>
+
         <div className={styles.topHeader}>
+          <div
+            className={styles.menuIcon}
+            onClick={() => setMenuAberto(!menuAberto)}
+          >
+            ☰
+          </div>
+
           <div className={styles.logoArea}>
             <h2>
               <span>Pagamento</span>
@@ -31,11 +53,7 @@ export default function Pagamento() {
           </button>
 
           <button
-            className={
-              metodo === "cartao"
-                ? `${styles.activeBtn} ${styles.pagamentoBtn}`
-                : styles.pagamentoBtn
-            }
+            className={styles.pagamentoBtn}
             onClick={() => {
               setMetodo("cartao");
               navigate("/pagamentoCartao");
@@ -85,6 +103,7 @@ export default function Pagamento() {
 
         <button
           className={`${styles.activeBtn} ${styles.confirmarPagamento}`}
+          onClick={() => navigate("/home")}
         >
           Confirmar pagamento
         </button>

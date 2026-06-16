@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaBars, FaRegUserCircle } from "react-icons/fa";
 import styles from "../../styles/agendamentos.module.css";
 import logo from "../../assets/logo.jpeg";
@@ -10,23 +11,49 @@ function HeaderAgendamentos() {
     <>
       <div className={styles.topHeader}>
         <FaBars
-          className={styles.menuIcon}
+          className={`${styles.menuIcon} ${
+            menuAberto ? styles.menuIconOpen : ""
+          }`}
           onClick={() => setMenuAberto(!menuAberto)}
         />
+
         <div className={styles.logoArea}>
           <img src={logo} alt="logo" />
-          <h2>Meus <span>Agendamentos</span></h2>
+          <h2>
+            Meus <span>Agendamentos</span>
+          </h2>
         </div>
+
         <FaRegUserCircle className={styles.userIcon} />
       </div>
 
-      {menuAberto && (
-        <div className={styles.sidebar}>
-          <a href="/">Home</a>
-          <a href="/agendamentos">Meus Agendamentos</a>
-          <a href="/quadra">Quadras</a>
-        </div>
-      )}
+      <div
+        className={`${styles.sidebar} ${
+          menuAberto ? styles.open : ""
+        }`}
+      >
+        <Link to="/home">🏠 Início</Link>
+
+        <Link to="/quadra">
+          🏐 Quadras
+        </Link>
+
+        <Link to="/agendamentos">
+          📅 Agendamentos
+        </Link>
+
+        <Link to="/torneios">
+          🏆 Torneios
+        </Link>
+
+        <Link to="/pagamento">
+          💳 Pagamento
+        </Link>
+
+        <Link to="/cadastro">
+          🚪 Sair
+        </Link>
+      </div>
     </>
   );
 }
