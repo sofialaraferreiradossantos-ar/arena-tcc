@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styles from "../styles/home.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Pagamento() {
   const [metodo, setMetodo] = useState("pix");
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -34,7 +36,10 @@ export default function Pagamento() {
                 ? `${styles.activeBtn} ${styles.pagamentoBtn}`
                 : styles.pagamentoBtn
             }
-            onClick={() => setMetodo("cartao")}
+            onClick={() => {
+              setMetodo("cartao");
+              navigate("/pagamentoCartao");
+            }}
           >
             Cartão
           </button>

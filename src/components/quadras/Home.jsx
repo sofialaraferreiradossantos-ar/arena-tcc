@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.arenaWrapper}>
       <aside className={styles.sidebar}>
@@ -18,23 +21,30 @@ export default function Home() {
             🏠 <span>Início</span>
           </button>
 
-          <button className={styles.menuItem}>
+          <button className={styles.menuItem}
+          onClick={() => navigate("/quadra")}>
             🏐 <span>Quadras</span>
           </button>
 
-          <button className={styles.menuItem}>
+          <button className={styles.menuItem}
+          onClick={() => navigate("/agendamentos")}>
             📅 <span>Agendamentos</span>
           </button>
 
-          <button className={styles.menuItem}>
+          <button className={styles.menuItem}
+          onClick={() =>navigate("/torneios") }>
             🏆 <span>Torneios</span>
           </button>
 
-          <button className={styles.menuItem}>
+          <button className={styles.menuItem}
+          onClick={() => navigate("/pagamento")}>
             💳 <span>Pagamento</span>
           </button>
 
-          <button className={styles.menuItem}>
+          <button
+            className={styles.menuItem}
+            onClick={() => navigate("/cadastro")}
+          >
             🚪 <span>Sair</span>
           </button>
         </nav>

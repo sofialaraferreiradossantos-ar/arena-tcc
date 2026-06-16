@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.app}>
@@ -34,6 +36,7 @@ export default function Login() {
 
           <button
             className={`${styles.activeBtn} ${styles.loginButton}`}
+            onClick={() => navigate("/home")}
           >
             Entrar
           </button>
@@ -41,7 +44,7 @@ export default function Login() {
           <div className={styles.loginLinks}>
             <p>
               <Link
-                to="/recuperar-senha"
+                to="/recuperarSenha"
                 className={styles.loginLink}
               >
                 Esqueceu a senha?
@@ -67,14 +70,6 @@ export default function Login() {
               </Link>
             </p>
 
-            <p>
-              <Link
-                to="/home"
-                className={styles.loginLink}
-              >
-                Home
-              </Link>
-            </p>
           </div>
 
         </div>

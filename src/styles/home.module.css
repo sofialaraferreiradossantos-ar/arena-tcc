@@ -1044,10 +1044,21 @@
     gap: 25px;
   }
 
-  .confirmarPagamento {
-    width: 100%;
-    max-width: 320px;
-  }
+.confirmarPagamento {
+  margin-top: 40px;
+
+  width: 280px;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
 }
 
 /* ================================
@@ -1136,4 +1147,70 @@
   font-size: 15px;
 
   cursor: pointer;
+}
+
+/* ================================
+   RECUPERAR SENHA
+================================ */
+
+.recuperarCard {
+  width: 100%;
+  max-width: 500px;
+
+  margin-top: 50px;
+
+  padding: 35px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  text-align: center;
+}
+
+.recuperarTitle {
+  color: white;
+
+  font-size: 28px;
+
+  font-weight: bold;
+}
+
+.recuperarText {
+  color: #bdbdbd;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+.recuperarButton {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.recuperarLink {
+  color: #ff8800;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  margin-top: 5px;
+}
+
+.recuperarLink:hover {
+  color: #ffaa33;
 }
