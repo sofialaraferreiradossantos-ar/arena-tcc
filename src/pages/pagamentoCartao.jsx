@@ -1,6 +1,9 @@
 import styles from "../styles/home.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function PagamentoCartao() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <div className={styles.app}>
@@ -16,16 +19,17 @@ export default function PagamentoCartao() {
         </div>
 
         <div className={styles.pagamentoButtons}>
-          <button className={styles.pagamentoBtn}>
+          <button
+            className={styles.pagamentoBtn}
+            onClick={() => navigate("/pagamento")}
+          >
             Pix
           </button>
 
-          <button className={styles.activeBtn}>
+          <button
+            className={`${styles.activeBtn} ${styles.pagamentoBtn}`}
+          >
             Cartão
-          </button>
-
-          <button className={styles.pagamentoBtn}>
-            Boleto
           </button>
         </div>
 
