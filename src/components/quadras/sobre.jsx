@@ -61,7 +61,7 @@ export default function Sobre() {
           </div>
 
           <Link
-            to="/"
+            to="/home"
             className={styles.sobreLink}
           >
             Voltar

@@ -374,33 +374,31 @@
 .sidebarMenu {
   position: fixed;
   top: 0;
-  left: 0;
+  left: -250px;
 
-  width: 210px;
+  width: 250px;
   height: 100vh;
 
   background: #0b0b0b;
 
-  border-right: 1px solid #1f1f1f;
+  border-right: 1px solid #222;
 
-  padding: 25px 20px;
+  padding: 25px;
 
   display: flex;
   flex-direction: column;
 
-  gap: 25px;
+  gap: 10px;
 
   z-index: 999;
 
   overflow-y: auto;
 
-  transition: transform 0.3s ease;
-
-  transform: translateX(-100%);
+  transition: left 0.35s ease;
 }
 
 .open {
-  transform: translateX(0);
+  left: 0;
 }
 
 .sidebarMenu img {
@@ -412,11 +410,15 @@
   color: white;
   text-decoration: none;
   font-size: 15px;
-  transition: 0.3s;
+
+  padding: 12px;
+  border-radius: 10px;
+
+  transition: all 0.3s ease;
 }
 
 .sidebarMenu a:hover {
-  color: #ff8800;
+  background: rgba(255, 136, 0, 0.15);
   transform: translateX(5px);
 }
 
@@ -1241,4 +1243,6 @@
 .recuperarLink:hover {
   color: #ffaa33;
 }
+
+
 

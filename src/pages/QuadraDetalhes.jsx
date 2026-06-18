@@ -15,44 +15,48 @@ function QuadraDetalhes() {
     <div className={styles.detailsContainer}>
 
       {/* BOTÃO MENU */}
-      <div
-        className={`${styles.menuIcon} ${
-          menuAberto ? styles.menuIconOpen : ""
-        }`}
-        onClick={() => setMenuAberto(!menuAberto)}
-      >
-        ☰
-      </div>
+<div
+  className={`${styles.menuIcon} ${
+    menuAberto ? styles.menuIconOpen : ""
+  }`}
+  onClick={() => setMenuAberto(!menuAberto)}
+>
+  ☰
+</div>
 
-      {/* SIDEBAR */}
-      <div
-        className={`${styles.sidebarMenu} ${
-          menuAberto ? styles.open : ""
-        }`}
-      >
-        <Link to="/home">🏠 Início</Link>
+{/* SIDEBAR */}
+<div
+  className={`${styles.sidebarMenu} ${
+    menuAberto ? styles.open : ""
+  }`}
+>
+  <img
+    src={logo}
+    alt="Arena Beach"
+  />
 
-        <Link to="/quadra">
-          🏐 Quadras
-        </Link>
+  <Link to="/home">🏠 Início</Link>
 
-        <Link to="/agendamentos">
-          📅 Agendamentos
-        </Link>
+  <Link to="/quadra">
+    🌐 Quadras
+  </Link>
 
-        <Link to="/torneios">
-          🏆 Torneios
-        </Link>
+  <Link to="/agendamentos">
+    📅 Agendamentos
+  </Link>
 
-        <Link to="/pagamento">
-          💳 Pagamento
-        </Link>
+  <Link to="/torneios">
+    🏆 Torneios
+  </Link>
 
-        <Link to="/cadastro">
-          🚪 Sair
-        </Link>
-      </div>
+  <Link to="/pagamento">
+    💳 Pagamento
+  </Link>
 
+  <Link to="/cadastro">
+    🚪 Sair
+  </Link>
+</div>
       {/* LOGO */}
       <img
         src={logo}

@@ -9,16 +9,17 @@ function HeaderAgendamentos() {
 
   return (
     <>
-      <div className={styles.topHeader}>
-        <FaBars
-          className={`${styles.menuIcon} ${
-            menuAberto ? styles.menuIconOpen : ""
-          }`}
-          onClick={() => setMenuAberto(!menuAberto)}
-        />
+      <FaBars
+        className={`${styles.menuIcon} ${
+          menuAberto ? styles.menuIconOpen : ""
+        }`}
+        onClick={() => setMenuAberto(!menuAberto)}
+      />
 
+      <div className={styles.topHeader}>
         <div className={styles.logoArea}>
           <img src={logo} alt="logo" />
+
           <h2>
             Meus <span>Agendamentos</span>
           </h2>
@@ -27,33 +28,24 @@ function HeaderAgendamentos() {
         <FaRegUserCircle className={styles.userIcon} />
       </div>
 
-      <div
-        className={`${styles.sidebar} ${
-          menuAberto ? styles.open : ""
-        }`}
-      >
-        <Link to="/home">🏠 Início</Link>
+     <div
+  className={`${styles.sidebar} ${
+    menuAberto ? styles.open : ""
+  }`}
+>
+  <img
+    src={logo}
+    alt="logo"
+    className={styles.sidebarLogo}
+  />
 
-        <Link to="/quadra">
-          🏐 Quadras
-        </Link>
-
-        <Link to="/agendamentos">
-          📅 Agendamentos
-        </Link>
-
-        <Link to="/torneios">
-          🏆 Torneios
-        </Link>
-
-        <Link to="/pagamento">
-          💳 Pagamento
-        </Link>
-
-        <Link to="/cadastro">
-          🚪 Sair
-        </Link>
-      </div>
+  <Link to="/home">🏠 Início</Link>
+  <Link to="/quadras">⚽ Quadras</Link>
+  <Link to="/agendamentos">📅 Agendamentos</Link>
+  <Link to="/torneios">🏆 Torneios</Link>
+  <Link to="/pagamento">💳 Pagamento</Link>
+  <Link to="/cadastro">🚪 Sair</Link>
+</div>
     </>
   );
 }
