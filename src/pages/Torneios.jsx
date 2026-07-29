@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/torneios.module.css";
 import logo from "../assets/logo.jpeg";
 import TorneioCard from "../components/torneios/TorneioCard";
 import quadra1 from "../mockup/imagens/quadraCoberta.jpg";
-import { useNavigate } from "react-router-dom";
 
 const torneios = [
   {
@@ -32,66 +32,151 @@ const torneios = [
 
 function Torneios() {
   const [menuAberto, setMenuAberto] = useState(false);
-  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fecharMenu = () => {
+    setMenuAberto(false);
+  };
 
   return (
     <div className={styles.pageWrapper}>
+      {/* ESCURECE O FUNDO QUANDO O MENU ESTIVER ABERTO */}
+      {menuAberto && (
+        <div
+          className={styles.menuOverlay}
+          onClick={fecharMenu}
+        />
+      )}
+
       {/* MENU LATERAL */}
-      <div
+      <aside
         className={`${styles.sidebarMenu} ${
           menuAberto ? styles.open : ""
         }`}
       >
+        {/* BOTÃO DE FECHAR */}
         <button
           className={styles.closeMenu}
-          onClick={() => setMenuAberto(false)}
+          onClick={fecharMenu}
+          aria-label="Fechar menu"
         >
-          
+          <FaTimes />
         </button>
 
-        <img src={logo} alt="logo" />
+        {/* LOGO */}
+        <img
+          src={logo}
+          alt="Arena Beach"
+        />
 
-        <a href="/home">🏠 Início</a>
-        <a href="/quadras">⚽ Quadras</a>
-        <a href="/agendamentos">📅 Agendamentos</a>
-        <a href="/torneios">🏆 Torneios</a>
-        <a href="/pagamento">💳 Pagamento</a>
-      </div>
+        {/* LINKS */}
+        <Link
+          to="/home"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/home"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>🏠</span>
+          Início
+        </Link>
+
+        <Link
+          to="/quadras"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/quadras"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>🏐</span>
+          Quadras
+        </Link>
+
+        <Link
+          to="/agendamentos"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/agendamentos"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>📅</span>
+          Agendamentos
+        </Link>
+
+        <Link
+          to="/torneios"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/torneios"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>🏆</span>
+          Torneios
+        </Link>
+
+        <Link
+          to="/pagamento"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/pagamento"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>💳</span>
+          Pagamento
+        </Link>
+
+        <Link
+          to="/"
+          onClick={fecharMenu}
+          className={styles.sair}
+        >
+          <span className={styles.menuEmoji}>🚪</span>
+          Sair
+        </Link>
+      </aside>
 
       {/* CONTEÚDO */}
-      <div className={styles.mainContent}>
+      <main className={styles.mainContent}>
+        {/* BOTÃO PARA ABRIR O MENU */}
         <FaBars
           className={styles.menuIcon}
           onClick={() => setMenuAberto(true)}
         />
 
         <div className={styles.phoneContainer}>
-          <img src={logo} alt="logo" className={styles.logo} />
+          <img
+            src={logo}
+            alt="Arena Beach"
+            className={styles.logo}
+          />
 
           <h2>
             Torneios <span>Disponíveis</span>
           </h2>
 
           <div className={styles.cardsArea}>
-            {torneios.map((t) => (
+            {torneios.map((torneio) => (
               <TorneioCard
-                key={t.id}
-                nome={t.nome}
-                data={t.data}
-                local={t.local}
-                imagem={t.imagem}
+                key={torneio.id}
+                nome={torneio.nome}
+                data={torneio.data}
+                local={torneio.local}
+                imagem={torneio.imagem}
               />
             ))}
           </div>
-
-          <button
-            className={styles.inscricaoBtn}
-            onClick={() => navigate("/inscricao-torneio")}
-          >
-            Inscrever-se
-          </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

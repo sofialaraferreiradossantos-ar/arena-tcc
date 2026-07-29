@@ -1,135 +1,437 @@
+/* PÁGINA */
 .pageWrapper {
   min-height: 100vh;
+
   background: #000;
+
+  color: #ffffff;
+
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* CONTEÚDO PRINCIPAL */
 .mainContent {
-  padding: 40px;
+  min-height: 100vh;
+
+  padding: 36px 25px 36px 290px;
+
   display: flex;
+
   justify-content: center;
+
+  box-sizing: border-box;
 }
 
+/* CONTAINER PRINCIPAL */
 .phoneContainer {
   width: 100%;
-  max-width: 900px;
 
-  background: #151515;
+  max-width: 1000px;
+
+  min-height: 820px;
+
+  background: #1d1d1f;
 
   border: 1px solid #ff8800;
 
   border-radius: 20px;
 
   padding: 35px;
+
+  box-sizing: border-box;
 }
 
+/* LOGO DO CONTEÚDO */
 .logo {
-  width: 100px;
+  width: 95px;
+
+  height: 75px;
+
+  object-fit: contain;
+
   display: block;
-  margin: auto;
+
+  margin: 0 auto 15px;
 }
 
+/* TÍTULO */
 .phoneContainer h2 {
-  color: white;
+  margin: 0 0 30px;
+
+  color: #ffffff;
+
   text-align: center;
+
+  font-size: 32px;
 }
 
-.phoneContainer span {
+.phoneContainer h2 span {
   color: #ff8800;
 }
 
+/* ÁREA DOS CARDS */
 .cardsArea {
+  width: 100%;
+
   display: flex;
+
   flex-direction: column;
-  gap: 20px;
+
+  gap: 22px;
 }
 
+/* CARD */
 .card {
-  background: #1f1f1f;
+  width: 100%;
+
+  min-height: 220px;
+
+  background: #202020;
 
   border: 1px solid #ff8800;
 
-  border-radius: 15px;
+  border-radius: 16px;
 
-  padding: 15px;
+  padding: 20px 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 35px;
+
+  box-sizing: border-box;
+
+  transition: 0.25s;
 }
 
-.inscricaoBtn {
+.card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 20px
+    rgba(255, 136, 0, 0.12);
+}
+
+/* INFORMAÇÕES À ESQUERDA */
+.cardInfo {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.cardInfo h3 {
+  margin: 0 0 20px;
+
+  color: #ff8800;
+
+  font-size: 24px;
+}
+
+.cardInfo p {
+  margin: 8px 0;
+
+  color: #e5e5e5;
+
+  font-size: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.cardInfo p svg {
+  color: #ff8800;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+/* FOTO À DIREITA */
+.cardRight {
+  width: 340px;
+
+  height: 180px;
+
+  overflow: hidden;
+
+  border: 1px solid #ff8800;
+
+  border-radius: 13px;
+
+  flex-shrink: 0;
+}
+
+.cardRight img {
   width: 100%;
 
-  background: #ff8800;
+  height: 100%;
 
-  border: none;
+  display: block;
 
-  padding: 15px;
-
-  border-radius: 12px;
-
-  font-weight: bold;
-
-  cursor: pointer;
+  object-fit: cover;
 }
 
+/* FUNDO ESCURO DO MENU */
+.menuOverlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  z-index: 998;
+}
+
+/* MENU LATERAL */
 .sidebarMenu {
   position: fixed;
+
   top: 0;
+
   left: -250px;
 
   width: 250px;
+
   height: 100vh;
 
-  background: #0b0b0b;
-  border-right: 1px solid #222;
+  background: #101113;
+
+  border-right: 1px solid #282828;
 
   display: flex;
+
   flex-direction: column;
 
-  padding: 25px;
+  padding: 24px;
 
-  gap: 10px;
+  box-sizing: border-box;
 
   z-index: 999;
 
-  transition: left .35s ease;
+  transition: left 0.35s ease;
 }
 
+/* MENU ABERTO */
 .open {
   left: 0;
 }
 
+/* LOGO DO MENU */
 .sidebarMenu img {
-  width: 90px;
+  width: 105px;
+
+  height: 85px;
+
+  object-fit: contain;
+
+  display: block;
+
   margin: 0 auto 25px;
 }
 
+/* LINKS */
 .sidebarMenu a {
-  color: white;
+  width: 100%;
+
+  min-height: 43px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 0 15px;
+
+  color: #f1f1f1;
+
   text-decoration: none;
 
-  padding: 12px;
+  font-size: 14px;
+
+  font-weight: 500;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  transition: 0.25s;
+}
+
+/* ESPAÇAMENTO ENTRE OS LINKS */
+.sidebarMenu a + a {
+  margin-top: 8px;
+}
+
+/* ITEM ATIVO */
+.active {
+  background: #ff8800;
+
+  color: #111111 !important;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 4px 12px
+    rgba(255, 136, 0, 0.2);
+}
+
+/* HOVER */
+.sidebarMenu a:hover {
+  background:
+    rgba(255, 136, 0, 0.14);
+
+  color: #ff9200;
+}
+
+/* MANTÉM O ATIVO LARANJA */
+.sidebarMenu a.active:hover {
+  background: #ff8800;
+
+  color: #111111;
+}
+
+/* ÍCONES DOS LINKS */
+.menuEmoji {
+  width: 14px;
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+/* LINK SAIR */
+.sair {
+  margin-top: 20px !important;
+}
+
+/* BOTÃO DE FECHAR */
+.closeMenu {
+  position: absolute;
+
+  top: 12px;
+
+  right: 12px;
+
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: transparent;
+
+  color: #ff8800;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 19px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.closeMenu:hover {
+  background:
+    rgba(255, 136, 0, 0.14);
+}
+
+/* ÍCONE PARA ABRIR O MENU */
+.menuIcon {
+  position: fixed;
+
+  top: 22px;
+
+  left: 22px;
+
+  width: 45px;
+
+  height: 45px;
+
+  padding: 10px;
+
+  background: #101113;
+
+  color: #ff8800;
+
+  border: 1px solid #ff8800;
 
   border-radius: 10px;
 
-  transition: .3s;
-}
-
-.sidebarMenu a:hover {
-  background: rgba(255,136,0,.15);
-  transform: translateX(5px);
-}
-
-.menuIcon {
-  position: fixed;
-  top: 25px;
-  left: 25px;
-
-  color: #ff8800;
-  font-size: 32px;
+  box-sizing: border-box;
 
   cursor: pointer;
 
   z-index: 1000;
+
+  transition: 0.2s;
 }
 
 .menuIcon:hover {
-  transform: scale(1.1);
+  background: #ff8800;
+
+  color: #111111;
+
+  transform: scale(1.05);
+}
+
+/* CELULAR */
+@media (max-width: 800px) {
+  .mainContent {
+    padding: 80px 12px 25px;
+  }
+
+  .phoneContainer {
+    min-height: auto;
+
+    padding: 22px;
+
+    border-radius: 16px;
+  }
+
+  .phoneContainer h2 {
+    font-size: 27px;
+  }
+
+  .card {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 20px;
+  }
+
+  .cardInfo {
+    width: 100%;
+  }
+
+  .cardInfo h3 {
+    font-size: 21px;
+  }
+
+  .cardRight {
+    width: 100%;
+
+    height: 210px;
+  }
 }

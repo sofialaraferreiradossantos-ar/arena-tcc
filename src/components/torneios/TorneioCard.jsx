@@ -1,22 +1,39 @@
-import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import {
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+
 import styles from "../../styles/torneios.module.css";
 
-function TorneioCard({ nome, data, local, imagem }) {
-  const navigate = useNavigate();
-
+function TorneioCard({
+  nome,
+  data,
+  local,
+  imagem,
+}) {
   return (
     <div className={styles.card}>
+      {/* TEXTO À ESQUERDA */}
       <div className={styles.cardInfo}>
         <h3>{nome}</h3>
-        <p><FaCalendarAlt /> Data: {data}</p>
-        <p><FaMapMarkerAlt /> {local}</p>
+
+        <p>
+          <FaCalendarAlt />
+          <span>Data: {data}</span>
+        </p>
+
+        <p>
+          <FaMapMarkerAlt />
+          <span>{local}</span>
+        </p>
       </div>
+
+      {/* IMAGEM À DIREITA */}
       <div className={styles.cardRight}>
-        <img src={imagem} alt={nome} />
-        <button onClick={() => navigate("/quadra")}>
-          Ver Detalhes
-        </button>
+        <img
+          src={imagem}
+          alt={nome}
+        />
       </div>
     </div>
   );

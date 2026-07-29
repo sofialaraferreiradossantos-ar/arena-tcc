@@ -17,6 +17,14 @@ export default function PagamentoCartao() {
             menuAberto ? styles.open : ""
           }`}
         >
+          {/* BOTÃO PARA FECHAR */}
+          <button
+            className={styles.closeMenu}
+            onClick={() => setMenuAberto(false)}
+          >
+            ×
+          </button>
+
           <a href="/home">🏠 Início</a>
           <a href="/quadra">🏐 Quadras</a>
           <a href="/agendamentos">📅 Agendamentos</a>
@@ -25,12 +33,16 @@ export default function PagamentoCartao() {
         </div>
 
         <div className={styles.topHeader}>
-          <div
-            className={styles.menuIcon}
-            onClick={() => setMenuAberto(!menuAberto)}
-          >
-            ☰
-          </div>
+
+          {/* O BOTÃO SÓ APARECE QUANDO O MENU ESTÁ FECHADO */}
+          {!menuAberto && (
+            <div
+              className={styles.menuIcon}
+              onClick={() => setMenuAberto(true)}
+            >
+              ☰
+            </div>
+          )}
 
           <div className={styles.logoArea}>
             <h2>
@@ -59,6 +71,7 @@ export default function PagamentoCartao() {
           <div className={styles.formPagamento}>
 
             <label>Número do cartão</label>
+
             <input
               type="text"
               placeholder="0000 0000 0000 0000"
@@ -66,6 +79,7 @@ export default function PagamentoCartao() {
             />
 
             <label>Nome impresso no cartão</label>
+
             <input
               type="text"
               placeholder="Como aparece no cartão"
@@ -73,8 +87,10 @@ export default function PagamentoCartao() {
             />
 
             <div className={styles.rowPagamento}>
+
               <div>
                 <label>Validade</label>
+
                 <input
                   type="text"
                   placeholder="MM/AA"
@@ -84,17 +100,21 @@ export default function PagamentoCartao() {
 
               <div>
                 <label>CVV</label>
+
                 <input
                   type="text"
                   placeholder="000"
                   className={styles.loginInput}
                 />
               </div>
+
             </div>
 
             <div className={styles.rowPagamento}>
+
               <div>
                 <label>Função</label>
+
                 <input
                   type="text"
                   placeholder="Débito/Crédito"
@@ -104,15 +124,18 @@ export default function PagamentoCartao() {
 
               <div>
                 <label>Bandeira</label>
+
                 <input
                   type="text"
                   placeholder="💳"
                   className={styles.loginInput}
                 />
               </div>
+
             </div>
 
             <label>Parcelas</label>
+
             <input
               type="text"
               placeholder="1x de R$100,00 (sem juros)"
@@ -122,16 +145,22 @@ export default function PagamentoCartao() {
           </div>
 
           <div className={styles.resumoPagamento}>
-            <h3>Resumo do Agendamento</h3>
+
+            <h3>
+              Resumo do Agendamento
+            </h3>
 
             <p>📍 Quadra 1</p>
             <p>📅 17/02/2026</p>
             <p>🕐 11:00 - 12:00</p>
 
-            <button className={styles.confirmarPagamento}
-            onClick={() => navigate("/home")}>
+            <button
+              className={styles.confirmarPagamento}
+              onClick={() => navigate("/home")}
+            >
               Confirmar pagamento
             </button>
+
           </div>
 
         </div>

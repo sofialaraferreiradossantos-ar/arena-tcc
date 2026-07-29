@@ -1,22 +1,38 @@
+/* PÁGINA */
+
 .detailsContainer {
   min-height: 100vh;
+
   background: #000;
+
   color: white;
+
   padding: 30px 60px;
+
+  box-sizing: border-box;
 }
 
-/* HEADER */
+
+/* LOGO */
 
 .logoDetails {
   width: 120px;
+
   display: block;
+
   margin: 0 auto;
 }
 
+
+/* TÍTULO */
+
 .titleDetails {
   text-align: center;
+
   margin-top: 20px;
+
   font-size: 38px;
+
   font-weight: bold;
 }
 
@@ -24,299 +40,471 @@
   color: #ff8800;
 }
 
+
 /* CONTEÚDO */
 
 .detailsContent {
   display: flex;
+
   justify-content: center;
+
   align-items: flex-start;
+
   gap: 35px;
+
   margin-top: 40px;
+
   flex-wrap: wrap;
 }
+
 
 /* GALERIA */
 
 .galleryBox {
   width: 650px;
+
   background: #2a2a2a;
-  border: 1px solid #ff8800;
+
+  border:
+    1px solid #ff8800;
+
   border-radius: 24px;
+
   padding: 20px;
+
+  box-sizing: border-box;
 }
 
 .mainImage {
   width: 100%;
+
   height: 420px;
+
   object-fit: cover;
+
   border-radius: 18px;
 }
 
 .thumbContainer {
   display: flex;
+
   gap: 15px;
+
   margin-top: 15px;
 }
 
 .thumb {
   width: 160px;
+
   height: 90px;
+
   object-fit: cover;
+
   border-radius: 10px;
+
   cursor: pointer;
 
-  border: 2px solid transparent;
+  border:
+    2px solid transparent;
 
   transition: 0.3s;
 }
 
 .activeThumb {
-  border: 2px solid #ff8800;
+  border:
+    2px solid #ff8800;
 }
 
-/* CARD DIREITA */
+
+/* INFORMAÇÕES */
 
 .infoBox {
   width: 450px;
 
   background: #2a2a2a;
 
-  border: 1px solid #ff8800;
+  border:
+    1px solid #ff8800;
 
   border-radius: 24px;
 
   padding: 35px;
+
+  box-sizing: border-box;
 }
 
 .infoBox h2 {
   text-align: center;
+
   color: white;
+
   font-size: 28px;
+
   margin-bottom: 30px;
 }
 
 .infoBox h3 {
   color: #ff8800;
+
   font-size: 20px;
+
   margin-bottom: 15px;
 }
 
 .infoBox p {
   color: #ddd;
+
   font-size: 18px;
+
   line-height: 1.6;
 }
 
 .horario {
   margin-top: 40px;
+
   font-size: 18px;
+
   color: white;
 }
 
-/* ==========================
-   MENU ESTILO HOME
-========================== */
+
+/* FUNDO AO ABRIR MENU */
+
+.menuOverlay {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0, 0, 0, 0.65);
+
+  z-index: 998;
+}
+
+
+/* MENU */
 
 .sidebarMenu {
   position: fixed;
-  top: 0;
-  left: -230px;
 
-  width: 230px;
+  top: 0;
+
+  left: -250px;
+
+  width: 250px;
+
   height: 100vh;
 
-  background: #000;
-  border-right: 1px solid #333;
+  background: #101113;
 
-  padding: 20px;
+  border-right:
+    1px solid #282828;
+
+  padding: 24px;
 
   display: flex;
+
   flex-direction: column;
 
-  z-index: 1000;
+  box-sizing: border-box;
 
-  transition: left 0.35s ease;
+  z-index: 999;
+
+  transition:
+    left 0.35s ease;
 }
+
+
+/* MENU ABERTO */
 
 .open {
   left: 0;
 }
 
+
+/* LOGO DO MENU */
+
 .sidebarMenu img {
-  width: 95px;
-  height: 95px;
+  width: 105px;
+
+  height: 85px;
 
   object-fit: contain;
 
-  margin: 35px auto 50px auto;
-
   display: block;
+
+  margin:
+    0 auto 25px;
 }
+
+
+/* LINKS */
 
 .sidebarMenu a {
   width: 100%;
 
-  color: white;
-  text-decoration: none;
-
-  font-size: 16px;
-  font-weight: 600;
-
-  padding: 10px 12px;
-
-  border-radius: 10px;
+  min-height: 43px;
 
   display: flex;
+
   align-items: center;
 
-  gap: 12px;
+  gap: 13px;
 
-  margin-bottom: 22px;
+  padding: 0 15px;
 
-  transition: all 0.3s ease;
+  color: #f1f1f1;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  transition: 0.25s;
 }
+
+
+/* ESPAÇAMENTO */
+
+.sidebarMenu a + a {
+  margin-top: 8px;
+}
+
+
+/* LINK ATIVO */
+
+.active {
+  background: #ff8800;
+
+  color:
+    #111 !important;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 4px 12px
+    rgba(
+      255,
+      136,
+      0,
+      0.2
+    );
+}
+
+
+/* HOVER */
 
 .sidebarMenu a:hover {
-  background: rgba(255, 136, 0, 0.15);
-  color: #ff8800;
-  transform: translateX(5px);
+  background:
+    rgba(
+      255,
+      136,
+      0,
+      0.14
+    );
+
+  color: #ff9200;
 }
 
-.sidebarMenu a:last-child {
-  margin-top: auto;
+
+/* ATIVO */
+
+.sidebarMenu a.active:hover {
+  background: #ff8800;
+
+  color:
+    #111 !important;
 }
+
+
+/* ÍCONES */
+
+.menuEmoji {
+  width: 14px;
+
+  display:
+    inline-flex;
+
+  justify-content:
+    center;
+
+  font-size: 14px;
+}
+
+
+/* SAIR */
+
+.sair {
+  margin-top:
+    20px !important;
+}
+
+
+/* FECHAR MENU */
+
+.closeMenu {
+  position: absolute;
+
+  top: 12px;
+
+  right: 12px;
+
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: transparent;
+
+  color: #ff8800;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 19px;
+
+  cursor: pointer;
+}
+
+.closeMenu:hover {
+  background:
+    rgba(
+      255,
+      136,
+      0,
+      0.14
+    );
+}
+
+
+/* ABRIR MENU */
 
 .menuIcon {
   position: fixed;
+
   top: 20px;
+
   left: 20px;
 
+  width: 45px;
+
+  height: 45px;
+
+  padding: 10px;
+
+  background: #101113;
+
   color: #ff8800;
-  font-size: 34px;
+
+  border:
+    1px solid #ff8800;
+
+  border-radius: 10px;
+
+  box-sizing:
+    border-box;
 
   cursor: pointer;
 
   z-index: 1001;
 
-  transition: all 0.35s ease;
+  transition: 0.2s;
 }
 
 .menuIcon:hover {
-  transform: scale(1.1);
-}
-
-.menuIconOpen {
-  left: 190px;
-}
-
-/* SUCESSO */
-
-.successContainer {
-  min-height: 100vh;
-  background: #000;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.successCard {
-  width: 550px;
-
-  background: #2a2a2a;
-
-  border: 1px solid #ff8800;
-
-  border-radius: 24px;
-
-  padding: 40px;
-
-  text-align: center;
-
-  color: white;
-}
-
-.checkIcon {
-  width: 80px;
-  height: 80px;
-
-  background: green;
-
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: 0 auto 20px;
-
-  font-size: 40px;
-}
-
-.successCard h1 {
-  margin-bottom: 15px;
-}
-
-.successCard p {
-  color: #ccc;
-}
-
-.resumeBox {
-  background: #1a1a1a;
-
-  border: 1px solid #ff8800;
-
-  border-radius: 16px;
-
-  padding: 25px;
-
-  margin-top: 25px;
-}
-
-.resumeBox h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.resumeBox img {
-  width: 100%;
-  max-height: 220px;
-  object-fit: cover;
-
-  border-radius: 12px;
-
-  margin-bottom: 15px;
-}
-
-.resumeInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  color: white;
-}
-
-.viewButton {
-  width: 100%;
-
-  margin-top: 25px;
-
-  padding: 16px;
-
-  border: none;
-
-  border-radius: 18px;
-
   background: #ff8800;
 
-  color: white;
+  color: #111;
 
-  font-size: 18px;
-  font-weight: bold;
-
-  cursor: pointer;
+  transform:
+    scale(1.05);
 }
 
-.viewButton:hover {
-  background: #e07700;
+
+/* CELULAR */
+
+@media (
+  max-width: 800px
+) {
+
+  .detailsContainer {
+    padding:
+      80px 15px 30px;
+  }
+
+  .logoDetails {
+    width: 100px;
+  }
+
+  .titleDetails {
+    font-size: 29px;
+  }
+
+  .detailsContent {
+    margin-top: 25px;
+
+    gap: 20px;
+  }
+
+  .galleryBox {
+    width: 100%;
+
+    padding: 12px;
+  }
+
+  .mainImage {
+    height: 260px;
+  }
+
+  .thumbContainer {
+    gap: 8px;
+  }
+
+  .thumb {
+    width: calc(
+      33.33% - 6px
+    );
+
+    height: 70px;
+  }
+
+  .infoBox {
+    width: 100%;
+
+    padding: 25px;
+  }
+
+}
+
+.closeMenu {
+  position: absolute;
+
+  top: 15px;
+  right: 15px;
+
+  width: 35px;
+  height: 35px;
+
+  background: transparent;
+
+  color: #ff8800;
+
+  border: 1px solid #ff8800;
+
+  border-radius: 8px;
+
+  font-size: 24px;
+
+  cursor: pointer;
 }
