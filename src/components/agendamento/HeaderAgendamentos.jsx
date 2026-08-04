@@ -40,7 +40,7 @@ function HeaderAgendamentos() {
   />
 
   <Link to="/home">🏠 Início</Link>
-  <Link to="/quadras">⚽ Quadras</Link>
+  <Link to="/quadra">⚽ Quadras</Link>
   <Link to="/agendamentos">📅 Agendamentos</Link>
   <Link to="/torneios">🏆 Torneios</Link>
   <Link to="/pagamento">💳 Pagamento</Link>

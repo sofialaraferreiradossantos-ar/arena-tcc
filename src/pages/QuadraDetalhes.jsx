@@ -88,7 +88,7 @@ function QuadraDetalhes() {
         </Link>
 
         <Link
-          to="/quadras"
+          to="/quadra"
           onClick={fecharMenu}
           className={
             location.pathname === "/quadras" ||

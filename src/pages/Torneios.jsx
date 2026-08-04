@@ -84,10 +84,10 @@ function Torneios() {
         </Link>
 
         <Link
-          to="/quadras"
+          to="/quadra"
           onClick={fecharMenu}
           className={
-            location.pathname === "/quadras"
+            location.pathname === "/quadra"
               ? styles.active
               : ""
           }

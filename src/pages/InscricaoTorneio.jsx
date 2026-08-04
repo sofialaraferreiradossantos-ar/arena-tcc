@@ -18,7 +18,7 @@ function InscricaoTorneio() {
       <div className={styles.sidebarMenu}>
         <img src={logo} alt="logo" />
         <a href="/home"><FaHome /> Início</a>
-        <a href="/quadras"><FaGlobe /> Quadras</a>
+        <a href="/quadra"><FaGlobe /> Quadras</a>
         <a href="/agendamentos"><FaCalendarAlt /> Agendamentos</a>
         <a href="/torneios"><FaTrophy /> Torneios</a>
         <a href="/pagamento"><FaCreditCard /> Pagamento</a>

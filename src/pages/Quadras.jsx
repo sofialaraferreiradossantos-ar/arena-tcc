@@ -4,11 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 
 import styles from "../styles/home.module.css";
 
-import Header from "../components/quadras/Header";
-import CategoryButtons from "../components/quadras/CategoryButtons";
+import Header from "../components/quadra/Header";
+import CategoryButtons from "../components/quadra/CategoryButtons";
 import SearchBar from "../components/quadras/SearchBar";
-import QuadrasSection from "../components/quadras/QuadrasSection";
-import Pagination from "../components/quadras/Pagination";
+import QuadrasSection from "../components/quadra/QuadrasSection";
+import Pagination from "../components/quadra/Pagination";
 
 import logo from "../assets/logo.jpeg";
 
@@ -127,10 +127,10 @@ function Quadras() {
         </Link>
 
         <Link
-          to="/quadras"
+          to="/quadra"
           onClick={fecharMenu}
           className={
-            location.pathname === "/quadras"
+            location.pathname === "/quadra"
               ? styles.active
               : ""
           }
@@ -237,7 +237,7 @@ function Quadras() {
     🏠 Início
   </Link>
 
-  <Link to="/quadras">
+  <Link to="/quadra">
     ⚽ Quadras
   </Link>
 
