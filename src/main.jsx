@@ -39,6 +39,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/pagamento" element={<Pagamento />} />
   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
+  
 </Routes>
     </BrowserRouter>
   </StrictMode>,
