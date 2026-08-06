@@ -12,7 +12,7 @@ function AgendamentoCard({ quadra, data, horario, onCancelar }) {
         </p>
       </div>
       <button onClick={onCancelar}>
-        Cancelar
+        Excluir
       </button>
     </div>
   );

@@ -15,6 +15,7 @@ import styles from "../styles/quadras.module.css";
 import logo from "../assets/logo.jpeg";
 import quadra from "../assets/quadra.jpeg";
 
+
 function QuadraDetalhes() {
   const imagens = [
     quadra,
@@ -25,7 +26,7 @@ function QuadraDetalhes() {
   const [
     imagemAtiva,
     setImagemAtiva,
-  ] = useState(imagens[0]);
+  ] = useState(0);
 
   const [
     menuAberto,
@@ -210,37 +211,19 @@ function QuadraDetalhes() {
             className={styles.mainImage}
           />
 
-          <div
-            className={
-              styles.thumbContainer
-            }
-          >
-
-            {imagens.map(
-              (img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Quadra ${
-                    index + 1
-                  }`}
-                  className={`${
-                    styles.thumb
-                  } ${
-                    imagemAtiva === img
-                      ? styles.activeThumb
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setImagemAtiva(
-                      img
-                    )
-                  }
-                />
-              )
-            )}
-
-          </div>
+         <div className={styles.thumbContainer}>
+  {imagens.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt={`Quadra ${index + 1}`}
+      className={`${styles.thumb} ${
+        imagemAtiva === index ? styles.activeThumb : ""
+      }`}
+      onClick={() => setImagemAtiva(index)}
+    />
+  ))}
+</div>
 
         </div>
 
