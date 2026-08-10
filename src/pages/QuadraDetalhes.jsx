@@ -206,7 +206,7 @@ function QuadraDetalhes() {
         >
 
           <img
-            src={imagemAtiva}
+            src={imagens[imagemAtiva]}
             alt="Quadra"
             className={styles.mainImage}
           />

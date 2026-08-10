@@ -83,6 +83,7 @@
   object-fit: cover;
 
   border-radius: 18px;
+  display:block
 }
 
 .thumbContainer {
