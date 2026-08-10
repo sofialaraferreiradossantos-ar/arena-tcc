@@ -1,327 +1,96 @@
-/* ================================
-   PÁGINA E HEADER
-================================ */
-.topHeader {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  padding-top: 30px;
-}
+/* =========================================================
+   BOTÕES DO CARD
+========================================================= */
 
-.logoArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.logoArea img {
-  width: 110px;
-  margin-bottom: 15px;
-}
-
-.logoArea h2 {
-  color: white;
-  font-size: 38px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.logoArea span {
-  color: #ff8800;
-}
-
-.userIcon {
-  position: absolute;
-  right: 40px;
-  top: 40px;
-  font-size: 40px;
-  color: white;
-}
-
-/* ================================
-   OVERLAY DO MENU
-================================ */
-.menuOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  z-index: 998;
-}
-
-/* ================================
-   MENU HAMBÚRGUER (BOTÃO)
-================================ */
-.menuIcon {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 45px;
-  height: 45px;
-  padding: 10px;
-  background: #101113;
-  color: #ff8800;
-  border: 2px solid #ff8800; 
-  border-radius: 10px;
-  box-sizing: border-box;
-  cursor: pointer;
-  z-index: 1001;
-  transition: all 0.3s ease;
-}
-
-.menuIcon:hover {
-  background: #ff8800;
-  color: #111;
-  transform: scale(1.05);
-}
-
-/* ================================
-   SIDEBAR (MENU LATERAL)
-================================ */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100vh;
-  background: #101113;
-  border-right: 1px solid #282828;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  z-index: 999;
-  transition: left 0.35s ease;
-}
-
-.open {
-  left: 0;
-}
-
-.sidebarLogo {
-  width: 105px;
-  height: 85px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 25px auto;
-}
-
-/* LINKS DO MENU (PADRÃO) */
-.sidebar a {
-  width: 100%;
-  padding: 16px 20px;
+.cardButtons {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
-  color: #f1f1f1;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 16px; 
-  box-sizing: border-box;
-  transition: all 0.3s ease;
+  gap: 12px;
 }
 
-.sidebar a:hover {
-  background: rgba(255, 136, 0, 0.14);
-  color: #ff9200;
-  transform: translateX(4px);
-}
 
-/* =====================================================
-FORÇA O DESTAQUE NO 3º ITEM DO MENU (AGENDAMENTOS) 
-SEM PRECISAR MEXER NO CÓDIGO HTML
-=====================================================
-*/
-.sidebar a:nth-of-type(3) {
-  background: #ff8800 !important;
-  color: #111 !important;
-  font-weight: 600 !important;
-  box-shadow: 0 4px 15px rgba(255, 136, 0, 0.25);
-}
+/* =========================================================
+   BOTÃO EXCLUIR
+========================================================= */
 
-.sidebar a:nth-of-type(3):hover {
-  transform: none;
-}
+.cancelButton {
+  width: 160px;
 
-/* BOTÃO SAIR */
-.sidebar a:last-child {
-  margin-top: auto !important;
-  margin-bottom: 0;
-  background: rgba(255, 136, 0, 0.05);
-}
+  padding: 16px;
 
-.sidebar a:last-child:hover {
-  background: rgba(255, 136, 0, 0.15);
-}
-
-/* BOTÃO FECHAR MENU */
-.closeMenu {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  color: #ff8800;
-  border: 1px solid #ff8800;
-  border-radius: 8px;
-  font-size: 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.closeMenu:hover {
-  background: rgba(255, 136, 0, 0.14);
-  transform: scale(1.05);
-}
-
-/* ================================
-   TABS (ABAS)
-================================ */
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 35px;
-}
-
-.tabs button {
-  width: 240px;
-  padding: 18px;
-  border: 1px solid #ff8800;
-  background: #2a2a2a;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.tabs button:first-child {
-  border-radius: 20px 0 0 20px;
-}
-
-.tabs button:last-child {
-  border-radius: 0 20px 20px 0;
-}
-
-.tabs button:hover {
-  background: rgba(255, 136, 0, 0.14);
-  color: #ff9200;
-}
-
-.activeTab {
-  background: #ff8800 !important;
-  color: #111 !important;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(255, 136, 0, 0.2);
-}
-
-/* ================================
-   CARD AGENDAMENTO
-================================ */
-.card {
-  width: 100%;
-  max-width: 1000px;
-  background: #2a2a2a;
-  border: 1px solid #ff8800;
-  border-radius: 24px;
-  padding: 35px;
-  margin: 0 auto 25px auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: 0 6px 16px rgba(255, 136, 0, 0.1);
-  transform: translateY(-2px);
-}
-
-.card h3 {
-  color: #ff8800;
-  font-size: 20px;
-  margin-bottom: 12px;
-  margin-top: 0;
-}
-
-.card p {
-  color: #ddd;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-}
-
-.card button {
-  width: 240px;
-  padding: 18px;
   border: none;
   border-radius: 12px;
+
   background: #ff8800;
   color: #111;
+
   font-size: 18px;
   font-weight: 600;
+
   cursor: pointer;
+
   transition: all 0.3s ease;
 }
 
-.card button:hover {
+
+.cancelButton:hover {
   background: #ff9200;
+
   box-shadow: 0 4px 12px rgba(255, 136, 0, 0.25);
+
   transform: translateY(-2px);
 }
 
-/* ================================
-   CELULAR (RESPONSIVO)
-================================ */
+
+/* =========================================================
+   BOTÃO VER SUCESSO
+========================================================= */
+
+.successButton {
+  width: 160px;
+
+  padding: 16px;
+
+  border: 1px solid #ff8800;
+  border-radius: 12px;
+
+  background: transparent;
+  color: #ff8800;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+
+.successButton:hover {
+  background: #ff8800;
+  color: #111;
+
+  box-shadow: 0 4px 12px rgba(255, 136, 0, 0.25);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
 @media (max-width: 800px) {
-  .topHeader {
-    padding-top: 80px;
-  }
 
-  .logoArea h2 {
-    font-size: 29px;
-  }
-
-  .logoArea img {
-    width: 100px;
-  }
-
-  .userIcon {
-    top: 25px;
-    right: 25px;
-    font-size: 35px;
-  }
-
-  .tabs {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .tabs button {
+  .cardButtons {
     width: 100%;
-    max-width: 320px;
-    border-radius: 12px !important;
-  }
 
-  .card {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 25px;
-    gap: 20px;
   }
 
-  .card button {
+  .cancelButton,
+  .successButton {
     width: 100%;
   }
+
 }
