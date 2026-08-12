@@ -1,50 +1,107 @@
 
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import {
+  FaRegCalendarAlt,
+  FaRegClock,
+  FaMapMarkerAlt,
+  FaTrashAlt,
+} from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
 
-function AgendamentoCard({ quadra, data, horario, onCancelar }) {
-  const navigate = useNavigate();
-
+function AgendamentoCard({
+  quadra,
+  data,
+  horario,
+  onCancelar,
+}) {
   return (
-    <div className={styles.card}>
+    <article className={styles.card}>
 
-      <div>
-        <h3>
-          {quadra}
-        </h3>
+      {/* CABEÇALHO DO CARD */}
 
-        <p>
-          <FaRegCalendarAlt />
+      <div className={styles.cardHeader}>
 
-          Data: {data} | Hora: {horario}
-        </p>
+        <div className={styles.cardIcon}>
+          <FaMapMarkerAlt />
+        </div>
+
+        <div>
+          <span className={styles.cardLabel}>
+            QUADRA
+          </span>
+
+          <h2 className={styles.cardTitle}>
+            {quadra}
+          </h2>
+        </div>
+
       </div>
 
 
-      <div className={styles.cardButtons}>
+      {/* INFORMAÇÕES */}
+
+      <div className={styles.cardInfo}>
+
+        <div className={styles.infoItem}>
+
+          <div className={styles.infoIcon}>
+            <FaRegCalendarAlt />
+          </div>
+
+          <div>
+            <span>
+              Data
+            </span>
+
+            <strong>
+              {data}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div className={styles.infoItem}>
+
+          <div className={styles.infoIcon}>
+            <FaRegClock />
+          </div>
+
+          <div>
+            <span>
+              Horário
+            </span>
+
+            <strong>
+              {horario}
+            </strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* BOTÃO */}
+
+      <div className={styles.cardFooter}>
 
         <button
+          type="button"
           className={styles.cancelButton}
           onClick={onCancelar}
         >
-          Excluir
-        </button>
+          <FaTrashAlt />
 
-
-        <button
-          className={styles.successButton}
-          onClick={() => navigate("/agendamento-sucesso")}
-        >
-          Ver sucesso
+          <span>
+            Cancelar agendamento
+          </span>
         </button>
 
       </div>
 
-    </div>
+    </article>
   );
 }
 
 export default AgendamentoCard;
-
