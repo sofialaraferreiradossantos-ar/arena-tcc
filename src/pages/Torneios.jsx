@@ -13,6 +13,11 @@ const torneios = [
     data: "25/05 a 25/06",
     local: "Beach Tennis Arena 1",
     imagem: quadra1,
+    horario: "08:00 às 18:00",
+    valor: "R$ 100,00",
+    premiacao: "R$ 1.000,00",
+    participantes: "Até 16 duplas",
+    descricao: "Torneio de Futevôlei Pro destinado a participantes interessados em competir e participar de uma experiência esportiva.",
   },
   {
     id: 2,
@@ -20,6 +25,12 @@ const torneios = [
     data: "14/06 a 24/06",
     local: "Beach Tennis Arena 1",
     imagem: quadra1,
+     imagem: quadra1,
+    horario: "08:00 às 18:00",
+    valor: "R$ 100,00",
+    premiacao: "R$ 1.000,00",
+    participantes: "Até 16 duplas",
+    descricao:"Torneio de Futevôlei Pro destinado a participantes interessados em competir e participar de uma experiência esportiva.",
   },
   {
     id: 3,
@@ -27,6 +38,11 @@ const torneios = [
     data: "30/05 a 30/06",
     local: "Beach Tennis Arena 1",
     imagem: quadra1,
+    horario: "08:00 às 18:00",
+    valor: "R$ 100,00",
+    premiacao: "R$ 1.000,00",
+    participantes: "Até 16 duplas",
+    descricao:"Torneio de Futevôlei Pro destinado a participantes interessados em competir e participar de uma experiência esportiva.",
   },
 ];
 
@@ -168,6 +184,7 @@ function Torneios() {
             {torneios.map((torneio) => (
               <TorneioCard
                 key={torneio.id}
+                id={torneio.id}
                 nome={torneio.nome}
                 data={torneio.data}
                 local={torneio.local}
