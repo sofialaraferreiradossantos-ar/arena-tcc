@@ -1,51 +1,201 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaRegUserCircle } from "react-icons/fa";
+
+import {
+  FaBars,
+  FaTimes,
+  FaRegUserCircle,
+  FaHome,
+  FaFutbol,
+  FaCalendarAlt,
+  FaTrophy,
+  FaCreditCard,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
 import styles from "../../styles/agendamentos.module.css";
 import logo from "../../assets/logo.jpeg";
 
 function HeaderAgendamentos() {
   const [menuAberto, setMenuAberto] = useState(false);
 
+  function fecharMenu() {
+    setMenuAberto(false);
+  }
+
   return (
     <>
-      <FaBars
-        className={`${styles.menuIcon} ${
-          menuAberto ? styles.menuIconOpen : ""
-        }`}
-        onClick={() => setMenuAberto(!menuAberto)}
-      />
+      {/* =================================================
+          CABEÇALHO
+      ================================================= */}
 
-      <div className={styles.topHeader}>
+      <header className={styles.topHeader}>
+
+        <button
+          type="button"
+          className={styles.menuButton}
+          onClick={() => setMenuAberto(!menuAberto)}
+          aria-label={
+            menuAberto
+              ? "Fechar menu"
+              : "Abrir menu"
+          }
+        >
+          {menuAberto ? <FaTimes /> : <FaBars />}
+        </button>
+
+
         <div className={styles.logoArea}>
-          <img src={logo} alt="logo" />
+
+          <img
+            src={logo}
+            alt="Arena Beach"
+          />
 
           <h2>
             Meus <span>Agendamentos</span>
           </h2>
+
         </div>
 
-        <FaRegUserCircle className={styles.userIcon} />
-      </div>
 
-     <div
-  className={`${styles.sidebar} ${
-    menuAberto ? styles.open : ""
-  }`}
->
-  <img
-    src={logo}
-    alt="logo"
-    className={styles.sidebarLogo}
-  />
+        <FaRegUserCircle
+          className={styles.userIcon}
+        />
 
-  <Link to="/home">🏠 Início</Link>
-  <Link to="/quadra">⚽ Quadras</Link>
-  <Link to="/agendamentos">📅 Agendamentos</Link>
-  <Link to="/torneios">🏆 Torneios</Link>
-  <Link to="/pagamento">💳 Pagamento</Link>
-  <Link to="/cadastro">🚪 Sair</Link>
-</div>
+      </header>
+
+
+      {/* =================================================
+          FUNDO ESCURO
+      ================================================= */}
+
+      {menuAberto && (
+        <div
+          className={styles.sidebarOverlay}
+          onClick={fecharMenu}
+        />
+      )}
+
+
+      {/* =================================================
+          MENU LATERAL
+      ================================================= */}
+
+      <aside
+        className={`${styles.sidebar} ${
+          menuAberto ? styles.open : ""
+        }`}
+      >
+
+        {/* LOGO */}
+
+        <div className={styles.sidebarBrand}>
+
+          <img
+            src={logo}
+            alt="Arena Beach"
+            className={styles.sidebarLogo}
+          />
+
+          <div className={styles.brandText}>
+
+            <strong>
+              ARENA
+            </strong>
+
+            <strong>
+              BEACH
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        {/* BOTÃO FECHAR */}
+
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={fecharMenu}
+          aria-label="Fechar menu"
+        >
+          <FaTimes />
+        </button>
+
+
+        {/* =================================================
+            NAVEGAÇÃO
+        ================================================= */}
+
+        <nav className={styles.sidebarNav}>
+
+          <Link
+            to="/home"
+            onClick={fecharMenu}
+          >
+            <FaHome />
+            <span>Início</span>
+          </Link>
+
+
+          <Link
+            to="/quadra"
+            onClick={fecharMenu}
+          >
+            <FaFutbol />
+            <span>Quadras</span>
+          </Link>
+
+
+          <Link
+            to="/agendamentos"
+            className={styles.active}
+            onClick={fecharMenu}
+          >
+            <FaCalendarAlt />
+            <span>Agendamentos</span>
+          </Link>
+
+
+          <Link
+            to="/torneios"
+            onClick={fecharMenu}
+          >
+            <FaTrophy />
+            <span>Torneios</span>
+          </Link>
+
+
+          <Link
+            to="/pagamento"
+            onClick={fecharMenu}
+          >
+            <FaCreditCard />
+            <span>Pagamento</span>
+          </Link>
+
+        </nav>
+
+
+        {/* =================================================
+            SAIR
+        ================================================= */}
+
+        <div className={styles.sidebarBottom}>
+
+          <Link
+            to="/cadastro"
+            onClick={fecharMenu}
+          >
+            <FaSignOutAlt />
+            <span>Sair</span>
+          </Link>
+
+        </div>
+
+      </aside>
     </>
   );
 }

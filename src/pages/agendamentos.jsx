@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import styles from "../styles/agendamentos.module.css";
@@ -5,7 +6,6 @@ import styles from "../styles/agendamentos.module.css";
 import HeaderAgendamentos from "../components/agendamento/HeaderAgendamentos";
 import AgendamentoTabs from "../components/agendamento/AgendamentoTabs";
 import AgendamentoCard from "../components/agendamento/AgendamentoCard";
-
 
 const todosAgendamentos = [
   {
@@ -31,105 +31,98 @@ const todosAgendamentos = [
   },
 ];
 
-
 function Agendamentos() {
   const [tabAtiva, setTabAtiva] = useState("anterior");
 
-  const [agendamentos, setAgendamentos] = useState(
-    todosAgendamentos
-  );
-
+  const [agendamentos, setAgendamentos] =
+    useState(todosAgendamentos);
 
   const filtrados = agendamentos.filter(
-    (a) => a.tipo === tabAtiva
+    (agendamento) => agendamento.tipo === tabAtiva
   );
 
-
   function cancelar(id) {
-    setAgendamentos(
-      agendamentos.filter((a) => a.id !== id)
+    setAgendamentos((agendamentosAtuais) =>
+      agendamentosAtuais.filter(
+        (agendamento) => agendamento.id !== id
+      )
     );
   }
 
-
   return (
-    
     <div className={styles.mainContent}>
-
-      {/* =========================================
-          CABEÇALHO
-      ========================================= */}
 
       <HeaderAgendamentos />
 
+      <main className={styles.content}>
 
-      {/* =========================================
-          TÍTULO
-      ========================================= */}
+        {/* TÍTULO */}
 
-      <section className={styles.pageTitle}>
+        <section className={styles.pageTitle}>
+          <div className={styles.titleLine}></div>
 
-        <h1>
-          Meus <span>Agendamentos</span>
-        </h1>
-
-        <p>
-          Confira suas reservas e horários.
-        </p>
-
-      </section>
-
-
-      {/* =========================================
-          ABAS
-      ========================================= */}
-
-      <AgendamentoTabs
-        tabAtiva={tabAtiva}
-        onTabChange={setTabAtiva}
-      />
-
-
-      {/* =========================================
-          CARDS
-      ========================================= */}
-
-      <div className={styles.cardsArea}>
-
-        {filtrados.length === 0 && (
-          <div className={styles.empty}>
-            <div className={styles.emptyIcon}>
-              📅
-            </div>
-
-            <h2>
-              Nenhum agendamento encontrado
-            </h2>
+          <div>
+            <h1>
+              Meus <span>Agendamentos</span>
+            </h1>
 
             <p>
-              Você não possui agendamentos nesta categoria.
+              Confira suas reservas e horários.
             </p>
           </div>
-        )}
-
-        
+        </section>
 
 
-        {filtrados.map((a) => (
-          <AgendamentoCard
-            key={a.id}
-            quadra={a.quadra}
-            data={a.data}
-            horario={a.horario}
-            onCancelar={() => cancelar(a.id)}
+        {/* ABAS */}
+
+        <section className={styles.tabsSection}>
+          <AgendamentoTabs
+            tabAtiva={tabAtiva}
+            onTabChange={setTabAtiva}
           />
-        ))}
+        </section>
 
-      </div>
+
+        {/* CARDS */}
+
+        <section className={styles.cardsArea}>
+
+          {filtrados.length === 0 && (
+            <div className={styles.empty}>
+
+              <div className={styles.emptyIcon}>
+                📅
+              </div>
+
+              <h2>
+                Nenhum agendamento encontrado
+              </h2>
+
+              <p>
+                Você não possui agendamentos nesta categoria.
+              </p>
+
+            </div>
+          )}
+
+          {filtrados.map((agendamento) => (
+            <AgendamentoCard
+              key={agendamento.id}
+              quadra={agendamento.quadra}
+              data={agendamento.data}
+              horario={agendamento.horario}
+              onCancelar={() =>
+                cancelar(agendamento.id)
+              }
+            />
+          ))}
+
+        </section>
+
+      </main>
 
     </div>
   );
 }
-
 
 export default Agendamentos;
