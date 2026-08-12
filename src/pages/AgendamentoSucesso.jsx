@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -31,9 +30,9 @@ function AgendamentoSucesso() {
   return (
     <div className={styles.page}>
 
-      {/* ================================
+      {/* =========================================
           BOTÃO MENU
-      ================================= */}
+      ========================================= */}
 
       <button
         className={styles.menuIcon}
@@ -44,9 +43,9 @@ function AgendamentoSucesso() {
       </button>
 
 
-      {/* ================================
+      {/* =========================================
           OVERLAY
-      ================================= */}
+      ========================================= */}
 
       {menuOpen && (
         <div
@@ -56,9 +55,9 @@ function AgendamentoSucesso() {
       )}
 
 
-      {/* ================================
+      {/* =========================================
           MENU LATERAL
-      ================================= */}
+      ========================================= */}
 
       <aside
         className={`${styles.sidebar} ${
@@ -74,6 +73,8 @@ function AgendamentoSucesso() {
           ×
         </button>
 
+
+        {/* LOGO */}
 
         <img
           className={styles.sidebarLogo}
@@ -154,9 +155,9 @@ function AgendamentoSucesso() {
       </aside>
 
 
-      {/* ================================
+      {/* =========================================
           HEADER
-      ================================= */}
+      ========================================= */}
 
       <header className={styles.topHeader}>
 
@@ -166,10 +167,6 @@ function AgendamentoSucesso() {
             src="/logo.png"
             alt="Arena Beach"
           />
-
-          <h2>
-            ARENA <span>BEACH</span>
-          </h2>
 
         </div>
 
@@ -187,18 +184,23 @@ function AgendamentoSucesso() {
       </header>
 
 
-      {/* ================================
+      {/* =========================================
           TELA DE SUCESSO
-      ================================= */}
+      ========================================= */}
 
       <main className={styles.successContainer}>
 
         <div className={styles.successCard}>
 
+
+          {/* ÍCONE DE SUCESSO */}
+
           <div className={styles.checkIcon}>
             ✓
           </div>
 
+
+          {/* TÍTULO */}
 
           <h1>
             Agendamento realizado com sucesso!
@@ -210,7 +212,9 @@ function AgendamentoSucesso() {
           </p>
 
 
-          {/* RESUMO */}
+          {/* =====================================
+              RESUMO
+          ===================================== */}
 
           <div className={styles.resumeBox}>
 
@@ -221,16 +225,22 @@ function AgendamentoSucesso() {
 
             <div className={styles.resumeContent}>
 
+
+              {/* IMAGEM DA QUADRA */}
+
               <img
                 src={quadra}
                 alt="Quadra Beach Tennis"
               />
 
 
+              {/* INFORMAÇÕES */}
+
               <div className={styles.resumeInfo}>
 
                 <p>
                   <strong>Quadra:</strong>
+
                   <span>
                     Quadra Beach Tennis
                   </span>
@@ -239,6 +249,7 @@ function AgendamentoSucesso() {
 
                 <p>
                   <strong>Data:</strong>
+
                   <span>
                     17/02/2026
                   </span>
@@ -247,6 +258,7 @@ function AgendamentoSucesso() {
 
                 <p>
                   <strong>Horário:</strong>
+
                   <span>
                     19:00 às 20:00
                   </span>
@@ -259,7 +271,9 @@ function AgendamentoSucesso() {
           </div>
 
 
-          {/* BOTÃO */}
+          {/* =====================================
+              BOTÃO
+          ===================================== */}
 
           <button
             className={styles.viewButton}
@@ -277,4 +291,3 @@ function AgendamentoSucesso() {
 }
 
 export default AgendamentoSucesso;
-

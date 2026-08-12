@@ -35,7 +35,7 @@ function AgendamentoCard({ quadra, data, horario, onCancelar }) {
 
         <button
           className={styles.successButton}
-          onClick={() => navigate("/agendamento-sucesso")}
+          onClick={() => navigate("/sucesso")}
         >
           Ver sucesso
         </button>
