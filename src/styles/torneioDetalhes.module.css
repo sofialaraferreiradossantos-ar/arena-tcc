@@ -1,0 +1,237 @@
+.pageWrapper {
+  min-height: 100vh;
+
+  background: #000;
+
+  color: white;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+
+  justify-content: center;
+
+  padding: 35px 20px;
+
+  box-sizing: border-box;
+}
+
+
+.container {
+  width: 100%;
+
+  max-width: 700px;
+
+  background: #1d1d1f;
+
+  border: 1px solid #ff8800;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+}
+
+
+/* VOLTAR */
+
+.voltar {
+  display: inline-block;
+
+  margin-bottom: 20px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 16px;
+}
+
+.voltar:hover {
+  color: #ff8800;
+}
+
+
+/* IMAGEM */
+
+.imagem {
+  width: 100%;
+
+  height: 250px;
+
+  object-fit: cover;
+
+  display: block;
+
+  border-radius: 15px;
+
+  border: 1px solid #ff8800;
+}
+
+
+/* TÍTULO */
+
+.container h1 {
+  text-align: center;
+
+  color: white;
+
+  font-size: 30px;
+
+  margin: 25px 0;
+}
+
+
+/* INFORMAÇÕES */
+
+.informacoes {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 15px;
+}
+
+
+.informacoes div {
+  background: #202020;
+
+  border-radius: 12px;
+
+  padding: 15px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.informacoes svg {
+  color: #ff8800;
+
+  font-size: 22px;
+
+  flex-shrink: 0;
+}
+
+
+.informacoes span {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  color: #e5e5e5;
+}
+
+
+.informacoes strong {
+  color: #ff8800;
+}
+
+
+/* DESCRIÇÃO */
+
+.descricao {
+  margin-top: 25px;
+
+  background: #202020;
+
+  padding: 20px;
+
+  border-radius: 12px;
+}
+
+
+.descricao h2 {
+  color: #ff8800;
+
+  margin-top: 0;
+}
+
+
+.descricao p {
+  color: #e5e5e5;
+
+  line-height: 1.6;
+}
+
+
+/* BOTÃO INSCREVER */
+
+.inscrever {
+  display: block;
+
+  width: 230px;
+
+  margin: 30px auto 0;
+
+  padding: 13px 20px;
+
+  background: #ff8800;
+
+  color: #111;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  transition: 0.25s;
+}
+
+
+.inscrever:hover {
+  background: #ff9d2e;
+
+  transform: translateY(-2px);
+}
+
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+
+  .pageWrapper {
+    padding: 20px 12px;
+  }
+
+
+  .container {
+    padding: 20px;
+  }
+
+
+  .container h1 {
+    font-size: 24px;
+  }
+
+
+  .informacoes {
+    grid-template-columns: 1fr;
+  }
+
+
+  .imagem {
+    height: 200px;
+  }
+
+}
+.detalhesButton:hover {
+  background: #ff9d2e;
+
+  color: #111111;
+
+  transform: translateY(-2px);
+}
