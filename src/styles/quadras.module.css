@@ -1,462 +1,800 @@
-/* PÁGINA */
+/* =========================================================
+   CONFIGURAÇÃO GERAL
+========================================================= */
 
-.detailsContainer {
+:global(*) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global(html) {
+  background: #000;
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  min-width: 320px;
   min-height: 100vh;
 
   background: #000;
 
-  color: white;
+  color: #fff;
 
-  padding: 30px 60px;
-
-  box-sizing: border-box;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
 
-/* LOGO */
+/* =========================================================
+   PÁGINA
+========================================================= */
+
+.detailsContainer {
+  min-height: 100vh;
+
+  padding: 0 50px 70px;
+
+  background: #000;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
 
 .logoDetails {
-  width: 120px;
+  width: 100px;
+  height: 100px;
 
   display: block;
 
-  margin: 0 auto;
+  margin: 30px auto 0;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 0 12px
+      rgba(255, 136, 0, 0.12)
+    );
+
+  transition: 0.25s ease;
+}
+
+.logoDetails:hover {
+  transform: scale(1.03);
 }
 
 
-/* TÍTULO */
+/* =========================================================
+   TÍTULO
+========================================================= */
 
 .titleDetails {
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 18px auto 0;
+
   text-align: center;
 
-  margin-top: 20px;
+  color: #fff;
 
-  font-size: 38px;
+  font-size: 34px;
 
-  font-weight: bold;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.5px;
 }
 
 .titleDetails span {
   color: #ff8800;
 }
 
+.titleDetails::after {
+  content: "";
 
-/* CONTEÚDO */
+  display: block;
 
-.detailsContent {
-  display: flex;
+  width: 55px;
+  height: 3px;
 
-  justify-content: center;
-
-  align-items: flex-start;
-
-  gap: 35px;
-
-  margin-top: 40px;
-
-  flex-wrap: wrap;
-}
-
-
-/* GALERIA */
-
-.galleryBox {
-  width: 650px;
-
-  background: #2a2a2a;
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 24px;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-}
-
-.mainImage {
-  width: 100%;
-
-  height: 420px;
-
-  object-fit: cover;
-
-  border-radius: 18px;
-  display:block
-}
-
-.thumbContainer {
-  display: flex;
-
-  gap: 15px;
-
-  margin-top: 15px;
-}
-
-.thumb {
-  width: 160px;
-
-  height: 90px;
-
-  object-fit: cover;
+  margin: 13px auto 0;
 
   border-radius: 10px;
 
+  background: #ff8800;
+
+  box-shadow:
+    0 0 10px
+    rgba(255, 136, 0, 0.18);
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.detailsContent {
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 35px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(350px, 0.8fr);
+
+  align-items: start;
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   GALERIA
+========================================================= */
+
+.galleryBox {
+  width: 100%;
+
+  padding: 14px;
+
+  overflow: hidden;
+
+  background: #151515;
+
+  border: 1px solid #303030;
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+
+  transition: 0.25s ease;
+}
+
+.galleryBox::before {
+  content: "";
+
+  display: block;
+
+  width: 100%;
+  height: 2px;
+
+  margin: -14px 0 14px;
+
+  background: #ff8800;
+}
+
+.galleryBox:hover {
+  border-color: #444;
+}
+
+
+/* =========================================================
+   IMAGEM PRINCIPAL
+========================================================= */
+
+.mainImage {
+  width: 100%;
+  height: 420px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 9px;
+
+  background: #101010;
+
+  transition: 0.3s ease;
+}
+
+
+/* =========================================================
+   MINIATURAS
+========================================================= */
+
+.thumbContainer {
+  width: 100%;
+
+  margin-top: 12px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 10px;
+}
+
+.thumb {
+  width: 100%;
+  height: 75px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border: 2px solid transparent;
+
+  border-radius: 8px;
+
+  background: #101010;
+
   cursor: pointer;
 
-  border:
-    2px solid transparent;
+  opacity: 0.65;
 
-  transition: 0.3s;
+  transition: 0.25s ease;
 }
+
+.thumb:hover {
+  opacity: 1;
+
+  border-color: #555;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MINIATURA ATIVA
+========================================================= */
 
 .activeThumb {
-  border:
-    2px solid #ff8800;
+  border: 2px solid #ff8800;
+
+  opacity: 1;
+
+  box-shadow:
+    0 0 12px
+    rgba(255, 136, 0, 0.18);
 }
 
 
-/* INFORMAÇÕES */
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
 
 .infoBox {
-  width: 450px;
+  position: relative;
 
-  background: #2a2a2a;
+  width: 100%;
 
-  border:
-    1px solid #ff8800;
+  padding: 25px;
 
-  border-radius: 24px;
+  background: #151515;
 
-  padding: 35px;
+  border: 1px solid #303030;
 
-  box-sizing: border-box;
+  border-radius: 13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+
+  overflow: hidden;
 }
+
+.infoBox::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: #ff8800;
+}
+
+
+/* =========================================================
+   TÍTULO DAS INFORMAÇÕES
+========================================================= */
 
 .infoBox h2 {
-  text-align: center;
+  margin: 0 0 25px;
 
-  color: white;
+  padding-bottom: 15px;
 
-  font-size: 28px;
+  border-bottom: 1px solid #292929;
 
-  margin-bottom: 30px;
+  color: #fff;
+
+  font-size: 21px;
+
+  font-weight: 700;
 }
+
+
+/* =========================================================
+   SUBTÍTULOS
+========================================================= */
 
 .infoBox h3 {
+  margin-bottom: 10px;
+
   color: #ff8800;
 
-  font-size: 20px;
+  font-size: 14px;
 
-  margin-bottom: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
 }
+
+
+/* =========================================================
+   TEXTOS
+========================================================= */
 
 .infoBox p {
-  color: #ddd;
+  color: #bbb;
 
-  font-size: 18px;
+  font-size: 13px;
 
-  line-height: 1.6;
+  line-height: 1.7;
 }
+
+
+/* =========================================================
+   HORÁRIO
+========================================================= */
 
 .horario {
-  margin-top: 40px;
+  margin-top: 25px;
 
-  font-size: 18px;
+  padding: 14px;
 
-  color: white;
+  background: #101010;
+
+  border: 1px solid #252525;
+
+  border-radius: 9px;
+
+  color: #ddd;
+
+  font-size: 13px;
+
+  line-height: 1.5;
 }
 
 
-/* FUNDO AO ABRIR MENU */
+/* =========================================================
+   FUNDO AO ABRIR MENU
+========================================================= */
 
 .menuOverlay {
   position: fixed;
 
   inset: 0;
 
-  background:
-    rgba(0, 0, 0, 0.65);
-
   z-index: 998;
+
+  background:
+    rgba(0, 0, 0, 0.72);
+
+  backdrop-filter: blur(2px);
+
+  -webkit-backdrop-filter: blur(2px);
+
+  animation: fadeIn 0.25s ease;
 }
 
 
-/* MENU */
+/* =========================================================
+   MENU LATERAL
+========================================================= */
 
 .sidebarMenu {
   position: fixed;
 
   top: 0;
-
   left: -250px;
 
-  width: 250px;
+  z-index: 1100;
 
+  width: 230px;
   height: 100vh;
 
-  background: #101113;
-
-  border-right:
-    1px solid #282828;
-
-  padding: 24px;
+  padding: 22px 16px;
 
   display: flex;
 
   flex-direction: column;
 
-  box-sizing: border-box;
+  background: #090909;
 
-  z-index: 999;
+  border-right: 1px solid #202020;
 
-  transition:
-    left 0.35s ease;
+  box-shadow:
+    12px 0 35px
+    rgba(0, 0, 0, 0.45);
+
+  overflow-y: auto;
+
+  transition: left 0.3s ease;
 }
 
 
-/* MENU ABERTO */
+/* =========================================================
+   MENU ABERTO
+========================================================= */
 
 .open {
   left: 0;
 }
 
 
-/* LOGO DO MENU */
+/* =========================================================
+   LOGO DO MENU
+========================================================= */
 
 .sidebarMenu img {
-  width: 105px;
+  width: 90px;
+  height: 75px;
 
-  height: 85px;
-
-  object-fit: contain;
+  margin: 0 auto 22px;
 
   display: block;
 
-  margin:
-    0 auto 25px;
+  object-fit: contain;
+
+  border-bottom: 1px solid #1b1b1b;
+
+  padding-bottom: 10px;
 }
 
 
-/* LINKS */
+/* =========================================================
+   LINKS
+========================================================= */
 
 .sidebarMenu a {
   width: 100%;
 
-  min-height: 43px;
+  min-height: 40px;
+
+  padding: 0 12px;
 
   display: flex;
 
   align-items: center;
 
-  gap: 13px;
+  gap: 12px;
 
-  padding: 0 15px;
+  border: 1px solid transparent;
 
-  color: #f1f1f1;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #ccc;
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 13px;
 
-  font-weight: 500;
+  font-weight: 600;
 
-  border-radius: 12px;
-
-  box-sizing: border-box;
-
-  transition: 0.25s;
+  transition: 0.2s ease;
 }
 
 
-/* ESPAÇAMENTO */
+/* =========================================================
+   ESPAÇAMENTO
+========================================================= */
 
 .sidebarMenu a + a {
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
 
-/* LINK ATIVO */
+/* =========================================================
+   PÁGINA ATUAL
+========================================================= */
 
 .active {
   background: #ff8800;
 
-  color:
-    #111 !important;
+  color: #111 !important;
 
-  font-weight: 600;
+  border-color: #ff8800;
+
+  font-weight: 700;
 
   box-shadow:
-    0 4px 12px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+    0 5px 15px
+    rgba(255, 136, 0, 0.18);
 }
 
 
-/* HOVER */
+/* =========================================================
+   HOVER DOS LINKS
+========================================================= */
 
 .sidebarMenu a:hover {
   background:
-    rgba(
-      255,
-      136,
-      0,
-      0.14
-    );
+    rgba(255, 136, 0, 0.08);
 
-  color: #ff9200;
+  color: #ff8800;
+
+  border-color:
+    rgba(255, 136, 0, 0.15);
+
+  transform: translateX(2px);
 }
 
 
-/* ATIVO */
+/* =========================================================
+   HOVER DA PÁGINA ATUAL
+========================================================= */
 
 .sidebarMenu a.active:hover {
-  background: #ff8800;
+  background: #ff9417;
 
-  color:
-    #111 !important;
+  border-color: #ff9417;
+
+  color: #111 !important;
+
+  transform: translateX(2px);
 }
 
 
-/* ÍCONES */
+/* =========================================================
+   ÍCONES
+========================================================= */
 
 .menuEmoji {
-  width: 14px;
+  width: 15px;
+  min-width: 15px;
 
-  display:
-    inline-flex;
+  display: inline-flex;
 
-  justify-content:
-    center;
+  align-items: center;
+
+  justify-content: center;
+
+  color: #aaa;
 
   font-size: 14px;
+
+  transition: 0.2s ease;
 }
 
 
-/* SAIR */
+/* ÍCONE NO HOVER */
+
+.sidebarMenu a:hover .menuEmoji {
+  color: #ff8800;
+}
+
+
+/* ÍCONE DA PÁGINA ATUAL */
+
+.sidebarMenu a.active .menuEmoji {
+  color: #111;
+}
+
+
+/* ÍCONE DA PÁGINA ATUAL NO HOVER */
+
+.sidebarMenu a.active:hover .menuEmoji {
+  color: #111;
+}
+
+
+/* =========================================================
+   SAIR
+========================================================= */
 
 .sair {
-  margin-top:
-    20px !important;
+  margin-top: auto !important;
+
+  padding-top: 15px !important;
+
+  border-top: 1px solid #1d1d1d !important;
 }
 
 
-/* FECHAR MENU */
+/* =========================================================
+   FECHAR MENU
+========================================================= */
 
 .closeMenu {
   position: absolute;
 
-  top: 12px;
+  top: 19px;
+  right: 15px;
 
-  right: 12px;
-
-  width: 34px;
-
-  height: 34px;
+  width: 32px;
+  height: 32px;
 
   display: flex;
 
-  justify-content: center;
-
   align-items: center;
 
-  background: transparent;
+  justify-content: center;
 
-  color: #ff8800;
+  border: 1px solid #2b2b2b;
 
-  border: none;
+  border-radius: 7px;
 
-  border-radius: 8px;
+  background: #111;
 
-  font-size: 19px;
+  color: #777;
+
+  font-size: 15px;
+
+  line-height: 1;
 
   cursor: pointer;
+
+  transition: 0.25s ease;
 }
 
 .closeMenu:hover {
+  border-color: #ff8800;
+
   background:
-    rgba(
-      255,
-      136,
-      0,
-      0.14
-    );
+    rgba(255, 136, 0, 0.08);
+
+  color: #ff8800;
 }
 
 
-/* ABRIR MENU */
+/* =========================================================
+   ABRIR MENU
+========================================================= */
 
 .menuIcon {
   position: fixed;
 
-  top: 20px;
-
-  left: 20px;
-
-  width: 45px;
-
-  height: 45px;
-
-  padding: 10px;
-
-  background: #101113;
-
-  color: #ff8800;
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 10px;
-
-  box-sizing:
-    border-box;
-
-  cursor: pointer;
+  top: 17px;
+  left: 25px;
 
   z-index: 1001;
 
-  transition: 0.2s;
-}
+  width: 43px;
+  height: 43px;
 
-.menuIcon:hover {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #ff8800;
+
+  border-radius: 9px;
+
   background: #ff8800;
 
   color: #111;
 
-  transform:
-    scale(1.05);
+  font-size: 18px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px
+    rgba(255, 136, 0, 0.18);
+
+  transition: 0.25s ease;
+}
+
+.menuIcon:hover {
+  border-color: #ff9417;
+
+  background: #ff9417;
+
+  color: #111;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 20px
+    rgba(255, 136, 0, 0.25);
 }
 
 
-/* CELULAR */
+/* =========================================================
+   ANIMAÇÃO
+========================================================= */
 
-@media (
-  max-width: 800px
-) {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
 
   .detailsContainer {
-    padding:
-      80px 15px 30px;
+    padding: 0 30px 60px;
   }
+
+  .detailsContent {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 15px;
+  }
+
+  .mainImage {
+    height: 360px;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .detailsContainer {
+    padding: 70px 15px 50px;
+  }
+
+
+  /* LOGO */
 
   .logoDetails {
-    width: 100px;
+    width: 85px;
+    height: 85px;
+
+    margin-top: 10px;
   }
 
+
+  /* TÍTULO */
+
   .titleDetails {
-    font-size: 29px;
+    font-size: 27px;
   }
+
+
+  /* CONTEÚDO */
 
   .detailsContent {
     margin-top: 25px;
 
-    gap: 20px;
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
   }
+
+
+  /* GALERIA */
 
   .galleryBox {
     width: 100%;
@@ -464,48 +802,190 @@
     padding: 12px;
   }
 
-  .mainImage {
-    height: 260px;
+  .galleryBox::before {
+    margin: -12px 0 12px;
   }
 
+  .mainImage {
+    height: 280px;
+
+    border-radius: 8px;
+  }
+
+
+  /* MINIATURAS */
+
   .thumbContainer {
-    gap: 8px;
+    grid-template-columns:
+      repeat(4, 1fr);
+
+    gap: 7px;
   }
 
   .thumb {
-    width: calc(
-      33.33% - 6px
-    );
-
-    height: 70px;
+    height: 65px;
   }
+
+
+  /* INFORMAÇÕES */
 
   .infoBox {
     width: 100%;
 
-    padding: 25px;
+    padding: 22px;
   }
 
+  .infoBox h2 {
+    font-size: 19px;
+  }
 }
 
-.closeMenu {
-  position: absolute;
 
-  top: 15px;
-  right: 15px;
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
 
-  width: 35px;
-  height: 35px;
+@media (max-width: 480px) {
 
-  background: transparent;
+  .detailsContainer {
+    padding: 65px 12px 40px;
+  }
 
-  color: #ff8800;
 
-  border: 1px solid #ff8800;
+  /* LOGO */
 
-  border-radius: 8px;
+  .logoDetails {
+    width: 75px;
+    height: 75px;
+  }
 
-  font-size: 24px;
 
-  cursor: pointer;
+  /* TÍTULO */
+
+  .titleDetails {
+    font-size: 23px;
+  }
+
+
+  /* GALERIA */
+
+  .galleryBox {
+    padding: 10px;
+
+    border-radius: 11px;
+  }
+
+  .galleryBox::before {
+    margin: -10px 0 10px;
+  }
+
+  .mainImage {
+    height: 220px;
+  }
+
+
+  /* MINIATURAS */
+
+  .thumbContainer {
+    gap: 6px;
+  }
+
+  .thumb {
+    height: 55px;
+
+    border-radius: 6px;
+  }
+
+
+  /* INFORMAÇÕES */
+
+  .infoBox {
+    padding: 18px;
+
+    border-radius: 11px;
+  }
+
+  .infoBox h2 {
+    font-size: 18px;
+
+    margin-bottom: 20px;
+  }
+
+  .infoBox p {
+    font-size: 13px;
+  }
+
+  .horario {
+    padding: 12px;
+
+    font-size: 12px;
+  }
+
+
+  /* MENU */
+
+  .sidebarMenu {
+    width: 240px;
+
+    left: -240px;
+  }
+
+  .sidebarMenu.open {
+    left: 0;
+  }
+
+
+  /* BOTÃO MENU */
+
+  .menuIcon {
+    top: 12px;
+
+    left: 12px;
+
+    width: 41px;
+
+    height: 41px;
+  }
+}
+
+
+/* =========================================================
+   CELULAR MUITO PEQUENO
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .detailsContainer {
+    padding: 62px 10px 35px;
+  }
+
+  .titleDetails {
+    font-size: 21px;
+  }
+
+  .mainImage {
+    height: 190px;
+  }
+
+  .thumb {
+    height: 48px;
+  }
+
+  .infoBox {
+    padding: 16px;
+  }
+
+  .sidebarMenu {
+    width: 225px;
+
+    left: -225px;
+  }
+
+  .sidebarMenu.open {
+    left: 0;
+  }
+
+  .menuIcon {
+    left: 10px;
+  }
 }
