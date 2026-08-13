@@ -5,12 +5,6 @@ import {
   FaBars,
   FaTimes,
   FaRegUserCircle,
-  FaHome,
-  FaFutbol,
-  FaCalendarAlt,
-  FaTrophy,
-  FaCreditCard,
-  FaSignOutAlt,
 } from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
@@ -88,7 +82,9 @@ function HeaderAgendamentos() {
         }`}
       >
 
-        {/* LOGO */}
+        {/* =================================================
+            LOGO
+        ================================================= */}
 
         <div className={styles.sidebarBrand}>
 
@@ -99,21 +95,16 @@ function HeaderAgendamentos() {
           />
 
           <div className={styles.brandText}>
-
-            <strong>
-              ARENA
-            </strong>
-
-            <strong>
-              BEACH
-            </strong>
-
+            <strong>ARENA</strong>
+            <strong>BEACH</strong>
           </div>
 
         </div>
 
 
-        {/* BOTÃO FECHAR */}
+        {/* =================================================
+            BOTÃO FECHAR
+        ================================================= */}
 
         <button
           type="button"
@@ -135,7 +126,7 @@ function HeaderAgendamentos() {
             to="/home"
             onClick={fecharMenu}
           >
-            <FaHome />
+            <span className={styles.menuEmoji}>🏠</span>
             <span>Início</span>
           </Link>
 
@@ -144,7 +135,7 @@ function HeaderAgendamentos() {
             to="/quadra"
             onClick={fecharMenu}
           >
-            <FaFutbol />
+            <span className={styles.menuEmoji}>⚽</span>
             <span>Quadras</span>
           </Link>
 
@@ -154,7 +145,7 @@ function HeaderAgendamentos() {
             className={styles.active}
             onClick={fecharMenu}
           >
-            <FaCalendarAlt />
+            <span className={styles.menuEmoji}>📅</span>
             <span>Agendamentos</span>
           </Link>
 
@@ -163,7 +154,7 @@ function HeaderAgendamentos() {
             to="/torneios"
             onClick={fecharMenu}
           >
-            <FaTrophy />
+            <span className={styles.menuEmoji}>🏆</span>
             <span>Torneios</span>
           </Link>
 
@@ -172,7 +163,7 @@ function HeaderAgendamentos() {
             to="/pagamento"
             onClick={fecharMenu}
           >
-            <FaCreditCard />
+            <span className={styles.menuEmoji}>💳</span>
             <span>Pagamento</span>
           </Link>
 
@@ -189,7 +180,7 @@ function HeaderAgendamentos() {
             to="/cadastro"
             onClick={fecharMenu}
           >
-            <FaSignOutAlt />
+            <span className={styles.menuEmoji}>🚪</span>
             <span>Sair</span>
           </Link>
 

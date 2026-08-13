@@ -1,6 +1,35 @@
-/* ================================
+/* =========================================================
+   CONFIGURAÇÃO GERAL
+========================================================= */
+
+:global(*) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global(html) {
+  background: #000;
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: #000;
+  color: #fff;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+
+/* =========================================================
    CONTAINER PRINCIPAL
-================================ */
+========================================================= */
 
 .container {
   width: 100%;
@@ -13,91 +42,125 @@
   width: 100%;
   min-height: 100vh;
 
-  padding: 20px 30px;
+  padding: 0 50px 70px;
 
   background: #000;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  box-sizing: border-box;
 }
 
 
-/* ================================
+/* =========================================================
    HEADER
-================================ */
+========================================================= */
 
 .topHeader {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 900;
+
   width: 100%;
-  max-width: 1200px;
+  height: 76px;
+
+  padding: 0 35px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  position: relative;
+  background:
+    rgba(5, 5, 5, 0.96);
 
-  margin-bottom: 10px;
+  border-bottom:
+    1px solid #1d1d1d;
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
 }
 
 
-/* ================================
+/* =========================================================
    BOTÃO ABRIR MENU
-================================ */
+========================================================= */
 
 .menuIcon {
   position: fixed;
 
-  top: 20px;
-  left: 20px;
-
-  width: 46px;
-  height: 46px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #101113;
-
-  color: #ff8800;
-
-  border: 1px solid #ff8800;
-
-  border-radius: 10px;
-
-  font-size: 27px;
-
-  cursor: pointer;
+  top: 17px;
+  left: 25px;
 
   z-index: 1001;
 
-  box-sizing: border-box;
+  width: 43px;
+  height: 43px;
 
-  transition: 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid #2c2c2c;
+
+  border-radius: 9px;
+
+  background:
+    #111;
+
+  color:
+    #fff;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition:
+    0.25s ease;
 }
 
 .menuIcon:hover {
-  background: #ff8800;
+  border-color:
+    #ff8800;
 
-  color: #111;
+  background:
+    rgba(255, 136, 0, 0.08);
 
-  transform: scale(1.05);
+  color:
+    #ff8800;
 }
 
 
-/* MANTIDA PARA NÃO DAR ERRO */
+/* =========================================================
+   BOTÃO COM MENU ABERTO
+========================================================= */
 
 .menuIconOpen {
   left: 240px;
+
+  border-color:
+    #ff8800;
+
+  background:
+    #111;
+
+  color:
+    #ff8800;
+
+  box-shadow:
+    0 0 15px
+    rgba(255, 136, 0, 0.08);
 }
 
 
-/* ================================
+/* =========================================================
    MENU LATERAL
-================================ */
+========================================================= */
 
 .sidebarMenu {
   position: fixed;
@@ -105,1491 +168,2504 @@
   top: 0;
   left: -250px;
 
-  width: 250px;
+  z-index: 1100;
+
+  width: 230px;
   height: 100vh;
 
-  background: #101113;
-
-  border-right: 1px solid #292929;
-
-  padding: 70px 20px 25px;
+  padding:
+    22px 16px;
 
   display: flex;
   flex-direction: column;
 
-  box-sizing: border-box;
-
-  z-index: 1000;
-
   overflow-y: auto;
 
-  transition: left 0.35s ease;
+  background:
+    #090909;
+
+  border-right:
+    1px solid #202020;
+
+  box-shadow:
+    12px 0 35px
+    rgba(0, 0, 0, 0.45);
+
+  transition:
+    left 0.3s ease;
 }
 
 
-/* MENU ABERTO */
+/* =========================================================
+   MENU ABERTO
+========================================================= */
 
 .open {
   left: 0;
 }
 
 
-/* LINKS */
+/* =========================================================
+   LINKS DO MENU
+========================================================= */
 
 .sidebarMenu a {
   width: 100%;
+  min-height: 40px;
 
-  min-height: 45px;
+  margin-bottom: 5px;
+
+  padding:
+    0 12px;
 
   display: flex;
   align-items: center;
 
-  padding: 0 15px;
+  gap: 12px;
 
-  color: white;
+  border:
+    1px solid transparent;
 
-  text-decoration: none;
+  border-radius:
+    8px;
 
-  font-size: 15px;
-  font-weight: 500;
+  background:
+    transparent;
 
-  border-radius: 11px;
+  color:
+    #ccc;
 
-  box-sizing: border-box;
+  font-size:
+    13px;
 
-  margin-bottom: 8px;
+  font-weight:
+    600;
 
-  transition: 0.25s ease;
+  text-decoration:
+    none;
+
+  transition:
+    0.2s ease;
 }
 
 
-/* HOVER DOS LINKS */
+/* =========================================================
+   HOVER DOS LINKS
+========================================================= */
 
 .sidebarMenu a:hover {
-  background: rgba(255, 136, 0, 0.15);
+  background:
+    rgba(255, 136, 0, 0.08);
 
-  color: #ff8800;
+  color:
+    #ff8800;
 
-  transform: translateX(5px);
+  transform:
+    translateX(2px);
 }
 
 
-/* ================================
+/* =========================================================
+   ÍCONES DOS LINKS
+========================================================= */
+
+.sidebarMenu a svg {
+  width:
+    15px;
+
+  min-width:
+    15px;
+
+  color:
+    #aaa;
+
+  font-size:
+    14px;
+
+  transition:
+    0.2s ease;
+}
+
+.sidebarMenu a:hover svg {
+  color:
+    #ff8800;
+}
+
+
+/* =========================================================
    BOTÃO FECHAR MENU
-================================ */
+========================================================= */
 
 .closeMenu {
   position: absolute;
 
-  top: 13px;
-  right: 13px;
+  top: 19px;
+  right: 15px;
 
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  background: transparent;
+  border:
+    1px solid #2b2b2b;
 
-  color: #ff8800;
+  border-radius:
+    7px;
 
-  border: 1px solid #ff8800;
+  background:
+    #111;
 
-  border-radius: 9px;
+  color:
+    #777;
 
-  font-size: 24px;
+  font-size:
+    13px;
 
-  line-height: 1;
+  cursor:
+    pointer;
 
-  cursor: pointer;
-
-  transition: 0.25s ease;
+  transition:
+    0.25s ease;
 }
 
 .closeMenu:hover {
-  background: #ff8800;
+  border-color:
+    #ff8800;
 
-  color: #111;
+  background:
+    rgba(255, 136, 0, 0.08);
+
+  color:
+    #ff8800;
 }
 
 
-/* ================================
+/* =========================================================
    LOGO
-================================ */
+========================================================= */
 
 .logoArea {
-  text-align: center;
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+
+  gap:
+    12px;
+
+  text-align:
+    center;
 }
 
 .logoArea img {
-  width: 80px;
+  width:
+    42px;
+
+  height:
+    42px;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    9px;
 
   filter:
     drop-shadow(
-      0 0 10px
-      rgba(255, 136, 0, 0.3)
+      0 0 8px
+      rgba(255, 136, 0, 0.18)
     );
 }
 
 .logoArea h2 {
-  color: white;
+  color:
+    #fff;
 
-  margin-top: 8px;
+  font-size:
+    18px;
 
-  font-size: 34px;
+  font-weight:
+    700;
 
-  font-weight: 700;
+  text-align:
+    left;
 }
 
 .logoArea span {
-  color: #ff8800;
+  color:
+    #ff8800;
 }
 
 
-/* ================================
+/* =========================================================
    BOTÕES DE CATEGORIA
-================================ */
+========================================================= */
 
 .categoryButtons {
-  display: flex;
+  width:
+    100%;
 
-  justify-content: center;
+  max-width:
+    1120px;
 
-  flex-wrap: wrap;
+  margin:
+    28px auto 0;
 
-  gap: 16px;
+  display:
+    flex;
 
-  margin-top: 25px;
+  align-items:
+    center;
+
+  justify-content:
+    flex-start;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    8px;
 }
 
 .categoryButtons button {
-  width: 190px;
+  min-height:
+    38px;
 
-  padding: 12px;
-
-  border-radius: 12px;
+  padding:
+    9px 18px;
 
   border:
-    1px solid #ff8800;
+    1px solid #292929;
 
-  background: transparent;
+  border-radius:
+    8px;
 
-  color: white;
+  background:
+    #111;
 
-  font-size: 15px;
+  color:
+    #999;
 
-  font-weight: 500;
+  font-size:
+    13px;
 
-  cursor: pointer;
+  font-weight:
+    600;
 
-  transition: 0.3s;
+  cursor:
+    pointer;
+
+  transition:
+    0.2s ease;
 }
 
 .categoryButtons button:hover {
-  background: #ff8800;
+  border-color:
+    #ff8800;
 
-  color: black;
+  background:
+    rgba(255, 136, 0, 0.08);
 
-  transform:
-    translateY(-2px);
+  color:
+    #ff8800;
 }
+
+
+/* =========================================================
+   BOTÃO ATIVO
+========================================================= */
 
 .activeBtn {
-  background: #ff8800;
+  border-color:
+    #ff8800 !important;
 
-  color: #111;
+  background:
+    #ff8800 !important;
+
+  color:
+    #111 !important;
 
   box-shadow:
-    0 0 15px
-    rgba(
-      255,
-      136,
-      0,
-      0.35
-    );
+    0 5px 15px
+    rgba(255, 136, 0, 0.16);
+}
+
+.activeBtn:hover {
+  background:
+    #ff9417 !important;
+
+  color:
+    #111 !important;
 }
 
 
-/* ================================
+/* =========================================================
    BUSCA
-================================ */
+========================================================= */
 
 .searchContainer {
-  width: 100%;
+  width:
+    100%;
 
-  display: flex;
+  max-width:
+    1120px;
 
-  flex-direction: column;
+  margin:
+    20px auto 0;
 
-  align-items: center;
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
 }
 
 .searchBar {
-  width: 100%;
+  width:
+    100%;
 
-  max-width: 650px;
+  max-width:
+    650px;
 
-  margin-top: 30px;
+  min-height:
+    45px;
 
-  background:
-    linear-gradient(
-      90deg,
-      #1b1b1b,
-      #232323
-    );
+  padding:
+    0 14px;
 
-  border-radius: 20px;
+  display:
+    flex;
 
-  display: flex;
-
-  align-items: center;
-
-  padding: 14px 18px;
+  align-items:
+    center;
 
   border:
-    1px solid #2f2f2f;
+    1px solid #292929;
 
-  box-sizing: border-box;
+  border-radius:
+    9px;
 
-  transition: 0.3s;
+  background:
+    #111;
+
+  transition:
+    0.25s ease;
 }
 
 .searchBar:focus-within {
-  border:
-    1px solid #ff8800;
+  border-color:
+    #ff8800;
+
+  background:
+    #151515;
 
   box-shadow:
     0 0 12px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+    rgba(255, 136, 0, 0.12);
 }
 
 .searchBar input {
-  flex: 1;
+  flex:
+    1;
 
-  background: transparent;
+  min-width:
+    0;
 
-  border: none;
+  margin:
+    0 10px;
 
-  outline: none;
+  border:
+    none;
 
-  color: white;
+  outline:
+    none;
 
-  margin: 0 10px;
+  background:
+    transparent;
 
-  font-size: 14px;
+  color:
+    #fff;
+
+  font-size:
+    13px;
 }
 
 .searchBar input::placeholder {
-  color: #888;
+  color:
+    #666;
 }
 
 .searchIcon,
 .arrowIcon {
-  color: #888;
+  color:
+    #777;
 
-  font-size: 15px;
+  font-size:
+    15px;
+
+  transition:
+    0.2s ease;
+}
+
+.searchBar:focus-within .searchIcon {
+  color:
+    #ff8800;
 }
 
 .selectQuadra {
-  width: 220px;
+  width:
+    220px;
 
-  margin-top: 12px;
+  margin-top:
+    12px;
 
-  padding: 10px;
-
-  border-radius: 8px;
+  padding:
+    10px;
 
   border:
-    1px solid #ff8800;
+    1px solid #292929;
 
-  background: #1f1f1f;
+  border-radius:
+    8px;
 
-  color: white;
-
-  font-size: 14px;
-}
-
-
-/* ================================
-   CARDS DE QUADRAS
-================================ */
-
-.quadrasSection {
-  width: 100%;
-
-  max-width: 1200px;
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 30px;
-
-  margin-top: 45px;
-
-  flex-wrap: wrap;
-}
-
-.quadraCard {
-  width: 240px;
+  outline:
+    none;
 
   background:
-    linear-gradient(
-      180deg,
-      #1b1b1b,
-      #141414
-    );
+    #111;
 
-  border:
-    1px solid #ff8800;
+  color:
+    #ddd;
 
-  border-radius: 18px;
+  font-size:
+    13px;
 
-  padding: 14px;
+  transition:
+    0.2s ease;
+}
 
-  text-align: center;
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
+.selectQuadra:focus {
+  border-color:
+    #ff8800;
 
   box-shadow:
     0 0 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.5
-    );
+    rgba(255, 136, 0, 0.08);
 }
+
+
+/* =========================================================
+   ÁREA DAS QUADRAS
+========================================================= */
+
+.quadrasSection {
+  width:
+    100%;
+
+  max-width:
+    1120px;
+
+  margin:
+    25px auto 0;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap:
+    18px;
+}
+
+
+/* =========================================================
+   CARD DA QUADRA
+========================================================= */
+
+.quadraCard {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  min-height:
+    250px;
+
+  padding:
+    14px;
+
+  overflow:
+    hidden;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  text-align:
+    left;
+
+  transition:
+    0.25s ease;
+}
+
+
+/* =========================================================
+   LINHA LARANJA SUPERIOR
+========================================================= */
+
+.quadraCard::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  width:
+    100%;
+
+  height:
+    2px;
+
+  background:
+    #ff8800;
+}
+
+
+/* =========================================================
+   HOVER CARD
+========================================================= */
 
 .quadraCard:hover {
+  border-color:
+    #ff8800;
+
   transform:
-    translateY(-6px);
+    translateY(-3px);
 
   box-shadow:
-    0 0 20px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+    0 8px 25px
+    rgba(0, 0, 0, 0.35);
 }
+
+
+/* =========================================================
+   IMAGEM DA QUADRA
+========================================================= */
 
 .quadraCard img {
-  width: 100%;
+  width:
+    100%;
 
-  height: 135px;
+  height:
+    145px;
 
-  object-fit: cover;
+  display:
+    block;
 
-  border-radius: 12px;
+  object-fit:
+    cover;
+
+  border-radius:
+    9px;
 }
+
+
+/* =========================================================
+   TÍTULO DA QUADRA
+========================================================= */
 
 .quadraCard h3 {
-  color: white;
+  margin-top:
+    14px;
 
-  margin-top: 14px;
+  color:
+    #fff;
 
-  font-size: 20px;
+  font-size:
+    17px;
+
+  font-weight:
+    700;
 }
 
+
+/* =========================================================
+   DESCRIÇÃO
+========================================================= */
+
 .quadraCard p {
-  color: white;
+  margin-top:
+    7px;
 
-  margin-top: 8px;
+  color:
+    #bbb;
 
-  font-size: 14px;
+  font-size:
+    13px;
+
+  line-height:
+    1.5;
 }
 
 .quadraCard span {
-  color: #bdbdbd;
+  color:
+    #666;
 
-  font-size: 12px;
+  font-size:
+    11px;
 }
 
+
+/* =========================================================
+   STATUS
+========================================================= */
+
 .status {
-  margin-top: 16px;
+  margin-top:
+    13px;
 
-  font-size: 13px;
+  color:
+    #888;
 
-  font-weight: bold;
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.3px;
 }
 
 .available {
-  color: #35d04d;
+  color:
+    #35d04d;
 }
 
 .unavailable {
-  color: #ff3b3b;
+  color:
+    #ff3b3b;
 }
 
 
-/* ================================
+/* =========================================================
    PAGINAÇÃO
-================================ */
+========================================================= */
 
 .pagination {
-  display: flex;
+  margin-top:
+    30px;
 
-  justify-content: center;
+  padding-bottom:
+    20px;
 
-  gap: 10px;
+  display:
+    flex;
 
-  margin-top: 40px;
+  align-items:
+    center;
 
-  padding-bottom: 30px;
+  justify-content:
+    center;
+
+  gap:
+    8px;
 }
 
 .dot {
-  width: 10px;
+  width:
+    8px;
 
-  height: 10px;
+  height:
+    8px;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
-  background: #777;
+  background:
+    #444;
 
-  transition: 0.3s;
+  transition:
+    0.25s ease;
 }
 
 .activeDot {
-  background: #ff8800;
+  width:
+    24px;
+
+  border-radius:
+    10px;
+
+  background:
+    #ff8800;
 
   box-shadow:
     0 0 10px
-    rgba(
-      255,
-      136,
-      0,
-      0.5
-    );
+    rgba(255, 136, 0, 0.35);
 }
 
 
-/* ================================
+/* =========================================================
    CADASTRO
-================================ */
+========================================================= */
 
 .cadastroCard {
-  width: 100%;
+  width:
+    100%;
 
-  max-width: 500px;
+  max-width:
+    500px;
 
-  margin-top: 40px;
+  margin-top:
+    40px;
 
-  padding: 30px;
+  padding:
+    30px;
 
-  display: flex;
+  display:
+    flex;
 
-  flex-direction: column;
+  flex-direction:
+    column;
 
-  gap: 16px;
+  gap:
+    16px;
 
-  text-align: center;
+  text-align:
+    center;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.cadastroCard::before {
+  content:
+    "";
+
+  width:
+    100%;
+
+  height:
+    2px;
+
+  position:
+    absolute;
 }
 
 .cadastroTitle {
-  color: white;
+  margin-bottom:
+    10px;
 
-  font-size: 28px;
+  color:
+    #fff;
 
-  font-weight: 700;
+  font-size:
+    28px;
 
-  margin-bottom: 10px;
+  font-weight:
+    700;
 }
 
 .cadastroInput {
-  width: 100%;
+  width:
+    100%;
 
-  padding: 14px 16px;
-
-  border-radius: 12px;
+  padding:
+    13px 14px;
 
   border:
-    1px solid #333;
+    1px solid #292929;
 
-  background: #1f1f1f;
+  border-radius:
+    8px;
 
-  color: white;
+  outline:
+    none;
 
-  font-size: 15px;
+  background:
+    #101010;
 
-  box-sizing: border-box;
+  color:
+    #fff;
 
-  outline: none;
+  font-size:
+    14px;
 
-  transition: 0.3s;
+  transition:
+    0.25s ease;
 }
 
 .cadastroInput::placeholder {
-  color: #888;
+  color:
+    #666;
 }
 
 .cadastroInput:focus {
-  border-color: #ff8800;
+  border-color:
+    #ff8800;
 
   box-shadow:
-    0 0 12px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+    0 0 10px
+    rgba(255, 136, 0, 0.12);
 }
 
 .cadastroButton {
-  width: 100%;
+  width:
+    100%;
 
-  padding: 14px;
+  padding:
+    13px;
 
-  border: none;
+  border:
+    none;
 
-  border-radius: 12px;
+  border-radius:
+    8px;
 
-  background: #ff8800;
+  background:
+    #ff8800;
 
-  color: black;
+  color:
+    #111;
 
-  font-size: 16px;
+  font-size:
+    14px;
 
-  font-weight: bold;
+  font-weight:
+    700;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
-  transition: 0.3s;
+  transition:
+    0.25s ease;
 }
 
 .cadastroButton:hover {
-  background: #ffaa33;
+  background:
+    #ff9417;
+
+  transform:
+    translateY(-1px);
+}
+
+.cadastroText {
+  margin-top:
+    5px;
+
+  color:
+    #777;
+
+  font-size:
+    13px;
+}
+
+.cadastroLink {
+  color:
+    #ff8800;
+
+  font-weight:
+    600;
+
+  text-decoration:
+    none;
+}
+
+.cadastroLink:hover {
+  color:
+    #ffaa33;
+
+  text-decoration:
+    underline;
+}
+
+
+/* =========================================================
+   HOME INSTITUCIONAL
+========================================================= */
+
+.arenaWrapper {
+  width:
+    100%;
+
+  min-height:
+    100vh;
+
+  display:
+    flex;
+
+  background:
+    #000;
+}
+
+.sidebar {
+  width:
+    230px;
+
+  min-height:
+    100vh;
+
+  padding:
+    22px 16px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  flex-shrink:
+    0;
+
+  background:
+    #090909;
+
+  border-right:
+    1px solid #202020;
+
+  box-shadow:
+    12px 0 35px
+    rgba(0, 0, 0, 0.2);
+}
+
+.logoMark {
+  color:
+    #ff8800;
+
+  font-size:
+    24px;
+}
+
+.logoText {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  color:
+    #fff;
+
+  font-size:
+    18px;
+
+  font-weight:
+    bold;
+}
+
+.menu {
+  margin-top:
+    30px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+}
+
+.menuItem {
+  width:
+    100%;
+
+  min-height:
+    40px;
+
+  padding:
+    0 12px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  border:
+    1px solid transparent;
+
+  border-radius:
+    8px;
+
+  background:
+    transparent;
+
+  color:
+    #ccc;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.menuItem:hover {
+  background:
+    rgba(255, 136, 0, 0.08);
+
+  color:
+    #ff8800;
+
+  transform:
+    translateX(2px);
+}
+
+.active {
+  background:
+    #ff8800;
+
+  color:
+    #111;
+
+  box-shadow:
+    0 5px 15px
+    rgba(255, 136, 0, 0.16);
+}
+
+.content {
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  padding:
+    40px;
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  background:
+    #000;
+}
+
+.contentCard {
+  width:
+    100%;
+
+  max-width:
+    900px;
+
+  padding:
+    35px;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  color:
+    #fff;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.hero h1 {
+  margin-bottom:
+    10px;
+
+  color:
+    #fff;
+
+  font-size:
+    38px;
+}
+
+.hero h1 span {
+  color:
+    #ff8800;
+}
+
+.hero p {
+  color:
+    #aaa;
+
+  line-height:
+    1.6;
+}
+
+.section {
+  margin-top:
+    30px;
+}
+
+.section h3 {
+  margin-bottom:
+    10px;
+
+  color:
+    #ff8800;
+}
+
+.section p,
+.section small {
+  color:
+    #ddd;
+
+  line-height:
+    1.6;
+}
+
+.inlineInfo {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.loginCard {
+  width:
+    100%;
+
+  max-width:
+    420px;
+
+  margin-top:
+    60px;
+
+  padding:
+    28px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    15px;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.loginTitle {
+  margin-bottom:
+    10px;
+
+  color:
+    #fff;
+
+  font-size:
+    28px;
+
+  text-align:
+    center;
+}
+
+.loginInput {
+  width:
+    100%;
+
+  padding:
+    13px 14px;
+
+  border:
+    1px solid #292929;
+
+  border-radius:
+    8px;
+
+  outline:
+    none;
+
+  background:
+    #101010;
+
+  color:
+    #fff;
+
+  font-size:
+    14px;
+
+  transition:
+    0.25s ease;
+}
+
+.loginInput:focus {
+  border-color:
+    #ff8800;
+
+  box-shadow:
+    0 0 10px
+    rgba(255, 136, 0, 0.12);
+}
+
+.loginButton {
+  width:
+    100%;
+
+  padding:
+    13px;
+
+  border:
+    none;
+
+  border-radius:
+    8px;
+
+  background:
+    #ff8800;
+
+  color:
+    #111;
+
+  cursor:
+    pointer;
+
+  font-size:
+    14px;
+
+  font-weight:
+    700;
+
+  transition:
+    0.25s ease;
+}
+
+.loginButton:hover {
+  background:
+    #ff9417;
+
+  transform:
+    translateY(-1px);
+}
+
+.loginLinks {
+  margin-top:
+    10px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    10px;
+
+  text-align:
+    center;
+}
+
+.loginLink {
+  color:
+    #ff8800;
+
+  font-weight:
+    600;
+
+  text-decoration:
+    none;
+
+  transition:
+    0.25s ease;
+}
+
+.loginLink:hover {
+  color:
+    #ffaa33;
+}
+
+
+/* =========================================================
+   SOBRE
+========================================================= */
+
+.sobreCard {
+  width:
+    100%;
+
+  max-width:
+    800px;
+
+  margin-top:
+    40px;
+
+  padding:
+    35px;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  text-align:
+    left;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.sobreTitulo {
+  margin-bottom:
+    15px;
+
+  color:
+    #fff;
+
+  font-size:
+    38px;
+}
+
+.sobreTitulo span {
+  color:
+    #ff8800;
+}
+
+.sobreDescricao {
+  margin-bottom:
+    30px;
+
+  color:
+    #aaa;
+
+  font-size:
+    15px;
+
+  line-height:
+    1.6;
+}
+
+.sobreSecao {
+  margin-top:
+    25px;
+
+  text-align:
+    left;
+}
+
+.sobreSecao h3 {
+  margin-bottom:
+    10px;
+
+  color:
+    #ff8800;
+}
+
+.sobreSecao p {
+  color:
+    #ddd;
+
+  line-height:
+    1.7;
+}
+
+.sobreLink {
+  display:
+    inline-block;
+
+  margin-top:
+    30px;
+
+  color:
+    #ff8800;
+
+  font-weight:
+    bold;
+
+  text-decoration:
+    none;
+
+  transition:
+    0.25s ease;
+}
+
+.sobreLink:hover {
+  color:
+    #ffaa33;
+}
+
+
+/* =========================================================
+   PAGAMENTO
+========================================================= */
+
+.pagamentoButtons {
+  margin-top:
+    25px;
+
+  margin-bottom:
+    30px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+}
+
+.pagamentoBtn {
+  width:
+    120px;
+
+  height:
+    40px;
+
+  padding:
+    8px 12px;
+
+  border:
+    1px solid #292929;
+
+  border-radius:
+    8px;
+
+  background:
+    #111;
+
+  color:
+    #999;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.pagamentoBtn.ativo {
+  border-color:
+    #ff8800;
+
+  background:
+    #ff8800;
+
+  color:
+    #111;
+
+  box-shadow:
+    0 5px 15px
+    rgba(255, 136, 0, 0.16);
+}
+
+.pagamentoBtn:hover {
+  border-color:
+    #ff8800;
+
+  background:
+    #ff8800;
+
+  color:
+    #111;
+}
+
+
+/* =========================================================
+   CARD PRINCIPAL DO PAGAMENTO
+========================================================= */
+
+.pagamentoCard {
+  width:
+    100%;
+
+  max-width:
+    400px;
+
+  margin:
+    25px auto 0;
+
+  padding:
+    20px;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   PIX
+========================================================= */
+
+.pixArea {
+  width:
+    100%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    70px;
+}
+
+.qrArea {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+}
+
+.pixArea h4 {
+  margin:
+    0 0 10px;
+
+  color:
+    #fff;
+
+  font-size:
+    15px;
+}
+
+.qrCode {
+  width:
+    140px;
+
+  height:
+    140px;
+
+  margin:
+    0;
+
+  border-radius:
+    8px;
+
+  background:
+    #fff;
+}
+
+.valorArea {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  text-align:
+    center;
+}
+
+.valorArea h3 {
+  margin:
+    0 0 8px;
+
+  color:
+    #ff8800;
+}
+
+.valorArea p {
+  margin:
+    0;
+
+  color:
+    #fff;
+
+  font-size:
+    24px;
+
+  font-weight:
+    bold;
+}
+
+
+/* =========================================================
+   DESCRIÇÃO PAGAMENTO
+========================================================= */
+
+.descricaoPagamento {
+  margin-top:
+    18px;
+
+  padding-top:
+    15px;
+
+  border-top:
+    1px solid #292929;
+
+  color:
+    #fff;
+}
+
+.descricaoPagamento h3 {
+  margin:
+    0 0 10px;
+
+  color:
+    #ff8800;
+}
+
+.descricaoPagamento p {
+  margin:
+    5px 0;
+
+  color:
+    #ddd;
+}
+
+
+/* =========================================================
+   RESUMO AGENDAMENTO
+========================================================= */
+
+.pagamentoInfo {
+  width:
+    100%;
+
+  max-width:
+    650px;
+
+  margin:
+    30px auto 0;
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  gap:
+    30px;
+
+  color:
+    #fff;
+}
+
+.pagamentoInfo h3 {
+  margin-bottom:
+    12px;
+
+  color:
+    #ff8800;
+}
+
+.pagamentoInfo p {
+  margin-bottom:
+    6px;
+
+  color:
+    #ddd;
+}
+
+
+/* =========================================================
+   PAGAMENTO CARTÃO
+========================================================= */
+
+.pagamentoContainer {
+  width:
+    100%;
+
+  max-width:
+    1000px;
+
+  margin:
+    20px auto 0;
+
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  gap:
+    60px;
+}
+
+.formPagamento {
+  flex:
+    1;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    12px;
+}
+
+.formPagamento label {
+  color:
+    #ddd;
+
+  font-size:
+    13px;
+}
+
+.rowPagamento {
+  display:
+    flex;
+
+  gap:
+    25px;
+}
+
+.rowPagamento div {
+  flex:
+    1;
+}
+
+.resumoPagamento {
+  width:
+    250px;
+
+  margin-top:
+    10px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  color:
+    #fff;
+}
+
+.resumoPagamento h3 {
+  margin-bottom:
+    20px;
+
+  color:
+    #ff8800;
+}
+
+.resumoPagamento p {
+  margin-bottom:
+    15px;
+
+  color:
+    #ddd;
+}
+
+
+/* =========================================================
+   CONFIRMAR PAGAMENTO
+========================================================= */
+
+.confirmarPagamento {
+  width:
+    220px;
+
+  min-height:
+    43px;
+
+  margin-top:
+    40px;
+
+  padding:
+    11px 20px;
+
+  border:
+    none;
+
+  border-radius:
+    8px;
+
+  background:
+    #ff8800;
+
+  color:
+    #111;
+
+  font-size:
+    14px;
+
+  font-weight:
+    bold;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.25s ease;
+}
+
+.confirmarPagamento:hover {
+  background:
+    #ff9417;
 
   transform:
     translateY(-2px);
 }
 
-.cadastroText {
-  color: #bdbdbd;
 
-  font-size: 14px;
-
-  margin-top: 5px;
-}
-
-.cadastroLink {
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: bold;
-}
-
-.cadastroLink:hover {
-  text-decoration: underline;
-}
-
-
-/* ================================
-   HOME INSTITUCIONAL
-================================ */
-
-.arenaWrapper {
-  width: 100%;
-
-  min-height: 100vh;
-
-  background: #000;
-
-  display: flex;
-}
-
-.sidebar {
-  width: 250px;
-
-  background: #0b0b0b;
-
-  border-right:
-    1px solid #222;
-
-  padding: 25px;
-
-  display: flex;
-
-  flex-direction: column;
-}
-
-.logoMark {
-  color: #ff8800;
-
-  font-size: 24px;
-}
-
-.logoText {
-  display: flex;
-
-  flex-direction: column;
-
-  color: white;
-
-  font-weight: bold;
-
-  font-size: 18px;
-}
-
-.menu {
-  margin-top: 30px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-.menuItem {
-  width: 100%;
-
-  background: transparent;
-
-  border: none;
-
-  color: white;
-
-  padding: 12px;
-
-  border-radius: 10px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.menuItem:hover {
-  background:
-    rgba(
-      255,
-      136,
-      0,
-      0.15
-    );
-}
-
-.active {
-  background: #ff8800;
-
-  color: black;
-}
-
-.content {
-  flex: 1;
-
-  padding: 40px;
-
-  display: flex;
-
-  justify-content: center;
-}
-
-.contentCard {
-  width: 100%;
-
-  max-width: 900px;
-
-  background: #151515;
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 20px;
-
-  padding: 35px;
-
-  color: white;
-}
-
-.hero h1 {
-  font-size: 38px;
-
-  margin-bottom: 10px;
-}
-
-.hero h1 span {
-  color: #ff8800;
-}
-
-.hero p {
-  color: #bdbdbd;
-}
-
-.section {
-  margin-top: 30px;
-}
-
-.section h3 {
-  color: #ff8800;
-
-  margin-bottom: 10px;
-}
-
-.section p,
-.section small {
-  color: #ddd;
-
-  line-height: 1.6;
-}
-
-.inlineInfo {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-}
-
-
-/* ================================
-   LOGIN
-================================ */
-
-.loginCard {
-  width: 100%;
-
-  max-width: 420px;
-
-  margin-top: 60px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 15px;
-}
-
-.loginTitle {
-  color: white;
-
-  font-size: 28px;
-
-  text-align: center;
-
-  margin-bottom: 10px;
-}
-
-.loginInput {
-  width: 100%;
-
-  padding: 14px;
-
-  border-radius: 10px;
-
-  border:
-    1px solid #333;
-
-  background: #1f1f1f;
-
-  color: white;
-
-  font-size: 15px;
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
-}
-
-.loginInput:focus {
-  outline: none;
-
-  border-color: #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      255,
-      136,
-      0,
-      0.25
-    );
-}
-
-.loginButton {
-  width: 100%;
-
-  padding: 14px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-size: 16px;
-
-  font-weight: bold;
-}
-
-.loginLinks {
-  text-align: center;
-
-  margin-top: 10px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-.loginLink {
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: 600;
-
-  transition: 0.3s;
-}
-
-.loginLink:hover {
-  color: #ffaa33;
-}
-
-
-/* ================================
-   SOBRE
-================================ */
-
-.sobreCard {
-  width: 100%;
-
-  max-width: 800px;
-
-  margin-top: 40px;
-
-  padding: 35px;
-
-  text-align: center;
-}
-
-.sobreTitulo {
-  color: white;
-
-  font-size: 38px;
-
-  margin-bottom: 15px;
-}
-
-.sobreTitulo span {
-  color: #ff8800;
-}
-
-.sobreDescricao {
-  color: #bdbdbd;
-
-  font-size: 16px;
-
-  margin-bottom: 30px;
-}
-
-.sobreSecao {
-  margin-top: 25px;
-
-  text-align: left;
-}
-
-.sobreSecao h3 {
-  color: #ff8800;
-
-  margin-bottom: 10px;
-}
-
-.sobreSecao p {
-  color: white;
-
-  line-height: 1.7;
-}
-
-.sobreLink {
-  display: inline-block;
-
-  margin-top: 30px;
-
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: bold;
-
-  transition: 0.3s;
-}
-
-.sobreLink:hover {
-  color: #ffaa33;
-}
-
-
-/* ================================
-   PAGAMENTO
-================================ */
-
-.pagamentoButtons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 25px;
-  margin-bottom: 30px;
-}
-
-.pagamentoBtn {
-  width: 120px;
-  height: 45px;
-  padding: 12px;
-
-  border: 1px solid #ff8800;
-  border-radius: 12px;
-
-  background: transparent;
-  color: white;
-
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/* BOTÃO SELECIONADO */
-.pagamentoBtn.ativo {
-  background: #ff8800;
-  color: #111;
-  border-color: #ff8800;
-}
-
-/* efeito ao passar o mouse */
-.pagamentoBtn:hover {
-  background: #ff8800;
-  color: #111;
-}
-
-
-/* ================================
-   CARD PRINCIPAL DO PAGAMENTO
-================================ */
-
-.pagamentoCard {
-  width: 100%;
-  max-width: 400px;
-
-  margin: 25px auto 0;
-
-  background: #181818;
-
-  border: 1px solid #ff8800;
-  border-radius: 16px;
-
-  padding: 16px;
-}
-
-
-/* ================================
-   PIX
-================================ */
-
-.pixArea {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  gap: 80px;
-
-  width: 100%;
-}
-
-/* área do QR Code */
-.qrArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pixArea h4 {
-  color: white;
-  margin: 0 0 10px 0;
-  font-size: 16px;
-}
-
-.qrCode {
-  width: 140px;
-  height: 140px;
-
-  margin: 0;
-
-  border-radius: 10px;
-
-  background: white;
-}
-
-
-/* área do valor */
-.valorArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  text-align: center;
-}
-
-.valorArea h3 {
-  color: white;
-
-  margin: 0 0 8px 0;
-}
-
-.valorArea p {
-  color: white;
-
-  margin: 0;
-
-  font-size: 24px;
-
-  font-weight: bold;
-}
-
-
-/* ================================
-   DESCRIÇÃO DENTRO DO CARD
-================================ */
-
-.descricaoPagamento {
-  margin-top: 18px;
-
-  padding-top: 15px;
-
-  border-top: 1px solid #333;
-
-  color: white;
-}
-
-.descricaoPagamento h3 {
-  color: #ff8800;
-
-  margin: 0 0 10px 0;
-}
-
-.descricaoPagamento p {
-  color: white;
-
-  margin: 5px 0;
-}
-
-
-/* ================================
-   RESUMO DO AGENDAMENTO
-================================ */
-
-.pagamentoInfo {
-  width: 100%;
-  max-width: 650px;
-
-  display: flex;
-  justify-content: space-between;
-
-  gap: 30px;
-
-  margin: 30px auto 0;
-
-  color: white;
-}
-
-.pagamentoInfo h3 {
-  color: #ff8800;
-
-  margin-bottom: 12px;
-}
-
-.pagamentoInfo p {
-  margin-bottom: 6px;
-}
-
-
-/* ================================
-   PAGAMENTO CARTÃO
-================================ */
-
-.pagamentoContainer {
-  width: 100%;
-  max-width: 1000px;
-
-  display: flex;
-
-  justify-content: space-between;
-  align-items: flex-start;
-
-  gap: 70px;
-
-  margin: 20px auto 0;
-}
-
-.formPagamento {
-  flex: 1;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 12px;
-}
-
-.formPagamento label {
-  color: white;
-
-  font-size: 14px;
-}
-
-.rowPagamento {
-  display: flex;
-
-  gap: 25px;
-}
-
-.rowPagamento div {
-  flex: 1;
-}
-
-.resumoPagamento {
-  width: 250px;
-
-  color: white;
-
-  display: flex;
-
-  flex-direction: column;
-
-  margin-top: 10px;
-}
-
-.resumoPagamento h3 {
-  margin-bottom: 20px;
-}
-
-.resumoPagamento p {
-  margin-bottom: 15px;
-}
-
-
-/* ================================
-   CONFIRMAR PAGAMENTO
-================================ */
-
-.confirmarPagamento {
-  width: 220px;
-
-  min-height: 45px;
-
-  margin-top: 40px;
-
-  padding: 12px 20px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background: #ff8800;
-
-  color: #111;
-
-  font-size: 16px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
-}
-
-.confirmarPagamento:hover {
-  background: #ffa01f;
-
-  transform: translateY(-2px);
-}
-
-
-/* ================================
-   RESPONSIVIDADE
-================================ */
-
-@media (max-width: 700px) {
-
-  .pixArea {
-    gap: 30px;
-  }
-
-}
-
-@media (max-width: 550px) {
-
-  .pixArea {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .pagamentoInfo {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .pagamentoContainer {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-}
-
-/* ================================
+/* =========================================================
    RECUPERAR SENHA
-================================ */
+========================================================= */
 
 .recuperarCard {
-  width: 100%;
+  width:
+    100%;
 
-  max-width: 500px;
+  max-width:
+    500px;
 
-  margin-top: 50px;
+  margin-top:
+    50px;
 
-  padding: 35px;
+  padding:
+    35px;
 
-  display: flex;
+  display:
+    flex;
 
-  flex-direction: column;
+  flex-direction:
+    column;
 
-  gap: 18px;
+  gap:
+    18px;
 
-  text-align: center;
+  text-align:
+    center;
+
+  background:
+    #151515;
+
+  border:
+    1px solid #303030;
+
+  border-radius:
+    13px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
 }
 
 .recuperarTitle {
-  color: white;
+  color:
+    #fff;
 
-  font-size: 28px;
+  font-size:
+    28px;
 
-  font-weight: bold;
+  font-weight:
+    bold;
 }
 
 .recuperarText {
-  color: #bdbdbd;
+  color:
+    #888;
 
-  font-size: 14px;
+  font-size:
+    14px;
 
-  line-height: 1.5;
+  line-height:
+    1.5;
 }
 
 .recuperarButton {
-  width: 100%;
+  width:
+    100%;
 
-  padding: 14px;
+  padding:
+    13px;
 
-  border: none;
+  border:
+    none;
 
-  border-radius: 12px;
+  border-radius:
+    8px;
 
-  font-size: 16px;
+  background:
+    #ff8800;
 
-  font-weight: bold;
+  color:
+    #111;
 
-  cursor: pointer;
+  font-size:
+    14px;
+
+  font-weight:
+    bold;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.25s ease;
+}
+
+.recuperarButton:hover {
+  background:
+    #ff9417;
+
+  transform:
+    translateY(-1px);
 }
 
 .recuperarLink {
-  color: #ff8800;
+  margin-top:
+    5px;
 
-  text-decoration: none;
+  color:
+    #ff8800;
 
-  font-weight: 600;
+  font-weight:
+    600;
 
-  margin-top: 5px;
+  text-decoration:
+    none;
 }
 
 .recuperarLink:hover {
-  color: #ffaa33;
+  color:
+    #ffaa33;
 }
 
 
-/* ================================
-   TABLET
-================================ */
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+========================================================= */
 
 @media (max-width: 1024px) {
 
-  .quadraCard {
-    width:
-      calc(
-        50% - 20px
-      );
-
-    max-width: 300px;
+  .app {
+    padding:
+      0 30px 60px;
   }
 
-  .categoryButtons button {
-    width: 160px;
-
-    font-size: 14px;
+  .quadrasSection {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
+  .categoryButtons {
+    max-width:
+      100%;
+  }
+
+  .content {
+    padding:
+      30px;
+  }
+
+  .pagamentoContainer {
+    gap:
+      35px;
+  }
 }
 
 
-/* ================================
-   MOBILE
-================================ */
+/* =========================================================
+   RESPONSIVIDADE - 768PX
+========================================================= */
 
 @media (max-width: 768px) {
 
   .app {
-    padding: 16px;
+    padding:
+      0 16px 50px;
   }
 
-  .sidebarMenu {
-    width: 250px;
 
-    left: -250px;
-  }
+  /* HEADER */
 
-  .sidebarMenu.open {
-    left: 0;
+  .topHeader {
+    height:
+      68px;
+
+    padding:
+      0 15px;
   }
 
   .menuIcon {
-    top: 15px;
+    top:
+      13px;
 
-    left: 15px;
+    left:
+      15px;
 
-    width: 42px;
+    width:
+      42px;
 
-    height: 42px;
+    height:
+      42px;
 
-    font-size: 24px;
+    font-size:
+      17px;
+  }
+
+  .menuIconOpen {
+    left:
+      250px;
+  }
+
+
+  /* MENU */
+
+  .sidebarMenu {
+    width:
+      250px;
+
+    left:
+      -250px;
+
+    padding:
+      20px 15px;
+  }
+
+  .sidebarMenu.open {
+    left:
+      0;
+  }
+
+
+  /* LOGO */
+
+  .logoArea img {
+    width:
+      38px;
+
+    height:
+      38px;
   }
 
   .logoArea h2 {
-    font-size: 24px;
+    font-size:
+      15px;
   }
 
-  .logoArea img {
-    width: 60px;
-  }
+
+  /* CATEGORIAS */
 
   .categoryButtons {
-    gap: 8px;
+    margin-top:
+      20px;
 
-    margin-top: 20px;
+    gap:
+      7px;
+
+    padding:
+      0 3px;
+
+    overflow-x:
+      auto;
+
+    flex-wrap:
+      nowrap;
+
+    justify-content:
+      flex-start;
+
+    scrollbar-width:
+      none;
+  }
+
+  .categoryButtons::-webkit-scrollbar {
+    display:
+      none;
   }
 
   .categoryButtons button {
-    width: 140px;
+    flex:
+      0 0 auto;
 
-    font-size: 13px;
+    white-space:
+      nowrap;
+  }
 
-    padding: 8px;
+
+  /* BUSCA */
+
+  .searchContainer {
+    margin-top:
+      18px;
   }
 
   .searchBar {
-    padding: 10px 14px;
-
-    margin-top: 20px;
+    max-width:
+      100%;
   }
 
   .selectQuadra {
-    width: 100%;
+    width:
+      100%;
 
-    max-width: 650px;
+    max-width:
+      650px;
   }
 
+
+  /* QUADRAS */
+
   .quadrasSection {
-    flex-direction: column;
+    grid-template-columns:
+      1fr;
 
-    align-items: center;
+    gap:
+      14px;
 
-    gap: 16px;
-
-    margin-top: 24px;
+    margin-top:
+      22px;
   }
 
   .quadraCard {
-    width: 100%;
+    width:
+      100%;
 
-    max-width: 340px;
+    max-width:
+      500px;
+
+    margin:
+      0 auto;
   }
 
   .quadraCard img {
-    height: 160px;
+    height:
+      160px;
   }
 
-  .pixArea {
-    flex-direction: column;
 
-    text-align: center;
+  /* PAGAMENTO */
+
+  .pixArea {
+    flex-direction:
+      column;
+
+    gap:
+      25px;
   }
 
   .pagamentoInfo {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 25px;
+    gap:
+      25px;
   }
 
   .pagamentoContainer {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 30px;
+    gap:
+      30px;
   }
 
   .resumoPagamento {
-    width: 100%;
+    width:
+      100%;
   }
 
   .confirmarPagamento {
-    width: 100%;
+    width:
+      100%;
   }
 
   .rowPagamento {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 12px;
+    gap:
+      12px;
   }
 
+
+  /* INSTITUCIONAL */
+
+  .arenaWrapper {
+    flex-direction:
+      column;
+  }
+
+  .sidebar {
+    width:
+      100%;
+
+    min-height:
+      auto;
+
+    border-right:
+      none;
+
+    border-bottom:
+      1px solid #202020;
+  }
+
+  .content {
+    padding:
+      25px 15px;
+  }
+
+  .contentCard {
+    padding:
+      25px;
+  }
+
+  .hero h1 {
+    font-size:
+      30px;
+  }
 }
 
 
-/* ================================
+/* =========================================================
    MOBILE PEQUENO
-================================ */
+========================================================= */
 
 @media (max-width: 480px) {
 
-  .categoryButtons {
-    flex-direction: column;
-
-    align-items: center;
+  .app {
+    padding:
+      0 12px 40px;
   }
 
-  .categoryButtons button {
-    width: 100%;
+  .topHeader {
+    height:
+      64px;
+  }
 
-    max-width: 300px;
+  .menuIcon {
+    top:
+      11px;
+
+    left:
+      12px;
+
+    width:
+      40px;
+
+    height:
+      40px;
+  }
+
+  .menuIconOpen {
+    left:
+      240px;
+  }
+
+  .sidebarMenu {
+    width:
+      240px;
+
+    left:
+      -240px;
+  }
+
+  .sidebarMenu.open {
+    left:
+      0;
+  }
+
+  .logoArea {
+    gap:
+      8px;
+  }
+
+  .logoArea img {
+    width:
+      35px;
+
+    height:
+      35px;
   }
 
   .logoArea h2 {
-    font-size: 18px;
+    font-size:
+      14px;
   }
 
+  .categoryButtons {
+    justify-content:
+      flex-start;
+  }
+
+  .categoryButtons button {
+    padding:
+      8px 14px;
+
+    font-size:
+      12px;
+  }
+
+  .quadraCard {
+    padding:
+      12px;
+  }
+
+  .quadraCard img {
+    height:
+      150px;
+  }
+
+  .quadraCard h3 {
+    font-size:
+      16px;
+  }
+
+  .sobreCard,
+  .cadastroCard,
+  .loginCard,
+  .recuperarCard {
+    padding:
+      22px 18px;
+  }
+
+  .sobreTitulo {
+    font-size:
+      29px;
+  }
+
+  .cadastroTitle,
+  .loginTitle,
+  .recuperarTitle {
+    font-size:
+      24px;
+  }
+
+  .pagamentoButtons {
+    flex-wrap:
+      wrap;
+  }
+
+  .pagamentoBtn {
+    width:
+      105px;
+  }
+
+  .pixArea {
+    gap:
+      20px;
+  }
+
+  .qrCode {
+    width:
+      125px;
+
+    height:
+      125px;
+  }
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .logoArea h2 {
+    font-size:
+      13px;
+  }
+
+  .menuIcon {
+    left:
+      10px;
+  }
+
+  .menuIconOpen {
+    left:
+      225px;
+  }
+
+  .sidebarMenu {
+    width:
+      225px;
+
+    left:
+      -225px;
+  }
+
+  .sidebarMenu.open {
+    left:
+      0;
+  }
+
+  .quadraCard img {
+    height:
+      135px;
+  }
 }
