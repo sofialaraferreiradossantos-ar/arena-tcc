@@ -1,6 +1,7 @@
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
+  FaTrophy,
 } from "react-icons/fa";
 
 import {
@@ -9,6 +10,7 @@ import {
 
 import styles from "../../styles/torneios.module.css";
 
+
 function TorneioCard({
   id,
   nome,
@@ -16,44 +18,119 @@ function TorneioCard({
   local,
   imagem,
 }) {
+
   return (
-    <div className={styles.card}>
 
-      {/* TEXTO À ESQUERDA */}
-      <div className={styles.cardInfo}>
+    <article
+      className={styles.card}
+    >
 
-        <h3>
-          {nome}
-        </h3>
+      {/* INFORMAÇÕES */}
 
-        <p>
-          <FaCalendarAlt />
+      <div
+        className={styles.cardInfo}
+      >
 
-          <span>
-            Data: {data}
-          </span>
-        </p>
+        <div
+          className={styles.cardTitle}
+        >
 
-        <p>
-          <FaMapMarkerAlt />
+          <div
+            className={styles.trophyIcon}
+          >
+            <FaTrophy />
+          </div>
 
-          <span>
-            {local}
-          </span>
-        </p>
+          <div>
 
-        {/* BOTÃO VER DETALHES */}
+            <span
+              className={styles.cardLabel}
+            >
+              TORNEIO
+            </span>
+
+            <h2>
+              {nome}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        {/* DATA */}
+
+        <div
+          className={styles.infoItem}
+        >
+
+          <div
+            className={styles.infoIcon}
+          >
+            <FaCalendarAlt />
+          </div>
+
+          <div>
+
+            <span>
+              Data
+            </span>
+
+            <strong>
+              {data}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        {/* LOCAL */}
+
+        <div
+          className={styles.infoItem}
+        >
+
+          <div
+            className={styles.infoIcon}
+          >
+            <FaMapMarkerAlt />
+          </div>
+
+          <div>
+
+            <span>
+              Local
+            </span>
+
+            <strong>
+              {local}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        {/* BOTÃO */}
+
         <Link
           to={`/torneio/${id}`}
-          className={styles.detalhesButton}
+          className={
+            styles.detalhesButton
+          }
         >
-          Ver Detalhes
+          Ver detalhes
         </Link>
 
       </div>
 
-      {/* IMAGEM À DIREITA */}
-      <div className={styles.cardRight}>
+
+      {/* IMAGEM */}
+
+      <div
+        className={styles.cardRight}
+      >
 
         <img
           src={imagem}
@@ -62,8 +139,10 @@ function TorneioCard({
 
       </div>
 
-    </div>
+    </article>
+
   );
 }
+
 
 export default TorneioCard;

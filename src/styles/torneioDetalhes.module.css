@@ -193,7 +193,7 @@
 
 
 .inscrever:hover {
-  background: #ff9d2e;
+  background: #ffffff;
 
   transform: translateY(-2px);
 }
@@ -227,11 +227,4 @@
     height: 200px;
   }
 
-}
-.detalhesButton:hover {
-  background: #ff9d2e;
-
-  color: #111111;
-
-  transform: translateY(-2px);
 }
