@@ -48,12 +48,12 @@
 ========================================================= */
 
 .logoDetails {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
 
   display: block;
 
-  margin: 30px auto 0;
+  margin: 34px auto 0;
 
   object-fit: contain;
 
@@ -77,15 +77,15 @@
 
 .titleDetails {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1300px;
 
-  margin: 18px auto 0;
+  margin: 20px auto 0;
 
   text-align: center;
 
   color: #fff;
 
-  font-size: 34px;
+  font-size: 40px;
 
   font-weight: 700;
 
@@ -103,10 +103,10 @@
 
   display: block;
 
-  width: 55px;
-  height: 3px;
+  width: 65px;
+  height: 4px;
 
-  margin: 13px auto 0;
+  margin: 16px auto 0;
 
   border-radius: 10px;
 
@@ -124,19 +124,19 @@
 
 .detailsContent {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1300px;
 
-  margin: 35px auto 0;
+  margin: 40px auto 0;
 
   display: grid;
 
   grid-template-columns:
     minmax(0, 1.45fr)
-    minmax(350px, 0.8fr);
+    minmax(380px, 0.8fr);
 
   align-items: start;
 
-  gap: 20px;
+  gap: 24px;
 }
 
 
@@ -147,7 +147,7 @@
 .galleryBox {
   width: 100%;
 
-  padding: 14px;
+  padding: 18px;
 
   overflow: hidden;
 
@@ -155,7 +155,7 @@
 
   border: 1px solid #303030;
 
-  border-radius: 13px;
+  border-radius: 15px;
 
   box-shadow:
     0 10px 30px
@@ -170,15 +170,15 @@
   display: block;
 
   width: 100%;
-  height: 2px;
+  height: 3px;
 
-  margin: -14px 0 14px;
+  margin: -18px 0 18px;
 
   background: #ff8800;
 }
 
 .galleryBox:hover {
-  border-color: #444;
+  border-color: #ff8800;
 }
 
 
@@ -188,13 +188,13 @@
 
 .mainImage {
   width: 100%;
-  height: 420px;
+  height: 460px;
 
   display: block;
 
   object-fit: cover;
 
-  border-radius: 9px;
+  border-radius: 11px;
 
   background: #101010;
 
@@ -209,19 +209,19 @@
 .thumbContainer {
   width: 100%;
 
-  margin-top: 12px;
+  margin-top: 14px;
 
   display: grid;
 
   grid-template-columns:
     repeat(4, 1fr);
 
-  gap: 10px;
+  gap: 12px;
 }
 
 .thumb {
   width: 100%;
-  height: 75px;
+  height: 85px;
 
   display: block;
 
@@ -229,7 +229,7 @@
 
   border: 2px solid transparent;
 
-  border-radius: 8px;
+  border-radius: 9px;
 
   background: #101010;
 
@@ -273,19 +273,25 @@
 
   width: 100%;
 
-  padding: 25px;
+  padding: 30px;
 
   background: #151515;
 
   border: 1px solid #303030;
 
-  border-radius: 13px;
+  border-radius: 15px;
 
   box-shadow:
     0 10px 30px
     rgba(0, 0, 0, 0.25);
 
   overflow: hidden;
+
+  transition: 0.25s ease;
+}
+
+.infoBox:hover {
+  border-color: #ff8800;
 }
 
 .infoBox::before {
@@ -297,7 +303,7 @@
   left: 0;
 
   width: 100%;
-  height: 2px;
+  height: 3px;
 
   background: #ff8800;
 }
@@ -308,15 +314,15 @@
 ========================================================= */
 
 .infoBox h2 {
-  margin: 0 0 25px;
+  margin: 0 0 28px;
 
-  padding-bottom: 15px;
+  padding-bottom: 17px;
 
   border-bottom: 1px solid #292929;
 
   color: #fff;
 
-  font-size: 21px;
+  font-size: 24px;
 
   font-weight: 700;
 }
@@ -327,11 +333,11 @@
 ========================================================= */
 
 .infoBox h3 {
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 
   color: #ff8800;
 
-  font-size: 14px;
+  font-size: 15px;
 
   font-weight: 700;
 
@@ -346,7 +352,7 @@
 .infoBox p {
   color: #bbb;
 
-  font-size: 13px;
+  font-size: 14px;
 
   line-height: 1.7;
 }
@@ -357,19 +363,19 @@
 ========================================================= */
 
 .horario {
-  margin-top: 25px;
+  margin-top: 28px;
 
-  padding: 14px;
+  padding: 16px;
 
   background: #101010;
 
   border: 1px solid #252525;
 
-  border-radius: 9px;
+  border-radius: 10px;
 
   color: #ddd;
 
-  font-size: 13px;
+  font-size: 14px;
 
   line-height: 1.5;
 }
@@ -377,6 +383,7 @@
 
 /* =========================================================
    FUNDO AO ABRIR MENU
+   (idêntico ao .sidebarOverlay do arquivo principal)
 ========================================================= */
 
 .menuOverlay {
@@ -384,7 +391,7 @@
 
   inset: 0;
 
-  z-index: 998;
+  z-index: 1000;
 
   background:
     rgba(0, 0, 0, 0.72);
@@ -399,13 +406,14 @@
 
 /* =========================================================
    MENU LATERAL
+   (idêntico ao .sidebar do arquivo principal)
 ========================================================= */
 
 .sidebarMenu {
   position: fixed;
 
   top: 0;
-  left: -250px;
+  left: 0;
 
   z-index: 1100;
 
@@ -426,43 +434,48 @@
     12px 0 35px
     rgba(0, 0, 0, 0.45);
 
-  overflow-y: auto;
+  transform: translateX(-100%);
 
-  transition: left 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 
 /* =========================================================
    MENU ABERTO
+   (idêntico ao .sidebar.open do arquivo principal)
 ========================================================= */
 
-.open {
-  left: 0;
+.sidebarMenu.open {
+  transform: translateX(0);
 }
 
 
 /* =========================================================
-   LOGO DO MENU
+   MARCA / LOGO DO MENU
+   (idêntico ao .sidebarBrand + .sidebarLogo do arquivo principal)
 ========================================================= */
 
 .sidebarMenu img {
-  width: 90px;
-  height: 75px;
-
-  margin: 0 auto 22px;
+  width: 43px;
+  height: 43px;
 
   display: block;
 
-  object-fit: contain;
+  margin: 0 auto 22px;
 
-  border-bottom: 1px solid #1b1b1b;
+  object-fit: cover;
 
-  padding-bottom: 10px;
+  border-radius: 8px;
+
+  padding-bottom: 0;
+
+  border-bottom: none;
 }
 
 
 /* =========================================================
    LINKS
+   (idêntico ao .sidebarNav a do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a {
@@ -507,25 +520,23 @@
 
 /* =========================================================
    PÁGINA ATUAL
+   (idêntico ao .sidebarNav a.active do arquivo principal)
 ========================================================= */
 
 .active {
   background: #ff8800;
 
-  color: #111 !important;
-
-  border-color: #ff8800;
-
-  font-weight: 700;
+  color: #111;
 
   box-shadow:
     0 5px 15px
-    rgba(255, 136, 0, 0.18);
+    rgba(255, 136, 0, 0.16);
 }
 
 
 /* =========================================================
    HOVER DOS LINKS
+   (idêntico ao .sidebarNav a:hover do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a:hover {
@@ -534,23 +545,19 @@
 
   color: #ff8800;
 
-  border-color:
-    rgba(255, 136, 0, 0.15);
-
   transform: translateX(2px);
 }
 
 
 /* =========================================================
    HOVER DA PÁGINA ATUAL
+   (idêntico ao .sidebarNav a.active:hover do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a.active:hover {
   background: #ff9417;
 
-  border-color: #ff9417;
-
-  color: #111 !important;
+  color: #111;
 
   transform: translateX(2px);
 }
@@ -558,6 +565,7 @@
 
 /* =========================================================
    ÍCONES
+   (idêntico ao .sidebarNav a svg do arquivo principal)
 ========================================================= */
 
 .menuEmoji {
@@ -577,22 +585,13 @@
   transition: 0.2s ease;
 }
 
-
-/* ÍCONE NO HOVER */
-
 .sidebarMenu a:hover .menuEmoji {
   color: #ff8800;
 }
 
-
-/* ÍCONE DA PÁGINA ATUAL */
-
 .sidebarMenu a.active .menuEmoji {
   color: #111;
 }
-
-
-/* ÍCONE DA PÁGINA ATUAL NO HOVER */
 
 .sidebarMenu a.active:hover .menuEmoji {
   color: #111;
@@ -601,19 +600,21 @@
 
 /* =========================================================
    SAIR
+   (idêntico ao .sidebarBottom do arquivo principal)
 ========================================================= */
 
 .sair {
-  margin-top: auto !important;
+  margin-top: auto;
 
-  padding-top: 15px !important;
+  padding-top: 15px;
 
-  border-top: 1px solid #1d1d1d !important;
+  border-top: 1px solid #1d1d1d;
 }
 
 
 /* =========================================================
    FECHAR MENU
+   (idêntico ao .closeButton do arquivo principal)
 ========================================================= */
 
 .closeMenu {
@@ -639,9 +640,7 @@
 
   color: #777;
 
-  font-size: 15px;
-
-  line-height: 1;
+  font-size: 13px;
 
   cursor: pointer;
 
@@ -660,6 +659,7 @@
 
 /* =========================================================
    ABRIR MENU
+   (idêntico ao .menuButton do arquivo principal)
 ========================================================= */
 
 .menuIcon {
@@ -681,37 +681,28 @@
 
   padding: 0;
 
-  border: 1px solid #ff8800;
+  border: 1px solid #2c2c2c;
 
   border-radius: 9px;
 
-  background: #ff8800;
+  background: #111;
 
-  color: #111;
+  color: #fff;
 
   font-size: 18px;
 
   cursor: pointer;
 
-  box-shadow:
-    0 5px 15px
-    rgba(255, 136, 0, 0.18);
-
   transition: 0.25s ease;
 }
 
 .menuIcon:hover {
-  border-color: #ff9417;
+  border-color: #ff8800;
 
-  background: #ff9417;
+  background:
+    rgba(255, 136, 0, 0.08);
 
-  color: #111;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 7px 20px
-    rgba(255, 136, 0, 0.25);
+  color: #ff8800;
 }
 
 
@@ -740,15 +731,19 @@
     padding: 0 30px 60px;
   }
 
+  .titleDetails {
+    font-size: 32px;
+  }
+
   .detailsContent {
     grid-template-columns:
       1fr 1fr;
 
-    gap: 15px;
+    gap: 18px;
   }
 
   .mainImage {
-    height: 360px;
+    height: 380px;
   }
 }
 
@@ -767,8 +762,8 @@
   /* LOGO */
 
   .logoDetails {
-    width: 85px;
-    height: 85px;
+    width: 90px;
+    height: 90px;
 
     margin-top: 10px;
   }
@@ -784,13 +779,13 @@
   /* CONTEÚDO */
 
   .detailsContent {
-    margin-top: 25px;
+    margin-top: 28px;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 15px;
+    gap: 16px;
   }
 
 
@@ -799,17 +794,17 @@
   .galleryBox {
     width: 100%;
 
-    padding: 12px;
+    padding: 14px;
   }
 
   .galleryBox::before {
-    margin: -12px 0 12px;
+    margin: -14px 0 14px;
   }
 
   .mainImage {
-    height: 280px;
+    height: 290px;
 
-    border-radius: 8px;
+    border-radius: 9px;
   }
 
 
@@ -819,11 +814,11 @@
     grid-template-columns:
       repeat(4, 1fr);
 
-    gap: 7px;
+    gap: 8px;
   }
 
   .thumb {
-    height: 65px;
+    height: 68px;
   }
 
 
@@ -832,11 +827,22 @@
   .infoBox {
     width: 100%;
 
-    padding: 22px;
+    padding: 24px;
   }
 
   .infoBox h2 {
-    font-size: 19px;
+    font-size: 20px;
+  }
+
+
+  /* MENU */
+
+  .menuIcon {
+    width: 41px;
+
+    height: 41px;
+
+    margin-right: 11px;
   }
 }
 
@@ -855,8 +861,8 @@
   /* LOGO */
 
   .logoDetails {
-    width: 75px;
-    height: 75px;
+    width: 78px;
+    height: 78px;
   }
 
 
@@ -870,17 +876,17 @@
   /* GALERIA */
 
   .galleryBox {
-    padding: 10px;
+    padding: 11px;
 
-    border-radius: 11px;
+    border-radius: 12px;
   }
 
   .galleryBox::before {
-    margin: -10px 0 10px;
+    margin: -11px 0 11px;
   }
 
   .mainImage {
-    height: 220px;
+    height: 225px;
   }
 
 
@@ -891,18 +897,18 @@
   }
 
   .thumb {
-    height: 55px;
+    height: 56px;
 
-    border-radius: 6px;
+    border-radius: 7px;
   }
 
 
   /* INFORMAÇÕES */
 
   .infoBox {
-    padding: 18px;
+    padding: 19px;
 
-    border-radius: 11px;
+    border-radius: 12px;
   }
 
   .infoBox h2 {
@@ -925,17 +931,8 @@
   /* MENU */
 
   .sidebarMenu {
-    width: 240px;
-
-    left: -240px;
+    width: 280px;
   }
-
-  .sidebarMenu.open {
-    left: 0;
-  }
-
-
-  /* BOTÃO MENU */
 
   .menuIcon {
     top: 12px;
@@ -964,28 +961,14 @@
   }
 
   .mainImage {
-    height: 190px;
+    height: 195px;
   }
 
   .thumb {
-    height: 48px;
+    height: 50px;
   }
 
   .infoBox {
     padding: 16px;
-  }
-
-  .sidebarMenu {
-    width: 225px;
-
-    left: -225px;
-  }
-
-  .sidebarMenu.open {
-    left: 0;
-  }
-
-  .menuIcon {
-    left: 10px;
   }
 }

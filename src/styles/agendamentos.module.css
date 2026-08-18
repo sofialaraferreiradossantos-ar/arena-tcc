@@ -493,18 +493,18 @@
 
 
 /* =========================================================
-   TÍTULO DA PÁGINA
+   TÍTULO DA PÁGINA (AUMENTADO)
 ========================================================= */
 
 .pageTitle {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1300px;
 
   margin:
     0 auto;
 
   padding:
-    45px 0 0;
+    50px 0 0;
 }
 
 .pageTitle h1 {
@@ -512,7 +512,7 @@
     #fff;
 
   font-size:
-    32px;
+    40px;
 
   font-weight:
     700;
@@ -534,10 +534,10 @@
 
   display: block;
 
-  width: 55px;
-  height: 3px;
+  width: 65px;
+  height: 4px;
 
-  margin-top: 13px;
+  margin-top: 16px;
 
   border-radius: 10px;
 
@@ -547,18 +547,18 @@
 
 .pageTitle p {
   margin-top:
-    10px;
+    12px;
 
   color:
     #888;
 
   font-size:
-    14px;
+    16px;
 }
 
 
 /* =========================================================
-   ABAS
+   ABAS (AUMENTADO)
 ========================================================= */
 
 .tabs,
@@ -566,15 +566,15 @@
 .tabsContainer,
 .mainContent nav {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1300px;
 
   margin:
-    28px auto 0;
+    32px auto 0;
 
   display: flex;
   align-items: center;
 
-  gap: 8px;
+  gap: 10px;
 }
 
 .tabs button,
@@ -582,16 +582,16 @@
 .tabsContainer button,
 .mainContent nav button {
   min-height:
-    38px;
+    44px;
 
   padding:
-    9px 18px;
+    11px 22px;
 
   border:
     1px solid #292929;
 
   border-radius:
-    8px;
+    9px;
 
   background:
     #111;
@@ -600,7 +600,7 @@
     #999;
 
   font-size:
-    13px;
+    14px;
 
   font-weight:
     600;
@@ -642,15 +642,15 @@
 
 
 /* =========================================================
-   ÁREA DOS CARDS
+   ÁREA DOS CARDS (AUMENTADO)
 ========================================================= */
 
 .cardsArea {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1300px;
 
   margin:
-    20px auto 0;
+    24px auto 0;
 
   display: grid;
 
@@ -658,22 +658,22 @@
     repeat(2, minmax(0, 1fr));
 
   gap:
-    18px;
+    24px;
 }
 
 
 /* =========================================================
-   CARD
+   CARD (AUMENTADO)
 ========================================================= */
 
 .card {
   position: relative;
 
   min-height:
-    195px;
+    240px;
 
   padding:
-    23px;
+    30px;
 
   overflow:
     hidden;
@@ -688,7 +688,7 @@
     1px solid #303030;
 
   border-radius:
-    13px;
+    15px;
 
   background:
     #151515;
@@ -714,7 +714,7 @@
     100%;
 
   height:
-    2px;
+    3px;
 
   background:
     #ff8800;
@@ -730,7 +730,7 @@
 
 
 /* =========================================================
-   CABEÇALHO DO CARD
+   CABEÇALHO DO CARD (AUMENTADO)
 ========================================================= */
 
 .cardHeader {
@@ -741,18 +741,18 @@
     center;
 
   gap:
-    13px;
+    16px;
 }
 
 .cardIcon {
   width:
-    43px;
+    52px;
 
   height:
-    43px;
+    52px;
 
   min-width:
-    43px;
+    52px;
 
   display:
     flex;
@@ -768,7 +768,7 @@
     rgba(255, 136, 0, 0.3);
 
   border-radius:
-    9px;
+    11px;
 
   background:
     rgba(255, 136, 0, 0.08);
@@ -777,7 +777,7 @@
     #ff8800;
 
   font-size:
-    17px;
+    21px;
 }
 
 .cardLabel {
@@ -785,13 +785,13 @@
     block;
 
   margin-bottom:
-    4px;
+    5px;
 
   color:
     #666;
 
   font-size:
-    10px;
+    11px;
 
   font-weight:
     700;
@@ -805,7 +805,7 @@
     #fff;
 
   font-size:
-    18px;
+    22px;
 
   font-weight:
     700;
@@ -813,12 +813,12 @@
 
 
 /* =========================================================
-   INFORMAÇÕES
+   INFORMAÇÕES (AUMENTADO)
 ========================================================= */
 
 .cardInfo {
   margin-top:
-    20px;
+    24px;
 
   display:
     grid;
@@ -827,15 +827,15 @@
     repeat(2, minmax(0, 1fr));
 
   gap:
-    10px;
+    12px;
 }
 
 .infoItem {
   min-height:
-    55px;
+    66px;
 
   padding:
-    9px;
+    12px;
 
   display:
     flex;
@@ -844,13 +844,13 @@
     center;
 
   gap:
-    9px;
+    11px;
 
   border:
     1px solid #252525;
 
   border-radius:
-    8px;
+    9px;
 
   background:
     #101010;
@@ -858,13 +858,13 @@
 
 .infoIcon {
   width:
-    31px;
+    38px;
 
   height:
-    31px;
+    38px;
 
   min-width:
-    31px;
+    38px;
 
   display:
     flex;
@@ -876,7 +876,7 @@
     center;
 
   border-radius:
-    7px;
+    8px;
 
   background:
     rgba(255, 136, 0, 0.08);
@@ -885,7 +885,7 @@
     #ff8800;
 
   font-size:
-    12px;
+    14px;
 }
 
 .infoItem span {
@@ -893,13 +893,13 @@
     block;
 
   margin-bottom:
-    3px;
+    4px;
 
   color:
     #666;
 
   font-size:
-    10px;
+    11px;
 }
 
 .infoItem strong {
@@ -910,12 +910,12 @@
     #ddd;
 
   font-size:
-    12px;
+    14px;
 }
 
 
 /* =========================================================
-   BOTÃO CANCELAR
+   BOTÃO CANCELAR (AUMENTADO)
 ========================================================= */
 
 .cardFooter {
@@ -923,7 +923,7 @@
     auto;
 
   padding-top:
-    17px;
+    20px;
 
   display:
     flex;
@@ -934,10 +934,10 @@
 
 .cancelButton {
   min-height:
-    36px;
+    42px;
 
   padding:
-    8px 14px;
+    10px 18px;
 
   display:
     flex;
@@ -949,13 +949,13 @@
     center;
 
   gap:
-    7px;
+    8px;
 
   border:
     1px solid #ff8800;
 
   border-radius:
-    7px;
+    8px;
 
   background:
     transparent;
@@ -964,7 +964,7 @@
     #ff8800;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
     600;
@@ -1103,6 +1103,11 @@
       0 30px 60px;
   }
 
+  .pageTitle h1 {
+    font-size:
+      32px;
+  }
+
   .cardsArea {
     grid-template-columns:
       1fr;
@@ -1183,7 +1188,7 @@
 
   .pageTitle h1 {
     font-size:
-      26px;
+      27px;
   }
 
   .pageTitle p {
@@ -1222,6 +1227,15 @@
   .mainContent nav button {
     white-space:
       nowrap;
+
+    min-height:
+      38px;
+
+    padding:
+      9px 16px;
+
+    font-size:
+      13px;
   }
 
 
@@ -1235,15 +1249,34 @@
       1fr;
 
     gap:
-      14px;
+      16px;
   }
 
   .card {
     min-height:
-      190px;
+      210px;
 
     padding:
-      20px;
+      22px;
+  }
+
+  .cardIcon {
+    width:
+      46px;
+
+    height:
+      46px;
+
+    min-width:
+      46px;
+
+    font-size:
+      18px;
+  }
+
+  .cardTitle {
+    font-size:
+      19px;
   }
 
   .cardInfo {
@@ -1277,7 +1310,7 @@
 
   .pageTitle h1 {
     font-size:
-      23px;
+      24px;
   }
 
   .card {
