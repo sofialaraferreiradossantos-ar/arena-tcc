@@ -287,7 +287,7 @@ function TorneioDetalhes() {
 
         <Link
           to={`/inscricao/${torneio.id}`}
-          className={styles.inscrever}
+          className={styles.inscreverButton}
         >
           Inscrever-se
         </Link>

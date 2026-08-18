@@ -25,7 +25,6 @@ function InscricaoTorneio() {
 
   const location = useLocation();
 
-
   const fecharMenu = () => {
     setMenuAberto(false);
   };
@@ -126,6 +125,11 @@ function InscricaoTorneio() {
         <Link
           to="/pagamento"
           onClick={fecharMenu}
+          className={
+            location.pathname === "/pagamento"
+              ? styles.active
+              : ""
+          }
         >
           <span>💳</span>
           Pagamento
@@ -144,12 +148,11 @@ function InscricaoTorneio() {
       </aside>
 
 
-      {/* CONTEÚDO */}
+      {/* CONTEÚDO PRINCIPAL */}
 
       <main className={styles.mainContent}>
 
-
-        {/* BOTÃO MENU */}
+        {/* BOTÃO DO MENU */}
 
         <FaBars
           className={styles.menuIcon}
@@ -219,8 +222,15 @@ function InscricaoTorneio() {
                 <FaCalendarAlt />
 
                 <div>
-                  <small>Data</small>
-                  <strong>25/05 a 25/06</strong>
+
+                  <small>
+                    Data
+                  </small>
+
+                  <strong>
+                    25/05 a 25/06
+                  </strong>
+
                 </div>
 
               </div>
@@ -231,8 +241,15 @@ function InscricaoTorneio() {
                 <FaMapMarkerAlt />
 
                 <div>
-                  <small>Local</small>
-                  <strong>Beach Tennis Arena 1</strong>
+
+                  <small>
+                    Local
+                  </small>
+
+                  <strong>
+                    Beach Tennis Arena 1
+                  </strong>
+
                 </div>
 
               </div>
@@ -243,8 +260,15 @@ function InscricaoTorneio() {
                 <FaMoneyBillWave />
 
                 <div>
-                  <small>Valor da inscrição</small>
-                  <strong>R$ 100,00</strong>
+
+                  <small>
+                    Valor da inscrição
+                  </small>
+
+                  <strong>
+                    R$ 100,00
+                  </strong>
+
                 </div>
 
               </div>
@@ -268,6 +292,7 @@ function InscricaoTorneio() {
 
 
             <div className={styles.formGrid}>
+
 
               <div className={styles.inputGroup}>
 
@@ -327,7 +352,7 @@ function InscricaoTorneio() {
             </div>
 
 
-            {/* RESUMO */}
+            {/* RESUMO DA INSCRIÇÃO */}
 
             <div className={styles.resumo}>
 
@@ -343,6 +368,7 @@ function InscricaoTorneio() {
 
               </div>
 
+
               <div>
 
                 <span>
@@ -354,6 +380,7 @@ function InscricaoTorneio() {
                 </strong>
 
               </div>
+
 
               <div className={styles.total}>
 
@@ -372,10 +399,10 @@ function InscricaoTorneio() {
 
             {/* BOTÃO */}
 
-            <button className={styles.confirmarButton}>
-
+            <button
+              className={styles.confirmarButton}
+            >
               Confirmar inscrição
-
             </button>
 
           </div>

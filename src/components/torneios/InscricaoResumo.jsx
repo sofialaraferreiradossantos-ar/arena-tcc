@@ -1,29 +1,30 @@
-import { FaTrophy, FaCalendarAlt } from "react-icons/fa";
-import { MdSportsTennis } from "react-icons/md";
-import styles from "../../styles/torneios.module.css";
+import React from 'react';
 
-function InscricaoResumo({ onConfirmar }) {
+const InscricaoResumo = ({ styles, torneio, onConfirmar }) => {
   return (
-    <div className={styles.resumoBox}>
-      <h2>Resumo da <span>inscrição</span></h2>
+    <div className={styles.resumoCard}>
+      <h2 className={styles.resumoTitle}>Resumo da inscrição</h2>
+      <div className={styles.resumoDetalhes}>
+        <p className={styles.resumoQuadra}>{torneio?.quadra || 'Quadra Beach Tennis'}</p>
+        <p className={styles.resumoData}>{torneio?.data || '17/02/2026'}</p>
 
-      <p><MdSportsTennis className={styles.resumoIcon} /> Quadra Beach Tennis</p>
-      <p><FaCalendarAlt className={styles.resumoIcon} /> 17/02/2026</p>
+        <div className={styles.premios}>
+          <h3 className={styles.premiosTitle}>Prêmios</h3>
+          <p className={styles.premioItem}>1º Lugar: R$2.000</p>
+          <p className={styles.premioItem}>2º Lugar: R$1.000</p>
+          <p className={styles.premioItem}>3º Lugar: R$500</p>
+        </div>
 
-      <div className={styles.premios}>
-        <p><FaTrophy className={styles.resumoIcon} /> Prêmios</p>
-        <p>1º Lugar: R$2.000</p>
-        <p>2º Lugar: R$1.000</p>
-        <p>3º Lugar: R$500</p>
+        <div className={styles.valor}>
+          <p className={styles.valorLabel}>Valor da Inscrição:</p>
+          <p className={styles.valorPreco}>R$100</p>
+        </div>
       </div>
-
-      <p className={styles.valor}>Valor da Inscrição: <strong>R$100</strong></p>
-
-      <button className={styles.confirmarBtn} onClick={onConfirmar}>
+      <button className={styles.btnConfirmar} onClick={onConfirmar}>
         Confirmar Inscrição
       </button>
     </div>
   );
-}
+};
 
 export default InscricaoResumo;
