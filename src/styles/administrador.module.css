@@ -1,0 +1,91 @@
+.admin {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  padding: 20px;
+}
+
+.adminHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.adminHeader h1 {
+  font-size: 24px;
+}
+
+.adminContent {
+  max-width: 900px;
+  margin: auto;
+}
+
+.adminContent h2 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.adminContent p {
+  color: #aaa;
+  margin-bottom: 25px;
+}
+
+.adminCards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.adminCards a {
+  min-height: 140px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+}
+
+.adminCards a:hover {
+  border-color: #ff8800;
+}
+
+.adminCards svg {
+  color: #ff8800;
+  font-size: 30px;
+}
+
+.adminCards span {
+  color: #999;
+  font-size: 12px;
+}
+
+.adminLogout {
+  margin-top: 20px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+
+  color: #ff3b30;
+  text-decoration: none;
+}
+
+@media (min-width: 700px) {
+  .adminCards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
