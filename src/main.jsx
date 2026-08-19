@@ -14,6 +14,7 @@ import PagamentoCartao from './pages/pagamentoCartao.jsx'
 import RecuperarSenha from "./components/quadras/recuperarSenha.jsx";
 import TorneioDetalhes from "./pages/TorneioDetalhes";
 
+
 import {
   BrowserRouter,
   Routes,
@@ -40,9 +41,9 @@ createRoot(document.getElementById('root')).render(
   <Route path="/pagamento" element={<Pagamento />} />
   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
-  <Route path="/torneio/:id" element={<TorneioDetalhes />}
-/>
+  <Route path="/torneio/:id" element={<TorneioDetalhes />} />
   
+
 </Routes>
     </BrowserRouter>
   </StrictMode>,
