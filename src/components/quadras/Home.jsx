@@ -1,56 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import Header from "../../components/quadras/Header";
 import styles from "../../styles/home.module.css";
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
-    <div className={styles.arenaWrapper}>
-      <aside className={styles.sidebar}>
-        <div className={styles.logoArea}>
-          <div className={styles.logoMark}>◉</div>
+    <div className={styles.container}>
+      <Header
+        title="ARENA"
+        highlight="BEACH"
+      />
 
-          <div className={styles.logoText}>
-            <span>ARENA</span>
-            <span>BEACH</span>
-          </div>
-        </div>
-
-        <nav className={styles.menu}>
-          <button className={`${styles.menuItem} ${styles.active}`}>
-            🏠 <span>Início</span>
-          </button>
-
-          <button className={styles.menuItem}
-          onClick={() => navigate("/quadra")}>
-            🏐 <span>Quadras</span>
-          </button>
-
-          <button className={styles.menuItem}
-          onClick={() => navigate("/agendamentos")}>
-            📅 <span>Agendamentos</span>
-          </button>
-
-          <button className={styles.menuItem}
-          onClick={() =>navigate("/torneios") }>
-            🏆 <span>Torneios</span>
-          </button>
-
-          <button className={styles.menuItem}
-          onClick={() => navigate("/pagamento")}>
-            💳 <span>Pagamento</span>
-          </button>
-
-          <button
-            className={styles.menuItem}
-            onClick={() => navigate("/cadastro")}
-          >
-            🚪 <span>Sair</span>
-          </button>
-        </nav>
-      </aside>
-
-      <main className={styles.content}>
+      <main className={styles.app}>
         <div className={styles.contentCard}>
           <header className={styles.hero}>
             <h1>

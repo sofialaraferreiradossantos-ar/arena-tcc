@@ -56,38 +56,8 @@
    HEADER
 ========================================================= */
 
-.topHeader {
-  position: sticky;
-
-  top: 0;
-
-  z-index: 900;
-
-  width: 100%;
-  height: 76px;
-
-  padding: 0 35px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background:
-    rgba(5, 5, 5, 0.96);
-
-  border-bottom:
-    1px solid #1d1d1d;
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
-}
-
-
 /* =========================================================
-   BARRA DE TOPO (igual ao arquivo de referência)
+   BARRA DE TOPO
 ========================================================= */
 
 .topHeader {
@@ -98,10 +68,10 @@
   z-index: 900;
 
   width: 100%;
-  height: 76px;
+  height: 84px;
 
   padding:
-    0 35px;
+    0 38px;
 
   display: flex;
   align-items: center;
@@ -125,10 +95,10 @@
 ========================================================= */
 
 .menuButton {
-  width: 43px;
-  height: 43px;
+  width: 48px;
+  height: 48px;
 
-  margin-right: 17px;
+  margin-right: 18px;
 
   display: flex;
   align-items: center;
@@ -137,7 +107,7 @@
   border:
     1px solid #2c2c2c;
 
-  border-radius: 9px;
+  border-radius: 10px;
 
   background:
     #111;
@@ -145,7 +115,7 @@
   color:
     #fff;
 
-  font-size: 18px;
+  font-size: 20px;
 
   cursor: pointer;
 
@@ -175,7 +145,7 @@
   color:
     #888;
 
-  font-size: 25px;
+  font-size: 28px;
 
   cursor: pointer;
 
@@ -295,15 +265,15 @@
   position: fixed;
 
   top: 0;
-  left: -250px;
+  left: -280px;
 
   z-index: 1100;
 
-  width: 230px;
+  width: 260px;
   height: 100vh;
 
   padding:
-    22px 16px;
+    26px 18px;
 
   display: flex;
   flex-direction: column;
@@ -339,15 +309,15 @@
 ========================================================= */
 
 .sidebarMenu img {
-  max-width: 140px;
+  max-width: 160px;
 
   height: auto;
 
   display: block;
 
-  margin: 0 auto 22px;
+  margin: 0 auto 26px;
 
-  padding-bottom: 14px;
+  padding-bottom: 16px;
 
   object-fit: contain;
 
@@ -362,23 +332,23 @@
 
 .sidebarMenu a {
   width: 100%;
-  min-height: 40px;
+  min-height: 48px;
 
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 
   padding:
-    0 12px;
+    0 14px;
 
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  gap: 14px;
 
   border:
     1px solid transparent;
 
   border-radius:
-    8px;
+    9px;
 
   background:
     transparent;
@@ -387,7 +357,7 @@
     #ccc;
 
   font-size:
-    13px;
+    14px;
 
   font-weight:
     600;
@@ -451,16 +421,16 @@
 
 .sidebarMenu a svg {
   width:
-    15px;
+    17px;
 
   min-width:
-    15px;
+    17px;
 
   color:
     #aaa;
 
   font-size:
-    14px;
+    16px;
 
   transition:
     0.2s ease;
@@ -482,14 +452,14 @@
 ========================================================= */
 
 .menuEmoji {
-  width: 15px;
-  min-width: 15px;
+  width: 17px;
+  min-width: 17px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
+  font-size: 16px;
 
   transition:
     0.2s ease;
@@ -516,11 +486,11 @@
 .closeMenu {
   position: absolute;
 
-  top: 19px;
-  right: 15px;
+  top: 22px;
+  right: 18px;
 
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 
   display: flex;
   align-items: center;
@@ -530,7 +500,7 @@
     1px solid #2b2b2b;
 
   border-radius:
-    7px;
+    8px;
 
   background:
     #111;
@@ -539,7 +509,7 @@
     #777;
 
   font-size:
-    13px;
+    14px;
 
   cursor:
     pointer;
@@ -579,16 +549,16 @@
 
 .logoArea img {
   width:
-    42px;
+    46px;
 
   height:
-    42px;
+    46px;
 
   object-fit:
     cover;
 
   border-radius:
-    9px;
+    10px;
 
   filter:
     drop-shadow(
@@ -602,7 +572,7 @@
     #fff;
 
   font-size:
-    18px;
+    20px;
 
   font-weight:
     700;
