@@ -40,7 +40,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/login" element={<Login />} />
   <Route path="/sobre" element={<Sobre />} />
   <Route path="/torneios" element={<Torneios />} />
-  <Route path="/inscricao" element={<InscricaoTorneio />} />
+  <Route path="/inscricao/:id" element={<InscricaoTorneio />} />
   <Route path="/pagamento" element={<Pagamento />} />
   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
