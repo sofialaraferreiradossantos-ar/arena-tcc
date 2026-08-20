@@ -87,7 +87,111 @@
 
 
 /* =========================================================
-   BOTÃO ABRIR MENU
+   BARRA DE TOPO (igual ao arquivo de referência)
+========================================================= */
+
+.topHeader {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 900;
+
+  width: 100%;
+  height: 76px;
+
+  padding:
+    0 35px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    rgba(5, 5, 5, 0.96);
+
+  border-bottom:
+    1px solid #1d1d1d;
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+}
+
+
+/* =========================================================
+   BOTÃO MENU (inline na barra de topo, igual à referência)
+========================================================= */
+
+.menuButton {
+  width: 43px;
+  height: 43px;
+
+  margin-right: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid #2c2c2c;
+
+  border-radius: 9px;
+
+  background:
+    #111;
+
+  color:
+    #fff;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition:
+    0.25s ease;
+}
+
+.menuButton:hover {
+  border-color:
+    #ff8800;
+
+  background:
+    rgba(255, 136, 0, 0.08);
+
+  color:
+    #ff8800;
+}
+
+
+/* =========================================================
+   ÍCONE DE USUÁRIO
+========================================================= */
+
+.userIcon {
+  margin-left: auto;
+
+  color:
+    #888;
+
+  font-size: 25px;
+
+  cursor: pointer;
+
+  transition:
+    0.25s ease;
+}
+
+.userIcon:hover {
+  color:
+    #ff8800;
+}
+
+
+/* =========================================================
+   BOTÃO ABRIR MENU (versão fixa/flutuante, mantida para
+   compatibilidade com telas que ainda a usam)
 ========================================================= */
 
 .menuIcon {
