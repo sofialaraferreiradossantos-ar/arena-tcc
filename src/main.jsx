@@ -24,6 +24,8 @@ import {
 
 import App from './App.jsx'
 import QuadraDetalhes from './pages/QuadraDetalhes.jsx'
+import Administrador from './pages/Administrador.jsx'
+import AgendarHorario from './pages/AgendarHorario.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -43,8 +45,8 @@ createRoot(document.getElementById('root')).render(
   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
   <Route path="/torneio/:id" element={<TorneioDetalhes />} />
-  
-  
+  <Route path="/administrador" element={<Administrador />} />
+  <Route path="/agendar-horario" element={<AgendarHorario />} />
 
 </Routes>
     </BrowserRouter>
