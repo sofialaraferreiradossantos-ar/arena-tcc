@@ -64,10 +64,18 @@ export default function Header({ title = "ARENA", highlight = "BEACH" }) {
           <FaTimes />
         </button>
 
-        <img
-          src={logo}
-          alt="Arena Beach"
-        />
+        <div className={styles.sidebarBrand}>
+          <img
+            src={logo}
+            alt="Arena Beach"
+            className={styles.sidebarLogo}
+          />
+
+          <div className={styles.brandText}>
+            <strong>ARENA</strong>
+            <strong>BEACH</strong>
+          </div>
+        </div>
 
         <Link
           to="/home"
