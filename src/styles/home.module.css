@@ -1,5 +1,6 @@
 /* =========================================================
-   CONFIGURAÇÃO GERAL
+   DESIGN SYSTEM — ARENA
+   Base visual padronizada
 ========================================================= */
 
 :global(*) {
@@ -16,339 +17,304 @@
 :global(body) {
   min-width: 320px;
   min-height: 100vh;
-
   background: #000;
   color: #fff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-
 /* =========================================================
-   CONTAINER PRINCIPAL
+   ESTRUTURA GERAL
 ========================================================= */
 
-.container {
+.container,
+.arenaWrapper {
   width: 100%;
   min-height: 100vh;
-
   background: #000;
 }
 
 .app {
   width: 100%;
   min-height: 100vh;
-
   padding: 0 50px 70px;
-
   background: #000;
-
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 
 /* =========================================================
    HEADER
 ========================================================= */
 
-/* =========================================================
-   BARRA DE TOPO
-========================================================= */
-
 .topHeader {
   position: sticky;
-
   top: 0;
-
   z-index: 900;
-
   width: 100%;
   height: 84px;
-
-  padding:
-    0 38px;
-
+  padding: 0 38px;
   display: flex;
   align-items: center;
-
-  background:
-    rgba(5, 5, 5, 0.96);
-
-  border-bottom:
-    1px solid #1d1d1d;
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
+  background: rgba(5, 5, 5, 0.96);
+  border-bottom: 1px solid #1d1d1d;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-
-/* =========================================================
-   BOTÃO MENU (inline na barra de topo, igual à referência)
-========================================================= */
-
-.menuButton {
+.menuButton,
+.menuIcon {
   width: 48px;
   height: 48px;
-
-  margin-right: 18px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border:
-    1px solid #2c2c2c;
-
+  border: 1px solid #2c2c2c;
   border-radius: 10px;
-
-  background:
-    #111;
-
-  color:
-    #fff;
-
+  background: #111;
+  color: #fff;
   font-size: 20px;
-
   cursor: pointer;
-
-  transition:
-    0.25s ease;
+  transition: 0.25s ease;
 }
 
-.menuButton:hover {
-  border-color:
-    #ff8800;
-
-  background:
-    rgba(255, 136, 0, 0.08);
-
-  color:
-    #ff8800;
+.menuButton {
+  margin-right: 18px;
 }
 
-
-/* =========================================================
-   ÍCONE DE USUÁRIO
-========================================================= */
-
-.userIcon {
-  margin-left: auto;
-
-  color:
-    #888;
-
-  font-size: 28px;
-
-  cursor: pointer;
-
-  transition:
-    0.25s ease;
+.menuButton:hover,
+.menuIcon:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
 }
-
-.userIcon:hover {
-  color:
-    #ff8800;
-}
-
-
-/* =========================================================
-   BOTÃO ABRIR MENU (versão fixa/flutuante, mantida para
-   compatibilidade com telas que ainda a usam)
-========================================================= */
 
 .menuIcon {
   position: fixed;
-
-  top: 17px;
+  top: 18px;
   left: 25px;
-
   z-index: 1001;
-
-  width: 43px;
-  height: 43px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border:
-    1px solid #2c2c2c;
-
-  border-radius: 9px;
-
-  background:
-    #111;
-
-  color:
-    #fff;
-
-  font-size: 18px;
-
-  cursor: pointer;
-
-  transition:
-    0.25s ease;
 }
-
-.menuIcon:hover {
-  border-color:
-    #ff8800;
-
-  background:
-    rgba(255, 136, 0, 0.08);
-
-  color:
-    #ff8800;
-}
-
-
-/* =========================================================
-   BOTÃO COM MENU ABERTO
-========================================================= */
 
 .menuIconOpen {
-  left: 240px;
-
-  border-color:
-    #ff8800;
-
-  background:
-    #111;
-
-  color:
-    #ff8800;
-
-  box-shadow:
-    0 0 15px
-    rgba(255, 136, 0, 0.08);
+  left: 276px;
+  border-color: #ff8800;
+  color: #ff8800;
 }
 
+.userIcon {
+  margin-left: auto;
+  color: #888;
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.userIcon:hover {
+  color: #ff8800;
+}
 
 /* =========================================================
-   FUNDO AO ABRIR MENU
+   LOGO
+========================================================= */
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoArea img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.logoArea h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.logoArea h2 span,
+.logoArea span {
+  color: #ff8800;
+}
+
+/* =========================================================
+   OVERLAY DO MENU
 ========================================================= */
 
 .menuOverlay {
   position: fixed;
-
   inset: 0;
-
   z-index: 1000;
 
-  background:
-    rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.72);
 
-  backdrop-filter:
-    blur(2px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 
-  -webkit-backdrop-filter:
-    blur(2px);
-
-  animation:
-    fadeIn 0.25s ease;
+  animation: fadeIn 0.25s ease;
 }
 
 
 /* =========================================================
-   MENU LATERAL
+   SIDEBAR — PADRÃO VISUAL DO AGENDAMENTO
 ========================================================= */
 
 .sidebarMenu {
   position: fixed;
-
   top: 0;
-  left: -280px;
+  left: 0;
 
   z-index: 1100;
 
-  width: 240px;
+  width: 256px;
   height: 100vh;
+  height: 100dvh;
 
-  padding:
-    22px 16px;
+  padding: 18px 16px 20px;
 
   display: flex;
   flex-direction: column;
 
-  overflow-y: auto;
+  overflow: hidden;
 
-  background:
-    #090909;
+  background: #080808;
 
-  border-right:
-    1px solid #202020;
+  border-right: 1px solid #181818;
 
-  box-shadow:
-    12px 0 35px
-    rgba(0, 0, 0, 0.45);
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.45);
 
-  transition:
-    left 0.3s ease;
+  transform: translateX(-100%);
+
+  transition: transform 0.3s ease;
+}
+
+.sidebarMenu.open {
+  transform: translateX(0);
 }
 
 
 /* =========================================================
-   MENU ABERTO
-========================================================= */
-
-.open {
-  left: 0;
-}
-
-
-/* =========================================================
-   MARCA DO MENU (logo + texto lado a lado)
+   TOPO DA SIDEBAR
 ========================================================= */
 
 .sidebarBrand {
-  min-height: 68px;
+  position: relative;
 
-  margin-bottom: 20px;
+  width: 100%;
+  min-height: 95px;
+
+  padding: 5px 0 18px;
+
+  display: flex;
+  align-items: flex-start;
+
+  border-bottom: 1px solid #1d1d1d;
+}
+
+
+/* =========================================================
+   LOGO + MARCA
+========================================================= */
+
+.sidebarLogo {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  margin-left: 51px;
+
+  display: block;
+
+  object-fit: contain;
+
+  border-radius: 0;
+}
+
+.brandText {
+  margin-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  line-height: 0.94;
+}
+
+.brandText strong {
+  display: block;
+
+  color: #ff8800;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   BOTÃO FECHAR
+========================================================= */
+
+.closeMenu {
+  position: absolute;
+
+  top: -5px;
+  right: 0;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 10px;
+  border: 1px solid #303030;
+  border-radius: 9px;
 
-  padding-bottom: 14px;
+  background: #111;
 
-  border-bottom:
-    1px solid #1b1b1b;
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-.sidebarLogo {
-  width: 42px;
-  height: 42px;
+.closeMenu:hover {
+  border-color: #ff8800;
 
-  object-fit: cover;
+  background: rgba(255, 136, 0, 0.08);
 
-  border-radius: 8px;
+  color: #ff8800;
 }
 
-.brandText {
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+.sidebarNav {
+  width: 165px;
+
+  margin: 60px auto 0;
+
   display: flex;
   flex-direction: column;
 
-  line-height: 1.15;
-}
-
-.brandText strong {
-  color:
-    #ff8800;
-
-  font-size: 16px;
-  font-weight: 800;
-
-  letter-spacing: 0.3px;
+  gap: 10px;
 }
 
 
@@ -357,125 +323,52 @@
 ========================================================= */
 
 .sidebarMenu a {
-  width: 100%;
-  min-height: 48px;
+  width: 165px;
+  height: 49px;
 
-  margin-bottom: 12px;
-
-  padding:
-    0 14px;
+  padding: 0 16px;
 
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  gap: 14px;
 
-  border:
-    1px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
 
-  border-radius:
-    14px;
+  background: transparent;
 
-  background:
-    transparent;
+  color: #c7c7c7;
 
-  color:
-    #ccc;
+  font-size: 14px;
+  font-weight: 600;
 
-  font-size:
-    14px;
+  line-height: 1;
 
-  font-weight:
-    600;
+  text-decoration: none;
 
-  text-decoration:
-    none;
+  white-space: nowrap;
 
   transition:
-    0.2s ease;
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
-
-/* =========================================================
-   HOVER DOS LINKS
-========================================================= */
-
-.sidebarMenu a:hover {
-  background:
-    rgba(255, 136, 0, 0.08);
-
-  color:
-    #ff8800;
-
-  transform:
-    translateX(2px);
+.sidebarMenu a + a {
+  margin-top: 0;
 }
-
-
-/* =========================================================
-   ITEM ATIVO DO MENU (precisa de mais especificidade que
-   ".sidebarMenu a" para o preenchimento laranja aparecer)
-========================================================= */
-
-.sidebarMenu a.active {
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  box-shadow:
-    0 5px 15px
-    rgba(255, 136, 0, 0.16);
-}
-
-.sidebarMenu a.active:hover {
-  background:
-    #ff9417;
-
-  color:
-    #111;
-
-  transform:
-    translateX(2px);
-}
-
-
-/* =========================================================
-   ÍCONES DOS LINKS (svg, usados em outras telas)
-========================================================= */
 
 .sidebarMenu a svg {
-  width:
-    17px;
+  width: 18px;
+  min-width: 18px;
 
-  min-width:
-    17px;
+  color: #aaa;
 
-  color:
-    #aaa;
+  font-size: 16px;
 
-  font-size:
-    16px;
-
-  transition:
-    0.2s ease;
+  transition: 0.2s ease;
 }
-
-.sidebarMenu a:hover svg {
-  color:
-    #ff8800;
-}
-
-.sidebarMenu a.active svg {
-  color:
-    #111;
-}
-
-
-/* =========================================================
-   EMOJIS DOS LINKS (usados pelo Quadras.jsx)
-========================================================= */
 
 .menuEmoji {
   width: 20px;
@@ -485,1969 +378,853 @@
   align-items: center;
   justify-content: center;
 
-  font-size: 16px;
+  font-size: 15px;
+
+  line-height: 1;
 }
 
 
 /* =========================================================
-   SAIR (fixado no rodapé do menu)
+   HOVER
+========================================================= */
+
+.sidebarMenu a:hover {
+  background: rgba(255, 136, 0, 0.07);
+
+  color: #ff8800;
+
+  transform: none;
+}
+
+.sidebarMenu a:hover svg {
+  color: #ff8800;
+}
+
+
+/* =========================================================
+   ITEM ATIVO
+========================================================= */
+
+.sidebarMenu a.active {
+  border-color: #ff8800;
+
+  background: #ff8800;
+
+  color: #090909;
+
+  box-shadow: 0 5px 18px rgba(255, 136, 0, 0.18);
+}
+
+.sidebarMenu a.active svg {
+  color: #090909;
+}
+
+.sidebarMenu a.active:hover {
+  border-color: #ff9417;
+
+  background: #ff9417;
+
+  color: #090909;
+}
+
+
+/* =========================================================
+   SAIR — FIXADO NO RODAPÉ
 ========================================================= */
 
 .sair {
+  width: 100%;
+
   margin-top: auto;
 
-  padding-top: 15px;
+  padding-top: 20px;
 
   border-top: 1px solid #1d1d1d;
 }
 
+.sair a {
+  width: 165px;
+  height: 46px;
+
+  margin: 0 auto;
+
+  padding: 0 16px;
+}
+
 
 /* =========================================================
-   BOTÃO FECHAR MENU
+   SCROLLBAR
 ========================================================= */
 
-.closeMenu {
-  position: absolute;
-
-  top: 18px;
-  right: 16px;
-
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border:
-    1px solid #2b2b2b;
-
-  border-radius:
-    7px;
-
-  background:
-    #111;
-
-  color:
-    #777;
-
-  font-size:
-    13px;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.25s ease;
+.sidebarMenu::-webkit-scrollbar {
+  width: 4px;
 }
 
-.closeMenu:hover {
-  border-color:
-    #ff8800;
+.sidebarMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  background:
-    rgba(255, 136, 0, 0.08);
+.sidebarMenu::-webkit-scrollbar-thumb {
+  background: #292929;
 
-  color:
-    #ff8800;
+  border-radius: 10px;
 }
 
 
 /* =========================================================
-   LOGO
-========================================================= */
-
-.logoArea {
-  display: flex;
-  align-items: center;
-
-  justify-content: center;
-
-  gap:
-    12px;
-
-  text-align:
-    center;
-}
-
-.logoArea img {
-  width:
-    46px;
-
-  height:
-    46px;
-
-  object-fit:
-    cover;
-
-  border-radius:
-    10px;
-
-  filter:
-    drop-shadow(
-      0 0 8px
-      rgba(255, 136, 0, 0.18)
-    );
-}
-
-.logoArea h2 {
-  color:
-    #fff;
-
-  font-size:
-    20px;
-
-  font-weight:
-    700;
-
-  text-align:
-    left;
-}
-
-.logoArea span {
-  color:
-    #ff8800;
-}
-
-
-/* =========================================================
-   BOTÕES DE CATEGORIA
+   CATEGORIAS / ABAS
 ========================================================= */
 
 .categoryButtons {
-  width:
-    100%;
-
-  max-width:
-    1120px;
-
-  margin:
-    28px auto 0;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    flex-start;
-
-  flex-wrap:
-    wrap;
-
-  gap:
-    8px;
+  width: 100%;
+  max-width: 1300px;
+  margin: 36px auto 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.categoryButtons button {
-  min-height:
-    38px;
-
-  padding:
-    9px 18px;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    8px;
-
-  background:
-    #111;
-
-  color:
-    #999;
-
-  font-size:
-    13px;
-
-  font-weight:
-    600;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.2s ease;
+.categoryButtons button,
+.pagamentoBtn {
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #111;
+  color: #999;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.categoryButtons button:hover {
-  border-color:
-    #ff8800;
-
-  background:
-    rgba(255, 136, 0, 0.08);
-
-  color:
-    #ff8800;
+.categoryButtons button:hover,
+.pagamentoBtn:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
 }
 
-
-/* =========================================================
-   BOTÃO ATIVO
-========================================================= */
-
-.activeBtn {
-  border-color:
-    #ff8800 !important;
-
-  background:
-    #ff8800 !important;
-
-  color:
-    #111 !important;
-
-  box-shadow:
-    0 5px 15px
-    rgba(255, 136, 0, 0.16);
+.activeBtn,
+.pagamentoBtn.ativo {
+  border-color: #ff8800 !important;
+  background: #ff8800 !important;
+  color: #111 !important;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
 }
 
-.activeBtn:hover {
-  background:
-    #ff9417 !important;
-
-  color:
-    #111 !important;
+.activeBtn:hover,
+.pagamentoBtn.ativo:hover {
+  background: #ff9417 !important;
+  color: #111 !important;
 }
-
 
 /* =========================================================
    BUSCA
 ========================================================= */
 
 .searchContainer {
-  width:
-    100%;
-
-  max-width:
-    1120px;
-
-  margin:
-    20px auto 0;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
+  width: 100%;
+  max-width: 1300px;
+  margin: 24px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .searchBar {
-  width:
-    100%;
-
-  max-width:
-    650px;
-
-  min-height:
-    45px;
-
-  padding:
-    0 14px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    9px;
-
-  background:
-    #111;
-
-  transition:
-    0.25s ease;
+  width: 100%;
+  max-width: 700px;
+  min-height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #111;
+  transition: 0.25s ease;
 }
 
 .searchBar:focus-within {
-  border-color:
-    #ff8800;
-
-  background:
-    #151515;
-
-  box-shadow:
-    0 0 12px
-    rgba(255, 136, 0, 0.12);
+  border-color: #ff8800;
+  background: #151515;
+  box-shadow: 0 0 12px rgba(255, 136, 0, 0.12);
 }
 
 .searchBar input {
-  flex:
-    1;
-
-  min-width:
-    0;
-
-  margin:
-    0 10px;
-
-  border:
-    none;
-
-  outline:
-    none;
-
-  background:
-    transparent;
-
-  color:
-    #fff;
-
-  font-size:
-    13px;
+  flex: 1;
+  min-width: 0;
+  margin: 0 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
 }
 
 .searchBar input::placeholder {
-  color:
-    #666;
+  color: #666;
 }
 
 .searchIcon,
 .arrowIcon {
-  color:
-    #777;
-
-  font-size:
-    15px;
-
-  transition:
-    0.2s ease;
+  color: #777;
+  font-size: 15px;
+  transition: 0.2s ease;
 }
 
 .searchBar:focus-within .searchIcon {
-  color:
-    #ff8800;
+  color: #ff8800;
 }
 
 .selectQuadra {
-  width:
-    220px;
-
-  margin-top:
-    12px;
-
-  padding:
-    10px;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    8px;
-
-  outline:
-    none;
-
-  background:
-    #111;
-
-  color:
-    #ddd;
-
-  font-size:
-    13px;
-
-  transition:
-    0.2s ease;
+  width: 240px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  outline: none;
+  background: #111;
+  color: #ddd;
+  font-size: 14px;
+  transition: 0.2s ease;
 }
 
 .selectQuadra:focus {
-  border-color:
-    #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(255, 136, 0, 0.08);
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.08);
 }
 
-
 /* =========================================================
-   ÁREA DAS QUADRAS
+   QUADRAS
 ========================================================= */
 
 .quadrasSection {
-  width:
-    100%;
-
-  max-width:
-    1120px;
-
-  margin:
-    25px auto 0;
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap:
-    18px;
+  width: 100%;
+  max-width: 1300px;
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
 }
-
-
-/* =========================================================
-   CARD DA QUADRA
-========================================================= */
 
 .quadraCard {
-  position:
-    relative;
-
-  width:
-    100%;
-
-  min-height:
-    250px;
-
-  padding:
-    14px;
-
-  overflow:
-    hidden;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  text-align:
-    left;
-
-  transition:
-    0.25s ease;
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  padding: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #151515;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  text-align: left;
+  transition: 0.25s ease;
 }
-
-
-/* =========================================================
-   LINHA LARANJA SUPERIOR
-========================================================= */
 
 .quadraCard::before {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  top:
-    0;
-
-  left:
-    0;
-
-  width:
-    100%;
-
-  height:
-    2px;
-
-  background:
-    #ff8800;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
 }
-
-
-/* =========================================================
-   HOVER CARD
-========================================================= */
 
 .quadraCard:hover {
-  border-color:
-    #ff8800;
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0 8px 25px
-    rgba(0, 0, 0, 0.35);
+  border-color: #ff8800;
+  transform: translateY(-2px);
 }
-
-
-/* =========================================================
-   IMAGEM DA QUADRA
-========================================================= */
 
 .quadraCard img {
-  width:
-    100%;
-
-  height:
-    145px;
-
-  display:
-    block;
-
-  object-fit:
-    cover;
-
-  border-radius:
-    9px;
+  width: 100%;
+  height: 180px;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
 }
-
-
-/* =========================================================
-   TÍTULO DA QUADRA
-========================================================= */
 
 .quadraCard h3 {
-  margin-top:
-    14px;
-
-  color:
-    #fff;
-
-  font-size:
-    17px;
-
-  font-weight:
-    700;
+  margin-top: 16px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-
-/* =========================================================
-   DESCRIÇÃO
-========================================================= */
-
 .quadraCard p {
-  margin-top:
-    7px;
-
-  color:
-    #bbb;
-
-  font-size:
-    13px;
-
-  line-height:
-    1.5;
+  margin-top: 8px;
+  color: #bbb;
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .quadraCard span {
-  color:
-    #666;
-
-  font-size:
-    11px;
+  color: #666;
+  font-size: 12px;
 }
 
-
-/* =========================================================
-   STATUS
-========================================================= */
-
 .status {
-  margin-top:
-    13px;
-
-  color:
-    #888;
-
-  font-size:
-    11px;
-
-  font-weight:
-    700;
-
-  letter-spacing:
-    0.3px;
+  margin-top: 14px;
+  color: #888;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .available {
-  color:
-    #35d04d;
+  color: #35d04d;
 }
 
 .unavailable {
-  color:
-    #ff3b3b;
+  color: #ff3b3b;
 }
-
 
 /* =========================================================
    PAGINAÇÃO
 ========================================================= */
 
 .pagination {
-  margin-top:
-    30px;
-
-  padding-bottom:
-    20px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    8px;
+  margin-top: 30px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .dot {
-  width:
-    8px;
-
-  height:
-    8px;
-
-  border-radius:
-    50%;
-
-  background:
-    #444;
-
-  transition:
-    0.25s ease;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #444;
+  transition: 0.25s ease;
 }
 
 .activeDot {
-  width:
-    24px;
-
-  border-radius:
-    10px;
-
-  background:
-    #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(255, 136, 0, 0.35);
+  width: 24px;
+  border-radius: 10px;
+  background: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.35);
 }
-
 
 /* =========================================================
-   CADASTRO
+   FORMULÁRIOS
 ========================================================= */
 
+.cadastroCard,
+.loginCard,
+.recuperarCard,
+.sobreCard,
+.pagamentoCard,
+.contentCard {
+  position: relative;
+  width: 100%;
+  background: #151515;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cadastroCard::before,
+.loginCard::before,
+.recuperarCard::before,
+.sobreCard::before,
+.pagamentoCard::before,
+.contentCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 17px 17px 0 0;
+  background: #ff8800;
+}
+
 .cadastroCard {
-  width:
-    100%;
-
-  max-width:
-    500px;
-
-  margin-top:
-    40px;
-
-  padding:
-    30px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    16px;
-
-  text-align:
-    center;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
+  max-width: 500px;
+  margin-top: 40px;
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
 }
 
-.cadastroCard::before {
-  content:
-    "";
-
-  width:
-    100%;
-
-  height:
-    2px;
-
-  position:
-    absolute;
+.loginCard {
+  max-width: 440px;
+  margin-top: 60px;
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.cadastroTitle {
-  margin-bottom:
-    10px;
-
-  color:
-    #fff;
-
-  font-size:
-    28px;
-
-  font-weight:
-    700;
+.recuperarCard {
+  max-width: 500px;
+  margin-top: 50px;
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: center;
 }
 
-.cadastroInput {
-  width:
-    100%;
-
-  padding:
-    13px 14px;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    8px;
-
-  outline:
-    none;
-
-  background:
-    #101010;
-
-  color:
-    #fff;
-
-  font-size:
-    14px;
-
-  transition:
-    0.25s ease;
+.sobreCard {
+  max-width: 900px;
+  margin-top: 40px;
+  padding: 35px;
 }
 
-.cadastroInput::placeholder {
-  color:
-    #666;
+.pagamentoCard {
+  max-width: 430px;
+  margin: 25px auto 0;
+  padding: 24px;
 }
 
-.cadastroInput:focus {
-  border-color:
-    #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(255, 136, 0, 0.12);
+.cadastroTitle,
+.loginTitle,
+.recuperarTitle {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
 }
 
-.cadastroButton {
-  width:
-    100%;
-
-  padding:
-    13px;
-
-  border:
-    none;
-
-  border-radius:
-    8px;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  font-size:
-    14px;
-
-  font-weight:
-    700;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.25s ease;
+.cadastroInput,
+.loginInput,
+.formPagamento input,
+.formPagamento select {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  outline: none;
+  background: #101010;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.25s ease;
 }
 
-.cadastroButton:hover {
-  background:
-    #ff9417;
-
-  transform:
-    translateY(-1px);
+.cadastroInput::placeholder,
+.loginInput::placeholder,
+.formPagamento input::placeholder {
+  color: #666;
 }
 
-.cadastroText {
-  margin-top:
-    5px;
-
-  color:
-    #777;
-
-  font-size:
-    13px;
+.cadastroInput:focus,
+.loginInput:focus,
+.formPagamento input:focus,
+.formPagamento select:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
 }
 
-.cadastroLink {
-  color:
-    #ff8800;
-
-  font-weight:
-    600;
-
-  text-decoration:
-    none;
+.cadastroButton,
+.loginButton,
+.recuperarButton,
+.confirmarPagamento {
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 1px solid #ff8800;
+  border-radius: 9px;
+  background: #ff8800;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.cadastroLink:hover {
-  color:
-    #ffaa33;
-
-  text-decoration:
-    underline;
+.cadastroButton,
+.loginButton,
+.recuperarButton {
+  width: 100%;
 }
 
+.cadastroButton:hover,
+.loginButton:hover,
+.recuperarButton:hover,
+.confirmarPagamento:hover {
+  background: #ff9417;
+  border-color: #ff9417;
+  transform: translateY(-1px);
+}
+
+.cadastroText,
+.recuperarText {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cadastroLink,
+.loginLink,
+.recuperarLink,
+.sobreLink {
+  color: #ff8800;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.cadastroLink:hover,
+.loginLink:hover,
+.recuperarLink:hover,
+.sobreLink:hover {
+  color: #ffaa33;
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.loginLinks {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+/* =========================================================
+   SOBRE
+========================================================= */
+
+.sobreTitulo {
+  margin-bottom: 15px;
+  color: #fff;
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.sobreTitulo span {
+  color: #ff8800;
+}
+
+.sobreDescricao {
+  margin-bottom: 30px;
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.sobreSecao {
+  margin-top: 25px;
+}
+
+.sobreSecao h3 {
+  margin-bottom: 10px;
+  color: #ff8800;
+}
+
+.sobreSecao p {
+  color: #ddd;
+  line-height: 1.7;
+}
+
+.sobreLink {
+  display: inline-block;
+  margin-top: 30px;
+}
 
 /* =========================================================
    HOME INSTITUCIONAL
 ========================================================= */
 
 .arenaWrapper {
-  width:
-    100%;
-
-  min-height:
-    100vh;
-
-  display:
-    flex;
-
-  background:
-    #000;
+  display: flex;
 }
 
 .sidebar {
-  width:
-    230px;
-
-  min-height:
-    100vh;
-
-  padding:
-    22px 16px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  flex-shrink:
-    0;
-
-  background:
-    #090909;
-
-  border-right:
-    1px solid #202020;
-
-  box-shadow:
-    12px 0 35px
-    rgba(0, 0, 0, 0.2);
+  width: 260px;
+  min-height: 100vh;
+  padding: 26px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: #090909;
+  border-right: 1px solid #202020;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.2);
 }
 
 .logoMark {
-  color:
-    #ff8800;
-
-  font-size:
-    24px;
+  color: #ff8800;
+  font-size: 24px;
 }
 
 .logoText {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  color:
-    #fff;
-
-  font-size:
-    18px;
-
-  font-weight:
-    bold;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .menu {
-  margin-top:
-    30px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    5px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .menuItem {
-  width:
-    100%;
-
-  min-height:
-    40px;
-
-  padding:
-    0 12px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    10px;
-
-  border:
-    1px solid transparent;
-
-  border-radius:
-    8px;
-
-  background:
-    transparent;
-
-  color:
-    #ccc;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.2s ease;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .menuItem:hover {
-  background:
-    rgba(255, 136, 0, 0.08);
-
-  color:
-    #ff8800;
-
-  transform:
-    translateX(2px);
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  transform: translateX(2px);
 }
 
 .active {
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  box-shadow:
-    0 5px 15px
-    rgba(255, 136, 0, 0.16);
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
 }
 
 .content {
-  flex:
-    1;
-
-  min-width:
-    0;
-
-  padding:
-    40px;
-
-  display:
-    flex;
-
-  justify-content:
-    center;
-
-  background:
-    #000;
+  flex: 1;
+  min-width: 0;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  background: #000;
 }
 
 .contentCard {
-  width:
-    100%;
-
-  max-width:
-    900px;
-
-  padding:
-    35px;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  color:
-    #fff;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
+  max-width: 1000px;
+  padding: 35px;
 }
 
 .hero {
-  padding-bottom:
-    22px;
-
-  border-bottom:
-    1px solid #292929;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #292929;
 }
 
 .hero h1 {
-  margin-bottom:
-    10px;
-
-  color:
-    #fff;
-
-  font-size:
-    38px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 46px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
 }
 
 .hero h1 span {
-  color:
-    #ff8800;
+  color: #ff8800;
 }
 
 .hero p {
-  color:
-    #aaa;
-
-  line-height:
-    1.6;
+  color: #888;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 .section {
-  margin-top:
-    30px;
+  margin-top: 30px;
 }
 
 .section h3 {
-  margin-bottom:
-    10px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    9px;
-
-  color:
-    #ff8800;
-
-  font-size:
-    17px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #ff8800;
+  font-size: 17px;
 }
 
 .section p,
 .section small {
-  color:
-    #ddd;
-
-  line-height:
-    1.6;
+  color: #ddd;
+  line-height: 1.6;
 }
 
 .inlineInfo {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    10px;
-
-  color:
-    #ddd;
-
-  font-size:
-    15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ddd;
+  font-size: 15px;
 }
 
 .inlineInfo svg {
-  color:
-    #ff8800;
+  color: #ff8800;
 }
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-.loginCard {
-  width:
-    100%;
-
-  max-width:
-    420px;
-
-  margin-top:
-    60px;
-
-  padding:
-    28px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    15px;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
-}
-
-.loginTitle {
-  margin-bottom:
-    10px;
-
-  color:
-    #fff;
-
-  font-size:
-    28px;
-
-  text-align:
-    center;
-}
-
-.loginInput {
-  width:
-    100%;
-
-  padding:
-    13px 14px;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    8px;
-
-  outline:
-    none;
-
-  background:
-    #101010;
-
-  color:
-    #fff;
-
-  font-size:
-    14px;
-
-  transition:
-    0.25s ease;
-}
-
-.loginInput:focus {
-  border-color:
-    #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(255, 136, 0, 0.12);
-}
-
-.loginButton {
-  width:
-    100%;
-
-  padding:
-    13px;
-
-  border:
-    none;
-
-  border-radius:
-    8px;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  cursor:
-    pointer;
-
-  font-size:
-    14px;
-
-  font-weight:
-    700;
-
-  transition:
-    0.25s ease;
-}
-
-.loginButton:hover {
-  background:
-    #ff9417;
-
-  transform:
-    translateY(-1px);
-}
-
-.loginLinks {
-  margin-top:
-    10px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    10px;
-
-  text-align:
-    center;
-}
-
-.loginLink {
-  color:
-    #ff8800;
-
-  font-weight:
-    600;
-
-  text-decoration:
-    none;
-
-  transition:
-    0.25s ease;
-}
-
-.loginLink:hover {
-  color:
-    #ffaa33;
-}
-
-
-/* =========================================================
-   SOBRE
-========================================================= */
-
-.sobreCard {
-  width:
-    100%;
-
-  max-width:
-    800px;
-
-  margin-top:
-    40px;
-
-  padding:
-    35px;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  text-align:
-    left;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
-}
-
-.sobreTitulo {
-  margin-bottom:
-    15px;
-
-  color:
-    #fff;
-
-  font-size:
-    38px;
-}
-
-.sobreTitulo span {
-  color:
-    #ff8800;
-}
-
-.sobreDescricao {
-  margin-bottom:
-    30px;
-
-  color:
-    #aaa;
-
-  font-size:
-    15px;
-
-  line-height:
-    1.6;
-}
-
-.sobreSecao {
-  margin-top:
-    25px;
-
-  text-align:
-    left;
-}
-
-.sobreSecao h3 {
-  margin-bottom:
-    10px;
-
-  color:
-    #ff8800;
-}
-
-.sobreSecao p {
-  color:
-    #ddd;
-
-  line-height:
-    1.7;
-}
-
-.sobreLink {
-  display:
-    inline-block;
-
-  margin-top:
-    30px;
-
-  color:
-    #ff8800;
-
-  font-weight:
-    bold;
-
-  text-decoration:
-    none;
-
-  transition:
-    0.25s ease;
-}
-
-.sobreLink:hover {
-  color:
-    #ffaa33;
-}
-
 
 /* =========================================================
    PAGAMENTO
 ========================================================= */
 
 .pagamentoButtons {
-  margin-top:
-    25px;
-
-  margin-bottom:
-    30px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    8px;
+  margin: 36px auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 .pagamentoBtn {
-  width:
-    120px;
-
-  height:
-    40px;
-
-  padding:
-    8px 12px;
-
-  border:
-    1px solid #292929;
-
-  border-radius:
-    8px;
-
-  background:
-    #111;
-
-  color:
-    #999;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.2s ease;
+  width: auto;
+  min-width: 120px;
 }
-
-.pagamentoBtn.ativo {
-  border-color:
-    #ff8800;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  box-shadow:
-    0 5px 15px
-    rgba(255, 136, 0, 0.16);
-}
-
-.pagamentoBtn:hover {
-  border-color:
-    #ff8800;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-}
-
-
-/* =========================================================
-   CARD PRINCIPAL DO PAGAMENTO
-========================================================= */
-
-.pagamentoCard {
-  width:
-    100%;
-
-  max-width:
-    400px;
-
-  margin:
-    25px auto 0;
-
-  padding:
-    20px;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
-}
-
-
-/* =========================================================
-   PIX
-========================================================= */
 
 .pixArea {
-  width:
-    100%;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
 }
 
-.qrArea {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-}
-
-.pixArea h4 {
-  margin:
-    0 0 10px;
-
-  color:
-    #fff;
-
-  font-size:
-    15px;
-}
-
-.qrCode {
-  width:
-    140px;
-
-  height:
-    140px;
-
-  margin:
-    0;
-
-  border-radius:
-    8px;
-
-  background:
-    #fff;
+.qrArea,
+.valorArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .valorArea {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-
-  text-align:
-    center;
+  text-align: center;
 }
 
-.valorArea h3 {
-  margin:
-    0 0 8px;
+.pixArea h4 {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 15px;
+}
 
-  color:
-    #ff8800;
+.qrCode {
+  width: 140px;
+  height: 140px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.valorArea h3,
+.descricaoPagamento h3,
+.pagamentoInfo h3,
+.resumoPagamento h3 {
+  color: #ff8800;
 }
 
 .valorArea p {
-  margin:
-    0;
-
-  color:
-    #fff;
-
-  font-size:
-    24px;
-
-  font-weight:
-    bold;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-
-/* =========================================================
-   DESCRIÇÃO PAGAMENTO
-========================================================= */
-
 .descricaoPagamento {
-  margin-top:
-    18px;
-
-  padding-top:
-    15px;
-
-  border-top:
-    1px solid #292929;
-
-  color:
-    #fff;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #292929;
+  color: #fff;
 }
 
 .descricaoPagamento h3 {
-  margin:
-    0 0 10px;
+  margin-bottom: 10px;
+}
 
-  color:
-    #ff8800;
+.descricaoPagamento p,
+.pagamentoInfo p,
+.resumoPagamento p {
+  color: #ddd;
 }
 
 .descricaoPagamento p {
-  margin:
-    5px 0;
-
-  color:
-    #ddd;
+  margin: 5px 0;
 }
 
-
-/* =========================================================
-   RESUMO AGENDAMENTO
-========================================================= */
-
 .pagamentoInfo {
-  width:
-    100%;
-
-  max-width:
-    650px;
-
-  margin:
-    30px auto 0;
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  gap:
-    30px;
-
-  color:
-    #fff;
+  width: 100%;
+  max-width: 650px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .pagamentoInfo h3 {
-  margin-bottom:
-    12px;
-
-  color:
-    #ff8800;
+  margin-bottom: 12px;
 }
 
 .pagamentoInfo p {
-  margin-bottom:
-    6px;
-
-  color:
-    #ddd;
+  margin-bottom: 6px;
 }
 
-
-/* =========================================================
-   PAGAMENTO CARTÃO
-========================================================= */
-
 .pagamentoContainer {
-  width:
-    100%;
-
-  max-width:
-    1000px;
-
-  margin:
-    20px auto 0;
-
-  display:
-    flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
-
-  gap:
-    60px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 28px auto 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 50px;
 }
 
 .formPagamento {
-  flex:
-    1;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .formPagamento label {
-  color:
-    #ddd;
-
-  font-size:
-    13px;
+  color: #ddd;
+  font-size: 13px;
 }
 
 .rowPagamento {
-  display:
-    flex;
-
-  gap:
-    25px;
+  display: flex;
+  gap: 18px;
 }
 
 .rowPagamento div {
-  flex:
-    1;
+  flex: 1;
 }
 
 .resumoPagamento {
-  width:
-    250px;
-
-  margin-top:
-    10px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  color:
-    #fff;
+  width: 280px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #303030;
+  border-radius: 13px;
+  background: #151515;
+  color: #fff;
 }
 
 .resumoPagamento h3 {
-  margin-bottom:
-    20px;
-
-  color:
-    #ff8800;
+  margin-bottom: 20px;
 }
 
 .resumoPagamento p {
-  margin-bottom:
-    15px;
-
-  color:
-    #ddd;
+  margin-bottom: 15px;
 }
-
-
-/* =========================================================
-   CONFIRMAR PAGAMENTO
-========================================================= */
 
 .confirmarPagamento {
-  width:
-    220px;
-
-  min-height:
-    43px;
-
-  margin-top:
-    40px;
-
-  padding:
-    11px 20px;
-
-  border:
-    none;
-
-  border-radius:
-    8px;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  font-size:
-    14px;
-
-  font-weight:
-    bold;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.25s ease;
+  width: 220px;
+  margin-top: 30px;
 }
-
-.confirmarPagamento:hover {
-  background:
-    #ff9417;
-
-  transform:
-    translateY(-2px);
-}
-
 
 /* =========================================================
-   RECUPERAR SENHA
-========================================================= */
-
-.recuperarCard {
-  width:
-    100%;
-
-  max-width:
-    500px;
-
-  margin-top:
-    50px;
-
-  padding:
-    35px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    18px;
-
-  text-align:
-    center;
-
-  background:
-    #151515;
-
-  border:
-    1px solid #303030;
-
-  border-radius:
-    13px;
-
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.25);
-}
-
-.recuperarTitle {
-  color:
-    #fff;
-
-  font-size:
-    28px;
-
-  font-weight:
-    bold;
-}
-
-.recuperarText {
-  color:
-    #888;
-
-  font-size:
-    14px;
-
-  line-height:
-    1.5;
-}
-
-.recuperarButton {
-  width:
-    100%;
-
-  padding:
-    13px;
-
-  border:
-    none;
-
-  border-radius:
-    8px;
-
-  background:
-    #ff8800;
-
-  color:
-    #111;
-
-  font-size:
-    14px;
-
-  font-weight:
-    bold;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.25s ease;
-}
-
-.recuperarButton:hover {
-  background:
-    #ff9417;
-
-  transform:
-    translateY(-1px);
-}
-
-.recuperarLink {
-  margin-top:
-    5px;
-
-  color:
-    #ff8800;
-
-  font-weight:
-    600;
-
-  text-decoration:
-    none;
-}
-
-.recuperarLink:hover {
-  color:
-    #ffaa33;
-}
-
-
-/* =========================================================
-   ANIMAÇÃO
+   ANIMAÇÕES
 ========================================================= */
 
 @keyframes fadeIn {
@@ -2460,468 +1237,267 @@
   }
 }
 
-
 /* =========================================================
-   RESPONSIVIDADE - TABLET
+   TABLET
 ========================================================= */
 
 @media (max-width: 1024px) {
-
   .app {
-    padding:
-      0 30px 60px;
+    padding: 0 30px 60px;
   }
 
   .quadrasSection {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-
-  .categoryButtons {
-    max-width:
-      100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .content {
-    padding:
-      30px;
+    padding: 30px;
   }
 
   .pagamentoContainer {
-    gap:
-      35px;
+    gap: 35px;
   }
 }
 
-
 /* =========================================================
-   RESPONSIVIDADE - 768PX
+   CELULAR
 ========================================================= */
 
-@media (max-width: 768px) {
-
+@media (max-width: 700px) {
   .app {
-    padding:
-      0 16px 50px;
+    padding: 0 15px 50px;
   }
 
-
-  /* HEADER */
-
   .topHeader {
-    height:
-      68px;
+    height: 72px;
+    padding: 0 16px;
+  }
 
-    padding:
-      0 15px;
+  .menuButton,
+  .menuIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .menuButton {
+    margin-right: 12px;
   }
 
   .menuIcon {
-    top:
-      13px;
-
-    left:
-      15px;
-
-    width:
-      42px;
-
-    height:
-      42px;
-
-    font-size:
-      17px;
+    top: 14px;
+    left: 15px;
   }
 
   .menuIconOpen {
-    left:
-      250px;
+    left: 300px;
   }
-
-
-  /* MENU */
-
-  .sidebarMenu {
-    width:
-      250px;
-
-    left:
-      -250px;
-
-    padding:
-      20px 15px;
-  }
-
-  .sidebarMenu.open {
-    left:
-      0;
-  }
-
-
-  /* LOGO */
 
   .logoArea img {
-    width:
-      38px;
-
-    height:
-      38px;
+    width: 40px;
+    height: 40px;
   }
 
   .logoArea h2 {
-    font-size:
-      15px;
+    font-size: 16px;
   }
 
+  .userIcon {
+    font-size: 24px;
+  }
 
-  /* CATEGORIAS */
+  .sidebarMenu {
+    width: 256px;
+    padding: 18px 16px 18px;
+  }
 
   .categoryButtons {
-    margin-top:
-      20px;
-
-    gap:
-      7px;
-
-    padding:
-      0 3px;
-
-    overflow-x:
-      auto;
-
-    flex-wrap:
-      nowrap;
-
-    justify-content:
-      flex-start;
-
-    scrollbar-width:
-      none;
+    margin-top: 28px;
+    padding: 0 5px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
   }
 
   .categoryButtons::-webkit-scrollbar {
-    display:
-      none;
+    display: none;
   }
 
   .categoryButtons button {
-    flex:
-      0 0 auto;
-
-    white-space:
-      nowrap;
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 10px 18px;
+    white-space: nowrap;
+    font-size: 14px;
   }
 
-
-  /* BUSCA */
-
-  .searchContainer {
-    margin-top:
-      18px;
-  }
-
-  .searchBar {
-    max-width:
-      100%;
+  .searchBar,
+  .selectQuadra {
+    max-width: 100%;
   }
 
   .selectQuadra {
-    width:
-      100%;
-
-    max-width:
-      650px;
+    width: 100%;
   }
 
-
-  /* QUADRAS */
-
   .quadrasSection {
-    grid-template-columns:
-      1fr;
-
-    gap:
-      14px;
-
-    margin-top:
-      22px;
+    padding: 0 5px;
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .quadraCard {
-    width:
-      100%;
-
-    max-width:
-      500px;
-
-    margin:
-      0 auto;
+    min-height: 260px;
+    padding: 16px;
   }
 
   .quadraCard img {
-    height:
-      160px;
+    height: 180px;
   }
 
-
-  /* PAGAMENTO */
-
-  .pixArea {
-    flex-direction:
-      column;
-
-    gap:
-      25px;
+  .quadraCard h3 {
+    font-size: 19px;
   }
 
-  .pagamentoInfo {
-    flex-direction:
-      column;
-
-    gap:
-      25px;
+  .pixArea,
+  .pagamentoInfo,
+  .pagamentoContainer,
+  .rowPagamento {
+    flex-direction: column;
   }
 
+  .pixArea,
+  .pagamentoInfo,
   .pagamentoContainer {
-    flex-direction:
-      column;
-
-    gap:
-      30px;
-  }
-
-  .resumoPagamento {
-    width:
-      100%;
-  }
-
-  .confirmarPagamento {
-    width:
-      100%;
+    gap: 25px;
   }
 
   .rowPagamento {
-    flex-direction:
-      column;
-
-    gap:
-      12px;
+    gap: 12px;
   }
 
-
-  /* INSTITUCIONAL */
+  .resumoPagamento,
+  .confirmarPagamento {
+    width: 100%;
+  }
 
   .arenaWrapper {
-    flex-direction:
-      column;
+    flex-direction: column;
   }
 
   .sidebar {
-    width:
-      100%;
-
-    min-height:
-      auto;
-
-    border-right:
-      none;
-
-    border-bottom:
-      1px solid #202020;
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid #202020;
   }
 
   .content {
-    padding:
-      25px 15px;
+    padding: 25px 15px;
   }
 
   .contentCard {
-    padding:
-      25px;
+    padding: 25px;
   }
 
   .hero h1 {
-    font-size:
-      30px;
+    font-size: 30px;
+  }
+
+  .hero p {
+    font-size: 14px;
   }
 }
 
 
 /* =========================================================
-   MOBILE PEQUENO
+   TELAS BAIXAS
 ========================================================= */
 
-@media (max-width: 480px) {
+@media (max-height: 650px) {
+  .sidebarNav {
+    margin-top: 32px;
+    gap: 6px;
+  }
 
+  .sidebarMenu a {
+    height: 44px;
+  }
+
+  .sair {
+    padding-top: 12px;
+  }
+
+  .sair a {
+    height: 42px;
+  }
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 420px) {
   .app {
-    padding:
-      0 12px 40px;
-  }
-
-  .topHeader {
-    height:
-      64px;
-  }
-
-  .menuIcon {
-    top:
-      11px;
-
-    left:
-      12px;
-
-    width:
-      40px;
-
-    height:
-      40px;
-  }
-
-  .menuIconOpen {
-    left:
-      240px;
-  }
-
-  .sidebarMenu {
-    width:
-      240px;
-
-    left:
-      -240px;
-  }
-
-  .sidebarMenu.open {
-    left:
-      0;
-  }
-
-  .logoArea {
-    gap:
-      8px;
-  }
-
-  .logoArea img {
-    width:
-      35px;
-
-    height:
-      35px;
+    padding: 0 12px 40px;
   }
 
   .logoArea h2 {
-    font-size:
-      14px;
+    font-size: 15px;
   }
 
-  .categoryButtons {
-    justify-content:
-      flex-start;
+  .menuIconOpen {
+    left: 245px;
   }
 
-  .categoryButtons button {
-    padding:
-      8px 14px;
-
-    font-size:
-      12px;
+  .sidebarMenu {
+    width: 256px;
   }
 
   .quadraCard {
-    padding:
-      12px;
+    padding: 14px;
   }
 
   .quadraCard img {
-    height:
-      150px;
+    height: 150px;
   }
 
   .quadraCard h3 {
-    font-size:
-      16px;
+    font-size: 18px;
   }
 
   .sobreCard,
   .cadastroCard,
   .loginCard,
   .recuperarCard {
-    padding:
-      22px 18px;
+    padding: 24px 20px;
   }
 
   .sobreTitulo {
-    font-size:
-      29px;
+    font-size: 29px;
   }
 
   .cadastroTitle,
   .loginTitle,
   .recuperarTitle {
-    font-size:
-      24px;
+    font-size: 24px;
   }
 
   .pagamentoButtons {
-    flex-wrap:
-      wrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+
+  .pagamentoButtons::-webkit-scrollbar {
+    display: none;
   }
 
   .pagamentoBtn {
-    width:
-      105px;
-  }
-
-  .pixArea {
-    gap:
-      20px;
+    flex: 0 0 auto;
   }
 
   .qrCode {
-    width:
-      125px;
-
-    height:
-      125px;
-  }
-}
-
-
-/* =========================================================
-   CELULARES MUITO PEQUENOS
-========================================================= */
-
-@media (max-width: 360px) {
-
-  .logoArea h2 {
-    font-size:
-      13px;
-  }
-
-  .menuIcon {
-    left:
-      10px;
-  }
-
-  .menuIconOpen {
-    left:
-      225px;
-  }
-
-  .sidebarMenu {
-    width:
-      225px;
-
-    left:
-      -225px;
-  }
-
-  .sidebarMenu.open {
-    left:
-      0;
-  }
-
-  .quadraCard img {
-    height:
-      135px;
+    width: 125px;
+    height: 125px;
   }
 }
