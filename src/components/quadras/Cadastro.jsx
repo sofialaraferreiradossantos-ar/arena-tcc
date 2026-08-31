@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import logo from "../../assets/logo.jpeg";
 import styles from "../../styles/home.module.css";
 
 export default function Cadastro() {
@@ -6,43 +8,38 @@ export default function Cadastro() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.app}>
-        <div className={styles.topHeader}>
-          <div className={styles.logoArea}>
-            <h2>
-              Criar <span>Conta</span>
-            </h2>
+      <header className={styles.authHeader}>
+        <Link to="/login" className={styles.authBrand} aria-label="Arena Beach">
+          <img src={logo} alt="Arena Beach" />
+          <strong>ARENA <span>BEACH</span></strong>
+        </Link>
+      </header>
+      <main className={styles.authContent}>
+        <section className={styles.cadastroCard}>
+          <div className={styles.authHeading}>
+            <span>Junte-se à Arena</span>
+            <h2 className={styles.cadastroTitle}>Crie sua conta</h2>
+            <p>Cadastre-se para reservar quadras e participar dos torneios.</p>
           </div>
-        </div>
 
-        <div className={`${styles.quadraCard} ${styles.cadastroCard}`}>
-          <h2 className={styles.cadastroTitle}>
-            Cadastro de usuário
-          </h2>
-
-          <input
-            type="text"
-            placeholder="Nome"
-            className={styles.cadastroInput}
-          />
-
-          <input
-            type="email"
-            placeholder="Email"
-            className={styles.cadastroInput}
-          />
-
-          <input
-            type="password"
-            placeholder="Senha"
-            className={styles.cadastroInput}
-          />
-
-          <input
-            type="password"
-            placeholder="Confirmar senha"
-            className={styles.cadastroInput}
-          />
+          <label className={styles.authField}>
+            <span>Nome</span>
+            <div><FaUser /><input type="text" placeholder="Seu nome completo" className={styles.cadastroInput} /></div>
+          </label>
+          <label className={styles.authField}>
+            <span>E-mail</span>
+            <div><FaEnvelope /><input type="email" placeholder="seu@email.com" className={styles.cadastroInput} /></div>
+          </label>
+          <div className={styles.authFieldRow}>
+            <label className={styles.authField}>
+              <span>Senha</span>
+              <div><FaLock /><input type="password" placeholder="Crie uma senha" className={styles.cadastroInput} /></div>
+            </label>
+            <label className={styles.authField}>
+              <span>Confirmar senha</span>
+              <div><FaLock /><input type="password" placeholder="Repita a senha" className={styles.cadastroInput} /></div>
+            </label>
+          </div>
 
           <button
             className={`${styles.activeBtn} ${styles.cadastroButton}`}
@@ -60,8 +57,8 @@ export default function Cadastro() {
               entrar
             </Link>
           </p>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

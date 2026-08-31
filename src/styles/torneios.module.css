@@ -1,5 +1,5 @@
-/* ========================================
-   PÁGINA
+﻿/* ========================================
+   PÃGINA
 ======================================== */
 
 .pageWrapper {
@@ -17,7 +17,7 @@
 
 
 /* ========================================
-   CONTEÚDO PRINCIPAL
+   CONTEÃšDO PRINCIPAL
 ======================================== */
 
 .mainContent {
@@ -56,10 +56,10 @@
 
   height: 100vh;
 
-  background: #101113;
+  background: #090909;
 
   border-right:
-    1px solid #282828;
+    1px solid #303030;
 
   display: flex;
 
@@ -113,7 +113,7 @@
   padding:
     0 15px;
 
-  color: #f1f1f1;
+  color: #ddd;
 
   text-decoration: none;
 
@@ -154,7 +154,7 @@
   background:
     rgba(255, 136, 0, 0.14);
 
-  color: #ff9200;
+  color: #ff9417;
 }
 
 
@@ -165,7 +165,7 @@
 }
 
 
-/* ÍCONES */
+/* ÃCONES */
 
 .menuEmoji {
   width: 14px;
@@ -185,7 +185,7 @@
 }
 
 
-/* BOTÃO FECHAR */
+/* BOTÃƒO FECHAR */
 
 .closeMenu {
   position: absolute;
@@ -225,7 +225,7 @@
 
 
 /* ========================================
-   BOTÃO MENU
+   BOTÃƒO MENU
 ======================================== */
 
 .menuIcon {
@@ -241,12 +241,12 @@
 
   padding: 9px;
 
-  background: #101113;
+  background: #090909;
 
   color: #ff8800;
 
   border:
-    1px solid #282828;
+    1px solid #303030;
 
   border-radius: 9px;
 
@@ -271,7 +271,7 @@
 
 
 /* ========================================
-   CABEÇALHO
+   CABEÃ‡ALHO
 ======================================== */
 
 .topHeader {
@@ -279,7 +279,7 @@
 
   width: 100%;
 
-  background: #050505;
+  background: #090909;
 
   border-bottom:
     1px solid #202020;
@@ -318,7 +318,7 @@
 
 
 /* ========================================
-   CONTEÚDO
+   CONTEÃšDO
 ======================================== */
 
 .content {
@@ -335,7 +335,7 @@
 }
 
 
-/* TÍTULO */
+/* TÃTULO */
 
 .content h1 {
   margin: 0;
@@ -368,7 +368,7 @@
 }
 
 
-/* SUBTÍTULO */
+/* SUBTÃTULO */
 
 .subtitle {
   margin:
@@ -381,7 +381,7 @@
 
 
 /* ========================================
-   ÁREA DOS CARDS
+   ÃREA DOS CARDS
 ======================================== */
 
 .cardsArea {
@@ -443,7 +443,7 @@
 
 
 /* ========================================
-   INFORMAÇÕES DO CARD
+   INFORMAÃ‡Ã•ES DO CARD
 ======================================== */
 
 .cardInfo {
@@ -459,7 +459,7 @@
 }
 
 
-/* TÍTULO DO CARD */
+/* TÃTULO DO CARD */
 
 .cardTitle {
   display: flex;
@@ -525,7 +525,7 @@
 
 
 /* ========================================
-   INFORMAÇÕES
+   INFORMAÃ‡Ã•ES
 ======================================== */
 
 .infoItem {
@@ -579,7 +579,7 @@
 
 
 .infoItem strong {
-  color: #e5e5e5;
+  color: #ddd;
 
   font-size: 13px;
 
@@ -588,7 +588,7 @@
 
 
 /* ========================================
-   BOTÃO VER DETALHES
+   BOTÃƒO VER DETALHES
 ======================================== */
 
 .detalhesButton {
@@ -770,4 +770,72 @@
     font-size: 17px;
   }
 
+}
+
+/* Shared layout alignment */
+.mainContent {
+  padding-left: 0;
+  background: #000;
+}
+
+.topHeader {
+  max-width: none;
+  padding-left: 100px !important;
+}
+
+.content {
+  max-width: 1300px;
+  padding: 56px 50px 70px;
+}
+
+.content h1 {
+  font-size: 46px;
+  line-height: 1.2;
+}
+
+.titleLine {
+  width: 72px;
+  height: 5px;
+  margin-top: 18px;
+  border-radius: 10px;
+}
+
+.subtitle {
+  margin: 14px 0 36px;
+  color: #888;
+  font-size: 17px;
+}
+
+.cardsArea {
+  gap: 28px;
+}
+
+.card {
+  min-height: 270px;
+  padding: 34px;
+  border: 1px solid #303030;
+  border-top: 3px solid #ff8800;
+  border-radius: 17px;
+}
+
+.card:hover {
+  border-color: #ff8800;
+}
+
+@media (max-width: 700px) {
+  .topHeader {
+    padding-left: 82px !important;
+  }
+
+  .content {
+    padding: 38px 20px 50px;
+  }
+
+  .content h1 {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
 }

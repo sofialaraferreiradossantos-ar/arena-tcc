@@ -17,7 +17,7 @@ body,
 .sidebar {
   width: 210px;
   min-height: 100vh;
-  background: #050505;
+  background: var(--arena-sidebar);
   border-right: 1px solid #1b1b1b;
   padding: 30px 20px;
   display:flex;
@@ -65,4 +65,201 @@ body,
   margin-left: 210px; /* mesmo width do sidebarMenu */
   flex: 1;
   min-height: 100vh;
+}
+
+/* Shared Arena visual language. Module classes remain unchanged. */
+[class*="topHeader"] {
+  position: sticky !important;
+  top: 0;
+  z-index: 900;
+  width: 100% !important;
+  height: var(--arena-header-height) !important;
+  margin: 0 !important;
+  padding: 0 38px !important;
+  display: flex;
+  align-items: center;
+  background: var(--arena-header) !important;
+  border-bottom: 1px solid #1d1d1d !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[class*="menuButton"],
+[class*="menuIcon"] {
+  width: 48px !important;
+  height: 48px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2c2c2c !important;
+  border-radius: var(--arena-control-radius) !important;
+  background: var(--arena-control) !important;
+  color: var(--arena-text) !important;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+[class*="menuButton"]:hover,
+[class*="menuIcon"]:hover {
+  border-color: var(--arena-accent) !important;
+  background: rgba(255, 136, 0, 0.08) !important;
+  color: var(--arena-accent) !important;
+  transform: none !important;
+}
+
+[class*="sidebarOverlay"],
+[class*="menuOverlay"] {
+  position: fixed;
+  inset: 0;
+  z-index: 1000 !important;
+  background: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+[class*="sidebarMenu"],
+[class^="_sidebar_"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1100 !important;
+  width: var(--arena-sidebar-width) !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  padding: 26px 18px !important;
+  display: flex;
+  flex-direction: column;
+  background: var(--arena-sidebar) !important;
+  border-right: 1px solid #202020 !important;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.45) !important;
+  transform: translateX(-100%) !important;
+  transition: transform 0.3s ease !important;
+}
+
+[class*="sidebarMenu"][class*="open"],
+[class^="_sidebar_"][class*="open"] {
+  transform: translateX(0) !important;
+}
+
+[class*="sidebarMenu"] a,
+[class*="sidebarNav"] a,
+[class*="sidebarBottom"] a {
+  min-height: 48px !important;
+  padding: 0 14px !important;
+  display: flex;
+  align-items: center;
+  gap: 14px !important;
+  border: 1px solid transparent !important;
+  border-radius: 9px !important;
+  background: transparent;
+  color: #ccc !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+[class*="sidebarMenu"] a:hover,
+[class*="sidebarNav"] a:hover,
+[class*="sidebarBottom"] a:hover {
+  background: rgba(255, 136, 0, 0.08) !important;
+  color: var(--arena-accent) !important;
+  transform: translateX(2px) !important;
+}
+
+[class*="sidebarMenu"] a[class*="active"],
+[class*="sidebarNav"] a[class*="active"] {
+  border-color: var(--arena-accent) !important;
+  background: var(--arena-accent) !important;
+  color: #111 !important;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16) !important;
+}
+
+[class*="closeMenu"],
+[class*="closeButton"] {
+  width: 36px !important;
+  height: 36px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2b2b2b !important;
+  border-radius: 8px !important;
+  background: var(--arena-control) !important;
+  color: #777 !important;
+}
+
+[class*="closeMenu"]:hover,
+[class*="closeButton"]:hover {
+  border-color: var(--arena-accent) !important;
+  color: var(--arena-accent) !important;
+  background: rgba(255, 136, 0, 0.08) !important;
+}
+
+[class*="_card_"],
+[class*="Card_"],
+[class*="Box_"] {
+  border-color: var(--arena-border) !important;
+  border-radius: var(--arena-card-radius) !important;
+  background-color: var(--arena-surface) !important;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid var(--arena-border);
+  border-radius: var(--arena-control-radius);
+  background: var(--arena-surface-muted);
+  color: var(--arena-text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--arena-accent);
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+button {
+  font-family: inherit;
+}
+
+@media (max-width: 700px) {
+  [class*="topHeader"] {
+    height: 72px !important;
+    padding: 0 16px !important;
+  }
+
+  [class*="menuButton"],
+  [class*="menuIcon"] {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  [class*="sidebarMenu"],
+  [class^="_sidebar_"] {
+    width: 290px !important;
+    padding: 22px 16px !important;
+  }
+}
+
+:root {
+  --arena-bg: #000;
+  --arena-header: rgba(5, 5, 5, 0.96);
+  --arena-sidebar: #090909;
+  --arena-surface: #151515;
+  --arena-surface-muted: #101010;
+  --arena-control: #111;
+  --arena-border: #303030;
+  --arena-border-subtle: #252525;
+  --arena-accent: #ff8800;
+  --arena-accent-hover: #ff9417;
+  --arena-text: #fff;
+  --arena-text-soft: #ddd;
+  --arena-text-muted: #888;
+  --arena-card-radius: 17px;
+  --arena-control-radius: 10px;
+  --arena-header-height: 84px;
+  --arena-sidebar-width: 260px;
+  color-scheme: dark;
 }

@@ -17,8 +17,8 @@ export default function Home() {
       />
 
       <main className={styles.app}>
-        <div className={styles.contentCard}>
-          <header className={styles.hero}>
+        <section className={styles.pageTitle}>
+          <div>
             <h1>
               Bem-vindo à <span>Arena Beach</span>
             </h1>
@@ -27,11 +27,14 @@ export default function Home() {
               Seu espaço para reservar quadras,
               participar de torneios e viver o esporte.
             </p>
-          </header>
+          </div>
+        </section>
 
-          <section className={styles.section}>
+        <section className={styles.homeCards}>
+          <article className={styles.infoCard}>
             <h3>
-              <FaInfoCircle /> Sobre nós
+              <span className={styles.infoCardIcon}><FaInfoCircle /></span>
+              Sobre nós
             </h3>
 
             <p>
@@ -40,42 +43,47 @@ export default function Home() {
               vôlei e futebol, além de torneios e uma estrutura
               completa para aproveitar com os amigos.
             </p>
-          </section>
+          </article>
 
-          <section className={styles.section}>
+          <article className={styles.infoCard}>
             <h3>
-              <FaClock /> Horário de funcionamento
+              <span className={styles.infoCardIcon}><FaClock /></span>
+              Horário de funcionamento
             </h3>
 
-            <p>Segunda à sexta-feira: 08:00 / 21:00</p>
-            <p>Sábado: 08:00 / 18:00</p>
-            <p>Domingo: Fechado</p>
+            <div className={styles.scheduleList}>
+              <p><span>Segunda à sexta-feira</span><strong>08:00 / 21:00</strong></p>
+              <p><span>Sábado</span><strong>08:00 / 18:00</strong></p>
+              <p><span>Domingo</span><strong>Fechado</strong></p>
+            </div>
 
             <small>
               Os horários podem sofrer alterações em feriados locais
               e nacionais.
             </small>
-          </section>
+          </article>
 
-          <section className={styles.section}>
+          <article className={styles.infoCard}>
             <h3>
-              <FaPhoneAlt /> Suporte
+              <span className={styles.infoCardIcon}><FaPhoneAlt /></span>
+              Suporte
             </h3>
 
             <div className={styles.inlineInfo}>
               <FaPhoneAlt />
               <span>(14) 99835-8654</span>
             </div>
-          </section>
+          </article>
 
-          <section className={styles.section}>
+          <article className={styles.infoCard}>
             <h3>
-              <FaMapMarkerAlt /> Endereço
+              <span className={styles.infoCardIcon}><FaMapMarkerAlt /></span>
+              Endereço
             </h3>
 
             <p>Rua xxxxxxxx - Jaú/SP, 17200-000</p>
-          </section>
-        </div>
+          </article>
+        </section>
       </main>
     </div>
   );

@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import logo from "../../assets/logo.jpeg";
 import styles from "../../styles/home.module.css";
 
 export default function Login() {
@@ -6,33 +8,32 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.app}>
-
-        <div className={styles.topHeader}>
-          <div className={styles.logoArea}>
-            <h2>
-              Arena <span>Beach</span>
-            </h2>
-          </div>
-        </div>
-
-        <div className={`${styles.quadraCard} ${styles.loginCard}`}>
+      <header className={styles.authHeader}>
+        <Link to="/login" className={styles.authBrand} aria-label="Arena Beach">
+          <img src={logo} alt="Arena Beach" />
+          <strong>ARENA <span>BEACH</span></strong>
+        </Link>
+      </header>
+      <main className={styles.authContent}>
+        <section className={styles.loginCard}>
+          <div className={styles.authHeading}>
+            <span>Acesso à Arena</span>
 
           <h2 className={styles.loginTitle}>
-            Login
+            Entre na sua conta
           </h2>
+            <p>Use seus dados para acessar reservas e torneios.</p>
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            className={styles.loginInput}
-          />
+          <label className={styles.authField}>
+            <span>E-mail</span>
+            <div><FaEnvelope /><input type="email" placeholder="seu@email.com" className={styles.loginInput} /></div>
+          </label>
 
-          <input
-            type="password"
-            placeholder="Senha"
-            className={styles.loginInput}
-          />
+          <label className={styles.authField}>
+            <span>Senha</span>
+            <div><FaLock /><input type="password" placeholder="Digite sua senha" className={styles.loginInput} /></div>
+          </label>
 
           <button
             className={`${styles.activeBtn} ${styles.loginButton}`}
@@ -72,9 +73,8 @@ export default function Login() {
 
           </div>
 
-        </div>
-
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

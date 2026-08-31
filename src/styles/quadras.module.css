@@ -1,5 +1,5 @@
-/* =========================================================
-   CONFIGURAÇÃO GERAL
+﻿/* =========================================================
+   CONFIGURAÃ‡ÃƒO GERAL
 ========================================================= */
 
 :global(*) {
@@ -29,7 +29,7 @@
 
 
 /* =========================================================
-   PÁGINA
+   PÃGINA
 ========================================================= */
 
 .detailsContainer {
@@ -72,7 +72,7 @@
 
 
 /* =========================================================
-   TÍTULO
+   TÃTULO
 ========================================================= */
 
 .titleDetails {
@@ -119,7 +119,7 @@
 
 
 /* =========================================================
-   CONTEÚDO
+   CONTEÃšDO
 ========================================================= */
 
 .detailsContent {
@@ -265,7 +265,7 @@
 
 
 /* =========================================================
-   INFORMAÇÕES
+   INFORMAÃ‡Ã•ES
 ========================================================= */
 
 .infoBox {
@@ -310,7 +310,7 @@
 
 
 /* =========================================================
-   TÍTULO DAS INFORMAÇÕES
+   TÃTULO DAS INFORMAÃ‡Ã•ES
 ========================================================= */
 
 .infoBox h2 {
@@ -329,7 +329,7 @@
 
 
 /* =========================================================
-   SUBTÍTULOS
+   SUBTÃTULOS
 ========================================================= */
 
 .infoBox h3 {
@@ -359,7 +359,7 @@
 
 
 /* =========================================================
-   HORÁRIO
+   HORÃRIO
 ========================================================= */
 
 .horario {
@@ -383,7 +383,7 @@
 
 /* =========================================================
    FUNDO AO ABRIR MENU
-   (idêntico ao .sidebarOverlay do arquivo principal)
+   (idÃªntico ao .sidebarOverlay do arquivo principal)
 ========================================================= */
 
 .menuOverlay {
@@ -406,7 +406,7 @@
 
 /* =========================================================
    MENU LATERAL
-   (idêntico ao .sidebar do arquivo principal)
+   (idÃªntico ao .sidebar do arquivo principal)
 ========================================================= */
 
 .sidebarMenu {
@@ -442,7 +442,7 @@
 
 /* =========================================================
    MENU ABERTO
-   (idêntico ao .sidebar.open do arquivo principal)
+   (idÃªntico ao .sidebar.open do arquivo principal)
 ========================================================= */
 
 .sidebarMenu.open {
@@ -452,7 +452,7 @@
 
 /* =========================================================
    MARCA / LOGO DO MENU
-   (idêntico ao .sidebarBrand + .sidebarLogo do arquivo principal)
+   (idÃªntico ao .sidebarBrand + .sidebarLogo do arquivo principal)
 ========================================================= */
 
 .sidebarMenu img {
@@ -475,7 +475,7 @@
 
 /* =========================================================
    LINKS
-   (idêntico ao .sidebarNav a do arquivo principal)
+   (idÃªntico ao .sidebarNav a do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a {
@@ -510,7 +510,7 @@
 
 
 /* =========================================================
-   ESPAÇAMENTO
+   ESPAÃ‡AMENTO
 ========================================================= */
 
 .sidebarMenu a + a {
@@ -519,8 +519,8 @@
 
 
 /* =========================================================
-   PÁGINA ATUAL
-   (idêntico ao .sidebarNav a.active do arquivo principal)
+   PÃGINA ATUAL
+   (idÃªntico ao .sidebarNav a.active do arquivo principal)
 ========================================================= */
 
 .active {
@@ -536,7 +536,7 @@
 
 /* =========================================================
    HOVER DOS LINKS
-   (idêntico ao .sidebarNav a:hover do arquivo principal)
+   (idÃªntico ao .sidebarNav a:hover do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a:hover {
@@ -550,8 +550,8 @@
 
 
 /* =========================================================
-   HOVER DA PÁGINA ATUAL
-   (idêntico ao .sidebarNav a.active:hover do arquivo principal)
+   HOVER DA PÃGINA ATUAL
+   (idÃªntico ao .sidebarNav a.active:hover do arquivo principal)
 ========================================================= */
 
 .sidebarMenu a.active:hover {
@@ -564,8 +564,8 @@
 
 
 /* =========================================================
-   ÍCONES
-   (idêntico ao .sidebarNav a svg do arquivo principal)
+   ÃCONES
+   (idÃªntico ao .sidebarNav a svg do arquivo principal)
 ========================================================= */
 
 .menuEmoji {
@@ -600,7 +600,7 @@
 
 /* =========================================================
    SAIR
-   (idêntico ao .sidebarBottom do arquivo principal)
+   (idÃªntico ao .sidebarBottom do arquivo principal)
 ========================================================= */
 
 .sair {
@@ -614,7 +614,7 @@
 
 /* =========================================================
    FECHAR MENU
-   (idêntico ao .closeButton do arquivo principal)
+   (idÃªntico ao .closeButton do arquivo principal)
 ========================================================= */
 
 .closeMenu {
@@ -659,7 +659,7 @@
 
 /* =========================================================
    ABRIR MENU
-   (idêntico ao .menuButton do arquivo principal)
+   (idÃªntico ao .menuButton do arquivo principal)
 ========================================================= */
 
 .menuIcon {
@@ -707,7 +707,7 @@
 
 
 /* =========================================================
-   ANIMAÇÃO
+   ANIMAÃ‡ÃƒO
 ========================================================= */
 
 @keyframes fadeIn {
@@ -769,14 +769,14 @@
   }
 
 
-  /* TÍTULO */
+  /* TÃTULO */
 
   .titleDetails {
     font-size: 27px;
   }
 
 
-  /* CONTEÚDO */
+  /* CONTEÃšDO */
 
   .detailsContent {
     margin-top: 28px;
@@ -822,7 +822,7 @@
   }
 
 
-  /* INFORMAÇÕES */
+  /* INFORMAÃ‡Ã•ES */
 
   .infoBox {
     width: 100%;
@@ -866,7 +866,7 @@
   }
 
 
-  /* TÍTULO */
+  /* TÃTULO */
 
   .titleDetails {
     font-size: 23px;
@@ -903,7 +903,7 @@
   }
 
 
-  /* INFORMAÇÕES */
+  /* INFORMAÃ‡Ã•ES */
 
   .infoBox {
     padding: 19px;
@@ -970,5 +970,81 @@
 
   .infoBox {
     padding: 16px;
+  }
+}
+
+/* Shared layout alignment */
+.detailsContainer {
+  padding-top: 120px;
+}
+
+.detailsContainer::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 850;
+  width: 100%;
+  height: 84px;
+  background: rgba(5, 5, 5, 0.96);
+  border-bottom: 1px solid #1d1d1d;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.logoDetails {
+  position: fixed;
+  top: 19px;
+  left: 104px;
+  z-index: 900;
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  border-radius: 10px;
+}
+
+.menuIcon {
+  z-index: 901;
+}
+
+.titleDetails {
+  margin-top: 0;
+  font-size: 46px;
+}
+
+.titleDetails::after {
+  width: 72px;
+  height: 5px;
+  margin-top: 18px;
+}
+
+.detailsContent {
+  margin-top: 36px;
+  gap: 28px;
+}
+
+.galleryBox,
+.infoBox {
+  border-radius: 17px;
+}
+
+@media (max-width: 800px) {
+  .detailsContainer {
+    padding-top: 108px;
+  }
+
+  .detailsContainer::after {
+    height: 72px;
+  }
+
+  .logoDetails {
+    top: 16px;
+    left: 76px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .titleDetails {
+    font-size: 30px;
   }
 }

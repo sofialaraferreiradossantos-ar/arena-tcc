@@ -1,4 +1,4 @@
-.pageWrapper {
+﻿.pageWrapper {
   min-height: 100vh;
 
   background: #000;
@@ -22,7 +22,7 @@
 
   max-width: 700px;
 
-  background: #1d1d1f;
+  background: #151515;
 
   border: 1px solid #ff8800;
 
@@ -70,7 +70,7 @@
 }
 
 
-/* TÍTULO */
+/* TÃTULO */
 
 .container h1 {
   text-align: center;
@@ -83,7 +83,7 @@
 }
 
 
-/* INFORMAÇÕES */
+/* INFORMAÃ‡Ã•ES */
 
 .informacoes {
   display: grid;
@@ -125,7 +125,7 @@
 
   gap: 5px;
 
-  color: #e5e5e5;
+  color: #ddd;
 }
 
 
@@ -134,7 +134,7 @@
 }
 
 
-/* DESCRIÇÃO */
+/* DESCRIÃ‡ÃƒO */
 
 .descricao {
   margin-top: 25px;
@@ -155,13 +155,13 @@
 
 
 .descricao p {
-  color: #e5e5e5;
+  color: #ddd;
 
   line-height: 1.6;
 }
 
 
-/* BOTÃO INSCREVER */
+/* BOTÃƒO INSCREVER */
 
 .inscrever {
   display: block;
@@ -193,7 +193,7 @@
 
 
 .inscrever:hover {
-  background: #ffffff;
+  background: #fff;
 
   transform: translateY(-2px);
 }
@@ -228,3 +228,50 @@
   }
 
 }
+
+/* Shared card language */
+.pageWrapper {
+  padding: 56px 20px 70px;
+}
+
+.container {
+  position: relative;
+  max-width: 900px;
+  padding: 34px;
+  overflow: hidden;
+  background: #151515;
+  border: 1px solid #303030;
+  border-radius: 17px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
+}
+
+.imagem {
+  border: 1px solid #303030;
+  border-radius: 12px;
+}
+
+.informacoes div,
+.descricao {
+  border: 1px solid #252525;
+  border-radius: 10px;
+  background: #101010;
+}
+
+.inscrever {
+  border-radius: 9px;
+}
+
+.inscrever:hover {
+  background: #ff9417;
+  color: #111;
+}
+
