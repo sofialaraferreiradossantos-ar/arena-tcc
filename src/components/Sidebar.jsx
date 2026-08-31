@@ -72,6 +72,17 @@ export default function Sidebar({
           </NavLink>
 
           <NavLink
+            to="/agendar-horario"
+            onClick={fecharMenu}
+            className={({ isActive }) =>
+              isActive ? styles.active : ""
+            }
+          >
+            <span className={styles.menuEmoji}>🕐</span>
+            <span>Agendar Horário</span>
+          </NavLink>
+
+          <NavLink
             to="/agendamentos"
             onClick={fecharMenu}
             className={({ isActive }) =>

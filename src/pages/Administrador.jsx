@@ -60,6 +60,7 @@ function Administrador() {
         <nav className={styles.sidebarNav}>
           <Link to="/home" onClick={() => setMenuAberto(false)}>Início</Link>
           <Link to="/quadra" onClick={() => setMenuAberto(false)}>Quadras</Link>
+          <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>Agendar Horário</Link>
           <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>Agendamentos</Link>
           <Link to="/torneios" onClick={() => setMenuAberto(false)}>Torneios</Link>
           <Link to="/administrador" className={styles.active} onClick={() => setMenuAberto(false)}>

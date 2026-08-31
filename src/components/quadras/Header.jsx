@@ -110,6 +110,22 @@ export default function Header({ title = "ARENA", highlight = "BEACH" }) {
         </Link>
 
         <Link
+          to="/agendar-horario"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/agendar-horario"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>
+            🕐
+          </span>
+
+          Agendar Horário
+        </Link>
+
+        <Link
           to="/agendamentos"
           onClick={fecharMenu}
           className={

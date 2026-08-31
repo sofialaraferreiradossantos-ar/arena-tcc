@@ -141,6 +141,15 @@ function HeaderAgendamentos() {
 
 
           <Link
+            to="/agendar-horario"
+            onClick={fecharMenu}
+          >
+            <span className={styles.menuEmoji}>🕐</span>
+            <span>Agendar Horário</span>
+          </Link>
+
+
+          <Link
             to="/agendamentos"
             className={styles.active}
             onClick={fecharMenu}

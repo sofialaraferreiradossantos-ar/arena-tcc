@@ -1,8 +1,15 @@
 import { useState } from "react";
 import styles from "../styles/home.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Pagamento() {
+  const location = useLocation();
+  const inscricao = location.state?.inscricao;
+
+  // Valor vindo da inscrição do torneio (fallback: valor fixo antigo)
+  const valorTotal = inscricao?.valor ?? 100;
+  const valorFormatado = `R$ ${valorTotal.toFixed(2).replace(".", ",")}`;
+
   const [metodo, setMetodo] = useState("pix");
 
   const [menuAberto, setMenuAberto] =
@@ -34,6 +41,10 @@ export default function Pagamento() {
 
           <a href="/quadra">
             🏐 Quadras
+          </a>
+
+          <a href="/agendar-horario">
+            🕐 Agendar Horário
           </a>
 
           <a href="/agendamentos">
@@ -136,8 +147,14 @@ export default function Pagamento() {
               </h3>
 
               <p>
-                R$100,00
+                {valorFormatado}
               </p>
+
+              {inscricao && (
+                <small>
+                  {inscricao.torneio}
+                </small>
+              )}
 
             </div>
 
