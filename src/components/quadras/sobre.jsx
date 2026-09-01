@@ -16,15 +16,13 @@ export default function Sobre() {
 
         <div className={`${styles.quadraCard} ${styles.sobreCard}`}>
 
-          <h1 className={styles.sobreTitulo}>
-            Bem-vindo à <br />
-            <span>Arena Beach</span>
-          </h1>
-
-          <p className={styles.sobreDescricao}>
-            Seu espaço para reservar quadras,
-            participar de torneios e viver o esporte.
-          </p>
+          <header className={styles.aboutHero}>
+            <span className={styles.eyebrow}>Bem-vindo</span>
+            <h1 className={styles.sobreTitulo}>Arena <span>Beach</span></h1>
+            <p className={styles.sobreDescricao}>
+              Seu espaço para reservar quadras, participar de torneios e viver o esporte.
+            </p>
+          </header>
 
           <div className={styles.sobreSecao}>
             <h3>Sobre nós</h3>

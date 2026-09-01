@@ -540,9 +540,6 @@
 }
 
 .agendar:hover:not(:disabled) {
-<<<<<<< HEAD
-  background: #ff9417;
-=======
   transform: translateY(-1px);
   box-shadow: 0 9px 26px rgba(255, 136, 0, 0.42);
   background: linear-gradient(135deg, #ff9d2e, #ff7d1a);
@@ -550,7 +547,6 @@
 
 .agendar:active:not(:disabled) {
   transform: translateY(0);
->>>>>>> 3f59ca753fa798eb37eb631647bd3c416b911165
 }
 
 .agendar:disabled {

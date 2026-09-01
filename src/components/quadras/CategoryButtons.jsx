@@ -1,19 +1,8 @@
-import styles from "../../styles/home.module.css"
+import styles from "../../styles/home.module.css";
 
-function CategoryButtons() {
-  return (
-    <div className={styles.categoryButtons}>
-
-      <button className={styles.activeBtn}>
-        Beach tennis
-      </button>
-
-      <button>
-        Futevôlei
-      </button>
-
-    </div>
-  )
+export default function CategoryButtons() {
+  return <div className={styles.categoryButtons} aria-label="Modalidades">
+    <button type="button" className={styles.activeBtn}>Beach tennis</button>
+    <button type="button">Futevôlei</button>
+  </div>;
 }
-
-export default CategoryButtons

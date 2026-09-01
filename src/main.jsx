@@ -25,6 +25,7 @@ import {
 
 import QuadraDetalhes from './pages/QuadraDetalhes.jsx'
 import Administrador from './pages/Administrador.jsx'
+import AdminModulo from './pages/AdminModulo.jsx'
 import AgendarHorario from './pages/AgendarHorario.jsx'
 import UnifiedMenu from './components/UnifiedMenu.jsx'
 
@@ -33,7 +34,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
 <UnifiedMenu />
 <Routes>
-  <Route path="/" element={<Cadastro />} />
+  <Route path="/" element={<Home />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
   <Route path="/agendamentos" element={<Agendamentos />} />
@@ -49,6 +50,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
   <Route path="/torneio/:id" element={<TorneioDetalhes />} />
   <Route path="/administrador" element={<Administrador />} />
+  <Route path="/administrador/:modulo" element={<AdminModulo />} />
   <Route path="/agendar-horario" element={<AgendarHorario />} />
 
 </Routes>

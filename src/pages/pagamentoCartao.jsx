@@ -1,56 +1,17 @@
-import { useState } from "react";
 import styles from "../styles/home.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function PagamentoCartao() {
   const navigate = useNavigate();
 
-  const [menuAberto, setMenuAberto] = useState(false);
-
   return (
     <div className={styles.container}>
-      <div className={styles.app}>
-
-        {/* MENU LATERAL */}
-        <div
-          className={`${styles.sidebarMenu} ${
-            menuAberto ? styles.open : ""
-          }`}
-        >
-          {/* BOTÃO PARA FECHAR */}
-          <button
-            className={styles.closeMenu}
-            onClick={() => setMenuAberto(false)}
-          >
-            ×
-          </button>
-
-          <a href="/home">🏠 Início</a>
-          <a href="/quadra">🏐 Quadras</a>
-          <a href="/agendar-horario">🕐 Agendar Horário</a>
-          <a href="/agendamentos">📅 Agendamentos</a>
-          <a href="/torneios">🏆 Torneios</a>
-          <a href="/pagamento">💳 Pagamento</a>
-        </div>
-
-        <div className={styles.topHeader}>
-
-          {/* O BOTÃO SÓ APARECE QUANDO O MENU ESTÁ FECHADO */}
-          {!menuAberto && (
-            <div
-              className={styles.menuIcon}
-              onClick={() => setMenuAberto(true)}
-            >
-              ☰
-            </div>
-          )}
-
-          <div className={styles.logoArea}>
-            <h2>
-              <span>Pagamento</span>
-            </h2>
-          </div>
-        </div>
+      <main className={`${styles.app} ${styles.paymentPage} ${styles.cardPaymentPage}`}>
+        <header className={styles.paymentHeading}>
+          <span>PAGAMENTO COM CARTÃO</span>
+          <h1>Dados do cartão</h1>
+          <p>Preencha os dados abaixo para confirmar seu agendamento.</p>
+        </header>
 
         <div className={styles.pagamentoButtons}>
           <button
@@ -166,7 +127,7 @@ export default function PagamentoCartao() {
 
         </div>
 
-      </div>
+      </main>
     </div>
   );
 }

@@ -12,77 +12,16 @@ export default function Pagamento() {
 
   const [metodo, setMetodo] = useState("pix");
 
-  const [menuAberto, setMenuAberto] =
-    useState(false);
-
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
-      <div className={styles.app}>
-
-        {/* MENU LATERAL */}
-        <div
-          className={`${styles.sidebarMenu} ${
-            menuAberto ? styles.open : ""
-          }`}
-        >
-          {/* BOTÃO PARA FECHAR */}
-          <button
-            className={styles.closeMenu}
-            onClick={() => setMenuAberto(false)}
-          >
-            ×
-          </button>
-
-          <a href="/home">
-            🏠 Início
-          </a>
-
-          <a href="/quadra">
-            🏐 Quadras
-          </a>
-
-          <a href="/agendar-horario">
-            🕐 Agendar Horário
-          </a>
-
-          <a href="/agendamentos">
-            📅 Agendamentos
-          </a>
-
-          <a href="/torneios">
-            🏆 Torneios
-          </a>
-
-          <a href="/pagamento">
-            💳 Pagamento
-          </a>
-        </div>
-
-        <div className={styles.topHeader}>
-
-          {/* O BOTÃO SÓ APARECE COM O MENU FECHADO */}
-          {!menuAberto && (
-            <div
-              className={styles.menuIcon}
-              onClick={() =>
-                setMenuAberto(true)
-              }
-            >
-              ☰
-            </div>
-          )}
-
-          <div className={styles.logoArea}>
-            <h2>
-              <span>
-                Pagamento
-              </span>
-            </h2>
-          </div>
-
-        </div>
+      <main className={`${styles.app} ${styles.paymentPage}`}>
+        <header className={styles.paymentHeading}>
+          <span>FINALIZE SUA RESERVA</span>
+          <h1>Escolha a forma de pagamento</h1>
+          <p>Faça o pagamento com segurança para confirmar seu agendamento.</p>
+        </header>
 
         <div className={styles.pagamentoButtons}>
 
@@ -226,7 +165,7 @@ export default function Pagamento() {
           Confirmar pagamento
         </button>
 
-      </div>
+      </main>
     </div>
   );
 }

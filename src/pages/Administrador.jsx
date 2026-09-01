@@ -6,12 +6,12 @@ function Administrador() {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const cards = [
-    { icon: "👥", label: "Usuários", desc: "Gerenciar usuários" },
-    { icon: "▦", label: "Quadras", desc: "Gerenciar quadras" },
-    { icon: "📅", label: "Agendamentos", desc: "Gerenciar agendamentos" },
-    { icon: "🏆", label: "Torneios", desc: "Gerenciar torneios" },
-    { icon: "📊", label: "Relatórios", desc: "Ver estatísticas" },
-    { icon: "⚙️", label: "Configurações", desc: "Configurações do sistema" },
+    { icon: "👥", label: "Usuários", desc: "Gerenciar usuários", to: "/administrador/usuarios" },
+    { icon: "▦", label: "Quadras", desc: "Gerenciar quadras", to: "/administrador/quadras" },
+    { icon: "📅", label: "Agendamentos", desc: "Gerenciar agendamentos", to: "/administrador/agendamentos" },
+    { icon: "🏆", label: "Torneios", desc: "Gerenciar torneios", to: "/administrador/torneios" },
+    { icon: "📊", label: "Relatórios", desc: "Ver estatísticas", to: "/administrador/relatorios" },
+    { icon: "⚙️", label: "Configurações", desc: "Configurações do sistema", to: "/administrador/configuracoes" },
   ];
 
   return (
@@ -84,7 +84,7 @@ function Administrador() {
       {/* CARDS */}
       <section className={styles.cardsArea}>
         {cards.map((c) => (
-          <div className={styles.card} key={c.label}>
+          <Link to={c.to} className={styles.card} key={c.label}>
             <div className={styles.cardHeader}>
               <div className={styles.cardIcon}>{c.icon}</div>
               <div>
@@ -92,7 +92,8 @@ function Administrador() {
                 <h3 className={styles.cardTitle}>{c.desc}</h3>
               </div>
             </div>
-          </div>
+            <span className={styles.cardAction}>Abrir módulo <span aria-hidden="true">→</span></span>
+          </Link>
         ))}
       </section>
 

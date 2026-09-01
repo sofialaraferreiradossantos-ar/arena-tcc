@@ -289,6 +289,8 @@
   background: #151515;
   transition: 0.25s ease;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
 .card::before {
@@ -338,6 +340,384 @@
   color: #888;
   font-size: 13px;
   font-weight: 500;
+}
+
+.cardAction {
+  margin-top: auto;
+  align-self: flex-end;
+  color: #ff9a35;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.cardAction span {
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.card:hover .cardAction,
+.card:focus-visible .cardAction {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   MÓDULOS ADMINISTRATIVOS
+========================================================= */
+.modulePage {
+  width: min(100%, 1100px);
+  margin: 0 auto;
+  padding: 98px 0 70px;
+}
+
+.moduleTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 27px;
+}
+
+.moduleTopline a {
+  color: #ff9a35;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.moduleTopline a:hover {
+  color: #ffbd70;
+}
+
+.moduleTopline > span,
+.panelEyebrow {
+  color: #737373;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.moduleHeading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.moduleIcon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 136, 0, 0.4);
+  border-radius: 15px;
+  background: rgba(255, 136, 0, 0.09);
+  color: #ff9a35;
+  font-size: 25px;
+  box-shadow: 0 10px 26px rgba(255, 136, 0, 0.08);
+}
+
+.moduleHeading h1 {
+  color: #fff;
+  font-size: clamp(30px, 4vw, 44px);
+  letter-spacing: -0.04em;
+}
+
+.moduleHeading p {
+  margin-top: 6px;
+  color: #898989;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modulePanel {
+  position: relative;
+  padding: 27px;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #181818, #121212);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+}
+
+.modulePanel::before,
+.reportCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 17px 17px 0 0;
+  background: #ff8800;
+}
+
+.moduleToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #292929;
+}
+
+.moduleToolbar h2 {
+  margin-top: 7px;
+  color: #fff;
+  font-size: 21px;
+}
+
+.moduleButton,
+.rowButton {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #ff8800;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff8800, #ff9e38);
+  color: #17120c;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.moduleButton:hover,
+.rowButton:hover {
+  background: linear-gradient(135deg, #ff971d, #ffb35e);
+  box-shadow: 0 8px 20px rgba(255, 136, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.moduleForm {
+  display: flex;
+  gap: 10px;
+  padding: 18px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.moduleForm input {
+  flex: 1;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid #353535;
+  border-radius: 9px;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.moduleForm input:focus {
+  border-color: #ff8800;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.11);
+}
+
+.recordsList {
+  display: grid;
+  gap: 10px;
+  padding-top: 18px;
+}
+
+.recordRow {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.5fr) minmax(130px, 1fr) auto auto;
+  align-items: center;
+  gap: 18px;
+  padding: 17px 18px;
+  border: 1px solid #282828;
+  border-radius: 12px;
+  background: rgba(8, 8, 8, 0.45);
+}
+
+.recordRow > div {
+  display: grid;
+  gap: 5px;
+}
+
+.recordRow strong {
+  color: #fff;
+  font-size: 14px;
+}
+
+.recordRow span {
+  color: #8d8d8d;
+  font-size: 12px;
+}
+
+.recordRole {
+  color: #c2c2c2 !important;
+}
+
+.status {
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 11px !important;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.statusSuccess {
+  border: 1px solid rgba(84, 205, 135, 0.25);
+  background: rgba(84, 205, 135, 0.1);
+  color: #72dfa0 !important;
+}
+
+.statusPending {
+  border: 1px solid rgba(255, 171, 74, 0.28);
+  background: rgba(255, 171, 74, 0.1);
+  color: #ffb762 !important;
+}
+
+.rowButton {
+  min-height: 32px;
+  padding: 0 10px;
+  border-color: #444;
+  background: transparent;
+  color: #d1d1d1;
+  font-size: 11px;
+}
+
+.successMessage {
+  margin-top: 15px;
+  color: #72dfa0;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.reportGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.reportCard {
+  position: relative;
+  min-height: 142px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  overflow: hidden;
+  border: 1px solid #303030;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #181818, #121212);
+}
+
+.reportCard > span {
+  color: #979797;
+  font-size: 12px;
+}
+
+.reportCard strong {
+  color: #ff9a35;
+  font-size: 31px;
+  letter-spacing: -0.04em;
+}
+
+.reportCard small {
+  color: #6f6f6f;
+  font-size: 11px;
+}
+
+.reportHighlight {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-top: 2px;
+}
+
+.reportHighlight h2 {
+  margin: 8px 0 7px;
+  color: #fff;
+  font-size: 22px;
+}
+
+.reportHighlight p {
+  max-width: 620px;
+  color: #929292;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.reportTrend {
+  color: #72dfa0;
+  font-size: 30px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.settingsList {
+  display: grid;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.settingRow {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #292929;
+  cursor: pointer;
+}
+
+.settingRow:last-child {
+  border-bottom: 0;
+}
+
+.settingRow span {
+  display: grid;
+  gap: 5px;
+}
+
+.settingRow strong {
+  color: #fff;
+  font-size: 14px;
+}
+
+.settingRow small {
+  color: #858585;
+  font-size: 12px;
+}
+
+.settingRow input {
+  appearance: none;
+  width: 43px;
+  height: 24px;
+  flex: 0 0 auto;
+  position: relative;
+  border: 1px solid #454545;
+  border-radius: 99px;
+  background: #252525;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.settingRow input::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #aaa;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.settingRow input:checked {
+  border-color: #ff8800;
+  background: #8f4d00;
+}
+
+.settingRow input:checked::before {
+  background: #fff;
+  transform: translateX(19px);
 }
 
 /* =========================================================
@@ -409,5 +789,78 @@
   }
   .card {
     padding: 22px;
+  }
+}
+
+@media (max-width: 700px) {
+  .modulePage {
+    padding: 82px 15px 50px;
+  }
+
+  .moduleTopline {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .moduleHeading {
+    align-items: flex-start;
+  }
+
+  .moduleIcon {
+    width: 48px;
+    height: 48px;
+    font-size: 21px;
+  }
+
+  .moduleHeading p {
+    font-size: 13px;
+  }
+
+  .modulePanel {
+    padding: 20px 16px;
+  }
+
+  .moduleToolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .moduleButton {
+    width: 100%;
+  }
+
+  .moduleForm {
+    flex-direction: column;
+  }
+
+  .recordRow {
+    grid-template-columns: 1fr auto;
+    gap: 11px;
+  }
+
+  .recordRole {
+    grid-column: 1;
+  }
+
+  .recordRow .status,
+  .recordRow .rowButton {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .recordRow .rowButton {
+    grid-row: 3;
+    grid-column: 1 / -1;
+  }
+
+  .reportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .reportHighlight {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
