@@ -2,6 +2,16 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import AgendamentoSucesso from './pages/AgendamentoSucesso.jsx'
+import Agendamentos from './pages/Agendamentos.jsx'
+import Cadastro from './components/quadras/Cadastro.jsx'
+import Home from './components/quadras/Home.jsx'
+import Login from './components/quadras/Login.jsx'
+import Sobre from './components/quadras/sobre.jsx'
+import Torneios from './pages/Torneios.jsx' 
+import InscricaoTorneio from './pages/InscricaoTorneio.jsx'
+import Pagamento from './pages/pagamento.jsx'
+import PagamentoCartao from './pages/pagamentoCartao.jsx'
+import RecuperarSenha from "./components/quadras/recuperarSenha.jsx";
 
 import {
   BrowserRouter,
@@ -16,9 +26,20 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
 <Routes>
-  <Route path="/" element={<App />} />
+  <Route path="/" element={<Cadastro />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
+  <Route path="/agendamentos" element={<Agendamentos />} />
+  <Route path="/cadastro" element={<Cadastro />} />
+  <Route path="/home" element={<Home />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/sobre" element={<Sobre />} />
+  <Route path="/torneios" element={<Torneios />} />
+  <Route path="/inscricao-torneio" element={<InscricaoTorneio />} />
+  <Route path="/pagamento" element={<Pagamento />} />
+  <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
+  <Route path="/recuperarSenha" element={<RecuperarSenha />} />
+  
 </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -1,0 +1,42 @@
+import {
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+
+import styles from "../../styles/torneios.module.css";
+
+function TorneioCard({
+  nome,
+  data,
+  local,
+  imagem,
+}) {
+  return (
+    <div className={styles.card}>
+      {/* TEXTO À ESQUERDA */}
+      <div className={styles.cardInfo}>
+        <h3>{nome}</h3>
+
+        <p>
+          <FaCalendarAlt />
+          <span>Data: {data}</span>
+        </p>
+
+        <p>
+          <FaMapMarkerAlt />
+          <span>{local}</span>
+        </p>
+      </div>
+
+      {/* IMAGEM À DIREITA */}
+      <div className={styles.cardRight}>
+        <img
+          src={imagem}
+          alt={nome}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default TorneioCard;

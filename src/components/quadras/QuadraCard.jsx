@@ -4,17 +4,16 @@ import { useNavigate } from "react-router-dom";
 
 function QuadraCard({ title, available }) {
   const navigate = useNavigate();
-  return (
-   
-   <div
-  className={styles.quadraCard}
-  onClick={() => navigate("/quadra")}
-  style={{ cursor: "pointer" }}
->
 
+  return (
+    <div
+      className={styles.quadraCard}
+      onClick={() => navigate("/quadra")}
+      style={{ cursor: "pointer" }}
+    >
       <img
         src={quadra}
-        alt=""
+        alt="Quadra"
       />
 
       <h3>{title}</h3>
@@ -30,11 +29,12 @@ function QuadraCard({ title, available }) {
             : `${styles.status} ${styles.unavailable}`
         }
       >
-        {available ? '🟢 Disponível' : '🔴 Indisponível'}
+        {available
+          ? "🟢 Disponível"
+          : "🔴 Indisponível"}
       </div>
-
     </div>
-  )
+  );
 }
 
-export default QuadraCard
+export default QuadraCard;
