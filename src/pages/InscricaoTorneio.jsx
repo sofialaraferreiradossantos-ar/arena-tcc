@@ -24,20 +24,17 @@ function InscricaoTorneio() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
-  const [torneio, setTorneio] = useState(null);
+  const torneio = TORNEIOS_MOCK[id];
 
   useEffect(() => {
     // Quando tiver API: fetch(`/api/torneios/${id}`).then(res => res.json()).then(setTorneio)
-    const encontrado = TORNEIOS_MOCK[id];
-
-    if (!encontrado) {
+    if (!torneio) {
       alert("Torneio não encontrado.");
       navigate("/torneios");
       return;
     }
 
-    setTorneio(encontrado);
-  }, [id, navigate]);
+  }, [torneio, navigate]);
 
   const [form, setForm] = useState({
     nome: "",

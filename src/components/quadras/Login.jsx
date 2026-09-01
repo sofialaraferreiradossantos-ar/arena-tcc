@@ -1,80 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/home.module.css";
+import logo from "../../assets/logo.jpeg";
 
 export default function Login() {
   const navigate = useNavigate();
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.app}>
-
-        <div className={styles.topHeader}>
-          <div className={styles.logoArea}>
-            <h2>
-              Arena <span>Beach</span>
-            </h2>
-          </div>
-        </div>
-
-        <div className={`${styles.quadraCard} ${styles.loginCard}`}>
-
-          <h2 className={styles.loginTitle}>
-            Login
-          </h2>
-
-          <input
-            type="email"
-            placeholder="Email"
-            className={styles.loginInput}
-          />
-
-          <input
-            type="password"
-            placeholder="Senha"
-            className={styles.loginInput}
-          />
-
-          <button
-            className={`${styles.activeBtn} ${styles.loginButton}`}
-            onClick={() => navigate("/home")}
-          >
-            Entrar
-          </button>
-
-          <div className={styles.loginLinks}>
-            <p>
-              <Link
-                to="/recuperarSenha"
-                className={styles.loginLink}
-              >
-                Esqueceu a senha?
-              </Link>
-            </p>
-
-            <p>
-              Não tem conta?{" "}
-              <Link
-                to="/cadastro"
-                className={styles.loginLink}
-              >
-                cadastre-se
-              </Link>
-            </p>
-
-            <p>
-              <Link
-                to="/sobre"
-                className={styles.loginLink}
-              >
-                Sobre
-              </Link>
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  );
+  return <main className={styles.authPage}>
+    <section className={`${styles.authCard} ${styles.authCardSmall}`}>
+      <div className={styles.authBrand}><img src={logo} alt="Arena Beach" /><strong>ARENA <span>BEACH</span></strong></div>
+      <div className={styles.authHeading}><small>ÁREA DO CLIENTE</small><h1>Entre na sua conta</h1><p>Acesse suas reservas e continue jogando.</p></div>
+      <form onSubmit={(event) => { event.preventDefault(); navigate("/home"); }}>
+        <label>E-mail<input type="email" placeholder="voce@email.com" required /></label>
+        <label>Senha<input type="password" placeholder="Digite sua senha" required /></label>
+        <Link to="/recuperarSenha" className={styles.forgotLink}>Esqueceu a senha?</Link>
+        <button type="submit">Entrar</button>
+      </form>
+      <p className={styles.authSwitch}>Ainda não tem conta? <Link to="/cadastro">Cadastre-se</Link></p>
+      <Link to="/sobre" className={styles.aboutLink}>Conheça a Arena Beach</Link>
+    </section>
+  </main>;
 }

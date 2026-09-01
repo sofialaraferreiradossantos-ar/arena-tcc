@@ -13,6 +13,7 @@ import Pagamento from './pages/pagamento.jsx'
 import PagamentoCartao from './pages/pagamentoCartao.jsx'
 import RecuperarSenha from "./components/quadras/recuperarSenha.jsx";
 import TorneioDetalhes from "./pages/TorneioDetalhes";
+import Quadras from "./pages/Home.jsx";
 
 
 
@@ -22,14 +23,15 @@ import {
   Route
 } from 'react-router-dom'
 
-import App from './App.jsx'
 import QuadraDetalhes from './pages/QuadraDetalhes.jsx'
 import Administrador from './pages/Administrador.jsx'
 import AgendarHorario from './pages/AgendarHorario.jsx'
+import UnifiedMenu from './components/UnifiedMenu.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+<UnifiedMenu />
 <Routes>
   <Route path="/" element={<Cadastro />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
@@ -37,6 +39,7 @@ createRoot(document.getElementById('root')).render(
   <Route path="/agendamentos" element={<Agendamentos />} />
   <Route path="/cadastro" element={<Cadastro />} />
   <Route path="/home" element={<Home />} />
+  <Route path="/quadras" element={<Quadras />} />
   <Route path="/login" element={<Login />} />
   <Route path="/sobre" element={<Sobre />} />
   <Route path="/torneios" element={<Torneios />} />

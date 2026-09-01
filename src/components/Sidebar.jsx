@@ -67,7 +67,7 @@ export default function Sidebar({
               isActive ? styles.active : ""
             }
           >
-            <span className={styles.menuEmoji}>⚽</span>
+            <span className={styles.menuEmoji}>🏐</span>
             <span>Quadras</span>
           </NavLink>
 
@@ -89,7 +89,7 @@ export default function Sidebar({
               isActive ? styles.active : ""
             }
           >
-            <span className={styles.menuEmoji}>🗓️</span>
+            <span className={styles.menuEmoji}>📅</span>
             <span>Agendamentos</span>
           </NavLink>
 
