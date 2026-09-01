@@ -67,8 +67,19 @@ export default function Sidebar({
               isActive ? styles.active : ""
             }
           >
-            <span className={styles.menuEmoji}>⚽</span>
+            <span className={styles.menuEmoji}>🏐</span>
             <span>Quadras</span>
+          </NavLink>
+
+          <NavLink
+            to="/agendar-horario"
+            onClick={fecharMenu}
+            className={({ isActive }) =>
+              isActive ? styles.active : ""
+            }
+          >
+            <span className={styles.menuEmoji}>🕐</span>
+            <span>Agendar Horário</span>
           </NavLink>
 
           <NavLink
@@ -78,7 +89,7 @@ export default function Sidebar({
               isActive ? styles.active : ""
             }
           >
-            <span className={styles.menuEmoji}>🗓️</span>
+            <span className={styles.menuEmoji}>📅</span>
             <span>Agendamentos</span>
           </NavLink>
 

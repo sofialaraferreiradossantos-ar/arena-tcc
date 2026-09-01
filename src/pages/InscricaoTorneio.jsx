@@ -24,20 +24,17 @@ function InscricaoTorneio() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
-  const [torneio, setTorneio] = useState(null);
+  const torneio = TORNEIOS_MOCK[id];
 
   useEffect(() => {
     // Quando tiver API: fetch(`/api/torneios/${id}`).then(res => res.json()).then(setTorneio)
-    const encontrado = TORNEIOS_MOCK[id];
-
-    if (!encontrado) {
+    if (!torneio) {
       alert("Torneio não encontrado.");
       navigate("/torneios");
       return;
     }
 
-    setTorneio(encontrado);
-  }, [id, navigate]);
+  }, [torneio, navigate]);
 
   const [form, setForm] = useState({
     nome: "",
@@ -58,8 +55,17 @@ function InscricaoTorneio() {
       return;
     }
 
-    // TODO: integrar com a tela/rota de pagamento
-    console.log("Inscrição confirmada:", { torneioId: id, ...form });
+    // Leva para a tela de pagamento com os dados da inscrição
+    navigate("/pagamento", {
+      state: {
+        inscricao: {
+          torneioId: id,
+          torneio: torneio.nome,
+          valor: torneio.valor,
+          ...form,
+        },
+      },
+    });
   };
 
   if (!torneio) return null;
@@ -100,6 +106,9 @@ function InscricaoTorneio() {
         </Link>
         <Link to="/quadra" onClick={() => setMenuAberto(false)}>
           📍 Quadras
+        </Link>
+        <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>
+          🕐 Agendar Horário
         </Link>
         <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>
           📅 Agendamentos

@@ -27,6 +27,7 @@ export default function PagamentoCartao() {
 
           <a href="/home">🏠 Início</a>
           <a href="/quadra">🏐 Quadras</a>
+          <a href="/agendar-horario">🕐 Agendar Horário</a>
           <a href="/agendamentos">📅 Agendamentos</a>
           <a href="/torneios">🏆 Torneios</a>
           <a href="/pagamento">💳 Pagamento</a>

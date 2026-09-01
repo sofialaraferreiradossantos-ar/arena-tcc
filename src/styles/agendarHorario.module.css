@@ -35,14 +35,14 @@
   z-index: 900;
   width: 100%;
   height: 76px;
-  padding: 0 35px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   background: rgba(5, 5, 5, 0.96);
   border-bottom: 1px solid #1d1d1d;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  margin: 0 -50px;
+  margin: 0;
 }
 
 .menuButton {
@@ -245,25 +245,39 @@
 ========================================================= */
 .formLayout {
   width: 100%;
-  max-width: 1300px;
+  max-width: 1100px;
   margin: 32px auto 0;
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
   align-items: start;
 }
 
-.formCard,
-.summaryCard {
-  padding: 30px;
-  border: 1px solid #303030;
-  border-radius: 15px;
-  background: #151515;
+.cardFull {
+  grid-column: 1 / -1;
 }
 
-.summaryCard {
-  position: sticky;
-  top: 100px;
+.stepTag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 12px;
+  border: 1px solid rgba(255, 136, 0, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.formCard {
+  padding: 30px;
+  border: 1px solid rgba(255, 136, 0, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #171614 0%, #111 60%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 /* =========================================================
@@ -301,7 +315,7 @@
 ========================================================= */
 .calendar {
   padding: 20px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   border: 1px solid #252525;
   border-radius: 12px;
   background: #101010;
@@ -410,7 +424,7 @@
    HORÃRIOS
 ========================================================= */
 .horariosBlock {
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .periodo {
@@ -476,55 +490,72 @@
 }
 
 /* =========================================================
-   RESUMO
+   BARRA DE AÇÃO FIXA
 ========================================================= */
-.summaryTitle {
-  margin-bottom: 20px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.summaryItem {
+.actionBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 800;
+  width: 100%;
+  max-width: 1100px;
+  margin: 26px auto 0;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
-  border-bottom: 1px solid #232323;
-  font-size: 13px;
+  gap: 16px;
+  border: 1px solid rgba(255, 136, 0, 0.22);
+  border-radius: 14px;
+  background: rgba(16, 16, 16, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.45);
+  margin-bottom: 8px;
 }
 
-.summaryItem span {
-  color: #888;
-}
-
-.summaryItem strong {
-  color: #fff;
-  font-weight: 600;
-  text-align: right;
-  text-transform: capitalize;
+.actionHint {
+  color: #999;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .agendar {
-  width: 100%;
-  height: 48px;
-  margin-top: 22px;
+  flex-shrink: 0;
+  min-width: 170px;
+  height: 46px;
+  padding: 0 30px;
   border: 0;
-  border-radius: 8px;
-  background: #ff8800;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff8800, #ff6a00);
   color: #111;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: 0.2s ease;
+  box-shadow: 0 6px 20px rgba(255, 136, 0, 0.3);
 }
 
 .agendar:hover:not(:disabled) {
+<<<<<<< HEAD
   background: #ff9417;
+=======
+  transform: translateY(-1px);
+  box-shadow: 0 9px 26px rgba(255, 136, 0, 0.42);
+  background: linear-gradient(135deg, #ff9d2e, #ff7d1a);
+}
+
+.agendar:active:not(:disabled) {
+  transform: translateY(0);
+>>>>>>> 3f59ca753fa798eb37eb631647bd3c416b911165
 }
 
 .agendar:disabled {
   background: #2c2c2c;
+  box-shadow: none;
   color: #666;
   cursor: not-allowed;
 }
@@ -551,10 +582,8 @@
     font-size: 32px;
   }
   .formLayout {
+    max-width: 1100px;
     grid-template-columns: 1fr;
-  }
-  .summaryCard {
-    position: static;
   }
 }
 
@@ -591,9 +620,16 @@
   .formLayout {
     padding: 0 5px;
   }
-  .formCard,
-  .summaryCard {
+  .formCard {
     padding: 20px;
+  }
+  .actionBar {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .agendar {
+    width: 100%;
   }
   .horarios {
     grid-template-columns: repeat(3, 1fr);

@@ -135,8 +135,17 @@ function HeaderAgendamentos() {
             to="/quadra"
             onClick={fecharMenu}
           >
-            <span className={styles.menuEmoji}>⚽</span>
+            <span className={styles.menuEmoji}>🏐</span>
             <span>Quadras</span>
+          </Link>
+
+
+          <Link
+            to="/agendar-horario"
+            onClick={fecharMenu}
+          >
+            <span className={styles.menuEmoji}>🕐</span>
+            <span>Agendar Horário</span>
           </Link>
 
 

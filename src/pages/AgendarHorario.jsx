@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/agendarHorario.module.css";
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -18,6 +18,7 @@ const PERIODOS = [
 ];
 
 function AgendarHorario() {
+  const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
   const [quadra, setQuadra] = useState("");
   const [horario, setHorario] = useState("");
@@ -79,6 +80,19 @@ function AgendarHorario() {
 
   const podeConfirmar = quadra && dataSelecionada && horario;
 
+  const irParaPagamento = () => {
+    if (!podeConfirmar) return;
+    navigate("/pagamento", {
+      state: {
+        agendamento: {
+          quadra,
+          data: dataSelecionada?.toISOString(),
+          horario,
+        },
+      },
+    });
+  };
+
   return (
     <div className={styles.mainContent}>
 
@@ -122,6 +136,7 @@ function AgendarHorario() {
         <nav className={styles.sidebarNav}>
           <Link to="/home" onClick={() => setMenuAberto(false)}>Início</Link>
           <Link to="/quadra" onClick={() => setMenuAberto(false)}>Quadras</Link>
+          <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>Agendar Horário</Link>
           <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>Meus Agendamentos</Link>
           <Link to="/torneios" onClick={() => setMenuAberto(false)}>Torneios</Link>
         </nav>
@@ -139,9 +154,9 @@ function AgendarHorario() {
 
       <div className={styles.formLayout}>
 
-        {/* COLUNA ESQUERDA - FORMULÁRIO */}
-        <section className={styles.formCard}>
-
+        {/* ETAPA 1 - QUADRA */}
+        <section className={`${styles.formCard} ${styles.cardFull}`}>
+          <span className={styles.stepTag}>Etapa 1</span>
           <label htmlFor="quadra" className={styles.label}>Quadra</label>
           <select
             id="quadra"
@@ -153,8 +168,14 @@ function AgendarHorario() {
             <option value="Beach Tennis">Beach Tennis</option>
             <option value="Futevôlei">Futevôlei</option>
             <option value="Futebol">Futebol</option>
-            <option value="Vôlei">Vôlei</option>
-          </select>
+                <option value="Vôlei">Vôlei</option>
+              </select>
+            </section>
+
+            {/* ETAPA 2 - DATA */}
+            <section className={styles.formCard}>
+          <span className={styles.stepTag}>Etapa 2</span>
+          <span className={styles.label}>Data</span>
 
           {/* CALENDÁRIO */}
           <div className={styles.calendar}>
@@ -218,11 +239,14 @@ function AgendarHorario() {
               })}
             </div>
           </div>
+        </section>
 
-          {/* HORÁRIOS */}
+        {/* ETAPA 3 - HORÁRIO */}
+        <section className={styles.formCard}>
+          <span className={styles.stepTag}>Etapa 3</span>
+          <span className={styles.label}>Horário</span>
+
           <div className={styles.horariosBlock}>
-            <span className={styles.label}>Horário</span>
-
             {!dataSelecionada ? (
               <p className={styles.hintText}>Selecione uma data para ver os horários disponíveis.</p>
             ) : (
@@ -259,42 +283,24 @@ function AgendarHorario() {
 
         </section>
 
-        {/* COLUNA DIREITA - RESUMO */}
-        <aside className={styles.summaryCard}>
-          <h3 className={styles.summaryTitle}>Resumo do agendamento</h3>
+      </div>
 
-          <div className={styles.summaryItem}>
-            <span>Quadra</span>
-            <strong>{quadra || "—"}</strong>
-          </div>
+      {/* BARRA DE AÇÃO FIXA */}
+      <div className={styles.actionBar}>
+        <p className={styles.actionHint}>
+          {podeConfirmar
+            ? `${quadra} • ${formatarDataResumo(dataSelecionada)} • ${horario}`
+            : "Preencha quadra, data e horário para continuar."}
+        </p>
 
-          <div className={styles.summaryItem}>
-            <span>Data</span>
-            <strong>
-              {dataSelecionada ? formatarDataResumo(dataSelecionada) : "—"}
-            </strong>
-          </div>
-
-          <div className={styles.summaryItem}>
-            <span>Horário</span>
-            <strong>{horario || "—"}</strong>
-          </div>
-
-          <button
-            type="button"
-            className={styles.agendar}
-            disabled={!podeConfirmar}
-          >
-            Confirmar Agendamento
-          </button>
-
-          {!podeConfirmar && (
-            <p className={styles.hintText}>
-              Preencha quadra, data e horário para continuar.
-            </p>
-          )}
-        </aside>
-
+        <button
+          type="button"
+          className={styles.agendar}
+          disabled={!podeConfirmar}
+          onClick={irParaPagamento}
+        >
+          Agendar
+        </button>
       </div>
 
     </div>

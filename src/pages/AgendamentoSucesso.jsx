@@ -111,6 +111,20 @@ function AgendamentoSucesso() {
         </a>
 
 
+        {/* AGENDAR HORÁRIO */}
+
+        <a
+          href="/agendar-horario"
+          onClick={(e) => {
+            e.preventDefault();
+            navegar("/agendar-horario");
+          }}
+        >
+          🕐
+          <span>Agendar Horário</span>
+        </a>
+
+
         {/* AGENDAMENTOS */}
 
         <a

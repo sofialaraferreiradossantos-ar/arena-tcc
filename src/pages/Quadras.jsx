@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "../styles/home.module.css";
@@ -143,6 +143,22 @@ function Quadras() {
         </Link>
 
         <Link
+          to="/agendar-horario"
+          onClick={fecharMenu}
+          className={
+            location.pathname === "/agendar-horario"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>
+            🕐
+          </span>
+
+          Agendar Horário
+        </Link>
+
+        <Link
           to="/agendamentos"
           onClick={fecharMenu}
           className={
@@ -239,6 +255,10 @@ function Quadras() {
 
   <Link to="/quadra">
     ⚽ Quadras
+  </Link>
+
+  <Link to="/agendar-horario">
+    🕐 Agendar Horário
   </Link>
 
   <Link to="/agendamentos">

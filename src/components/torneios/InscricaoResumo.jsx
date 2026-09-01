@@ -1,5 +1,3 @@
-import React from 'react';
-
 const InscricaoResumo = ({ styles, torneio, onConfirmar }) => {
   return (
     <div className={styles.resumoCard}>
