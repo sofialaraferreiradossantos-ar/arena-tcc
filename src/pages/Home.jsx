@@ -1,29 +1,31 @@
-import { useState } from 'react'
-import styles from '../styles/home.module.css'
-import Header from '../components/quadras/Header.jsx'
-import CategoryButtons from '../components/quadras/CategoryButtons.jsx'
-import SearchBar from '../components/quadras/SearchBar.jsx'
-import QuadrasSection from '../components/quadras/QuadrasSection.jsx'
-import Pagination from '../components/quadras/Pagination.jsx'
-import { quadrasMckp } from '../mockup/dados.js';
+import { useState } from "react";
+import styles from "../styles/home.module.css";
+import CategoryButtons from "../components/quadras/CategoryButtons.jsx";
+import SearchBar from "../components/quadras/SearchBar.jsx";
+import QuadrasSection from "../components/quadras/QuadrasSection.jsx";
+import { quadrasMckp } from "../mockup/dados.js";
 
-function Home() {
-  const [pagina, setPagina] = useState(""); // ✅ CORRETO — dentro do componente
+export default function Quadras() {
+  const [search, setSearch] = useState("");
+  const quadras = quadrasMckp.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()));
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.app}>
-        <Header />
+  return <div className={styles.container}>
+    <main className={`${styles.app} ${styles.courtsPage}`}>
+      <header className={styles.listingIntro}>
+        <span className={styles.eyebrow}>Escolha seu espaço</span>
+        <h1>Nossas <span>quadras</span></h1>
+        <p>Encontre a estrutura ideal para sua próxima partida.</p>
+      </header>
+      <section className={styles.listingControls} aria-label="Filtros das quadras">
         <CategoryButtons />
-        <SearchBar />
-        <QuadrasSection quadras={quadrasMckp} />
-        <Pagination
-          pagina={pagina}
-          setPagina={setPagina}
-        />
+        <SearchBar search={search} setSearch={setSearch} />
+      </section>
+      <div className={styles.resultsHeader}>
+        <h2>Quadras disponíveis</h2>
+        <span>{quadras.length} {quadras.length === 1 ? "resultado" : "resultados"}</span>
       </div>
-    </div>
-  )
+      <QuadrasSection quadras={quadras} />
+      {quadras.length === 0 && <p className={styles.emptyState}>Nenhuma quadra encontrada.</p>}
+    </main>
+  </div>;
 }
-
-export default Home

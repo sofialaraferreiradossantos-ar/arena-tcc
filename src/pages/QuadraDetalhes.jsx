@@ -106,6 +106,23 @@ function QuadraDetalhes() {
         </Link>
 
         <Link
+          to="/agendar-horario"
+          onClick={fecharMenu}
+          className={
+            location.pathname ===
+            "/agendar-horario"
+              ? styles.active
+              : ""
+          }
+        >
+          <span className={styles.menuEmoji}>
+            🕐
+          </span>
+
+          Agendar Horário
+        </Link>
+
+        <Link
           to="/agendamentos"
           onClick={fecharMenu}
           className={
@@ -206,7 +223,7 @@ function QuadraDetalhes() {
         >
 
           <img
-            src={imagemAtiva}
+            src={imagens[imagemAtiva]}
             alt="Quadra"
             className={styles.mainImage}
           />

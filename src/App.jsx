@@ -1,4 +1,5 @@
-import Home from "./pages/Home";
+import Home from "./components/quadras/Home";
+
 
 function App() {
   return (

@@ -1,527 +1,674 @@
-/* ================================
-   CONTAINER PRINCIPAL
-================================ */
+﻿/* =========================================================
+   DESIGN SYSTEM â€” ARENA
+   Base visual padronizada
+========================================================= */
 
-.container {
+:global(*) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global(html) {
+  background: #000;
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   ESTRUTURA GERAL
+========================================================= */
+
+.container,
+.arenaWrapper {
   width: 100%;
   min-height: 100vh;
-
   background: #000;
 }
 
 .app {
   width: 100%;
   min-height: 100vh;
-
-  padding: 20px 30px;
-
+  padding: 0 50px 70px;
   background: #000;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  box-sizing: border-box;
 }
 
-
-/* ================================
+/* =========================================================
    HEADER
-================================ */
+========================================================= */
 
 .topHeader {
+  position: sticky;
+  top: 0;
+  z-index: 900;
   width: 100%;
-  max-width: 1200px;
-
+  height: 84px;
+  padding: 0 38px;
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  position: relative;
-
-  margin-bottom: 10px;
+  background: rgba(5, 5, 5, 0.96);
+  border-bottom: 1px solid #1d1d1d;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
+.menuButton,
+.menuIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2c2c2c;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
 
-/* ================================
-   BOTÃO ABRIR MENU
-================================ */
+.menuButton {
+  margin-right: 18px;
+}
+
+.menuButton:hover,
+.menuIcon:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+}
 
 .menuIcon {
   position: fixed;
-
-  top: 20px;
-  left: 20px;
-
-  width: 46px;
-  height: 46px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #101113;
-
-  color: #ff8800;
-
-  border: 1px solid #ff8800;
-
-  border-radius: 10px;
-
-  font-size: 27px;
-
-  cursor: pointer;
-
+  top: 18px;
+  left: 25px;
   z-index: 1001;
-
-  box-sizing: border-box;
-
-  transition: 0.25s ease;
 }
-
-.menuIcon:hover {
-  background: #ff8800;
-
-  color: #111;
-
-  transform: scale(1.05);
-}
-
-
-/* MANTIDA PARA NÃO DAR ERRO */
 
 .menuIconOpen {
-  left: 240px;
-}
-
-
-/* ================================
-   MENU LATERAL
-================================ */
-
-.sidebarMenu {
-  position: fixed;
-
-  top: 0;
-  left: -250px;
-
-  width: 250px;
-  height: 100vh;
-
-  background: #101113;
-
-  border-right: 1px solid #292929;
-
-  padding: 70px 20px 25px;
-
-  display: flex;
-  flex-direction: column;
-
-  box-sizing: border-box;
-
-  z-index: 1000;
-
-  overflow-y: auto;
-
-  transition: left 0.35s ease;
-}
-
-
-/* MENU ABERTO */
-
-.open {
-  left: 0;
-}
-
-
-/* LINKS */
-
-.sidebarMenu a {
-  width: 100%;
-
-  min-height: 45px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 0 15px;
-
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 15px;
-  font-weight: 500;
-
-  border-radius: 11px;
-
-  box-sizing: border-box;
-
-  margin-bottom: 8px;
-
-  transition: 0.25s ease;
-}
-
-
-/* HOVER DOS LINKS */
-
-.sidebarMenu a:hover {
-  background: rgba(255, 136, 0, 0.15);
-
+  left: 276px;
+  border-color: #ff8800;
   color: #ff8800;
-
-  transform: translateX(5px);
 }
 
-
-/* ================================
-   BOTÃO FECHAR MENU
-================================ */
-
-.closeMenu {
-  position: absolute;
-
-  top: 13px;
-  right: 13px;
-
-  width: 35px;
-  height: 35px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: transparent;
-
-  color: #ff8800;
-
-  border: 1px solid #ff8800;
-
-  border-radius: 9px;
-
-  font-size: 24px;
-
-  line-height: 1;
-
+.userIcon {
+  margin-left: auto;
+  color: #888;
+  font-size: 28px;
   cursor: pointer;
-
   transition: 0.25s ease;
 }
 
-.closeMenu:hover {
-  background: #ff8800;
-
-  color: #111;
+.userIcon:hover {
+  color: #ff8800;
 }
 
-
-/* ================================
+/* =========================================================
    LOGO
-================================ */
+========================================================= */
 
 .logoArea {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .logoArea img {
-  width: 80px;
-
-  filter:
-    drop-shadow(
-      0 0 10px
-      rgba(255, 136, 0, 0.3)
-    );
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .logoArea h2 {
-  color: white;
-
-  margin-top: 8px;
-
-  font-size: 34px;
-
+  color: #fff;
+  font-size: 20px;
   font-weight: 700;
 }
 
+.logoArea h2 span,
 .logoArea span {
   color: #ff8800;
 }
 
+/* =========================================================
+   OVERLAY DO MENU
+========================================================= */
 
-/* ================================
-   BOTÕES DE CATEGORIA
-================================ */
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
 
-.categoryButtons {
-  display: flex;
+  background: rgba(0, 0, 0, 0.72);
 
-  justify-content: center;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 
-  flex-wrap: wrap;
-
-  gap: 16px;
-
-  margin-top: 25px;
+  animation: fadeIn 0.25s ease;
 }
 
-.categoryButtons button {
-  width: 190px;
 
-  padding: 12px;
+/* =========================================================
+   SIDEBAR â€” PADRÃƒO VISUAL DO AGENDAMENTO
+========================================================= */
 
-  border-radius: 12px;
+.sidebarMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
 
-  border:
-    1px solid #ff8800;
+  z-index: 1100;
 
-  background: transparent;
+  width: 256px;
+  height: 100vh;
+  height: 100dvh;
 
-  color: white;
+  padding: 18px 16px 20px;
 
-  font-size: 15px;
+  display: flex;
+  flex-direction: column;
 
-  font-weight: 500;
+  overflow: hidden;
+
+  background: #090909;
+
+  border-right: 1px solid #181818;
+
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.45);
+
+  transform: translateX(-100%);
+
+  transition: transform 0.3s ease;
+}
+
+.sidebarMenu.open {
+  transform: translateX(0);
+}
+
+
+/* =========================================================
+   TOPO DA SIDEBAR
+========================================================= */
+
+.sidebarBrand {
+  position: relative;
+
+  width: 100%;
+  min-height: 95px;
+
+  padding: 5px 0 18px;
+
+  display: flex;
+  align-items: flex-start;
+
+  border-bottom: 1px solid #1d1d1d;
+}
+
+
+/* =========================================================
+   LOGO + MARCA
+========================================================= */
+
+.sidebarLogo {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  margin-left: 51px;
+
+  display: block;
+
+  object-fit: contain;
+
+  border-radius: 0;
+}
+
+.brandText {
+  margin-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  line-height: 0.94;
+}
+
+.brandText strong {
+  display: block;
+
+  color: #ff8800;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   BOTÃƒO FECHAR
+========================================================= */
+
+.closeMenu {
+  position: absolute;
+
+  top: -5px;
+  right: 0;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #303030;
+  border-radius: 9px;
+
+  background: #111;
+
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition: 0.2s ease;
 }
 
-.categoryButtons button:hover {
+.closeMenu:hover {
+  border-color: #ff8800;
+
+  background: rgba(255, 136, 0, 0.08);
+
+  color: #ff8800;
+}
+
+
+/* =========================================================
+   NAVEGAÃ‡ÃƒO
+========================================================= */
+
+.sidebarNav {
+  width: 165px;
+
+  margin: 60px auto 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   LINKS DO MENU
+========================================================= */
+
+.sidebarMenu a {
+  width: 165px;
+  height: 49px;
+
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #c7c7c7;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.sidebarMenu a + a {
+  margin-top: 0;
+}
+
+.sidebarMenu a svg {
+  width: 18px;
+  min-width: 18px;
+
+  color: #aaa;
+
+  font-size: 16px;
+
+  transition: 0.2s ease;
+}
+
+.menuEmoji {
+  width: 20px;
+  min-width: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.sidebarMenu a:hover {
+  background: rgba(255, 136, 0, 0.07);
+
+  color: #ff8800;
+
+  transform: none;
+}
+
+.sidebarMenu a:hover svg {
+  color: #ff8800;
+}
+
+
+/* =========================================================
+   ITEM ATIVO
+========================================================= */
+
+.sidebarMenu a.active {
+  border-color: #ff8800;
+
   background: #ff8800;
 
-  color: black;
+  color: #090909;
 
-  transform:
-    translateY(-2px);
+  box-shadow: 0 5px 18px rgba(255, 136, 0, 0.18);
 }
 
-.activeBtn {
-  background: #ff8800;
+.sidebarMenu a.active svg {
+  color: #090909;
+}
 
-  color: #111;
+.sidebarMenu a.active:hover {
+  border-color: #ff9417;
 
-  box-shadow:
-    0 0 15px
-    rgba(
-      255,
-      136,
-      0,
-      0.35
-    );
+  background: #ff9417;
+
+  color: #090909;
 }
 
 
-/* ================================
+/* =========================================================
+   SAIR â€” FIXADO NO RODAPÃ‰
+========================================================= */
+
+.sair {
+  width: 100%;
+
+  margin-top: auto;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #1d1d1d;
+}
+
+.sair a {
+  width: 165px;
+  height: 46px;
+
+  margin: 0 auto;
+
+  padding: 0 16px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebarMenu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebarMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebarMenu::-webkit-scrollbar-thumb {
+  background: #292929;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   CATEGORIAS / ABAS
+========================================================= */
+
+.categoryButtons {
+  width: 100%;
+  max-width: 1300px;
+  margin: 36px auto 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.categoryButtons button,
+.pagamentoBtn {
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #111;
+  color: #999;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.categoryButtons button:hover,
+.pagamentoBtn:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+}
+
+.activeBtn,
+.pagamentoBtn.ativo {
+  border-color: #ff8800 !important;
+  background: #ff8800 !important;
+  color: #111 !important;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+.activeBtn:hover,
+.pagamentoBtn.ativo:hover {
+  background: #ff9417 !important;
+  color: #111 !important;
+}
+
+/* =========================================================
    BUSCA
-================================ */
+========================================================= */
 
 .searchContainer {
   width: 100%;
-
+  max-width: 1300px;
+  margin: 24px auto 0;
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
 }
 
 .searchBar {
   width: 100%;
-
-  max-width: 650px;
-
-  margin-top: 30px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #1b1b1b,
-      #232323
-    );
-
-  border-radius: 20px;
-
+  max-width: 700px;
+  min-height: 48px;
+  padding: 0 14px;
   display: flex;
-
   align-items: center;
-
-  padding: 14px 18px;
-
-  border:
-    1px solid #2f2f2f;
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #111;
+  transition: 0.25s ease;
 }
 
 .searchBar:focus-within {
-  border:
-    1px solid #ff8800;
-
-  box-shadow:
-    0 0 12px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+  border-color: #ff8800;
+  background: #151515;
+  box-shadow: 0 0 12px rgba(255, 136, 0, 0.12);
 }
 
 .searchBar input {
   flex: 1;
-
-  background: transparent;
-
-  border: none;
-
-  outline: none;
-
-  color: white;
-
+  min-width: 0;
   margin: 0 10px;
-
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
   font-size: 14px;
 }
 
 .searchBar input::placeholder {
-  color: #888;
+  color: #666;
 }
 
 .searchIcon,
 .arrowIcon {
-  color: #888;
-
+  color: #777;
   font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.searchBar:focus-within .searchIcon {
+  color: #ff8800;
 }
 
 .selectQuadra {
-  width: 220px;
-
+  width: 240px;
   margin-top: 12px;
-
-  padding: 10px;
-
-  border-radius: 8px;
-
-  border:
-    1px solid #ff8800;
-
-  background: #1f1f1f;
-
-  color: white;
-
+  padding: 12px 14px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  outline: none;
+  background: #111;
+  color: #ddd;
   font-size: 14px;
+  transition: 0.2s ease;
 }
 
+.selectQuadra:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.08);
+}
 
-/* ================================
-   CARDS DE QUADRAS
-================================ */
+/* =========================================================
+   QUADRAS
+========================================================= */
 
 .quadrasSection {
   width: 100%;
-
-  max-width: 1200px;
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 30px;
-
-  margin-top: 45px;
-
-  flex-wrap: wrap;
+  max-width: 1300px;
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
 }
 
 .quadraCard {
-  width: 240px;
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  padding: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #151515;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  text-align: left;
+  transition: 0.25s ease;
+}
 
-  background:
-    linear-gradient(
-      180deg,
-      #1b1b1b,
-      #141414
-    );
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 18px;
-
-  padding: 14px;
-
-  text-align: center;
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.5
-    );
+.quadraCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
 }
 
 .quadraCard:hover {
-  transform:
-    translateY(-6px);
-
-  box-shadow:
-    0 0 20px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
+  border-color: #ff8800;
+  transform: translateY(-2px);
 }
 
 .quadraCard img {
   width: 100%;
-
-  height: 135px;
-
+  height: 180px;
+  display: block;
   object-fit: cover;
-
   border-radius: 12px;
 }
 
 .quadraCard h3 {
-  color: white;
-
-  margin-top: 14px;
-
+  margin-top: 16px;
+  color: #fff;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .quadraCard p {
-  color: white;
-
   margin-top: 8px;
-
+  color: #bbb;
   font-size: 14px;
+  line-height: 1.55;
 }
 
 .quadraCard span {
-  color: #bdbdbd;
-
+  color: #666;
   font-size: 12px;
 }
 
 .status {
-  margin-top: 16px;
-
-  font-size: 13px;
-
-  font-weight: bold;
+  margin-top: 14px;
+  color: #888;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .available {
@@ -532,464 +679,281 @@
   color: #ff3b3b;
 }
 
-
-/* ================================
-   PAGINAÇÃO
-================================ */
+/* =========================================================
+   PAGINAÃ‡ÃƒO
+========================================================= */
 
 .pagination {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  margin-top: 40px;
-
-  padding-bottom: 30px;
-}
-
-.dot {
-  width: 10px;
-
-  height: 10px;
-
-  border-radius: 50%;
-
-  background: #777;
-
-  transition: 0.3s;
-}
-
-.activeDot {
-  background: #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      255,
-      136,
-      0,
-      0.5
-    );
-}
-
-
-/* ================================
-   CADASTRO
-================================ */
-
-.cadastroCard {
-  width: 100%;
-
-  max-width: 500px;
-
-  margin-top: 40px;
-
-  padding: 30px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 16px;
-
-  text-align: center;
-}
-
-.cadastroTitle {
-  color: white;
-
-  font-size: 28px;
-
-  font-weight: 700;
-
-  margin-bottom: 10px;
-}
-
-.cadastroInput {
-  width: 100%;
-
-  padding: 14px 16px;
-
-  border-radius: 12px;
-
-  border:
-    1px solid #333;
-
-  background: #1f1f1f;
-
-  color: white;
-
-  font-size: 15px;
-
-  box-sizing: border-box;
-
-  outline: none;
-
-  transition: 0.3s;
-}
-
-.cadastroInput::placeholder {
-  color: #888;
-}
-
-.cadastroInput:focus {
-  border-color: #ff8800;
-
-  box-shadow:
-    0 0 12px
-    rgba(
-      255,
-      136,
-      0,
-      0.2
-    );
-}
-
-.cadastroButton {
-  width: 100%;
-
-  padding: 14px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background: #ff8800;
-
-  color: black;
-
-  font-size: 16px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.cadastroButton:hover {
-  background: #ffaa33;
-
-  transform:
-    translateY(-2px);
-}
-
-.cadastroText {
-  color: #bdbdbd;
-
-  font-size: 14px;
-
-  margin-top: 5px;
-}
-
-.cadastroLink {
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: bold;
-}
-
-.cadastroLink:hover {
-  text-decoration: underline;
-}
-
-
-/* ================================
-   HOME INSTITUCIONAL
-================================ */
-
-.arenaWrapper {
-  width: 100%;
-
-  min-height: 100vh;
-
-  background: #000;
-
-  display: flex;
-}
-
-.sidebar {
-  width: 250px;
-
-  background: #0b0b0b;
-
-  border-right:
-    1px solid #222;
-
-  padding: 25px;
-
-  display: flex;
-
-  flex-direction: column;
-}
-
-.logoMark {
-  color: #ff8800;
-
-  font-size: 24px;
-}
-
-.logoText {
-  display: flex;
-
-  flex-direction: column;
-
-  color: white;
-
-  font-weight: bold;
-
-  font-size: 18px;
-}
-
-.menu {
   margin-top: 30px;
-
+  padding-bottom: 20px;
   display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-.menuItem {
-  width: 100%;
-
-  background: transparent;
-
-  border: none;
-
-  color: white;
-
-  padding: 12px;
-
-  border-radius: 10px;
-
-  display: flex;
-
   align-items: center;
-
-  gap: 10px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.menuItem:hover {
-  background:
-    rgba(
-      255,
-      136,
-      0,
-      0.15
-    );
-}
-
-.active {
-  background: #ff8800;
-
-  color: black;
-}
-
-.content {
-  flex: 1;
-
-  padding: 40px;
-
-  display: flex;
-
   justify-content: center;
-}
-
-.contentCard {
-  width: 100%;
-
-  max-width: 900px;
-
-  background: #151515;
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 20px;
-
-  padding: 35px;
-
-  color: white;
-}
-
-.hero h1 {
-  font-size: 38px;
-
-  margin-bottom: 10px;
-}
-
-.hero h1 span {
-  color: #ff8800;
-}
-
-.hero p {
-  color: #bdbdbd;
-}
-
-.section {
-  margin-top: 30px;
-}
-
-.section h3 {
-  color: #ff8800;
-
-  margin-bottom: 10px;
-}
-
-.section p,
-.section small {
-  color: #ddd;
-
-  line-height: 1.6;
-}
-
-.inlineInfo {
-  display: flex;
-
-  align-items: center;
-
   gap: 8px;
 }
 
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #444;
+  transition: 0.25s ease;
+}
 
-/* ================================
-   LOGIN
-================================ */
+.activeDot {
+  width: 24px;
+  border-radius: 10px;
+  background: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.35);
+}
+
+/* =========================================================
+   FORMULÃRIOS
+========================================================= */
+
+.cadastroCard,
+.loginCard,
+.recuperarCard,
+.sobreCard,
+.pagamentoCard,
+.contentCard {
+  position: relative;
+  width: 100%;
+  background: #151515;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cadastroCard::before,
+.loginCard::before,
+.recuperarCard::before,
+.sobreCard::before,
+.pagamentoCard::before,
+.contentCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 17px 17px 0 0;
+  background: #ff8800;
+}
+
+.cadastroCard {
+  max-width: 500px;
+  margin-top: 40px;
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
 
 .loginCard {
-  width: 100%;
-
-  max-width: 420px;
-
+  max-width: 440px;
   margin-top: 60px;
-
+  padding: 34px;
   display: flex;
-
   flex-direction: column;
-
   gap: 15px;
 }
 
-.loginTitle {
-  color: white;
-
-  font-size: 28px;
-
-  text-align: center;
-
-  margin-bottom: 10px;
-}
-
-.loginInput {
-  width: 100%;
-
-  padding: 14px;
-
-  border-radius: 10px;
-
-  border:
-    1px solid #333;
-
-  background: #1f1f1f;
-
-  color: white;
-
-  font-size: 15px;
-
-  box-sizing: border-box;
-
-  transition: 0.3s;
-}
-
-.loginInput:focus {
-  outline: none;
-
-  border-color: #ff8800;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      255,
-      136,
-      0,
-      0.25
-    );
-}
-
-.loginButton {
-  width: 100%;
-
-  padding: 14px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-size: 16px;
-
-  font-weight: bold;
-}
-
-.loginLinks {
-  text-align: center;
-
-  margin-top: 10px;
-
+.recuperarCard {
+  max-width: 500px;
+  margin-top: 50px;
+  padding: 34px;
   display: flex;
-
   flex-direction: column;
-
-  gap: 10px;
+  gap: 18px;
+  text-align: center;
 }
-
-.loginLink {
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: 600;
-
-  transition: 0.3s;
-}
-
-.loginLink:hover {
-  color: #ffaa33;
-}
-
-
-/* ================================
-   SOBRE
-================================ */
 
 .sobreCard {
-  width: 100%;
+  max-width: 980px;
+  margin: 60px auto 0;
+  padding: 42px 50px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 18px;
+  background: linear-gradient(145deg, #181818, #131313);
+  border-color: rgba(255, 136, 0, 0.28);
+  border-top: 4px solid #ff8800 !important;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24), 0 0 30px rgba(255, 136, 0, 0.04);
+}
 
-  max-width: 800px;
+.sobreCard::before {
+  z-index: 2;
+  height: 4px;
+  background: linear-gradient(90deg, #ff8800, #ffad4d, #ff8800);
+  box-shadow: 0 0 14px rgba(255, 136, 0, 0.28);
+}
 
-  margin-top: 40px;
+.sobreCard > .sobreTitulo,
+.sobreCard > .sobreDescricao,
+.sobreCard > .sobreLink {
+  grid-column: 1 / -1;
+}
 
-  padding: 35px;
+.sobreCard > .aboutHero {
+  grid-column: 1 / -1;
+}
 
+.aboutHero {
   text-align: center;
 }
 
+.aboutHero .eyebrow {
+  justify-content: center;
+}
+
+.aboutHero .sobreTitulo {
+  margin: 14px 0 16px;
+  font-size: clamp(42px, 6vw, 68px);
+}
+
+.aboutHero .sobreTitulo span {
+  font-size: inherit;
+}
+
+.aboutHero .sobreDescricao {
+  margin-bottom: 0;
+}
+
+.aboutHero .heroActions {
+  justify-content: center;
+}
+
+.sobreCard > .sobreSecao:first-of-type {
+  grid-column: 1 / -1;
+}
+
+.pagamentoCard {
+  max-width: 430px;
+  margin: 25px auto 0;
+  padding: 24px;
+}
+
+.cadastroTitle,
+.loginTitle,
+.recuperarTitle {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cadastroInput,
+.loginInput,
+.formPagamento input,
+.formPagamento select {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  outline: none;
+  background: #101010;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+
+.cadastroInput::placeholder,
+.loginInput::placeholder,
+.formPagamento input::placeholder {
+  color: #666;
+}
+
+.cadastroInput:focus,
+.loginInput:focus,
+.formPagamento input:focus,
+.formPagamento select:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+.cadastroButton,
+.loginButton,
+.recuperarButton,
+.confirmarPagamento {
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 1px solid #ff8800;
+  border-radius: 9px;
+  background: #ff8800;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cadastroButton,
+.loginButton,
+.recuperarButton {
+  width: 100%;
+}
+
+.cadastroButton:hover,
+.loginButton:hover,
+.recuperarButton:hover,
+.confirmarPagamento:hover {
+  background: #ff9417;
+  border-color: #ff9417;
+  transform: translateY(-1px);
+}
+
+.cadastroText,
+.recuperarText {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cadastroLink,
+.loginLink,
+.recuperarLink,
+.sobreLink {
+  color: #ff8800;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.cadastroLink:hover,
+.loginLink:hover,
+.recuperarLink:hover,
+.sobreLink:hover {
+  color: #ff9417;
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.loginLinks {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+/* =========================================================
+   SOBRE
+========================================================= */
+
 .sobreTitulo {
-  color: white;
-
+  margin-bottom: 18px;
+  color: #fff;
   font-size: 38px;
-
-  margin-bottom: 15px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .sobreTitulo span {
@@ -997,160 +961,385 @@
 }
 
 .sobreDescricao {
-  color: #bdbdbd;
-
-  font-size: 16px;
-
-  margin-bottom: 30px;
+  max-width: 640px;
+  margin: 0 auto 36px;
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
 }
 
 .sobreSecao {
-  margin-top: 25px;
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 136, 0, 0.2);
+  border-radius: 13px;
+  background: linear-gradient(145deg, #121212, #0e0e0e);
+  text-align: center;
+}
 
-  text-align: left;
+.sobreSecao::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 64%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff8800, transparent);
 }
 
 .sobreSecao h3 {
-  color: #ff8800;
-
   margin-bottom: 10px;
+  color: #ff9417;
+  text-align: center;
+}
+
+.sobreSecao h3::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  background: #ff8800;
 }
 
 .sobreSecao p {
-  color: white;
-
+  max-width: 620px;
+  margin: 0 auto;
+  color: #ddd;
   line-height: 1.7;
+  text-align: center;
 }
 
 .sobreLink {
-  display: inline-block;
+  display: block;
+  width: fit-content;
+  margin: 34px auto 0;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 136, 0, 0.7);
+  border-radius: 9px;
+  background: rgba(255, 136, 0, 0.1);
+}
 
-  margin-top: 30px;
+/* =========================================================
+   HOME INSTITUCIONAL
+========================================================= */
 
+.arenaWrapper {
+  display: flex;
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  padding: 26px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: #090909;
+  border-right: 1px solid #202020;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.2);
+}
+
+.logoMark {
   color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: bold;
-
-  transition: 0.3s;
+  font-size: 24px;
 }
 
-.sobreLink:hover {
-  color: #ffaa33;
+.logoText {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
 }
 
+.menu {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-/* ================================
+.menuItem {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.menuItem:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  transform: translateX(2px);
+}
+
+.active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  background: #000;
+}
+
+.pageTitle {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-top: 56px;
+}
+
+.pageTitle h1 {
+  color: #fff;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.pageTitle h1 span {
+  color: #ff8800;
+}
+
+.pageTitle h1::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 5px;
+  margin-top: 18px;
+  border-radius: 10px;
+  background: #ff8800;
+}
+
+.pageTitle p {
+  margin-top: 14px;
+  color: #888;
+  font-size: 17px;
+}
+
+.homeCards {
+  width: 100%;
+  max-width: 1300px;
+  margin: 36px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.infoCard {
+  position: relative;
+  min-height: 220px;
+  padding: 34px;
+  overflow: hidden;
+  border: 1px solid #303030;
+  border-radius: 17px;
+  background: #151515;
+  transition: 0.25s ease;
+}
+
+.infoCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
+}
+
+.infoCard:hover {
+  border-color: #ff8800;
+  transform: translateY(-2px);
+}
+
+.infoCard h3 {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #fff;
+  font-size: 21px;
+}
+
+.infoCardIcon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  font-size: 20px;
+}
+
+.infoCard p,
+.infoCard small {
+  color: #aaa;
+  line-height: 1.6;
+}
+
+.infoCard small {
+  display: block;
+  margin-top: 18px;
+  color: #666;
+}
+
+.scheduleList {
+  display: grid;
+  gap: 10px;
+}
+
+.scheduleList p {
+  min-height: 44px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid #252525;
+  border-radius: 10px;
+  background: #101010;
+}
+
+.scheduleList strong {
+  color: #ddd;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.inlineInfo {
+  min-height: 74px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #252525;
+  border-radius: 10px;
+  background: #101010;
+  color: #ddd;
+  font-size: 15px;
+}
+
+.inlineInfo svg {
+  color: #ff8800;
+}
+
+/* =========================================================
    PAGAMENTO
-================================ */
+========================================================= */
 
 .pagamentoButtons {
+  margin: 36px auto 30px;
   display: flex;
-
+  align-items: center;
   justify-content: center;
-
-  gap: 20px;
-
-  margin-top: 25px;
-
-  margin-bottom: 30px;
+  gap: 12px;
 }
 
 .pagamentoBtn {
-  width: 120px;
-
-  height: 45px;
-
-  padding: 12px;
-
-  border:
-    1px solid #ff8800;
-
-  border-radius: 12px;
-
-  background: transparent;
-
-  color: white;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.pagamentoBtn:hover {
-  background:
-    rgba(
-      255,
-      136,
-      0,
-      0.15
-    );
-}
-
-.pagamentoCard {
-  width: 100%;
-
-  max-width: 650px;
-
-  margin-top: 25px;
+  width: auto;
+  min-width: 120px;
 }
 
 .pixArea {
+  width: 100%;
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
+  justify-content: center;
+  gap: 60px;
+}
 
-  gap: 30px;
+.qrArea,
+.valorArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.valorArea {
+  text-align: center;
+}
+
+.pixArea h4 {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 15px;
 }
 
 .qrCode {
   width: 140px;
-
   height: 140px;
-
-  margin-top: 10px;
-
   border-radius: 10px;
-
-  background: white;
+  background: #fff;
 }
 
-.valorArea h3 {
-  color: white;
-
-  margin-bottom: 8px;
+.valorArea h3,
+.descricaoPagamento h3,
+.pagamentoInfo h3,
+.resumoPagamento h3 {
+  color: #ff8800;
 }
 
 .valorArea p {
-  color: white;
-
+  color: #fff;
   font-size: 24px;
+  font-weight: 700;
+}
 
-  font-weight: bold;
+.descricaoPagamento {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #292929;
+  color: #fff;
+}
+
+.descricaoPagamento h3 {
+  margin-bottom: 10px;
+}
+
+.descricaoPagamento p,
+.pagamentoInfo p,
+.resumoPagamento p {
+  color: #ddd;
+}
+
+.descricaoPagamento p {
+  margin: 5px 0;
 }
 
 .pagamentoInfo {
   width: 100%;
-
   max-width: 650px;
-
+  margin: 30px auto 0;
   display: flex;
-
   justify-content: space-between;
-
   gap: 30px;
-
-  margin-top: 30px;
-
-  color: white;
 }
 
 .pagamentoInfo h3 {
-  color: #ff8800;
-
   margin-bottom: 12px;
 }
 
@@ -1158,47 +1347,31 @@
   margin-bottom: 6px;
 }
 
-
-/* ================================
-   PAGAMENTO CARTÃO
-================================ */
-
 .pagamentoContainer {
   width: 100%;
-
   max-width: 1000px;
-
+  margin: 28px auto 0;
   display: flex;
-
-  justify-content: space-between;
-
   align-items: flex-start;
-
-  gap: 70px;
-
-  margin-top: 20px;
+  justify-content: space-between;
+  gap: 50px;
 }
 
 .formPagamento {
   flex: 1;
-
   display: flex;
-
   flex-direction: column;
-
   gap: 12px;
 }
 
 .formPagamento label {
-  color: white;
-
-  font-size: 14px;
+  color: #ddd;
+  font-size: 13px;
 }
 
 .rowPagamento {
   display: flex;
-
-  gap: 25px;
+  gap: 18px;
 }
 
 .rowPagamento div {
@@ -1206,15 +1379,14 @@
 }
 
 .resumoPagamento {
-  width: 250px;
-
-  color: white;
-
+  width: 280px;
+  padding: 22px;
   display: flex;
-
   flex-direction: column;
-
-  margin-top: 10px;
+  border: 1px solid #303030;
+  border-radius: 13px;
+  background: #151515;
+  color: #fff;
 }
 
 .resumoPagamento h3 {
@@ -1225,279 +1397,1011 @@
   margin-bottom: 15px;
 }
 
-
-/* ================================
-   CONFIRMAR PAGAMENTO
-================================ */
-
 .confirmarPagamento {
   width: 220px;
-
-  min-height: 45px;
-
-  margin-top: 40px;
-
-  padding: 12px 20px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background: #ff8800;
-
-  color: #111;
-
-  font-size: 16px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
+  margin-top: 30px;
 }
 
-.confirmarPagamento:hover {
-  background: #ffa01f;
+/* =========================================================
+   ANIMAÃ‡Ã•ES
+========================================================= */
 
-  transform:
-    translateY(-2px);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-
-/* ================================
-   RECUPERAR SENHA
-================================ */
-
-.recuperarCard {
-  width: 100%;
-
-  max-width: 500px;
-
-  margin-top: 50px;
-
-  padding: 35px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 18px;
-
-  text-align: center;
-}
-
-.recuperarTitle {
-  color: white;
-
-  font-size: 28px;
-
-  font-weight: bold;
-}
-
-.recuperarText {
-  color: #bdbdbd;
-
-  font-size: 14px;
-
-  line-height: 1.5;
-}
-
-.recuperarButton {
-  width: 100%;
-
-  padding: 14px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  font-size: 16px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.recuperarLink {
-  color: #ff8800;
-
-  text-decoration: none;
-
-  font-weight: 600;
-
-  margin-top: 5px;
-}
-
-.recuperarLink:hover {
-  color: #ffaa33;
-}
-
-
-/* ================================
+/* =========================================================
    TABLET
-================================ */
+========================================================= */
 
 @media (max-width: 1024px) {
-
-  .quadraCard {
-    width:
-      calc(
-        50% - 20px
-      );
-
-    max-width: 300px;
+  .app {
+    padding: 0 30px 60px;
   }
 
-  .categoryButtons button {
-    width: 160px;
-
-    font-size: 14px;
+  .quadrasSection {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .homeCards {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 30px;
+  }
+
+  .pagamentoContainer {
+    gap: 35px;
+  }
 }
 
+/* =========================================================
+   CELULAR
+========================================================= */
 
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 768px) {
-
+@media (max-width: 700px) {
   .app {
-    padding: 16px;
+    padding: 0 15px 50px;
   }
 
-  .sidebarMenu {
-    width: 250px;
-
-    left: -250px;
+  .topHeader {
+    height: 72px;
+    padding: 0 16px;
   }
 
-  .sidebarMenu.open {
-    left: 0;
+  .menuButton,
+  .menuIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .menuButton {
+    margin-right: 12px;
   }
 
   .menuIcon {
-    top: 15px;
-
+    top: 14px;
     left: 15px;
-
-    width: 42px;
-
-    height: 42px;
-
-    font-size: 24px;
   }
 
-  .logoArea h2 {
-    font-size: 24px;
+  .menuIconOpen {
+    left: 300px;
   }
 
   .logoArea img {
-    width: 60px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .logoArea h2 {
+    font-size: 16px;
+  }
+
+  .userIcon {
+    font-size: 24px;
+  }
+
+  .sidebarMenu {
+    width: 256px;
+    padding: 18px 16px 18px;
   }
 
   .categoryButtons {
-    gap: 8px;
+    margin-top: 28px;
+    padding: 0 5px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
 
-    margin-top: 20px;
+  .categoryButtons::-webkit-scrollbar {
+    display: none;
   }
 
   .categoryButtons button {
-    width: 140px;
-
-    font-size: 13px;
-
-    padding: 8px;
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 10px 18px;
+    white-space: nowrap;
+    font-size: 14px;
   }
 
-  .searchBar {
-    padding: 10px 14px;
-
-    margin-top: 20px;
+  .searchBar,
+  .selectQuadra {
+    max-width: 100%;
   }
 
   .selectQuadra {
     width: 100%;
-
-    max-width: 650px;
   }
 
   .quadrasSection {
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 16px;
-
-    margin-top: 24px;
+    padding: 0 5px;
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .quadraCard {
-    width: 100%;
-
-    max-width: 340px;
+    min-height: 260px;
+    padding: 16px;
   }
 
   .quadraCard img {
-    height: 160px;
+    height: 180px;
   }
 
-  .pixArea {
-    flex-direction: column;
-
-    text-align: center;
+  .quadraCard h3 {
+    font-size: 19px;
   }
 
-  .pagamentoInfo {
+  .pixArea,
+  .pagamentoInfo,
+  .pagamentoContainer,
+  .rowPagamento {
     flex-direction: column;
+  }
 
+  .pixArea,
+  .pagamentoInfo,
+  .pagamentoContainer {
     gap: 25px;
   }
 
-  .pagamentoContainer {
-    flex-direction: column;
-
-    gap: 30px;
+  .rowPagamento {
+    gap: 12px;
   }
 
-  .resumoPagamento {
-    width: 100%;
-  }
-
+  .resumoPagamento,
   .confirmarPagamento {
     width: 100%;
   }
 
-  .rowPagamento {
+  .arenaWrapper {
     flex-direction: column;
-
-    gap: 12px;
   }
 
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid #202020;
+  }
+
+  .pageTitle {
+    padding: 38px 5px 0;
+  }
+
+  .pageTitle h1 {
+    font-size: 30px;
+  }
+
+  .pageTitle p {
+    font-size: 14px;
+  }
+
+  .homeCards {
+    margin-top: 28px;
+    padding: 0 5px;
+    gap: 18px;
+  }
+
+  .infoCard {
+    min-height: auto;
+    padding: 24px;
+  }
 }
 
 
-/* ================================
-   MOBILE PEQUENO
-================================ */
+/* =========================================================
+   TELAS BAIXAS
+========================================================= */
 
-@media (max-width: 480px) {
-
-  .categoryButtons {
-    flex-direction: column;
-
-    align-items: center;
+@media (max-height: 650px) {
+  .sidebarNav {
+    margin-top: 32px;
+    gap: 6px;
   }
 
-  .categoryButtons button {
-    width: 100%;
+  .sidebarMenu a {
+    height: 44px;
+  }
 
-    max-width: 300px;
+  .sair {
+    padding-top: 12px;
+  }
+
+  .sair a {
+    height: 42px;
+  }
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 420px) {
+  .app {
+    padding: 0 12px 40px;
   }
 
   .logoArea h2 {
+    font-size: 15px;
+  }
+
+  .menuIconOpen {
+    left: 245px;
+  }
+
+  .sidebarMenu {
+    width: 256px;
+  }
+
+  .quadraCard {
+    padding: 14px;
+  }
+
+  .quadraCard img {
+    height: 150px;
+  }
+
+  .quadraCard h3 {
     font-size: 18px;
   }
 
+  .pageTitle h1 {
+    font-size: 26px;
+  }
+
+  .infoCard {
+    padding: 20px;
+  }
+
+  .infoCard h3 {
+    font-size: 19px;
+  }
+
+  .scheduleList p {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sobreCard,
+  .cadastroCard,
+  .loginCard,
+  .recuperarCard {
+    padding: 24px 20px;
+  }
+
+  .sobreTitulo {
+    font-size: 29px;
+  }
+
+  .cadastroTitle,
+  .loginTitle,
+  .recuperarTitle {
+    font-size: 24px;
+  }
+
+  .pagamentoButtons {
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+
+  .pagamentoButtons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pagamentoBtn {
+    flex: 0 0 auto;
+  }
+
+  .qrCode {
+    width: 125px;
+    height: 125px;
+  }
 }
+
+/* Authentication screens and shared navigation */
+.authHeader {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  width: 100%;
+  height: 84px;
+  padding: 0 38px;
+  display: flex;
+  align-items: center;
+  background: rgba(5, 5, 5, 0.96);
+  border-bottom: 1px solid #1d1d1d;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.authBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.authBrand img {
+  width: 46px;
+  height: 46px;
+  display: block;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.authBrand strong {
+  font-weight: 700;
+}
+
+.authBrand span {
+  color: #ff8800;
+}
+
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: fadeIn 0.25s ease;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  width: 260px;
+  height: 100vh;
+  height: 100dvh;
+  padding: 26px 18px;
+  display: flex;
+  flex-direction: column;
+  background: #090909;
+  border-right: 1px solid #202020;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.45);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar .sidebarBrand {
+  min-height: 80px;
+  margin-bottom: 26px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sidebar .sidebarLogo {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  margin: 0;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.sidebar .brandText {
+  margin: 0;
+  line-height: 1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 22px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2b2b2b;
+  border-radius: 8px;
+  background: #111;
+  color: #777;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.closeButton:hover {
+  border-color: #ff8800;
+  color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+.sidebar .sidebarNav {
+  width: auto;
+  margin: 0;
+  gap: 8px;
+}
+
+.sidebarNav a,
+.sidebarBottom a {
+  min-height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.sidebarNav a:hover,
+.sidebarBottom a:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  transform: translateX(2px);
+}
+
+.sidebarNav a.active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+.sidebarBottom {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #1d1d1d;
+}
+
+.authContent {
+  width: 100%;
+  min-height: calc(100vh - 84px);
+  padding: 48px 24px 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: #000;
+}
+
+.authContent .cadastroCard,
+.authContent .loginCard {
+  margin: 0;
+  padding: 34px;
+  text-align: left;
+}
+
+.authContent .cadastroCard {
+  max-width: 720px;
+}
+
+.authContent .loginCard {
+  max-width: 480px;
+}
+
+.authContent .cadastroTitle,
+.authContent .loginTitle {
+  margin: 0;
+  text-align: left;
+}
+
+.authHeading {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.authHeading > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #ff8800;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.authHeading p {
+  margin-top: 10px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.authField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #bbb;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.authField > div {
+  min-height: 50px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #101010;
+  transition: 0.25s ease;
+}
+
+.authField > div:focus-within {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+.authField svg {
+  flex: 0 0 auto;
+  color: #666;
+  font-size: 14px;
+}
+
+.authField > div:focus-within svg {
+  color: #ff8800;
+}
+
+.authFieldRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.authField .cadastroInput,
+.authField .loginInput {
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.loginLinks p {
+  color: #777;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .authHeader {
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .authBrand {
+    font-size: 16px;
+  }
+
+  .authBrand img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar {
+    width: 290px;
+    padding: 22px 16px;
+  }
+
+  .authContent {
+    min-height: calc(100vh - 72px);
+    padding: 30px 15px 50px;
+  }
+
+  .authContent .cadastroCard,
+  .authContent .loginCard {
+    padding: 24px 20px;
+  }
+
+  .authFieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Payment page alignment */
+.app > .topHeader .logoArea {
+  margin-left: 58px;
+}
+
+.pagamentoButtons {
+  width: 100%;
+  max-width: 900px;
+}
+
+.pagamentoCard {
+  max-width: 900px;
+  padding: 34px;
+}
+
+.pagamentoCard .pixArea {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pagamentoContainer {
+  width: 100%;
+  max-width: 900px;
+  margin: 28px auto 0;
+  gap: 28px;
+}
+
+.pagamentoInfo,
+.resumoPagamento {
+  flex: 1;
+  min-height: 180px;
+  padding: 24px;
+  border: 1px solid #303030;
+  border-top: 3px solid #ff8800;
+  border-radius: 17px;
+  background: #151515;
+}
+
+.confirmarPagamento {
+  width: 100%;
+  max-width: 900px;
+  margin: 28px auto 0;
+  align-self: center;
+}
+
+/* Pagamentos: composição unificada */
+.paymentPage {
+  padding-top: 92px;
+  flex-direction: column;
+}
+
+.paymentHeading {
+  width: min(100%, 760px);
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.paymentHeading > span {
+  color: #ff9a35;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.paymentHeading h1 {
+  margin: 11px 0 10px;
+  color: #fff;
+  font-size: clamp(30px, 4vw, 46px);
+  letter-spacing: -.035em;
+}
+
+.paymentHeading p {
+  color: #8e918d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.paymentPage .pagamentoButtons {
+  margin: 0 auto 26px;
+  padding: 5px;
+  width: fit-content;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 13px;
+  background: #111;
+}
+
+.paymentPage .pagamentoBtn {
+  min-width: 140px;
+  border-radius: 9px;
+}
+
+.paymentPage .pagamentoCard {
+  width: min(100%, 920px);
+  max-width: 920px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #181818, #131313);
+}
+
+.paymentPage .pixArea {
+  min-height: 250px;
+  gap: 100px;
+}
+
+.paymentPage .qrCode {
+  padding: 10px;
+  border: 1px solid rgba(255,136,0,.25);
+  box-shadow: 0 10px 28px rgba(0,0,0,.3);
+}
+
+.paymentPage .valorArea p {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 32px;
+}
+
+.paymentPage .pagamentoInfo {
+  max-width: 920px;
+  margin-top: 22px;
+  gap: 18px;
+}
+
+.paymentPage .pagamentoInfo > div,
+.cardPaymentPage .formPagamento {
+  flex: 1;
+  padding: 24px;
+  border: 1px solid #303030;
+  border-top: 3px solid #ff8800;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #181818, #131313);
+}
+
+.paymentPage .pagamentoInfo h3 {
+  margin-bottom: 14px;
+}
+
+.paymentPage .confirmarPagamento {
+  min-height: 52px;
+  display: block;
+  width: min(100%, 920px);
+  max-width: 920px;
+  margin: 22px auto 0 !important;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff8800, #ff9f3d) !important;
+  box-shadow: 0 10px 24px rgba(255,136,0,.18);
+  color: #17120c;
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.paymentPage .confirmarPagamento:hover {
+  background: linear-gradient(135deg, #ff9417, #ffb15c) !important;
+  box-shadow: 0 13px 28px rgba(255,136,0,.28);
+  transform: translateY(-2px);
+}
+
+.cardPaymentPage .pagamentoContainer {
+  max-width: 920px;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.cardPaymentPage .formPagamento {
+  min-width: 0;
+  box-shadow: 0 16px 35px rgba(0,0,0,.2);
+}
+
+.cardPaymentPage .formPagamento label {
+  display: block;
+  margin-bottom: 7px;
+  color: #d7d7d7;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.cardPaymentPage .formPagamento input {
+  min-height: 49px;
+  background: #0f0f0f;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+.cardPaymentPage .formPagamento input:focus {
+  background: #14110d;
+  box-shadow: 0 0 0 3px rgba(255,136,0,.1);
+}
+
+.cardPaymentPage .resumoPagamento {
+  width: 320px;
+  min-width: 280px;
+  align-self: flex-start;
+  background: linear-gradient(145deg, #181818, #131313);
+  box-shadow: 0 16px 35px rgba(0,0,0,.2);
+}
+
+.cardPaymentPage .resumoPagamento h3 {
+  font-size: 19px;
+}
+
+.cardPaymentPage .resumoPagamento p {
+  min-height: 27px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.cardPaymentPage .resumoPagamento .confirmarPagamento {
+  margin-top: 28px;
+}
+
+@media (max-width: 700px) {
+  .paymentPage {
+    padding-top: 72px;
+    padding-inline: 20px;
+  }
+
+  .paymentPage .pagamentoButtons {
+    width: 100%;
+  }
+
+  .paymentPage .pagamentoBtn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .paymentPage .pixArea {
+    min-height: 0;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .paymentPage .pagamentoInfo,
+  .cardPaymentPage .pagamentoContainer {
+    flex-direction: column;
+  }
+
+  .cardPaymentPage .resumoPagamento {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .app > .topHeader .logoArea {
+    margin-left: 48px;
+  }
+
+  .pagamentoCard,
+  .pagamentoInfo,
+  .resumoPagamento {
+    padding: 20px;
+  }
+}
+
+/* Home 2026 */
+.homeMain { width: min(1240px, calc(100% - 48px)); margin: 0 auto; }
+.topHeader { height: 76px; padding: 0 max(24px, calc((100% - 1240px) / 2)); background: rgba(8,10,9,.82); border-bottom-color: rgba(255,255,255,.08); }
+.menuButton { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.05); }
+.logoArea { color: inherit; text-decoration: none; }
+.logoArea img { border-radius: 50%; border: 1px solid rgba(255,138,31,.35); }
+.desktopNav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
+.desktopNav a { color: #a7aaa6; text-decoration: none; font-size: 14px; font-weight: 650; transition: .2s; }
+.desktopNav a:hover, .desktopNav a[aria-current="page"] { color: #fff; }
+.profileButton { margin-left: 34px; padding: 10px 15px; display: flex; align-items: center; gap: 9px; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: #eee; text-decoration: none; font-size: 13px; font-weight: 650; }
+.profileButton svg { color: #ff8a1f; font-size: 18px; }
+.homeHero { min-height: 650px; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 45px; position: relative; }
+.homeHero::before { content: ""; position: absolute; inset: 5% 45% 20% -30%; background: radial-gradient(circle, rgba(255,119,0,.12), transparent 64%); pointer-events: none; }
+.heroCopy { position: relative; z-index: 2; padding: 65px 0; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #ff9b3d; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow::before { content: ""; width: 24px; height: 2px; background: #ff8a1f; border-radius: 2px; }
+.heroCopy h1 { margin: 19px 0 22px; color: #f8f7f2; font-size: clamp(52px, 6.3vw, 88px); line-height: .94; letter-spacing: -.055em; }
+.heroCopy h1 span { color: #ff8a1f; }
+.heroCopy > p { max-width: 570px; color: #a4a7a3; font-size: 17px; line-height: 1.75; }
+.heroActions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; }
+.primaryAction, .secondaryAction { min-height: 50px; padding: 0 22px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: 12px; font-size: 14px; font-weight: 800; text-decoration: none; transition: .25s; }
+.primaryAction { background: #ff8a1f; color: #14120e; box-shadow: 0 12px 35px rgba(255,120,0,.2); }
+.primaryAction:hover { background: #ffa34f; transform: translateY(-2px); }
+.secondaryAction { color: #f4f4f1; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.035); }
+.secondaryAction:hover { border-color: #ff8a1f; color: #ff9b3d; }
+.quickInfo { margin-top: 35px; display: flex; flex-wrap: wrap; gap: 24px; color: #7f827e; font-size: 13px; }
+.quickInfo span { display: flex; align-items: center; gap: 8px; }.quickInfo svg { color: #ff8a1f; }
+.heroVisual { height: 570px; position: relative; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.heroVisual img { position: relative; z-index: 1; max-width: 100%; max-height: 95%; object-fit: contain; filter: drop-shadow(0 30px 30px rgba(0,0,0,.55)); }
+.heroGlow { position: absolute; width: 430px; height: 430px; left: 50%; bottom: 3%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 45% 40%, #ffb04f 0, #d4630b 38%, #492003 68%, transparent 69%); opacity: .88; }
+.floatingCard { position: absolute; z-index: 3; right: 2%; bottom: 9%; padding: 14px 17px; display: flex; align-items: center; gap: 11px; background: rgba(19,21,19,.82); border: 1px solid rgba(255,255,255,.14); border-radius: 14px; backdrop-filter: blur(14px); box-shadow: 0 20px 50px #0008; }
+.floatingCard div { display: flex; flex-direction: column; gap: 3px; }.floatingCard strong { font-size: 13px; }.floatingCard small { color: #999; font-size: 11px; }
+.liveDot { width: 9px; height: 9px; border-radius: 50%; background: #62d36b; box-shadow: 0 0 0 5px rgba(98,211,107,.12); }
+.statsBar { display: grid; grid-template-columns: repeat(4, 1fr); padding: 25px 10px; border-block: 1px solid rgba(255,255,255,.08); }
+.statsBar div { display: flex; flex-direction: column; align-items: center; gap: 5px; border-right: 1px solid rgba(255,255,255,.08); }.statsBar div:last-child { border: 0; }
+.statsBar strong { color: #ff8a1f; font-size: 27px; }.statsBar span { color: #777b76; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+.homeSection { padding: 100px 0; }.sectionHeading { margin-bottom: 38px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+.sectionHeading h2 { margin-top: 10px; font-size: clamp(34px, 4vw, 48px); letter-spacing: -.04em; }.sectionHeading > p { max-width: 430px; color: #8e918d; line-height: 1.65; }
+.benefitGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }.benefitCard { padding: 30px; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.015)); transition: .3s; }
+.benefitCard:hover { transform: translateY(-5px); border-color: rgba(255,138,31,.45); }.benefitIcon { width: 46px; height: 46px; display: grid; place-items: center; color: #ff8a1f; background: rgba(255,138,31,.1); border-radius: 12px; }
+.benefitCard h3 { margin: 22px 0 9px; font-size: 20px; }.benefitCard p { color: #929590; line-height: 1.6; font-size: 14px; }
+.featureCourt { height: 480px; margin-bottom: 100px; position: relative; overflow: hidden; border-radius: 24px; border: 1px solid rgba(255,255,255,.1); }.featureCourt > img { width: 100%; height: 100%; object-fit: cover; }
+.featureCourt::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,8,7,.96) 0%, rgba(6,8,7,.7) 48%, rgba(6,8,7,.05) 80%); }
+.featureOverlay { position: absolute; z-index: 2; top: 50%; left: 6%; transform: translateY(-50%); max-width: 510px; }.availablePill { padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(98,211,107,.25); border-radius: 999px; color: #9fdda5; background: rgba(98,211,107,.08); font-size: 11px; font-weight: 700; }
+.availablePill i { width: 6px; height: 6px; border-radius: 50%; background: #62d36b; }.featureOverlay h2 { margin: 20px 0 13px; font-size: clamp(32px, 4vw, 49px); line-height: 1.05; letter-spacing: -.04em; }.featureOverlay p { color: #aaa; line-height: 1.65; }.featureOverlay a { margin-top: 24px; display: inline-flex; align-items: center; gap: 10px; color: #ff9b3d; text-decoration: none; font-weight: 750; font-size: 14px; }
+.homeFooter { padding: 35px max(24px, calc((100% - 1240px) / 2)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-top: 1px solid rgba(255,255,255,.08); color: #737671; font-size: 12px; }.homeFooter strong { color: #fff; font-size: 15px; }.homeFooter strong span { color: #ff8a1f; }.homeFooter small { justify-self: end; }
+.listingIntro { width: 100%; max-width: 1300px; padding-top: 65px; }.listingIntro h1 { margin: 10px 0; font-size: clamp(38px,5vw,60px); letter-spacing: -.04em; }.listingIntro h1 span { color: #ff8a1f; }.listingIntro p,.emptyState { color: #8e918d; }.emptyState { padding: 50px 0; }
+.courtImageWrap { position: relative; }.courtCardBody small { color: #ff9b3d; font-weight: 800; letter-spacing: .12em; }.courtCardBody p { color: #888; }.cardLink { margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; color: #ff9b3d; font-size: 13px; font-weight: 700; }
+
+@media (max-width: 820px) {
+  .desktopNav,.profileButton span { display: none; }.profileButton { margin-left: auto; padding: 10px; }.homeMain { width: min(100% - 30px, 620px); }
+  .homeHero { grid-template-columns: 1fr; min-height: auto; }.heroCopy { padding: 65px 0 10px; }.heroVisual { height: 430px; }.floatingCard { right: 0; }
+  .statsBar { grid-template-columns: 1fr 1fr; }.statsBar div { padding: 18px 5px; }.statsBar div:nth-child(2) { border-right: 0; }.statsBar div:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.08); }
+  .homeSection { padding: 75px 0; }.sectionHeading { align-items: flex-start; flex-direction: column; }.benefitGrid { grid-template-columns: 1fr; }.featureCourt { height: 500px; }.featureCourt::after { background: linear-gradient(0deg, rgba(6,8,7,.96), rgba(6,8,7,.15)); }.featureOverlay { left: 25px; right: 25px; top: auto; bottom: 35px; transform: none; }
+  .homeFooter { grid-template-columns: 1fr; gap: 8px; text-align: center; }.homeFooter small { justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+/* Versão visual simples e consistente */
+.homePage { display: flex; flex-direction: column; align-items: center; }
+.homePage .contentCard {
+  width: min(100%, 1180px);
+  max-width: 1180px;
+  min-height: 620px;
+  margin-top: 86px;
+  padding: 58px 68px;
+}
+.contentCard { width: min(100%, 980px); margin: 50px auto 0; padding: 38px; background: linear-gradient(145deg, #181818, #131313); border: 1px solid #303030; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,.24); }
+.contentCard .hero { text-align: center; }
+.contentCard .hero h1 { margin: 12px 0 18px; font-size: clamp(46px, 6vw, 72px); }
+.contentCard .hero p { max-width: 760px; margin-inline: auto; font-size: 18px; }
+.contentCard .heroActions {
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.simpleInfoGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.simpleInfoGrid .section { min-height: 148px; padding: 28px; border: 1px solid #292929; border-radius: 13px; background: linear-gradient(145deg, #121212, #0e0e0e); box-shadow: inset 0 1px rgba(255,255,255,.025); text-align: center; transition: border-color .2s, transform .2s, background .2s; }
+.simpleInfoGrid .section:hover { border-color: rgba(255,136,0,.45); background: linear-gradient(145deg, #17130e, #101010); transform: translateY(-2px); }
+.simpleInfoGrid .section h3 { color: #ff8800; text-align: center; }
+.simpleInfoGrid .section p { text-align: center; }
+@media (max-width: 700px) {
+  .homePage .contentCard, .contentCard { width: min(100%, 980px); min-height: 0; margin-top: 52px; padding: 34px 24px; }
+  .contentCard .hero h1 { font-size: clamp(42px, 10vw, 62px); }
+  .contentCard .hero p { font-size: 16px; }
+  .simpleInfoGrid { grid-template-columns: 1fr; }
+  .sobreCard { grid-template-columns: 1fr; margin-top: 44px; padding: 32px 20px; }
+  .sobreCard > .sobreSecao:first-of-type { grid-column: auto; }
+}
+
+/* Acesso: cadastro, login e recuperação */
+.authPage { min-height: 100vh; padding: 42px 20px; display: grid; place-items: center; background: radial-gradient(circle at 50% 0, #24170c 0, #0b0b0b 42%); }
+.authCard { width: min(100%, 590px); padding: 32px; border: 1px solid #303030; border-top: 3px solid #ff8800; border-radius: 15px; background: #151515; box-shadow: 0 18px 50px #0007; }
+.authCardSmall { max-width: 470px; }.authBrand { display: flex; align-items: center; justify-content: center; gap: 10px; }.authBrand img { width: 46px; height: 46px; object-fit: cover; border-radius: 9px; }.authBrand strong { font-size: 16px; }.authBrand span { color: #ff8800; }
+.authHeading { margin: 27px 0 25px; text-align: center; }.authHeading small { color: #ff941f; font-size: 10px; font-weight: 800; letter-spacing: .14em; }.authHeading h1 { margin: 8px 0; color: #fff; font-size: 29px; }.authHeading p { color: #8d8d8d; font-size: 13px; line-height: 1.55; }
+.authCard form { display: flex; flex-direction: column; gap: 15px; }.authCard label { display: flex; flex-direction: column; gap: 7px; color: #d0d0d0; font-size: 12px; font-weight: 650; }.authCard input { width: 100%; min-height: 47px; padding: 0 13px; border: 1px solid #333; border-radius: 9px; outline: none; background: #0e0e0e; color: #fff; }.authCard input:focus { border-color: #ff8800; box-shadow: 0 0 0 3px rgba(255,136,0,.1); }.authCard form > button { min-height: 47px; margin-top: 5px; border: 0; border-radius: 9px; background: #ff8800; color: #17120c; font-weight: 800; cursor: pointer; }.authCard form > button:hover { background: #ff9c35; }
+.authRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.authSwitch { margin-top: 21px; color: #888; font-size: 13px; text-align: center; }.authSwitch a,.forgotLink,.aboutLink { color: #ff941f; font-weight: 700; text-decoration: none; }.forgotLink { align-self: flex-end; margin-top: -6px; font-size: 12px; }.aboutLink { margin-top: 16px; display: block; color: #777; font-size: 12px; text-align: center; }
+@media (max-width: 560px) { .authPage { padding: 20px 13px; }.authCard { padding: 26px 20px; }.authRow { grid-template-columns: 1fr; }.authHeading h1 { font-size: 25px; } }
+
+/* Listagem de quadras: alinhamento e responsividade */
+.courtsPage { width: min(100%, 1240px); margin: 0 auto; padding-inline: 24px; }
+.courtsPage .listingIntro { max-width: 760px; margin: 0 auto; padding-top: 64px; text-align: center; }
+.courtsPage .listingIntro .eyebrow { justify-content: center; }
+.listingControls { width: min(100%, 760px); margin: 34px auto 0; padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; background: #111; }
+.listingControls .categoryButtons { margin: 0; justify-content: center; }
+.listingControls .searchBar { margin: 14px auto 0; }
+.resultsHeader { width: 100%; margin: 48px auto 0; padding-bottom: 14px; display: flex; align-items: end; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.resultsHeader h2 { font-size: clamp(22px,3vw,30px); }.resultsHeader span { color: #888; font-size: 13px; }
+.courtsPage .quadrasSection { max-width: none; margin-top: 22px; gap: 20px; }
+.courtsPage .quadraCard { min-height: 390px; padding: 0; cursor: pointer; outline: none; }
+.courtsPage .quadraCard:focus-visible { border-color: #ff8800; box-shadow: 0 0 0 3px rgba(255,136,0,.18); }
+.courtImageWrap { position: relative; overflow: hidden; }
+.courtsPage .quadraCard img { height: 220px; border-radius: 16px 16px 0 0; transition: transform .35s ease; }
+.courtsPage .quadraCard:hover img { transform: scale(1.035); }
+.courtsPage .status { position: absolute; top: 14px; right: 14px; margin: 0; padding: 7px 10px; border-radius: 999px; background: rgba(8,8,8,.88); box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.courtCardBody { flex: 1; padding: 22px; display: flex; flex-direction: column; align-items: flex-start; }
+.courtCardBody h3 { margin-top: 10px; }.courtCardBody .cardLink { margin-top: auto; padding-top: 18px; }
+
+@media (max-width: 1000px) { .courtsPage .quadrasSection { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 640px) {
+  .contentCard { margin-top: 20px; }
+  .contentCard .heroActions { flex-direction: column; }
+  .contentCard .primaryAction, .contentCard .secondaryAction { width: 100%; }
+  .courtsPage { padding-inline: 15px; }
+  .courtsPage .listingIntro { padding-top: 40px; }
+  .listingControls { margin-top: 26px; padding: 12px; }
+  .listingControls .categoryButtons { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .listingControls .categoryButtons button { width: 100%; padding-inline: 10px; }
+  .resultsHeader { margin-top: 34px; align-items: flex-start; flex-direction: column; gap: 5px; }
+  .courtsPage .quadrasSection { grid-template-columns: 1fr; }
+  .courtsPage .quadraCard { min-height: 0; }
+  .courtsPage .quadraCard img { height: clamp(190px,55vw,250px); }
+}
+

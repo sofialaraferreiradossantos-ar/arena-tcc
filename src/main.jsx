@@ -12,6 +12,10 @@ import InscricaoTorneio from './pages/InscricaoTorneio.jsx'
 import Pagamento from './pages/pagamento.jsx'
 import PagamentoCartao from './pages/pagamentoCartao.jsx'
 import RecuperarSenha from "./components/quadras/recuperarSenha.jsx";
+import TorneioDetalhes from "./pages/TorneioDetalhes";
+import Quadras from "./pages/Home.jsx";
+
+
 
 import {
   BrowserRouter,
@@ -19,27 +23,36 @@ import {
   Route
 } from 'react-router-dom'
 
-import App from './App.jsx'
 import QuadraDetalhes from './pages/QuadraDetalhes.jsx'
+import Administrador from './pages/Administrador.jsx'
+import AdminModulo from './pages/AdminModulo.jsx'
+import AgendarHorario from './pages/AgendarHorario.jsx'
+import UnifiedMenu from './components/UnifiedMenu.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+<UnifiedMenu />
 <Routes>
-  <Route path="/" element={<Cadastro />} />
+  <Route path="/" element={<Home />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
   <Route path="/agendamentos" element={<Agendamentos />} />
   <Route path="/cadastro" element={<Cadastro />} />
   <Route path="/home" element={<Home />} />
+  <Route path="/quadras" element={<Quadras />} />
   <Route path="/login" element={<Login />} />
   <Route path="/sobre" element={<Sobre />} />
   <Route path="/torneios" element={<Torneios />} />
-  <Route path="/inscricao-torneio" element={<InscricaoTorneio />} />
+  <Route path="/inscricao/:id" element={<InscricaoTorneio />} />
   <Route path="/pagamento" element={<Pagamento />} />
   <Route path="/pagamentoCartao" element={<PagamentoCartao />} />
   <Route path="/recuperarSenha" element={<RecuperarSenha />} />
-  
+  <Route path="/torneio/:id" element={<TorneioDetalhes />} />
+  <Route path="/administrador" element={<Administrador />} />
+  <Route path="/administrador/:modulo" element={<AdminModulo />} />
+  <Route path="/agendar-horario" element={<AgendarHorario />} />
+
 </Routes>
     </BrowserRouter>
   </StrictMode>,

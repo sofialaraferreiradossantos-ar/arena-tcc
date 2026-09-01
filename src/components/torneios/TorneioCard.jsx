@@ -1,42 +1,148 @@
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
+  FaTrophy,
 } from "react-icons/fa";
+
+import {
+  Link,
+} from "react-router-dom";
 
 import styles from "../../styles/torneios.module.css";
 
+
 function TorneioCard({
+  id,
   nome,
   data,
   local,
   imagem,
 }) {
+
   return (
-    <div className={styles.card}>
-      {/* TEXTO À ESQUERDA */}
-      <div className={styles.cardInfo}>
-        <h3>{nome}</h3>
 
-        <p>
-          <FaCalendarAlt />
-          <span>Data: {data}</span>
-        </p>
+    <article
+      className={styles.card}
+    >
 
-        <p>
-          <FaMapMarkerAlt />
-          <span>{local}</span>
-        </p>
+      {/* INFORMAÇÕES */}
+
+      <div
+        className={styles.cardInfo}
+      >
+
+        <div
+          className={styles.cardTitle}
+        >
+
+          <div
+            className={styles.trophyIcon}
+          >
+            <FaTrophy />
+          </div>
+
+          <div>
+
+            <span
+              className={styles.cardLabel}
+            >
+              TORNEIO
+            </span>
+
+            <h2>
+              {nome}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        {/* DATA */}
+
+        <div
+          className={styles.infoItem}
+        >
+
+          <div
+            className={styles.infoIcon}
+          >
+            <FaCalendarAlt />
+          </div>
+
+          <div>
+
+            <span>
+              Data
+            </span>
+
+            <strong>
+              {data}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        {/* LOCAL */}
+
+        <div
+          className={styles.infoItem}
+        >
+
+          <div
+            className={styles.infoIcon}
+          >
+            <FaMapMarkerAlt />
+          </div>
+
+          <div>
+
+            <span>
+              Local
+            </span>
+
+            <strong>
+              {local}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        {/* BOTÃO */}
+
+        <Link
+          to={`/torneio/${id}`}
+          className={
+            styles.detalhesButton
+          }
+        >
+          Ver detalhes
+        </Link>
+
       </div>
 
-      {/* IMAGEM À DIREITA */}
-      <div className={styles.cardRight}>
+
+      {/* IMAGEM */}
+
+      <div
+        className={styles.cardRight}
+      >
+
         <img
           src={imagem}
           alt={nome}
         />
+
       </div>
-    </div>
+
+    </article>
+
   );
 }
+
 
 export default TorneioCard;
