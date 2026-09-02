@@ -36,6 +36,7 @@ createRoot(document.getElementById('root')).render(
 <Routes>
   <Route path="/" element={<Home />} />
   <Route path="/quadra" element={<QuadraDetalhes />} />
+  <Route path="/quadra/:id" element={<QuadraDetalhes />} />
   <Route path="/sucesso" element={<AgendamentoSucesso />} />
   <Route path="/agendamentos" element={<Agendamentos />} />
   <Route path="/cadastro" element={<Cadastro />} />

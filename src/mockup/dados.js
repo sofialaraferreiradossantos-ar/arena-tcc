@@ -1,6 +1,7 @@
 
-import quadraCoberta from '../mockup/imagens/quadraCoberta.jpg';
-import quadraDesoberta from '../mockup/imagens/quadraDescoberta.jpg';
+import quadraCoberta from '../mockup/imagens/quadraCobertaAlta.png';
+import quadraDesoberta from '../mockup/imagens/quadraDescobertaAlta.png';
+import quadraBeachTennis from '../mockup/imagens/quadraBeachTennis.jpg';
 
 export const quadrasMckp = [
 
@@ -12,8 +13,8 @@ export const quadrasMckp = [
     }, 
     {
         id: 2, 
-        title: 'Quadra coberta',
-        image: quadraCoberta, 
+        title: 'Quadra Beach Tennis',
+        image: quadraBeachTennis,
         available: true
     }, 
     {

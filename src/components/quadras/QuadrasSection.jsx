@@ -9,6 +9,7 @@ function QuadrasSection({ quadras }) {
       {quadras.map((quadra) => (
         <QuadraCard
           key={quadra.id}
+          id={quadra.id}
           title={quadra.title}
           image={quadra.image}
           available={quadra.available}

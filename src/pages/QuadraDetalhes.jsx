@@ -7,21 +7,29 @@ import {
 
 import {
   Link,
+  useParams,
   useLocation,
 } from "react-router-dom";
 
 import styles from "../styles/quadras.module.css";
 
 import logo from "../assets/logo.jpeg";
-import quadra from "../assets/quadra.jpeg";
+import { quadrasMckp } from "../mockup/dados.js";
 
 
 function QuadraDetalhes() {
+  const { id } = useParams();
+  const quadraSelecionada =
+    quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0];
+
   const imagens = [
-    quadra,
-    quadra,
-    quadra,
-  ];
+    quadraSelecionada.image,
+    ...quadrasMckp
+      .filter((item) => item.id !== quadraSelecionada.id)
+      .map((item) => item.image),
+  ].filter((imagem, index, imagensDaGaleria) =>
+    imagensDaGaleria.indexOf(imagem) === index,
+  );
 
   const [
     imagemAtiva,
@@ -250,7 +258,7 @@ function QuadraDetalhes() {
         >
 
           <h2>
-            Beach Tennis Arena 1
+            {quadraSelecionada.title}
           </h2>
 
           <div>
@@ -260,13 +268,8 @@ function QuadraDetalhes() {
             </h3>
 
             <p>
-              A quadra conta com
-              iluminação LED,
-              ambiente climatizado.
-              Possui opções para
-              agendamentos de
-              eventos, torneios e
-              jogos.
+              A quadra conta com iluminação LED e areia selecionada.
+              Possui opções para agendamentos de eventos, torneios e jogos.
             </p>
 
           </div>

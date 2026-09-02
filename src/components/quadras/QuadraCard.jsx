@@ -3,9 +3,9 @@ import { FaArrowRight } from "react-icons/fa";
 import styles from "../../styles/home.module.css";
 import fallback from "../../assets/quadra.jpeg";
 
-export default function QuadraCard({ title, image = fallback, available }) {
+export default function QuadraCard({ id, title, image = fallback, available }) {
   const navigate = useNavigate();
-  const open = () => navigate("/quadra");
+  const open = () => navigate(`/quadra/${id}`);
 
   return <article className={styles.quadraCard} onClick={open} role="link" tabIndex={0} onKeyDown={(event) => (event.key === "Enter" || event.key === " ") && open()}>
     <div className={styles.courtImageWrap}>
