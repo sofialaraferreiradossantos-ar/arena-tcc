@@ -48,8 +48,7 @@ router.delete('/torneios', TorneiosController.apagarTorneios);
 
 router.get('/usuarios', UsuariosController.listarUsuarios);
 router.post('/usuarios', UsuariosController.cadastrarUsuarios);
-router.patch('/usuarios', UsuariosController.editarUsuarios);
-router.delete('/usuarios', UsuariosController.apagarUsuarios);
-
+router.patch('/usuarios/:id', UsuariosController.editarUsuarios);
+router.delete('/usuarios/:id', UsuariosController.apagarUsuarios);
 
 module.exports = router;
