@@ -2,6 +2,9 @@ const db = require('../database/connection');
 
 module.exports = {
 
+    // =====================================================
+    // LISTAR DISPONIBILIDADES - GET
+    // =====================================================
     async listarDisponibilidades(request, response) {
         try {
 
@@ -14,15 +17,17 @@ module.exports = {
                     hora_fim,
                     status_disp
                 FROM disponibilidades
+                WHERE status_disp = 'disponivel'
                 ORDER BY id_disp;
             `;
 
-            const [dados] = await db.query(sql);
+            const [rows] = await db.query(sql);
 
             return response.status(200).json({
                 sucesso: true,
                 mensagem: 'Lista de disponibilidades.',
-                dados: dados
+                items: rows.length,
+                dados: rows
             });
 
         } catch (error) {
@@ -36,6 +41,10 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // CADASTRAR DISPONIBILIDADE - POST
+    // =====================================================
     async cadastrarDisponibilidades(request, response) {
         try {
 
@@ -88,11 +97,16 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // EDITAR DISPONIBILIDADE - PATCH
+    // =====================================================
     async editarDisponibilidades(request, response) {
         try {
 
+            const { id } = request.params;
+
             const {
-                id_disp,
                 id_qd,
                 dia_semana,
                 hora_inicio,
@@ -117,17 +131,24 @@ module.exports = {
                 hora_inicio,
                 hora_fim,
                 status_disp,
-                id_disp
+                id
             ];
 
             const [resultado] = await db.query(sql, valores);
+
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Disponibilidade não encontrada.',
+                    dados: null
+                });
+            }
 
             return response.status(200).json({
                 sucesso: true,
                 mensagem: 'Disponibilidade atualizada com sucesso.',
                 dados: {
-                    linhasAfetadas: resultado.affectedRows,
-                    id_disp,
+                    id_disp: id,
                     id_qd,
                     dia_semana,
                     hora_inicio,
@@ -147,24 +168,36 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // INATIVAR DISPONIBILIDADE - DELETE
+    // =====================================================
     async apagarDisponibilidades(request, response) {
         try {
 
-            const { id_disp } = request.body;
+            const { id } = request.params;
 
             const sql = `
-                DELETE FROM disponibilidades
+                UPDATE disponibilidades
+                SET status_disp = 'indisponivel'
                 WHERE id_disp = ?;
             `;
 
-            const [resultado] = await db.query(sql, [id_disp]);
+            const [resultado] = await db.query(sql, [id]);
+
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Disponibilidade não encontrada.',
+                    dados: null
+                });
+            }
 
             return response.status(200).json({
                 sucesso: true,
-                mensagem: 'Disponibilidade apagada com sucesso.',
+                mensagem: 'Disponibilidade inativada com sucesso.',
                 dados: {
-                    linhasAfetadas: resultado.affectedRows,
-                    id_disp: id_disp
+                    id_disp: id
                 }
             });
 
@@ -177,6 +210,6 @@ module.exports = {
             });
 
         }
-    },
+    }
 
 };

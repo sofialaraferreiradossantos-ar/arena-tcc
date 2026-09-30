@@ -17,6 +17,7 @@ module.exports = {
                     status_usu,
                     dt_cad
                 FROM usuarios
+                 WHERE status_usu = 'ativo'
                 ORDER BY id_usu;
             `;
 
@@ -177,8 +178,9 @@ module.exports = {
             const { id } = request.params;
 
             const sql = `
-                DELETE FROM usuarios
-                WHERE id_usu = ?;
+               UPDATE usuarios
+            SET status_usu = 'inativo'
+            WHERE id_usu = ?;
             `;
 
             const [resultado] = await db.query(sql, [id]);

@@ -18,8 +18,8 @@ router.delete('/agendamentos', AgendamentosController.apagarAgendamentos);
 
 router.get('/disponibilidades', DisponibilidadesController.listarDisponibilidades);
 router.post('/disponibilidades', DisponibilidadesController.cadastrarDisponibilidades);
-router.patch('/disponibilidades', DisponibilidadesController.editarDisponibilidades);
-router.delete('/disponibilidades', DisponibilidadesController.apagarDisponibilidades);
+router.patch('/disponibilidades/:id', DisponibilidadesController.editarDisponibilidades);
+router.delete('/disponibilidades/:id', DisponibilidadesController.apagarDisponibilidades);
 
 router.get('/equipesTorneios', EquipesTorneiosController.listarEquipesTorneios);
 router.post('/equipesTorneios', EquipesTorneiosController.cadastrarEquipesTorneios);
@@ -38,8 +38,8 @@ router.delete('/participantesEquipes', ParticipantesEquipesController.apagarPart
 
 router.get('/quadras', QuadrasController.listarQuadras);
 router.post('/quadras', QuadrasController.cadastrarQuadras);
-router.patch('/quadras', QuadrasController.editarQuadras);
-router.delete('/quadras', QuadrasController.apagarQuadras);
+router.patch('/quadras/:id', QuadrasController.editarQuadras);
+router.delete('/quadras/:id', QuadrasController.apagarQuadras);
 
 router.get('/torneios', TorneiosController.listarTorneios);
 router.post('/torneios', TorneiosController.cadastrarTorneios);

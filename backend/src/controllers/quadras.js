@@ -2,6 +2,9 @@ const db = require('../database/connection');
 
 module.exports = {
 
+    // =====================================================
+    // LISTAR QUADRAS - GET
+    // =====================================================
     async listarQuadras(request, response) {
         try {
 
@@ -14,15 +17,17 @@ module.exports = {
                     status_qd,
                     valor_qd
                 FROM quadras
+                WHERE status_qd = 'disponivel'
                 ORDER BY id_qd;
             `;
 
-            const [dados] = await db.query(sql);
+            const [rows] = await db.query(sql);
 
             return response.status(200).json({
                 sucesso: true,
                 mensagem: 'Lista de quadras.',
-                dados: dados
+                items: rows.length,
+                dados: rows
             });
 
         } catch (error) {
@@ -36,6 +41,10 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // CADASTRAR QUADRA - POST
+    // =====================================================
     async cadastrarQuadras(request, response) {
         try {
 
@@ -88,11 +97,16 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // EDITAR QUADRA - PATCH
+    // =====================================================
     async editarQuadras(request, response) {
         try {
 
+            const { id } = request.params;
+
             const {
-                id_qd,
                 nome_qd,
                 tipo_qd,
                 desc_qd,
@@ -117,17 +131,24 @@ module.exports = {
                 desc_qd,
                 status_qd,
                 valor_qd,
-                id_qd
+                id
             ];
 
             const [resultado] = await db.query(sql, valores);
+
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Quadra não encontrada.',
+                    dados: null
+                });
+            }
 
             return response.status(200).json({
                 sucesso: true,
                 mensagem: 'Quadra atualizada com sucesso.',
                 dados: {
-                    linhasAfetadas: resultado.affectedRows,
-                    id_qd,
+                    id_qd: id,
                     nome_qd,
                     tipo_qd,
                     desc_qd,
@@ -147,24 +168,36 @@ module.exports = {
         }
     },
 
+
+    // =====================================================
+    // INATIVAR QUADRA - DELETE
+    // =====================================================
     async apagarQuadras(request, response) {
         try {
 
-            const { id_qd } = request.body;
+            const { id } = request.params;
 
             const sql = `
-                DELETE FROM quadras
+                UPDATE quadras
+                SET status_qd = 'indisponivel'
                 WHERE id_qd = ?;
             `;
 
-            const [resultado] = await db.query(sql, [id_qd]);
+            const [resultado] = await db.query(sql, [id]);
+
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Quadra não encontrada.',
+                    dados: null
+                });
+            }
 
             return response.status(200).json({
                 sucesso: true,
-                mensagem: 'Quadra apagada com sucesso.',
+                mensagem: 'Quadra inativada com sucesso.',
                 dados: {
-                    linhasAfetadas: resultado.affectedRows,
-                    id_qd: id_qd
+                    id_qd: id
                 }
             });
 
@@ -177,6 +210,6 @@ module.exports = {
             });
 
         }
-    },
+    }
 
 };
