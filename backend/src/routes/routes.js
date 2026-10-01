@@ -12,6 +12,8 @@ const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
 
 router.post("/auth/login", AuthController.login);
+router.post("/auth/admin/login", AuthController.adminLogin);
+router.post("/auth/admin/cadastro", AuthController.adminCadastro);
 router.post("/auth/logout", AuthController.logout);
 router.get("/auth/me", AuthController.sessaoAtual);
 

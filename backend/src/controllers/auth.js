@@ -45,27 +45,6 @@ module.exports = {
       });
     }
 
-    const adminEmail = String(process.env.ADMIN_EMAIL || "")
-      .trim()
-      .toLowerCase();
-    const adminSenha = process.env.ADMIN_SENHA || "";
-
-    if (emailNormalizado === adminEmail && senha === adminSenha) {
-      const usuario = {
-        id_usu: "admin",
-        nome_usu: "Administrador",
-        email_usu: adminEmail,
-        tipo: "admin",
-      };
-
-      return response.status(200).json({
-        sucesso: true,
-        mensagem: "Login administrativo realizado com sucesso.",
-        token: criarSessao(usuario),
-        usuario,
-      });
-    }
-
     try {
       const [rows] = await db.query(
         "SELECT id_usu, nome_usu, email_usu, senha_usu, status_usu " +
@@ -103,6 +82,142 @@ module.exports = {
       return response.status(500).json({
         sucesso: false,
         mensagem: "Não foi possível realizar o login.",
+        dados: error.message,
+      });
+    }
+  },
+
+  async adminLogin(request, response) {
+    const { email, senha } = request.body || {};
+    const emailNormalizado = String(email || "")
+      .trim()
+      .toLowerCase();
+
+    if (!emailNormalizado || !senha) {
+      return response.status(400).json({
+        sucesso: false,
+        mensagem: "Informe o e-mail e a senha.",
+      });
+    }
+
+    const adminEmail = String(process.env.ADMIN_EMAIL || "")
+      .trim()
+      .toLowerCase();
+    const adminSenha = process.env.ADMIN_SENHA || "";
+
+    if (adminEmail && emailNormalizado === adminEmail && senha === adminSenha) {
+      const administrador = {
+        id_adm: "admin-env",
+        nome_adm: "Administrador",
+        email_adm: adminEmail,
+        tipo: "admin",
+      };
+
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Login administrativo realizado com sucesso.",
+        token: criarSessao(administrador),
+        usuario: administrador,
+      });
+    }
+
+    try {
+      const [rows] = await db.query(
+        "SELECT id_adm, nome_adm, email_adm, senha_adm, status_adm " +
+          "FROM administradores WHERE LOWER(email_adm) = ? LIMIT 1;",
+        [emailNormalizado],
+      );
+
+      const administradorBanco = rows[0];
+
+      if (
+        !administradorBanco ||
+        administradorBanco.senha_adm !== senha ||
+        !statusAtivo(administradorBanco.status_adm)
+      ) {
+        return response.status(401).json({
+          sucesso: false,
+          mensagem: "E-mail ou senha administrativos incorretos.",
+        });
+      }
+
+      const administrador = {
+        id_adm: administradorBanco.id_adm,
+        nome_adm: administradorBanco.nome_adm,
+        email_adm: administradorBanco.email_adm,
+        tipo: "admin",
+      };
+
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Login administrativo realizado com sucesso.",
+        token: criarSessao(administrador),
+        usuario: administrador,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Não foi possível realizar o login administrativo.",
+        dados: error.message,
+      });
+    }
+  },
+
+  async adminCadastro(request, response) {
+    try {
+      const { nome_adm, email_adm, senha_adm } = request.body || {};
+      const emailNormalizado = String(email_adm || "")
+        .trim()
+        .toLowerCase();
+
+      if (!nome_adm || !emailNormalizado || !senha_adm) {
+        return response.status(400).json({
+          sucesso: false,
+          mensagem: "Nome, e-mail e senha são obrigatórios.",
+        });
+      }
+
+      if (
+        String(nome_adm).length > 100 ||
+        emailNormalizado.length > 100 ||
+        String(senha_adm).length > 20
+      ) {
+        return response.status(400).json({
+          sucesso: false,
+          mensagem:
+            "Nome e e-mail podem ter até 100 caracteres; a senha, até 20.",
+        });
+      }
+
+      const [resultado] = await db.query(
+        `INSERT INTO administradores
+          (nome_adm, email_adm, senha_adm, status_adm, dt_cad)
+         VALUES (?, ?, ?, ?, ?);`,
+        [
+          String(nome_adm).trim(),
+          emailNormalizado,
+          String(senha_adm),
+          "ativo",
+          new Date().toISOString().slice(0, 10),
+        ],
+      );
+
+      return response.status(201).json({
+        sucesso: true,
+        mensagem: "Administrador cadastrado com sucesso.",
+        dados: { id_adm: resultado.insertId },
+      });
+    } catch (error) {
+      if (error.code === "ER_DUP_ENTRY") {
+        return response.status(409).json({
+          sucesso: false,
+          mensagem: "Este e-mail administrativo já está cadastrado.",
+        });
+      }
+
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Não foi possível realizar o cadastro administrativo.",
         dados: error.message,
       });
     }

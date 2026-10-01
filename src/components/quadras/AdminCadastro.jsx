@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
 import styles from "../../styles/home.module.css";
 
-export default function Cadastro() {
+export default function AdminCadastro() {
   const navigate = useNavigate();
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
@@ -21,20 +21,8 @@ export default function Cadastro() {
     const senha = String(dados.get("senha") || "");
     const confirmarSenha = String(dados.get("confirmarSenha") || "");
 
-    if (nome.length > 100) {
-      setErro("O nome deve ter no máximo 100 caracteres.");
-      setCarregando(false);
-      return;
-    }
-
-    if (email.length > 100) {
-      setErro("O e-mail deve ter no máximo 100 caracteres.");
-      setCarregando(false);
-      return;
-    }
-
-    if (senha.length > 20) {
-      setErro("A senha deve ter no máximo 20 caracteres.");
+    if (nome.length > 100 || email.length > 100 || senha.length > 20) {
+      setErro("Nome e e-mail podem ter até 100 caracteres; a senha, até 20.");
       setCarregando(false);
       return;
     }
@@ -47,25 +35,18 @@ export default function Cadastro() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3333";
-      const resposta = await fetch(apiUrl + "/usuarios", {
+      const resposta = await fetch(apiUrl + "/auth/admin/cadastro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome_usu: nome,
-          email_usu: email,
-          senha_usu: senha,
-          status_usu: 1,
-          dt_cad: new Date().toISOString().slice(0, 19).replace("T", " "),
-        }),
+        body: JSON.stringify({ nome_adm: nome, email_adm: email, senha_adm: senha }),
       });
-
       const resultado = await resposta.json().catch(() => null);
 
       if (!resposta.ok) {
-        throw new Error(resultado?.mensagem || "Não foi possível realizar o cadastro.");
+        throw new Error(resultado?.mensagem || "Não foi possível realizar o cadastro administrativo.");
       }
 
-      navigate("/login", { replace: true });
+      navigate("/admin/login", { replace: true });
     } catch (error) {
       const mensagem =
         error.message === "Failed to fetch"
@@ -88,9 +69,9 @@ export default function Cadastro() {
         </div>
 
         <div className={styles.authHeading}>
-          <small>SEJA BEM-VINDO</small>
-          <h1>Crie sua conta</h1>
-          <p>Cadastre-se para reservar quadras e participar dos torneios.</p>
+          <small>ÁREA ADMINISTRATIVA</small>
+          <h1>Cadastre um administrador</h1>
+          <p>Crie uma conta separada para acessar o painel da Arena Beach.</p>
         </div>
 
         <form onSubmit={cadastrar}>
@@ -107,11 +88,11 @@ export default function Cadastro() {
           </label>
 
           <label>
-            E-mail
+            E-mail administrativo
             <input
               name="email"
               type="email"
-              placeholder="voce@email.com"
+              placeholder="admin@arena-beach.com"
               autoComplete="email"
               maxLength={100}
               required
@@ -149,16 +130,16 @@ export default function Cadastro() {
           {erro && <p role="alert">{erro}</p>}
 
           <button type="submit" disabled={carregando}>
-            {carregando ? "Cadastrando..." : "Criar conta"}
+            {carregando ? "Cadastrando..." : "Criar conta administrativa"}
           </button>
         </form>
 
         <p className={styles.authSwitch}>
-          Já tem uma conta? <Link to="/login">Entrar</Link>
+          Já tem uma conta administrativa? <Link to="/admin/login">Entrar</Link>
         </p>
 
         <p className={styles.authSwitch}>
-          Precisa de acesso administrativo? <Link to="/admin/cadastro">Cadastrar administrador</Link>
+          Quer uma conta de cliente? <Link to="/cadastro">Cadastrar cliente</Link>
         </p>
       </section>
     </main>

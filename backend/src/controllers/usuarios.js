@@ -40,8 +40,13 @@ module.exports = {
   // =====================================================
   async cadastrarUsuarios(request, response) {
     try {
-      const { nome_usu, email_usu, senha_usu, status_usu, dt_cad } =
-        request.body;
+      const {
+        nome_usu,
+        email_usu,
+        senha_usu,
+        status_usu = 1,
+        dt_cad = new Date().toISOString().slice(0, 10),
+      } = request.body || {};
 
       if (!nome_usu || !email_usu || !senha_usu) {
         return response.status(400).json({
@@ -56,6 +61,18 @@ module.exports = {
                 VALUES
                     (?, ?, ?, ?, ?);
             `;
+
+      if (
+        String(nome_usu).length > 100 ||
+        String(email_usu).length > 100 ||
+        String(senha_usu).length > 20
+      ) {
+        return response.status(400).json({
+          sucesso: false,
+          mensagem:
+            "Nome e e-mail podem ter até 100 caracteres; a senha, até 20.",
+        });
+      }
 
       const valores = [nome_usu, email_usu, senha_usu, status_usu, dt_cad];
 
