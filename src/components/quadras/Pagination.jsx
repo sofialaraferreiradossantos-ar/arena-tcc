@@ -1,10 +1,8 @@
 import styles from "../../styles/quadras.module.css";
 
 function Pagination({ pagina, setPagina }) {
-
   return (
     <div className={styles.pagination}>
-
       <div
         className={`${styles.dot} ${pagina === 1 ? styles.activeDot : ""}`}
         onClick={() => setPagina(1)}
@@ -24,7 +22,6 @@ function Pagination({ pagina, setPagina }) {
         className={`${styles.dot} ${pagina === 4 ? styles.activeDot : ""}`}
         onClick={() => setPagina(4)}
       />
-
     </div>
   );
 }

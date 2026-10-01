@@ -1,4 +1,3 @@
-
 import {
   FaRegCalendarAlt,
   FaRegClock,
@@ -8,84 +7,54 @@ import {
 
 import styles from "../../styles/agendamentos.module.css";
 
-function AgendamentoCard({
-  quadra,
-  data,
-  horario,
-  onCancelar,
-}) {
+function AgendamentoCard({ quadra, data, horario, onCancelar }) {
   return (
     <article className={styles.card}>
-
       {/* CABEÇALHO DO CARD */}
 
       <div className={styles.cardHeader}>
-
         <div className={styles.cardIcon}>
           <FaMapMarkerAlt />
         </div>
 
         <div>
-          <span className={styles.cardLabel}>
-            QUADRA
-          </span>
+          <span className={styles.cardLabel}>QUADRA</span>
 
-          <h2 className={styles.cardTitle}>
-            {quadra}
-          </h2>
+          <h2 className={styles.cardTitle}>{quadra}</h2>
         </div>
-
       </div>
-
 
       {/* INFORMAÇÕES */}
 
       <div className={styles.cardInfo}>
-
         <div className={styles.infoItem}>
-
           <div className={styles.infoIcon}>
             <FaRegCalendarAlt />
           </div>
 
           <div>
-            <span>
-              Data
-            </span>
+            <span>Data</span>
 
-            <strong>
-              {data}
-            </strong>
+            <strong>{data}</strong>
           </div>
-
         </div>
 
-
         <div className={styles.infoItem}>
-
           <div className={styles.infoIcon}>
             <FaRegClock />
           </div>
 
           <div>
-            <span>
-              Horário
-            </span>
+            <span>Horário</span>
 
-            <strong>
-              {horario}
-            </strong>
+            <strong>{horario}</strong>
           </div>
-
         </div>
-
       </div>
-
 
       {/* BOTÃO */}
 
       <div className={styles.cardFooter}>
-
         <button
           type="button"
           className={styles.cancelButton}
@@ -93,13 +62,9 @@ function AgendamentoCard({
         >
           <FaTrashAlt />
 
-          <span>
-            Cancelar agendamento
-          </span>
+          <span>Cancelar agendamento</span>
         </button>
-
       </div>
-
     </article>
   );
 }

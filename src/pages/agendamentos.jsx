@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import styles from "../styles/agendamentos.module.css";
@@ -34,28 +33,23 @@ const todosAgendamentos = [
 function Agendamentos() {
   const [tabAtiva, setTabAtiva] = useState("anterior");
 
-  const [agendamentos, setAgendamentos] =
-    useState(todosAgendamentos);
+  const [agendamentos, setAgendamentos] = useState(todosAgendamentos);
 
   const filtrados = agendamentos.filter(
-    (agendamento) => agendamento.tipo === tabAtiva
+    (agendamento) => agendamento.tipo === tabAtiva,
   );
 
   function cancelar(id) {
     setAgendamentos((agendamentosAtuais) =>
-      agendamentosAtuais.filter(
-        (agendamento) => agendamento.id !== id
-      )
+      agendamentosAtuais.filter((agendamento) => agendamento.id !== id),
     );
   }
 
   return (
     <div className={styles.mainContent}>
-
       <HeaderAgendamentos />
 
       <main className={styles.content}>
-
         {/* TÍTULO */}
 
         <section className={styles.pageTitle}>
@@ -66,42 +60,26 @@ function Agendamentos() {
               Meus <span>Agendamentos</span>
             </h1>
 
-            <p>
-              Confira suas reservas e horários.
-            </p>
+            <p>Confira suas reservas e horários.</p>
           </div>
         </section>
-
 
         {/* ABAS */}
 
         <section className={styles.tabsSection}>
-          <AgendamentoTabs
-            tabAtiva={tabAtiva}
-            onTabChange={setTabAtiva}
-          />
+          <AgendamentoTabs tabAtiva={tabAtiva} onTabChange={setTabAtiva} />
         </section>
-
 
         {/* CARDS */}
 
         <section className={styles.cardsArea}>
-
           {filtrados.length === 0 && (
             <div className={styles.empty}>
+              <div className={styles.emptyIcon}>📅</div>
 
-              <div className={styles.emptyIcon}>
-                📅
-              </div>
+              <h2>Nenhum agendamento encontrado</h2>
 
-              <h2>
-                Nenhum agendamento encontrado
-              </h2>
-
-              <p>
-                Você não possui agendamentos nesta categoria.
-              </p>
-
+              <p>Você não possui agendamentos nesta categoria.</p>
             </div>
           )}
 
@@ -111,16 +89,11 @@ function Agendamentos() {
               quadra={agendamento.quadra}
               data={agendamento.data}
               horario={agendamento.horario}
-              onCancelar={() =>
-                cancelar(agendamento.id)
-              }
+              onCancelar={() => cancelar(agendamento.id)}
             />
           ))}
-
         </section>
-
       </main>
-
     </div>
   );
 }

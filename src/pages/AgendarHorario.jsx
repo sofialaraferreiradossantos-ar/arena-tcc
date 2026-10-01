@@ -4,8 +4,18 @@ import styles from "../styles/agendarHorario.module.css";
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MESES = [
-  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
 ];
 
 // Simula horários já ocupados vindos do backend (por enquanto fixo)
@@ -29,7 +39,9 @@ function AgendarHorario() {
     return d;
   }, []);
 
-  const [mesAtual, setMesAtual] = useState(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
+  const [mesAtual, setMesAtual] = useState(
+    new Date(hoje.getFullYear(), hoje.getMonth(), 1),
+  );
   const [dataSelecionada, setDataSelecionada] = useState(null);
 
   const diasDoMes = useMemo(() => {
@@ -54,14 +66,17 @@ function AgendarHorario() {
   }, [mesAtual]);
 
   const mudarMes = (delta) => {
-    setMesAtual((atual) => new Date(atual.getFullYear(), atual.getMonth() + delta, 1));
+    setMesAtual(
+      (atual) => new Date(atual.getFullYear(), atual.getMonth() + delta, 1),
+    );
     setDataSelecionada(null);
     setHorario("");
   };
 
   const podeVoltarMes =
     mesAtual.getFullYear() > hoje.getFullYear() ||
-    (mesAtual.getFullYear() === hoje.getFullYear() && mesAtual.getMonth() > hoje.getMonth());
+    (mesAtual.getFullYear() === hoje.getFullYear() &&
+      mesAtual.getMonth() > hoje.getMonth());
 
   const selecionarDia = (dia) => {
     if (!dia || dia < hoje) return;
@@ -95,7 +110,6 @@ function AgendarHorario() {
 
   return (
     <div className={styles.mainContent}>
-
       {/* HEADER */}
       <header className={styles.topHeader}>
         <button
@@ -107,7 +121,9 @@ function AgendarHorario() {
         </button>
 
         <div className={styles.logoArea}>
-          <h2>ARENA <span>BEACH</span></h2>
+          <h2>
+            ARENA <span>BEACH</span>
+          </h2>
         </div>
 
         <div className={styles.userIcon}>👤</div>
@@ -134,30 +150,45 @@ function AgendarHorario() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          <Link to="/home" onClick={() => setMenuAberto(false)}>Início</Link>
-          <Link to="/quadra" onClick={() => setMenuAberto(false)}>Quadras</Link>
-          <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>Agendar Horário</Link>
-          <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>Meus Agendamentos</Link>
-          <Link to="/torneios" onClick={() => setMenuAberto(false)}>Torneios</Link>
+          <Link to="/home" onClick={() => setMenuAberto(false)}>
+            Início
+          </Link>
+          <Link to="/quadra" onClick={() => setMenuAberto(false)}>
+            Quadras
+          </Link>
+          <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>
+            Agendar Horário
+          </Link>
+          <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>
+            Meus Agendamentos
+          </Link>
+          <Link to="/torneios" onClick={() => setMenuAberto(false)}>
+            Torneios
+          </Link>
         </nav>
 
         <div className={styles.sidebarBottom}>
-          <Link to="/login" onClick={() => setMenuAberto(false)}>Sair</Link>
+          <Link to="/login" onClick={() => setMenuAberto(false)}>
+            Sair
+          </Link>
         </div>
       </aside>
 
       {/* TÍTULO */}
       <div className={styles.pageTitle}>
-        <h1>Agendar <span>Horário</span></h1>
+        <h1>
+          Agendar <span>Horário</span>
+        </h1>
         <p>Escolha a quadra, a data e o horário desejado.</p>
       </div>
 
       <div className={styles.formLayout}>
-
         {/* ETAPA 1 - QUADRA */}
         <section className={`${styles.formCard} ${styles.cardFull}`}>
           <span className={styles.stepTag}>Etapa 1</span>
-          <label htmlFor="quadra" className={styles.label}>Quadra</label>
+          <label htmlFor="quadra" className={styles.label}>
+            Quadra
+          </label>
           <select
             id="quadra"
             className={styles.select}
@@ -168,18 +199,17 @@ function AgendarHorario() {
             <option value="Beach Tennis">Beach Tennis</option>
             <option value="Futevôlei">Futevôlei</option>
             <option value="Futebol">Futebol</option>
-                <option value="Vôlei">Vôlei</option>
-              </select>
-            </section>
+            <option value="Vôlei">Vôlei</option>
+          </select>
+        </section>
 
-            {/* ETAPA 2 - DATA */}
-            <section className={styles.formCard}>
+        {/* ETAPA 2 - DATA */}
+        <section className={styles.formCard}>
           <span className={styles.stepTag}>Etapa 2</span>
           <span className={styles.label}>Data</span>
 
           {/* CALENDÁRIO */}
           <div className={styles.calendar}>
-
             <div className={styles.calendarHeader}>
               <button
                 type="button"
@@ -212,7 +242,12 @@ function AgendarHorario() {
             <div className={styles.calendarGrid}>
               {diasDoMes.map((dia, index) => {
                 if (!dia) {
-                  return <span key={`vazio-${index}`} className={styles.calendarEmpty} />;
+                  return (
+                    <span
+                      key={`vazio-${index}`}
+                      className={styles.calendarEmpty}
+                    />
+                  );
                 }
 
                 const passado = dia < hoje;
@@ -248,7 +283,9 @@ function AgendarHorario() {
 
           <div className={styles.horariosBlock}>
             {!dataSelecionada ? (
-              <p className={styles.hintText}>Selecione uma data para ver os horários disponíveis.</p>
+              <p className={styles.hintText}>
+                Selecione uma data para ver os horários disponíveis.
+              </p>
             ) : (
               PERIODOS.map((periodo) => (
                 <div key={periodo.label} className={styles.periodo}>
@@ -280,9 +317,7 @@ function AgendarHorario() {
               ))
             )}
           </div>
-
         </section>
-
       </div>
 
       {/* BARRA DE AÇÃO FIXA */}
@@ -302,7 +337,6 @@ function AgendarHorario() {
           Agendar
         </button>
       </div>
-
     </div>
   );
 }

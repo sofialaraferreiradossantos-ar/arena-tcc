@@ -11,49 +11,138 @@ body,
   min-height: 100vh;
   background: #080a09;
   overflow-x: hidden;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-body { color: #f7f7f4; }
-button, input, select, textarea { font: inherit; }
-button, a { -webkit-tap-highlight-color: transparent; }
-::selection { background: #ff8a1f; color: #10110f; }
-:focus-visible { outline: 3px solid rgba(255, 138, 31, .55); outline-offset: 3px; }
+body {
+  color: #f7f7f4;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+::selection {
+  background: #ff8a1f;
+  color: #10110f;
+}
+:focus-visible {
+  outline: 3px solid rgba(255, 138, 31, 0.55);
+  outline-offset: 3px;
+}
 
 /* Os menus antigos permanecem no código das páginas para preservar os fluxos,
    mas a interface utiliza um único menu compartilhado. */
-[class*="sidebarMenu_"] { display: none !important; }
-[class*="menuOverlay_"] { display: none !important; }
-[class*="menuIcon_"], [class*="menuButton_"] { display: none !important; }
+[class*="sidebarMenu_"] {
+  display: none !important;
+}
+[class*="menuOverlay_"] {
+  display: none !important;
+}
+[class*="menuIcon_"],
+[class*="menuButton_"] {
+  display: none !important;
+}
 
-img, video, canvas, svg { max-width: 100%; }
-input, select, textarea, button { max-width: 100%; min-width: 0; }
-p, h1, h2, h3, a, span { overflow-wrap: break-word; }
-[class*="mainContent_"] { width: 100% !important; margin-left: 0 !important; padding-left: 0 !important; }
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+  min-width: 0;
+}
+p,
+h1,
+h2,
+h3,
+a,
+span {
+  overflow-wrap: break-word;
+}
+[class*="mainContent_"] {
+  width: 100% !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
 
 @media (max-width: 900px) {
   [class*="pageWrapper_"],
   [class*="detailsContainer_"],
-  [class*="container_"] { max-width: 100%; }
+  [class*="container_"] {
+    max-width: 100%;
+  }
 
-  [class*="content_"] { max-width: 100%; }
+  [class*="content_"] {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
-  html { font-size: 15px; }
-  [class*="topHeader_"] { min-height: 68px; padding-left: 16px !important; padding-right: 16px !important; }
-  [class*="pageTitle_"] { padding-left: 0; }
-  [class*="contentCard_"], [class*="cadastroCard_"], [class*="loginCard_"],
-  [class*="recuperarCard_"], [class*="pagamentoCard_"], [class*="inscricaoCard_"],
-  [class*="containerCard_"], [class*="detailsContent_"] { max-width: 100%; }
-  [class*="pagamentoContainer_"], [class*="pagamentoInfo_"], [class*="pixArea_"] { width: 100%; }
-  table { display: block; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+  html {
+    font-size: 15px;
+  }
+  [class*="topHeader_"] {
+    min-height: 68px;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  [class*="pageTitle_"] {
+    padding-left: 0;
+  }
+  [class*="contentCard_"],
+  [class*="cadastroCard_"],
+  [class*="loginCard_"],
+  [class*="recuperarCard_"],
+  [class*="pagamentoCard_"],
+  [class*="inscricaoCard_"],
+  [class*="containerCard_"],
+  [class*="detailsContent_"] {
+    max-width: 100%;
+  }
+  [class*="pagamentoContainer_"],
+  [class*="pagamentoInfo_"],
+  [class*="pixArea_"] {
+    width: 100%;
+  }
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 420px) {
-  html { font-size: 14px; }
-  [class*="pageWrapper_"], [class*="detailsContainer_"], [class*="mainContent_"] { padding-right: 12px; padding-left: 12px !important; }
-  [class*="card_"] { max-width: 100%; }
+  html {
+    font-size: 14px;
+  }
+  [class*="pageWrapper_"],
+  [class*="detailsContainer_"],
+  [class*="mainContent_"] {
+    padding-right: 12px;
+    padding-left: 12px !important;
+  }
+  [class*="card_"] {
+    max-width: 100%;
+  }
 }
 
 .sidebar {
@@ -62,7 +151,7 @@ p, h1, h2, h3, a, span { overflow-wrap: break-word; }
   background: var(--arena-sidebar);
   border-right: 1px solid #1b1b1b;
   padding: 30px 20px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -74,7 +163,7 @@ p, h1, h2, h3, a, span { overflow-wrap: break-word; }
 
 .sidebar ul {
   list-style: none;
-  width:100%;
+  width: 100%;
 }
 
 .sidebar li {
@@ -86,7 +175,7 @@ p, h1, h2, h3, a, span { overflow-wrap: break-word; }
   display: flex;
   align-items: center;
   gap: 14px;
-  padding:10px 12px;
+  padding: 10px 12px;
   border-radius: 10px;
 }
 
@@ -94,8 +183,8 @@ p, h1, h2, h3, a, span { overflow-wrap: break-word; }
   color: orange;
 }
 
-.layout{
-  display:flex;
+.layout {
+  display: flex;
 }
 
 .app {
@@ -403,6 +492,11 @@ body.has-unified-menu [class^="_sidebar_"] {
 }
 
 @media (max-width: 900px) {
-  body.has-unified-menu [class*="topHeader"] { top: 58px !important; padding-left: 16px !important; }
-  body.has-unified-menu [class^="_sidebar_"] { padding-top: 76px !important; }
+  body.has-unified-menu [class*="topHeader"] {
+    top: 58px !important;
+    padding-left: 16px !important;
+  }
+  body.has-unified-menu [class^="_sidebar_"] {
+    padding-top: 76px !important;
+  }
 }

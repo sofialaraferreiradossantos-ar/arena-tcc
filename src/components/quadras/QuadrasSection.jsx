@@ -1,11 +1,10 @@
-import styles from '../../styles/home.module.css'
+import styles from "../../styles/home.module.css";
 
-import QuadraCard from './QuadraCard'
+import QuadraCard from "./QuadraCard";
 
 function QuadrasSection({ quadras }) {
   return (
     <div className={styles.quadrasSection}>
-
       {quadras.map((quadra) => (
         <QuadraCard
           key={quadra.id}
@@ -15,9 +14,8 @@ function QuadrasSection({ quadras }) {
           available={quadra.available}
         />
       ))}
-
     </div>
-  )
+  );
 }
 
-export default QuadrasSection
+export default QuadrasSection;

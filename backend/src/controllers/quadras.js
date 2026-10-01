@@ -1,6 +1,7 @@
-const db = require('../database/connection');
+const db = require("../database/connection");
 
 module.exports = {
+<<<<<<< HEAD
 
     // =====================================================
     // LISTAR QUADRAS - GET
@@ -9,6 +10,11 @@ module.exports = {
         try {
 
             const sql = `
+=======
+  async listarQuadras(request, response) {
+    try {
+      const sql = `
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
                 SELECT
                     id_qd,
                     nome_qd,
@@ -21,6 +27,7 @@ module.exports = {
                 ORDER BY id_qd;
             `;
 
+<<<<<<< HEAD
             const [rows] = await db.query(sql);
 
             return response.status(200).json({
@@ -29,9 +36,29 @@ module.exports = {
                 items: rows.length,
                 dados: rows
             });
+=======
+      const [dados] = await db.query(sql);
 
-        } catch (error) {
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Lista de quadras.",
+        dados: dados,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
+  async cadastrarQuadras(request, response) {
+    try {
+      const { nome_qd, tipo_qd, desc_qd, status_qd, valor_qd } = request.body;
+
+<<<<<<< HEAD
             return response.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro na requisição.',
@@ -57,37 +84,46 @@ module.exports = {
             } = request.body;
 
             const sql = `
+=======
+      const sql = `
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
                 INSERT INTO quadras
                     (nome_qd, tipo_qd, desc_qd, status_qd, valor_qd)
                 VALUES
                     (?, ?, ?, ?, ?);
             `;
 
-            const valores = [
-                nome_qd,
-                tipo_qd,
-                desc_qd,
-                status_qd,
-                valor_qd
-            ];
+      const valores = [nome_qd, tipo_qd, desc_qd, status_qd, valor_qd];
 
-            const [resultado] = await db.query(sql, valores);
+      const [resultado] = await db.query(sql, valores);
 
-            return response.status(201).json({
-                sucesso: true,
-                mensagem: 'Quadra cadastrada com sucesso.',
-                dados: {
-                    id_qd: resultado.insertId,
-                    nome_qd,
-                    tipo_qd,
-                    desc_qd,
-                    status_qd,
-                    valor_qd
-                }
-            });
+      return response.status(201).json({
+        sucesso: true,
+        mensagem: "Quadra cadastrada com sucesso.",
+        dados: {
+          id_qd: resultado.insertId,
+          nome_qd,
+          tipo_qd,
+          desc_qd,
+          status_qd,
+          valor_qd,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
 
-        } catch (error) {
+  async editarQuadras(request, response) {
+    try {
+      const { id_qd, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd } =
+        request.body;
 
+<<<<<<< HEAD
             return response.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro na requisição.',
@@ -115,6 +151,9 @@ module.exports = {
             } = request.body;
 
             const sql = `
+=======
+      const sql = `
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
                 UPDATE quadras
                 SET
                     nome_qd = ?,
@@ -125,6 +164,7 @@ module.exports = {
                 WHERE id_qd = ?;
             `;
 
+<<<<<<< HEAD
             const valores = [
                 nome_qd,
                 tipo_qd,
@@ -133,9 +173,13 @@ module.exports = {
                 valor_qd,
                 id
             ];
+=======
+      const valores = [nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, id_qd];
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
-            const [resultado] = await db.query(sql, valores);
+      const [resultado] = await db.query(sql, valores);
 
+<<<<<<< HEAD
             if (resultado.affectedRows === 0) {
                 return response.status(404).json({
                     sucesso: false,
@@ -156,9 +200,35 @@ module.exports = {
                     valor_qd
                 }
             });
+=======
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Quadra atualizada com sucesso.",
+        dados: {
+          linhasAfetadas: resultado.affectedRows,
+          id_qd,
+          nome_qd,
+          tipo_qd,
+          desc_qd,
+          status_qd,
+          valor_qd,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
-        } catch (error) {
+  async apagarQuadras(request, response) {
+    try {
+      const { id_qd } = request.body;
 
+<<<<<<< HEAD
             return response.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro na requisição.',
@@ -213,3 +283,29 @@ module.exports = {
     }
 
 };
+=======
+      const sql = `
+                DELETE FROM quadras
+                WHERE id_qd = ?;
+            `;
+
+      const [resultado] = await db.query(sql, [id_qd]);
+
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Quadra apagada com sucesso.",
+        dados: {
+          linhasAfetadas: resultado.affectedRows,
+          id_qd: id_qd,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
+};
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b

@@ -9,12 +9,8 @@
 
   color: #fff;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
-
 
 /* ========================================
    CONTEÃšDO PRINCIPAL
@@ -28,7 +24,6 @@
   padding-left: 290px;
 }
 
-
 /* ========================================
    MENU LATERAL
 ======================================== */
@@ -38,12 +33,10 @@
 
   inset: 0;
 
-  background:
-    rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.65);
 
   z-index: 998;
 }
-
 
 .sidebarMenu {
   position: fixed;
@@ -58,8 +51,7 @@
 
   background: #090909;
 
-  border-right:
-    1px solid #303030;
+  border-right: 1px solid #303030;
 
   display: flex;
 
@@ -71,15 +63,12 @@
 
   z-index: 999;
 
-  transition:
-    left 0.35s ease;
+  transition: left 0.35s ease;
 }
-
 
 .sidebarMenu.open {
   left: 0;
 }
-
 
 /* LOGO DO MENU */
 
@@ -92,10 +81,8 @@
 
   display: block;
 
-  margin:
-    0 auto 25px;
+  margin: 0 auto 25px;
 }
-
 
 /* LINKS */
 
@@ -110,8 +97,7 @@
 
   gap: 13px;
 
-  padding:
-    0 15px;
+  padding: 0 15px;
 
   color: #ddd;
 
@@ -125,15 +111,12 @@
 
   box-sizing: border-box;
 
-  transition:
-    0.25s;
+  transition: 0.25s;
 }
-
 
 .sidebarMenu a + a {
   margin-top: 8px;
 }
-
 
 /* ITEM ATIVO */
 
@@ -144,26 +127,20 @@
 
   font-weight: 600;
 
-  box-shadow:
-    0 4px 12px
-    rgba(255, 136, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 136, 0, 0.2);
 }
 
-
 .sidebarMenu a:hover {
-  background:
-    rgba(255, 136, 0, 0.14);
+  background: rgba(255, 136, 0, 0.14);
 
   color: #ff9417;
 }
-
 
 .sidebarMenu a.active:hover {
   background: #ff8800;
 
   color: #111;
 }
-
 
 /* ÃCONES */
 
@@ -177,13 +154,11 @@
   font-size: 14px;
 }
 
-
 /* SAIR */
 
 .sair {
   margin-top: 20px !important;
 }
-
 
 /* BOTÃƒO FECHAR */
 
@@ -217,12 +192,9 @@
   cursor: pointer;
 }
 
-
 .closeMenu:hover {
-  background:
-    rgba(255, 136, 0, 0.14);
+  background: rgba(255, 136, 0, 0.14);
 }
-
 
 /* ========================================
    BOTÃƒO MENU
@@ -245,8 +217,7 @@
 
   color: #ff8800;
 
-  border:
-    1px solid #303030;
+  border: 1px solid #303030;
 
   border-radius: 9px;
 
@@ -259,16 +230,13 @@
   transition: 0.2s;
 }
 
-
 .menuIcon:hover {
   background: #ff8800;
 
   color: #111;
 
-  transform:
-    scale(1.05);
+  transform: scale(1.05);
 }
-
 
 /* ========================================
    CABEÃ‡ALHO
@@ -281,8 +249,7 @@
 
   background: #090909;
 
-  border-bottom:
-    1px solid #202020;
+  border-bottom: 1px solid #202020;
 
   display: flex;
 
@@ -295,7 +262,6 @@
   box-sizing: border-box;
 }
 
-
 .headerLogo {
   width: 48px;
 
@@ -304,18 +270,15 @@
   object-fit: contain;
 }
 
-
 .topHeader span {
   font-size: 18px;
 
   font-weight: 600;
 }
 
-
 .topHeader strong {
   color: #ff8800;
 }
-
 
 /* ========================================
    CONTEÃšDO
@@ -328,12 +291,10 @@
 
   margin: 0 auto;
 
-  padding:
-    45px 30px 60px;
+  padding: 45px 30px 60px;
 
   box-sizing: border-box;
 }
-
 
 /* TÃTULO */
 
@@ -347,11 +308,9 @@
   color: #fff;
 }
 
-
 .content h1 span {
   color: #ff8800;
 }
-
 
 /* LINHA LARANJA */
 
@@ -367,18 +326,15 @@
   border-radius: 5px;
 }
 
-
 /* SUBTÃTULO */
 
 .subtitle {
-  margin:
-    12px 0 28px;
+  margin: 12px 0 28px;
 
   color: #a9a9a9;
 
   font-size: 14px;
 }
-
 
 /* ========================================
    ÃREA DOS CARDS
@@ -392,7 +348,6 @@
   gap: 18px;
 }
 
-
 /* ========================================
    CARD
 ======================================== */
@@ -404,11 +359,9 @@
 
   background: #151515;
 
-  border:
-    1px solid #292929;
+  border: 1px solid #292929;
 
-  border-top:
-    2px solid #ff8800;
+  border-top: 2px solid #ff8800;
 
   border-radius: 14px;
 
@@ -428,19 +381,13 @@
     box-shadow 0.2s ease;
 }
 
-
 .card:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
-  border-color:
-    #3a3a3a;
+  border-color: #3a3a3a;
 
-  box-shadow:
-    0 8px 25px
-    rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
 }
-
 
 /* ========================================
    INFORMAÃ‡Ã•ES DO CARD
@@ -458,7 +405,6 @@
   align-items: flex-start;
 }
 
-
 /* TÃTULO DO CARD */
 
 .cardTitle {
@@ -471,7 +417,6 @@
   margin-bottom: 20px;
 }
 
-
 .trophyIcon {
   width: 42px;
 
@@ -483,12 +428,9 @@
 
   justify-content: center;
 
-  background:
-    rgba(255, 136, 0, 0.08);
+  background: rgba(255, 136, 0, 0.08);
 
-  border:
-    1px solid
-    rgba(255, 136, 0, 0.35);
+  border: 1px solid rgba(255, 136, 0, 0.35);
 
   border-radius: 10px;
 
@@ -498,7 +440,6 @@
 
   flex-shrink: 0;
 }
-
 
 .cardLabel {
   display: block;
@@ -512,7 +453,6 @@
   margin-bottom: 3px;
 }
 
-
 .cardTitle h2 {
   margin: 0;
 
@@ -522,7 +462,6 @@
 
   font-weight: 700;
 }
-
 
 /* ========================================
    INFORMAÃ‡Ã•ES
@@ -537,7 +476,6 @@
 
   margin-bottom: 10px;
 }
-
 
 .infoIcon {
   width: 34px;
@@ -561,7 +499,6 @@
   flex-shrink: 0;
 }
 
-
 .infoItem div:last-child {
   display: flex;
 
@@ -570,13 +507,11 @@
   gap: 2px;
 }
 
-
 .infoItem span {
   color: #777;
 
   font-size: 10px;
 }
-
 
 .infoItem strong {
   color: #ddd;
@@ -585,7 +520,6 @@
 
   font-weight: 500;
 }
-
 
 /* ========================================
    BOTÃƒO VER DETALHES
@@ -608,8 +542,7 @@
 
   color: #ff8800;
 
-  border:
-    1px solid #ff8800;
+  border: 1px solid #ff8800;
 
   border-radius: 9px;
 
@@ -621,20 +554,16 @@
 
   box-sizing: border-box;
 
-  transition:
-    0.2s ease;
+  transition: 0.2s ease;
 }
-
 
 .detalhesButton:hover {
   background: #ff8800;
 
   color: #111;
 
-  transform:
-    translateY(-1px);
+  transform: translateY(-1px);
 }
-
 
 /* ========================================
    IMAGEM
@@ -647,8 +576,7 @@
 
   overflow: hidden;
 
-  border:
-    1px solid #292929;
+  border: 1px solid #292929;
 
   border-radius: 11px;
 
@@ -656,7 +584,6 @@
 
   background: #202020;
 }
-
 
 .cardRight img {
   width: 100%;
@@ -667,27 +594,21 @@
 
   object-fit: cover;
 
-  transition:
-    transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
-
 
 .card:hover .cardRight img {
-  transform:
-    scale(1.03);
+  transform: scale(1.03);
 }
-
 
 /* ========================================
    CELULAR
 ======================================== */
 
 @media (max-width: 800px) {
-
   .mainContent {
     padding-left: 0;
   }
-
 
   .topHeader {
     padding-left: 82px;
@@ -695,29 +616,23 @@
     height: 70px;
   }
 
-
   .headerLogo {
     width: 43px;
 
     height: 43px;
   }
 
-
   .topHeader span {
     font-size: 16px;
   }
 
-
   .content {
-    padding:
-      35px 16px 45px;
+    padding: 35px 16px 45px;
   }
-
 
   .content h1 {
     font-size: 27px;
   }
-
 
   .card {
     flex-direction: column;
@@ -727,7 +642,6 @@
     gap: 18px;
   }
 
-
   .cardRight {
     width: 100%;
 
@@ -736,40 +650,31 @@
     order: -1;
   }
 
-
   .cardInfo {
     width: 100%;
   }
 
-
   .detalhesButton {
     width: 100%;
   }
-
 }
 
-
 @media (max-width: 450px) {
-
   .content h1 {
     font-size: 24px;
   }
-
 
   .subtitle {
     font-size: 13px;
   }
 
-
   .cardRight {
     height: 160px;
   }
 
-
   .cardTitle h2 {
     font-size: 17px;
   }
-
 }
 
 /* Shared layout alignment */

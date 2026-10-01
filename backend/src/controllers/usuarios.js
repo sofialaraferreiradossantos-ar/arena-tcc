@@ -1,14 +1,12 @@
-const db = require('../database/connection');
+const db = require("../database/connection");
 
 module.exports = {
-
-    // =====================================================
-    // LISTAR USUÁRIOS - GET
-    // =====================================================
-    async listarUsuarios(request, response) {
-        try {
-
-            const sql = `
+  // =====================================================
+  // LISTAR USUÁRIOS - GET
+  // =====================================================
+  async listarUsuarios(request, response) {
+    try {
+      const sql = `
                 SELECT
                     id_usu,
                     nome_usu,
@@ -21,100 +19,88 @@ module.exports = {
                 ORDER BY id_usu;
             `;
 
-            const [rows] = await db.query(sql);
+      const [rows] = await db.query(sql);
 
-            return response.status(200).json({
-                sucesso: true,
-                mensagem: 'Lista de usuários.',
-                items: rows.length,
-                dados: rows
-            });
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Lista de usuários.",
+        items: rows.length,
+        dados: rows,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
 
-        } catch (error) {
+  // =====================================================
+  // CADASTRAR USUÁRIO - POST
+  // =====================================================
+  async cadastrarUsuarios(request, response) {
+    try {
+      const { nome_usu, email_usu, senha_usu, status_usu, dt_cad } =
+        request.body;
 
-            return response.status(500).json({
-                sucesso: false,
-                mensagem: 'Erro na requisição.',
-                dados: error.message
-            });
+      if (!nome_usu || !email_usu || !senha_usu) {
+        return response.status(400).json({
+          sucesso: false,
+          mensagem: "Nome, e-mail e senha são obrigatórios.",
+        });
+      }
 
-        }
-    },
-
-
-    // =====================================================
-    // CADASTRAR USUÁRIO - POST
-    // =====================================================
-    async cadastrarUsuarios(request, response) {
-        try {
-
-            const {
-                nome_usu,
-                email_usu,
-                senha_usu,
-                status_usu,
-                dt_cad
-            } = request.body;
-
-            const sql = `
+      const sql = `
                 INSERT INTO usuarios
                     (nome_usu, email_usu, senha_usu, status_usu, dt_cad)
                 VALUES
                     (?, ?, ?, ?, ?);
             `;
 
-            const valores = [
-                nome_usu,
-                email_usu,
-                senha_usu,
-                status_usu,
-                dt_cad
-            ];
+      const valores = [nome_usu, email_usu, senha_usu, status_usu, dt_cad];
 
-            const [resultado] = await db.query(sql, valores);
+      const [resultado] = await db.query(sql, valores);
 
-            return response.status(201).json({
-                sucesso: true,
-                mensagem: 'Usuário cadastrado com sucesso.',
-                dados: {
-                    id_usu: resultado.insertId,
-                    nome_usu,
-                    email_usu,
-                    senha_usu,
-                    status_usu,
-                    dt_cad
-                }
-            });
+      return response.status(201).json({
+        sucesso: true,
+        mensagem: "Usuário cadastrado com sucesso.",
+        dados: {
+          id_usu: resultado.insertId,
+          nome_usu,
+          email_usu,
+          senha_usu,
+          status_usu,
+          dt_cad,
+        },
+      });
+    } catch (error) {
+      if (error.code === "ER_DUP_ENTRY") {
+        return response.status(409).json({
+          sucesso: false,
+          mensagem: "Este e-mail já está cadastrado.",
+        });
+      }
 
-        } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
 
-            return response.status(500).json({
-                sucesso: false,
-                mensagem: 'Erro na requisição.',
-                dados: error.message
-            });
+  // =====================================================
+  // EDITAR USUÁRIO - PATCH
+  // =====================================================
+  async editarUsuarios(request, response) {
+    try {
+      const { id } = request.params;
 
-        }
-    },
+      const { nome_usu, email_usu, senha_usu, status_usu, dt_cad } =
+        request.body;
 
-
-    // =====================================================
-    // EDITAR USUÁRIO - PATCH
-    // =====================================================
-    async editarUsuarios(request, response) {
-        try {
-
-            const { id } = request.params;
-
-            const {
-                nome_usu,
-                email_usu,
-                senha_usu,
-                status_usu,
-                dt_cad
-            } = request.body;
-
-            const sql = `
+      const sql = `
                 UPDATE usuarios
                 SET
                     nome_usu = ?,
@@ -125,40 +111,47 @@ module.exports = {
                 WHERE id_usu = ?;
             `;
 
-            const valores = [
-                nome_usu,
-                email_usu,
-                senha_usu,
-                status_usu,
-                dt_cad,
-                id
-            ];
+      const valores = [nome_usu, email_usu, senha_usu, status_usu, dt_cad, id];
 
-            const [resultado] = await db.query(sql, valores);
+      const [resultado] = await db.query(sql, valores);
 
-            if (resultado.affectedRows === 0) {
-                return response.status(404).json({
-                    sucesso: false,
-                    mensagem: 'Usuário não encontrado.',
-                    dados: null
-                });
-            }
+      if (resultado.affectedRows === 0) {
+        return response.status(404).json({
+          sucesso: false,
+          mensagem: "Usuário não encontrado.",
+          dados: null,
+        });
+      }
 
-            return response.status(200).json({
-                sucesso: true,
-                mensagem: 'Usuário atualizado com sucesso.',
-                dados: {
-                    id_usu: id,
-                    nome_usu,
-                    email_usu,
-                    senha_usu,
-                    status_usu,
-                    dt_cad
-                }
-            });
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Usuário atualizado com sucesso.",
+        dados: {
+          id_usu: id,
+          nome_usu,
+          email_usu,
+          senha_usu,
+          status_usu,
+          dt_cad,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
 
-        } catch (error) {
+  // =====================================================
+  // APAGAR USUÁRIO - DELETE
+  // =====================================================
+  async apagarUsuarios(request, response) {
+    try {
+      const { id } = request.params;
 
+<<<<<<< HEAD
             return response.status(500).json({
                 sucesso: false,
                 mensagem: 'Erro na requisição.',
@@ -181,35 +174,36 @@ module.exports = {
                UPDATE usuarios
             SET status_usu = 'inativo'
             WHERE id_usu = ?;
+=======
+      const sql = `
+                DELETE FROM usuarios
+                WHERE id_usu = ?;
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
             `;
 
-            const [resultado] = await db.query(sql, [id]);
+      const [resultado] = await db.query(sql, [id]);
 
-            if (resultado.affectedRows === 0) {
-                return response.status(404).json({
-                    sucesso: false,
-                    mensagem: 'Usuário não encontrado.',
-                    dados: null
-                });
-            }
+      if (resultado.affectedRows === 0) {
+        return response.status(404).json({
+          sucesso: false,
+          mensagem: "Usuário não encontrado.",
+          dados: null,
+        });
+      }
 
-            return response.status(200).json({
-                sucesso: true,
-                mensagem: 'Usuário apagado com sucesso.',
-                dados: {
-                    id_usu: id
-                }
-            });
-
-        } catch (error) {
-
-            return response.status(500).json({
-                sucesso: false,
-                mensagem: 'Erro na requisição.',
-                dados: error.message
-            });
-
-        }
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Usuário apagado com sucesso.",
+        dados: {
+          id_usu: id,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
     }
-
+  },
 };

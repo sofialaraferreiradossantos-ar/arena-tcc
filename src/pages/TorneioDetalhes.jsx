@@ -13,7 +13,6 @@ import styles from "../styles/torneioDetalhes.module.css";
 
 import quadra1 from "../mockup/imagens/quadraCoberta.jpg";
 
-
 const torneios = [
   {
     id: 1,
@@ -38,7 +37,6 @@ const torneios = [
       "Torneio de Futevôlei Pro destinado aos participantes interessados em competir e participar de uma experiência esportiva.",
   },
 
-
   {
     id: 2,
 
@@ -61,7 +59,6 @@ const torneios = [
     descricao:
       "Torneio de Futevôlei Pro destinado aos participantes interessados em competir e participar de uma experiência esportiva.",
   },
-
 
   {
     id: 3,
@@ -87,60 +84,33 @@ const torneios = [
   },
 ];
 
-
 function TorneioDetalhes() {
-
   const { id } = useParams();
 
-
-  const torneio = torneios.find(
-    (item) => item.id === Number(id)
-  );
-
+  const torneio = torneios.find((item) => item.id === Number(id));
 
   if (!torneio) {
-
     return (
-
       <div className={styles.pageWrapper}>
-
         <div className={styles.container}>
+          <h2>Torneio não encontrado</h2>
 
-          <h2>
-            Torneio não encontrado
-          </h2>
-
-          <Link
-            to="/torneios"
-            className={styles.voltar}
-          >
+          <Link to="/torneios" className={styles.voltar}>
             ← Voltar para torneios
           </Link>
-
         </div>
-
       </div>
-
     );
   }
 
-
   return (
-
     <div className={styles.pageWrapper}>
-
       <main className={styles.container}>
-
-
         {/* VOLTAR */}
 
-        <Link
-          to="/torneios"
-          className={styles.voltar}
-        >
+        <Link to="/torneios" className={styles.voltar}>
           ← Voltar
         </Link>
-
 
         {/* IMAGEM */}
 
@@ -150,138 +120,81 @@ function TorneioDetalhes() {
           className={styles.imagem}
         />
 
-
         {/* NOME */}
 
-        <h1>
-          {torneio.nome}
-        </h1>
-
+        <h1>{torneio.nome}</h1>
 
         {/* INFORMAÇÕES */}
 
         <div className={styles.informacoes}>
-
-
           <div>
-
             <FaCalendarAlt />
 
             <span>
-
-              <strong>
-                Data
-              </strong>
+              <strong>Data</strong>
 
               {torneio.data}
-
             </span>
-
           </div>
 
-
           <div>
-
             <FaMapMarkerAlt />
 
             <span>
-
-              <strong>
-                Local
-              </strong>
+              <strong>Local</strong>
 
               {torneio.local}
-
             </span>
-
           </div>
 
-
           <div>
-
             <FaClock />
 
             <span>
-
-              <strong>
-                Horário
-              </strong>
+              <strong>Horário</strong>
 
               {torneio.horario}
-
             </span>
-
           </div>
 
-
           <div>
-
             <FaUsers />
 
             <span>
-
-              <strong>
-                Participantes
-              </strong>
+              <strong>Participantes</strong>
 
               {torneio.participantes}
-
             </span>
-
           </div>
 
-
           <div>
-
             <FaTrophy />
 
             <span>
-
-              <strong>
-                Premiação
-              </strong>
+              <strong>Premiação</strong>
 
               {torneio.premiacao}
-
             </span>
-
           </div>
 
-
           <div>
-
             <FaMoneyBillWave />
 
             <span>
-
-              <strong>
-                Valor da inscrição
-              </strong>
+              <strong>Valor da inscrição</strong>
 
               {torneio.valor}
-
             </span>
-
           </div>
-
-
         </div>
-
 
         {/* DESCRIÇÃO */}
 
         <section className={styles.descricao}>
+          <h2>Sobre o torneio</h2>
 
-          <h2>
-            Sobre o torneio
-          </h2>
-
-          <p>
-            {torneio.descricao}
-          </p>
-
+          <p>{torneio.descricao}</p>
         </section>
-
 
         {/* BOTÃO */}
 
@@ -291,14 +204,9 @@ function TorneioDetalhes() {
         >
           Inscrever-se
         </Link>
-
-
       </main>
-
     </div>
-
   );
 }
-
 
 export default TorneioDetalhes;

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const InscricaoForm = ({ styles, onPagamento }) => {
   const [form, setForm] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
+    nome: "",
+    email: "",
+    telefone: "",
   });
 
   const handleChange = (e) => {
@@ -15,7 +15,7 @@ const InscricaoForm = ({ styles, onPagamento }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.nome || !form.email || !form.telefone) {
-      alert('Preencha todos os campos!');
+      alert("Preencha todos os campos!");
       return;
     }
     if (onPagamento) onPagamento(form);
@@ -26,7 +26,9 @@ const InscricaoForm = ({ styles, onPagamento }) => {
       <h2 className={styles.formTitle}>Inscrição no Torneio</h2>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="nome">Seu Nome</label>
+          <label className={styles.label} htmlFor="nome">
+            Seu Nome
+          </label>
           <input
             className={styles.input}
             type="text"
@@ -38,7 +40,9 @@ const InscricaoForm = ({ styles, onPagamento }) => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="email">Email</label>
+          <label className={styles.label} htmlFor="email">
+            Email
+          </label>
           <input
             className={styles.input}
             type="email"
@@ -50,7 +54,9 @@ const InscricaoForm = ({ styles, onPagamento }) => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="telefone">Telefone</label>
+          <label className={styles.label} htmlFor="telefone">
+            Telefone
+          </label>
           <input
             className={styles.input}
             type="tel"

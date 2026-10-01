@@ -16,7 +16,6 @@
   box-sizing: border-box;
 }
 
-
 .container {
   width: 100%;
 
@@ -32,7 +31,6 @@
 
   box-sizing: border-box;
 }
-
 
 /* VOLTAR */
 
@@ -52,7 +50,6 @@
   color: #ff8800;
 }
 
-
 /* IMAGEM */
 
 .imagem {
@@ -69,7 +66,6 @@
   border: 1px solid #ff8800;
 }
 
-
 /* TÃTULO */
 
 .container h1 {
@@ -82,7 +78,6 @@
   margin: 25px 0;
 }
 
-
 /* INFORMAÃ‡Ã•ES */
 
 .informacoes {
@@ -92,7 +87,6 @@
 
   gap: 15px;
 }
-
 
 .informacoes div {
   background: #202020;
@@ -108,7 +102,6 @@
   gap: 12px;
 }
 
-
 .informacoes svg {
   color: #ff8800;
 
@@ -116,7 +109,6 @@
 
   flex-shrink: 0;
 }
-
 
 .informacoes span {
   display: flex;
@@ -128,11 +120,9 @@
   color: #ddd;
 }
 
-
 .informacoes strong {
   color: #ff8800;
 }
-
 
 /* DESCRIÃ‡ÃƒO */
 
@@ -146,20 +136,17 @@
   border-radius: 12px;
 }
 
-
 .descricao h2 {
   color: #ff8800;
 
   margin-top: 0;
 }
 
-
 .descricao p {
   color: #ddd;
 
   line-height: 1.6;
 }
-
 
 /* BOTÃƒO INSCREVER */
 
@@ -191,42 +178,34 @@
   transition: 0.25s;
 }
 
-
 .inscrever:hover {
   background: #fff;
 
   transform: translateY(-2px);
 }
 
-
 /* CELULAR */
 
 @media (max-width: 600px) {
-
   .pageWrapper {
     padding: 20px 12px;
   }
-
 
   .container {
     padding: 20px;
   }
 
-
   .container h1 {
     font-size: 24px;
   }
-
 
   .informacoes {
     grid-template-columns: 1fr;
   }
 
-
   .imagem {
     height: 200px;
   }
-
 }
 
 /* Shared card language */
@@ -274,4 +253,3 @@
   background: #ff9417;
   color: #111;
 }
-

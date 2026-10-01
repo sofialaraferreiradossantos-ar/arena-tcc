@@ -33,7 +33,6 @@ function InscricaoTorneio() {
       navigate("/torneios");
       return;
     }
-
   }, [torneio, navigate]);
 
   const [form, setForm] = useState({
@@ -72,7 +71,6 @@ function InscricaoTorneio() {
 
   return (
     <div className={styles.pageWrapper}>
-
       {/* BOTÃO DE MENU */}
       <button
         type="button"
@@ -90,7 +88,9 @@ function InscricaoTorneio() {
         />
       )}
 
-      <aside className={`${styles.sidebarMenu} ${menuAberto ? styles.open : ""}`}>
+      <aside
+        className={`${styles.sidebarMenu} ${menuAberto ? styles.open : ""}`}
+      >
         <button
           type="button"
           className={styles.closeMenu}
@@ -113,31 +113,43 @@ function InscricaoTorneio() {
         <Link to="/agendamentos" onClick={() => setMenuAberto(false)}>
           📅 Agendamentos
         </Link>
-        <Link to="/torneios" className={styles.active} onClick={() => setMenuAberto(false)}>
+        <Link
+          to="/torneios"
+          className={styles.active}
+          onClick={() => setMenuAberto(false)}
+        >
           🏆 Torneios
         </Link>
         <Link to="/pagamento" onClick={() => setMenuAberto(false)}>
           💳 Pagamento
         </Link>
 
-        <Link to="/login" className={styles.sair} onClick={() => setMenuAberto(false)}>
+        <Link
+          to="/login"
+          className={styles.sair}
+          onClick={() => setMenuAberto(false)}
+        >
           🚪 Sair
         </Link>
       </aside>
 
       {/* CONTEÚDO PRINCIPAL */}
       <div className={styles.mainContent}>
-
         <div className={styles.header}>
-          <img src="/logo-arena-beach.png" alt="Arena Beach" className={styles.logo} />
+          <img
+            src="/logo-arena-beach.png"
+            alt="Arena Beach"
+            className={styles.logo}
+          />
           <div>
-            <h1>Inscrição no <span>Torneio</span></h1>
+            <h1>
+              Inscrição no <span>Torneio</span>
+            </h1>
             <p>Preencha seus dados para garantir sua vaga.</p>
           </div>
         </div>
 
         <div className={styles.inscricaoCard}>
-
           {/* INFORMAÇÕES DO TORNEIO */}
           <div className={styles.torneioInfo}>
             <div className={styles.infoHeader}>
@@ -205,7 +217,10 @@ function InscricaoTorneio() {
                 />
               </div>
 
-              <div className={styles.inputGroup} style={{ gridColumn: "1 / -1" }}>
+              <div
+                className={styles.inputGroup}
+                style={{ gridColumn: "1 / -1" }}
+              >
                 <label htmlFor="telefone">Telefone</label>
                 <input
                   id="telefone"
@@ -238,7 +253,6 @@ function InscricaoTorneio() {
               Confirmar Inscrição
             </button>
           </form>
-
         </div>
       </div>
     </div>
