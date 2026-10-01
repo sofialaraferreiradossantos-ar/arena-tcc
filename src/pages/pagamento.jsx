@@ -24,147 +24,81 @@ export default function Pagamento() {
         </header>
 
         <div className={styles.pagamentoButtons}>
-
           <button
             className={
               metodo === "pix"
                 ? `${styles.activeBtn} ${styles.pagamentoBtn}`
                 : styles.pagamentoBtn
             }
-            onClick={() =>
-              setMetodo("pix")
-            }
+            onClick={() => setMetodo("pix")}
           >
             Pix
           </button>
 
           <button
-            className={
-              styles.pagamentoBtn
-            }
+            className={styles.pagamentoBtn}
             onClick={() => {
               setMetodo("cartao");
 
-              navigate(
-                "/pagamentoCartao"
-              );
+              navigate("/pagamentoCartao");
             }}
           >
             Cartão
           </button>
-
         </div>
 
-        <div
-          className={`${styles.quadraCard} ${
-            styles.pagamentoCard
-          }`}
-        >
-
+        <div className={`${styles.quadraCard} ${styles.pagamentoCard}`}>
           <div className={styles.pixArea}>
-
             <div>
-
-              <h4>
-                Escaneie para pagar
-              </h4>
+              <h4>Escaneie para pagar</h4>
 
               <img
                 src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PagamentoArena"
                 alt="QR Code"
                 className={styles.qrCode}
               />
-
             </div>
 
-            <div
-              className={styles.valorArea}
-            >
+            <div className={styles.valorArea}>
+              <h3>Valor Total:</h3>
 
-              <h3>
-                Valor Total:
-              </h3>
+              <p>{valorFormatado}</p>
 
-              <p>
-                {valorFormatado}
-              </p>
-
-              {inscricao && (
-                <small>
-                  {inscricao.torneio}
-                </small>
-              )}
-
+              {inscricao && <small>{inscricao.torneio}</small>}
             </div>
-
           </div>
-
         </div>
 
-        <div
-          className={
-            styles.pagamentoInfo
-          }
-        >
-
+        <div className={styles.pagamentoInfo}>
           <div>
+            <h3>Descrição pagamento:</h3>
 
-            <h3>
-              Descrição pagamento:
-            </h3>
+            <p>Realizado por via pix.</p>
 
-            <p>
-              Realizado por via pix.
-            </p>
+            <p>Destinatário: xxx.xxx.xxx-xx</p>
 
-            <p>
-              Destinatário:
-              xxx.xxx.xxx-xx
-            </p>
+            <p>Dia: 20/01/2026</p>
 
-            <p>
-              Dia: 20/01/2026
-            </p>
-
-            <p>
-              Horário: 13:00
-            </p>
-
+            <p>Horário: 13:00</p>
           </div>
 
           <div>
+            <h3>Resumo do Agendamento</h3>
 
-            <h3>
-              Resumo do Agendamento
-            </h3>
+            <p>📍 Quadra 1</p>
 
-            <p>
-              📍 Quadra 1
-            </p>
+            <p>📅 17/02/2026</p>
 
-            <p>
-              📅 17/02/2026
-            </p>
-
-            <p>
-              ⏰ 11:00 - 12:00
-            </p>
-
+            <p>⏰ 11:00 - 12:00</p>
           </div>
-
         </div>
 
         <button
-          className={`${styles.activeBtn} ${
-            styles.confirmarPagamento
-          }`}
-          onClick={() =>
-            navigate("/home")
-          }
+          className={`${styles.activeBtn} ${styles.confirmarPagamento}`}
+          onClick={() => navigate("/home")}
         >
           Confirmar pagamento
         </button>
-
       </main>
     </div>
   );

@@ -52,28 +52,23 @@ function Quadras() {
   ];
 
   const filteredQuadras = quadras.filter((quadra) => {
-    const matchesSearch =
-      quadra.title
-        .toLowerCase()
-        .includes(search.toLowerCase());
+    const matchesSearch = quadra.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-    const matchesCategory =
-      category === "Todos" ||
-      quadra.type === category;
+    const matchesCategory = category === "Todos" || quadra.type === category;
 
     return matchesSearch && matchesCategory;
   });
 
   const cardsPerPage = 3;
 
-  const startIndex =
-    currentPage * cardsPerPage;
+  const startIndex = currentPage * cardsPerPage;
 
-  const selectedQuadras =
-    filteredQuadras.slice(
-      startIndex,
-      startIndex + cardsPerPage
-    );
+  const selectedQuadras = filteredQuadras.slice(
+    startIndex,
+    startIndex + cardsPerPage,
+  );
 
   const fecharMenu = () => {
     setMenuAberto(false);
@@ -81,22 +76,15 @@ function Quadras() {
 
   return (
     <div className={styles.container}>
-
       {/* FUNDO ESCURO AO ABRIR O MENU */}
       {menuAberto && (
-        <div
-          className={styles.menuOverlay}
-          onClick={fecharMenu}
-        />
+        <div className={styles.menuOverlay} onClick={fecharMenu} />
       )}
 
       {/* MENU LATERAL */}
       <aside
-        className={`${styles.sidebarMenu} ${
-          menuAberto ? styles.open : ""
-        }`}
+        className={`${styles.sidebarMenu} ${menuAberto ? styles.open : ""}`}
       >
-
         <button
           className={styles.closeMenu}
           onClick={fecharMenu}
@@ -105,40 +93,23 @@ function Quadras() {
           <FaTimes />
         </button>
 
-        <img
-          src={logo}
-          alt="Arena Beach"
-        />
+        <img src={logo} alt="Arena Beach" />
 
         <Link
           to="/home"
           onClick={fecharMenu}
-          className={
-            location.pathname === "/home"
-              ? styles.active
-              : ""
-          }
+          className={location.pathname === "/home" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>
-            🏠
-          </span>
-
+          <span className={styles.menuEmoji}>🏠</span>
           Início
         </Link>
 
         <Link
           to="/quadra"
           onClick={fecharMenu}
-          className={
-            location.pathname === "/quadra"
-              ? styles.active
-              : ""
-          }
+          className={location.pathname === "/quadra" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>
-            🏐
-          </span>
-
+          <span className={styles.menuEmoji}>🏐</span>
           Quadras
         </Link>
 
@@ -146,169 +117,95 @@ function Quadras() {
           to="/agendar-horario"
           onClick={fecharMenu}
           className={
-            location.pathname === "/agendar-horario"
-              ? styles.active
-              : ""
+            location.pathname === "/agendar-horario" ? styles.active : ""
           }
         >
-          <span className={styles.menuEmoji}>
-            🕐
-          </span>
-
+          <span className={styles.menuEmoji}>🕐</span>
           Agendar Horário
         </Link>
 
         <Link
           to="/agendamentos"
           onClick={fecharMenu}
-          className={
-            location.pathname === "/agendamentos"
-              ? styles.active
-              : ""
-          }
+          className={location.pathname === "/agendamentos" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>
-            📅
-          </span>
-
+          <span className={styles.menuEmoji}>📅</span>
           Agendamentos
         </Link>
 
         <Link
           to="/torneios"
           onClick={fecharMenu}
-          className={
-            location.pathname === "/torneios"
-              ? styles.active
-              : ""
-          }
+          className={location.pathname === "/torneios" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>
-            🏆
-          </span>
-
+          <span className={styles.menuEmoji}>🏆</span>
           Torneios
         </Link>
 
         <Link
           to="/pagamento"
           onClick={fecharMenu}
-          className={
-            location.pathname === "/pagamento"
-              ? styles.active
-              : ""
-          }
+          className={location.pathname === "/pagamento" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>
-            💳
-          </span>
-
+          <span className={styles.menuEmoji}>💳</span>
           Pagamento
         </Link>
 
-        <Link
-          to="/"
-          onClick={fecharMenu}
-          className={styles.sair}
-        >
-          <span className={styles.menuEmoji}>
-            🚪
-          </span>
-
+        <Link to="/" onClick={fecharMenu} className={styles.sair}>
+          <span className={styles.menuEmoji}>🚪</span>
           Sair
         </Link>
-
       </aside>
 
-{/* BOTÃO PARA ABRIR */}
-{!menuAberto && (
-  <div
-    className={styles.menuIcon}
-    onClick={() => setMenuAberto(true)}
-  >
-    ☰
-  </div>
-)}
+      {/* BOTÃO PARA ABRIR */}
+      {!menuAberto && (
+        <div className={styles.menuIcon} onClick={() => setMenuAberto(true)}>
+          ☰
+        </div>
+      )}
 
-{/* MENU LATERAL */}
-<div
-  className={`${styles.sidebarMenu} ${
-    menuAberto ? styles.open : ""
-  }`}
->
-  {/* BOTÃO PARA FECHAR */}
-  <button
-    className={styles.closeMenu}
-    onClick={() => setMenuAberto(false)}
-  >
-    ×
-  </button>
+      {/* MENU LATERAL */}
+      <div className={`${styles.sidebarMenu} ${menuAberto ? styles.open : ""}`}>
+        {/* BOTÃO PARA FECHAR */}
+        <button
+          className={styles.closeMenu}
+          onClick={() => setMenuAberto(false)}
+        >
+          ×
+        </button>
 
-  <img
-    src={logo}
-    alt="Arena Beach"
-  />
+        <img src={logo} alt="Arena Beach" />
 
-  <Link to="/home">
-    🏠 Início
-  </Link>
+        <Link to="/home">🏠 Início</Link>
 
-  <Link to="/quadra">
-    ⚽ Quadras
-  </Link>
+        <Link to="/quadra">⚽ Quadras</Link>
 
-  <Link to="/agendar-horario">
-    🕐 Agendar Horário
-  </Link>
+        <Link to="/agendar-horario">🕐 Agendar Horário</Link>
 
-  <Link to="/agendamentos">
-    📅 Agendamentos
-  </Link>
+        <Link to="/agendamentos">📅 Agendamentos</Link>
 
-  <Link to="/torneios">
-    🏆 Torneios
-  </Link>
+        <Link to="/torneios">🏆 Torneios</Link>
 
-  <Link to="/pagamento">
-    💳 Pagamento
-  </Link>
+        <Link to="/pagamento">💳 Pagamento</Link>
 
-  <Link to="/cadastro">
-    🚪 Sair
-  </Link>
-</div>
+        <Link to="/cadastro">🚪 Sair</Link>
+      </div>
       {/* CONTEÚDO DA PÁGINA */}
       <div className={styles.app}>
-
         <Header />
 
-        <CategoryButtons
-          category={category}
-          setCategory={setCategory}
-        />
+        <CategoryButtons category={category} setCategory={setCategory} />
 
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-        />
+        <SearchBar search={search} setSearch={setSearch} />
 
-        <QuadrasSection
-          quadras={selectedQuadras}
-        />
+        <QuadrasSection quadras={selectedQuadras} />
 
         <Pagination
-          total={
-            Math.ceil(
-              filteredQuadras.length /
-              cardsPerPage
-            )
-          }
+          total={Math.ceil(filteredQuadras.length / cardsPerPage)}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
-
       </div>
-
     </div>
   );
 }

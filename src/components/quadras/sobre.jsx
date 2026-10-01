@@ -5,7 +5,6 @@ export default function Sobre() {
   return (
     <div className={styles.container}>
       <div className={styles.app}>
-
         <div className={styles.topHeader}>
           <div className={styles.logoArea}>
             <h2>
@@ -15,12 +14,14 @@ export default function Sobre() {
         </div>
 
         <div className={`${styles.quadraCard} ${styles.sobreCard}`}>
-
           <header className={styles.aboutHero}>
             <span className={styles.eyebrow}>Bem-vindo</span>
-            <h1 className={styles.sobreTitulo}>Arena <span>Beach</span></h1>
+            <h1 className={styles.sobreTitulo}>
+              Arena <span>Beach</span>
+            </h1>
             <p className={styles.sobreDescricao}>
-              Seu espaço para reservar quadras, participar de torneios e viver o esporte.
+              Seu espaço para reservar quadras, participar de torneios e viver o
+              esporte.
             </p>
           </header>
 
@@ -28,11 +29,9 @@ export default function Sobre() {
             <h3>Sobre nós</h3>
 
             <p>
-              A Arena Beach é um espaço ideal para quem ama
-              esportes de areia. Aqui você encontra quadras
-              de beach tênis, vôlei e futevôlei, além de
-              eventos e uma estrutura completa para aproveitar
-              com os amigos.
+              A Arena Beach é um espaço ideal para quem ama esportes de areia.
+              Aqui você encontra quadras de beach tênis, vôlei e futevôlei, além
+              de eventos e uma estrutura completa para aproveitar com os amigos.
             </p>
           </div>
 
@@ -58,15 +57,10 @@ export default function Sobre() {
             <p>Rua Exemplo, 123 - Tupã/SP - 17600-000</p>
           </div>
 
-          <Link
-            to="/home"
-            className={styles.sobreLink}
-          >
+          <Link to="/home" className={styles.sobreLink}>
             Voltar
           </Link>
-
         </div>
-
       </div>
     </div>
   );

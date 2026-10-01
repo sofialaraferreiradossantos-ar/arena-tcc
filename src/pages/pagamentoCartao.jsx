@@ -6,7 +6,9 @@ export default function PagamentoCartao() {
 
   return (
     <div className={styles.container}>
-      <main className={`${styles.app} ${styles.paymentPage} ${styles.cardPaymentPage}`}>
+      <main
+        className={`${styles.app} ${styles.paymentPage} ${styles.cardPaymentPage}`}
+      >
         <header className={styles.paymentHeading}>
           <span>PAGAMENTO COM CARTÃO</span>
           <h1>Dados do cartão</h1>
@@ -21,17 +23,13 @@ export default function PagamentoCartao() {
             Pix
           </button>
 
-          <button
-            className={`${styles.activeBtn} ${styles.pagamentoBtn}`}
-          >
+          <button className={`${styles.activeBtn} ${styles.pagamentoBtn}`}>
             Cartão
           </button>
         </div>
 
         <div className={styles.pagamentoContainer}>
-
           <div className={styles.formPagamento}>
-
             <label>Número do cartão</label>
 
             <input
@@ -49,7 +47,6 @@ export default function PagamentoCartao() {
             />
 
             <div className={styles.rowPagamento}>
-
               <div>
                 <label>Validade</label>
 
@@ -69,11 +66,9 @@ export default function PagamentoCartao() {
                   className={styles.loginInput}
                 />
               </div>
-
             </div>
 
             <div className={styles.rowPagamento}>
-
               <div>
                 <label>Função</label>
 
@@ -93,7 +88,6 @@ export default function PagamentoCartao() {
                   className={styles.loginInput}
                 />
               </div>
-
             </div>
 
             <label>Parcelas</label>
@@ -103,14 +97,10 @@ export default function PagamentoCartao() {
               placeholder="1x de R$100,00 (sem juros)"
               className={styles.loginInput}
             />
-
           </div>
 
           <div className={styles.resumoPagamento}>
-
-            <h3>
-              Resumo do Agendamento
-            </h3>
+            <h3>Resumo do Agendamento</h3>
 
             <p>📍 Quadra 1</p>
             <p>📅 17/02/2026</p>
@@ -122,11 +112,8 @@ export default function PagamentoCartao() {
             >
               Confirmar pagamento
             </button>
-
           </div>
-
         </div>
-
       </main>
     </div>
   );

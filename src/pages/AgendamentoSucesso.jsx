@@ -29,7 +29,6 @@ function AgendamentoSucesso() {
 
   return (
     <div className={styles.page}>
-
       {/* =========================================
           BOTÃO MENU
       ========================================= */}
@@ -42,29 +41,17 @@ function AgendamentoSucesso() {
         ☰
       </button>
 
-
       {/* =========================================
           OVERLAY
       ========================================= */}
 
-      {menuOpen && (
-        <div
-          className={styles.menuOverlay}
-          onClick={closeMenu}
-        />
-      )}
-
+      {menuOpen && <div className={styles.menuOverlay} onClick={closeMenu} />}
 
       {/* =========================================
           MENU LATERAL
       ========================================= */}
 
-      <aside
-        className={`${styles.sidebar} ${
-          menuOpen ? styles.open : ""
-        }`}
-      >
-
+      <aside className={`${styles.sidebar} ${menuOpen ? styles.open : ""}`}>
         <button
           className={styles.closeMenu}
           onClick={closeMenu}
@@ -73,15 +60,9 @@ function AgendamentoSucesso() {
           ×
         </button>
 
-
         {/* LOGO */}
 
-        <img
-          className={styles.sidebarLogo}
-          src="/logo.png"
-          alt="Arena Beach"
-        />
-
+        <img className={styles.sidebarLogo} src="/logo.png" alt="Arena Beach" />
 
         {/* HOME */}
 
@@ -96,7 +77,6 @@ function AgendamentoSucesso() {
           <span>Home</span>
         </a>
 
-
         {/* QUADRAS */}
 
         <a
@@ -109,7 +89,6 @@ function AgendamentoSucesso() {
           🏟️
           <span>Quadras</span>
         </a>
-
 
         {/* AGENDAR HORÁRIO */}
 
@@ -124,7 +103,6 @@ function AgendamentoSucesso() {
           <span>Agendar Horário</span>
         </a>
 
-
         {/* AGENDAMENTOS */}
 
         <a
@@ -137,7 +115,6 @@ function AgendamentoSucesso() {
           📅
           <span>Agendamentos</span>
         </a>
-
 
         {/* SOBRE */}
 
@@ -152,7 +129,6 @@ function AgendamentoSucesso() {
           <span>Sobre</span>
         </a>
 
-
         {/* SAIR */}
 
         <a
@@ -165,25 +141,16 @@ function AgendamentoSucesso() {
           🚪
           <span>Sair</span>
         </a>
-
       </aside>
-
 
       {/* =========================================
           HEADER
       ========================================= */}
 
       <header className={styles.topHeader}>
-
         <div className={styles.logoArea}>
-
-          <img
-            src="/logo.png"
-            alt="Arena Beach"
-          />
-
+          <img src="/logo.png" alt="Arena Beach" />
         </div>
-
 
         {/* USUÁRIO */}
 
@@ -194,96 +161,59 @@ function AgendamentoSucesso() {
         >
           👤
         </button>
-
       </header>
-
 
       {/* =========================================
           TELA DE SUCESSO
       ========================================= */}
 
       <main className={styles.successContainer}>
-
         <div className={styles.successCard}>
-
-
           {/* ÍCONE DE SUCESSO */}
 
-          <div className={styles.checkIcon}>
-            ✓
-          </div>
-
+          <div className={styles.checkIcon}>✓</div>
 
           {/* TÍTULO */}
 
-          <h1>
-            Agendamento realizado com sucesso!
-          </h1>
+          <h1>Agendamento realizado com sucesso!</h1>
 
-
-          <p className={styles.successMessage}>
-            Sua reserva foi confirmada
-          </p>
-
+          <p className={styles.successMessage}>Sua reserva foi confirmada</p>
 
           {/* =====================================
               RESUMO
           ===================================== */}
 
           <div className={styles.resumeBox}>
-
-            <h2>
-              Resumo do agendamento
-            </h2>
-
+            <h2>Resumo do agendamento</h2>
 
             <div className={styles.resumeContent}>
-
-
               {/* IMAGEM DA QUADRA */}
 
-              <img
-                src={quadra}
-                alt="Quadra Beach Tennis"
-              />
-
+              <img src={quadra} alt="Quadra Beach Tennis" />
 
               {/* INFORMAÇÕES */}
 
               <div className={styles.resumeInfo}>
-
                 <p>
                   <strong>Quadra:</strong>
 
-                  <span>
-                    Quadra Beach Tennis
-                  </span>
+                  <span>Quadra Beach Tennis</span>
                 </p>
-
 
                 <p>
                   <strong>Data:</strong>
 
-                  <span>
-                    17/02/2026
-                  </span>
+                  <span>17/02/2026</span>
                 </p>
-
 
                 <p>
                   <strong>Horário:</strong>
 
-                  <span>
-                    19:00 às 20:00
-                  </span>
+                  <span>19:00 às 20:00</span>
                 </p>
-
               </div>
-
             </div>
-
           </div>
-
 
           {/* =====================================
               BOTÃO
@@ -295,11 +225,8 @@ function AgendamentoSucesso() {
           >
             Ver agendamento
           </button>
-
         </div>
-
       </main>
-
     </div>
   );
 }

@@ -1,11 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./ArenaBeach.module.css";
 
-export default function Sidebar({
-  menuOpen,
-  setMenuOpen,
-  logo,
-}) {
+export default function Sidebar({ menuOpen, setMenuOpen, logo }) {
   const fecharMenu = () => {
     setMenuOpen(false);
   };
@@ -20,17 +16,9 @@ export default function Sidebar({
         />
       )}
 
-      <aside
-        className={`${styles.sidebarMenu} ${
-          menuOpen ? styles.open : ""
-        }`}
-      >
+      <aside className={`${styles.sidebarMenu} ${menuOpen ? styles.open : ""}`}>
         <div className={styles.sidebarBrand}>
-          <img
-            src={logo}
-            alt="Arena Beach"
-            className={styles.sidebarLogo}
-          />
+          <img src={logo} alt="Arena Beach" className={styles.sidebarLogo} />
 
           <div className={styles.brandText}>
             <strong>ARENA</strong>
@@ -52,9 +40,7 @@ export default function Sidebar({
             to="/"
             end
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>🏠</span>
             <span>Início</span>
@@ -63,9 +49,7 @@ export default function Sidebar({
           <NavLink
             to="/quadras"
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>🏐</span>
             <span>Quadras</span>
@@ -74,9 +58,7 @@ export default function Sidebar({
           <NavLink
             to="/agendar-horario"
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>🕐</span>
             <span>Agendar Horário</span>
@@ -85,9 +67,7 @@ export default function Sidebar({
           <NavLink
             to="/agendamentos"
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>📅</span>
             <span>Agendamentos</span>
@@ -96,9 +76,7 @@ export default function Sidebar({
           <NavLink
             to="/torneios"
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>🏆</span>
             <span>Torneios</span>
@@ -107,9 +85,7 @@ export default function Sidebar({
           <NavLink
             to="/pagamento"
             onClick={fecharMenu}
-            className={({ isActive }) =>
-              isActive ? styles.active : ""
-            }
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             <span className={styles.menuEmoji}>💳</span>
             <span>Pagamento</span>
@@ -117,10 +93,7 @@ export default function Sidebar({
         </nav>
 
         <div className={styles.sair}>
-          <NavLink
-            to="/logout"
-            onClick={fecharMenu}
-          >
+          <NavLink to="/logout" onClick={fecharMenu}>
             <span className={styles.menuEmoji}>🚪</span>
             <span>Sair</span>
           </NavLink>
