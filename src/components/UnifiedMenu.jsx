@@ -21,7 +21,7 @@ const mainItems = [
 
 const supportItems = [
   ["/sobre", "ℹ️", "Sobre"],
-  ["/administrador", "⚙️", "Administração"],
+  ["/admin/login", "⚙️", "Administração"],
 ];
 
 export default function UnifiedMenu() {
@@ -73,7 +73,7 @@ export default function UnifiedMenu() {
         </button>
         {!isPresentationPage && (
           <nav className={styles.quickActions} aria-label="Acesso rápido">
-            <NavLink to="/administrador" className={styles.quickLink}>
+            <NavLink to="/admin/login" className={styles.quickLink}>
               <FaUserCog />
               <span>Administração</span>
             </NavLink>

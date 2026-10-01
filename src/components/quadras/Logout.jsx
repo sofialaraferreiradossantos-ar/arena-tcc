@@ -5,7 +5,8 @@ export default function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token_sessao");
+    const tokenAdmin = localStorage.getItem("token_admin");
+    const token = tokenAdmin || localStorage.getItem("token_sessao");
 
     fetch(
       `${import.meta.env.VITE_API_URL || "http://localhost:3333"}/auth/logout`,
@@ -16,7 +17,9 @@ export default function Logout() {
     ).finally(() => {
       localStorage.removeItem("usuario");
       localStorage.removeItem("token_sessao");
-      navigate("/login", { replace: true });
+      localStorage.removeItem("administrador");
+      localStorage.removeItem("token_admin");
+      navigate(tokenAdmin ? "/admin/login" : "/login", { replace: true });
     });
   }, [navigate]);
 

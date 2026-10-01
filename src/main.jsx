@@ -6,6 +6,8 @@ import Agendamentos from "./pages/Agendamentos.jsx";
 import Cadastro from "./components/quadras/Cadastro.jsx";
 import Home from "./components/quadras/Home.jsx";
 import Login from "./components/quadras/Login.jsx";
+import AdminLogin from "./components/quadras/AdminLogin.jsx";
+import AdminCadastro from "./components/quadras/AdminCadastro.jsx";
 import Logout from "./components/quadras/Logout.jsx";
 import Sobre from "./components/quadras/sobre.jsx";
 import Torneios from "./pages/Torneios.jsx";
@@ -39,6 +41,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/home" element={<Home />} />
         <Route path="/quadras" element={<Quadras />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/cadastro" element={<AdminCadastro />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/torneios" element={<Torneios />} />

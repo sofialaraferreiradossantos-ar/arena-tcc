@@ -112,7 +112,7 @@ function Administrador() {
         </nav>
 
         <div className={styles.sidebarBottom}>
-          <Link to="/login" onClick={() => setMenuAberto(false)}>
+          <Link to="/logout" onClick={() => setMenuAberto(false)}>
             Sair do sistema
           </Link>
         </div>
