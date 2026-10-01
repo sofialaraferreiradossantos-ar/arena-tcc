@@ -22,6 +22,12 @@ router.post("/agendamentos", AgendamentosController.cadastrarAgendamentos);
 router.patch("/agendamentos", AgendamentosController.editarAgendamentos);
 router.delete("/agendamentos", AgendamentosController.apagarAgendamentos);
 
+<<<<<<< HEAD
+router.get('/disponibilidades', DisponibilidadesController.listarDisponibilidades);
+router.post('/disponibilidades', DisponibilidadesController.cadastrarDisponibilidades);
+router.patch('/disponibilidades/:id', DisponibilidadesController.editarDisponibilidades);
+router.delete('/disponibilidades/:id', DisponibilidadesController.apagarDisponibilidades);
+=======
 router.get(
   "/disponibilidades",
   DisponibilidadesController.listarDisponibilidades,
@@ -38,6 +44,7 @@ router.delete(
   "/disponibilidades",
   DisponibilidadesController.apagarDisponibilidades,
 );
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
 router.get("/equipesTorneios", EquipesTorneiosController.listarEquipesTorneios);
 router.post(
@@ -75,10 +82,17 @@ router.delete(
   ParticipantesEquipesController.apagarParticipantesEquipes,
 );
 
+<<<<<<< HEAD
+router.get('/quadras', QuadrasController.listarQuadras);
+router.post('/quadras', QuadrasController.cadastrarQuadras);
+router.patch('/quadras/:id', QuadrasController.editarQuadras);
+router.delete('/quadras/:id', QuadrasController.apagarQuadras);
+=======
 router.get("/quadras", QuadrasController.listarQuadras);
 router.post("/quadras", QuadrasController.cadastrarQuadras);
 router.patch("/quadras", QuadrasController.editarQuadras);
 router.delete("/quadras", QuadrasController.apagarQuadras);
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
 router.get("/torneios", TorneiosController.listarTorneios);
 router.post("/torneios", TorneiosController.cadastrarTorneios);

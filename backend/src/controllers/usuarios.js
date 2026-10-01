@@ -15,6 +15,7 @@ module.exports = {
                     status_usu,
                     dt_cad
                 FROM usuarios
+                 WHERE status_usu = 'ativo'
                 ORDER BY id_usu;
             `;
 
@@ -167,9 +168,34 @@ module.exports = {
     try {
       const { id } = request.params;
 
+<<<<<<< HEAD
+            return response.status(500).json({
+                sucesso: false,
+                mensagem: 'Erro na requisição.',
+                dados: error.message
+            });
+
+        }
+    },
+
+
+    // =====================================================
+    // APAGAR USUÁRIO - DELETE
+    // =====================================================
+    async apagarUsuarios(request, response) {
+        try {
+
+            const { id } = request.params;
+
+            const sql = `
+               UPDATE usuarios
+            SET status_usu = 'inativo'
+            WHERE id_usu = ?;
+=======
       const sql = `
                 DELETE FROM usuarios
                 WHERE id_usu = ?;
+>>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
             `;
 
       const [resultado] = await db.query(sql, [id]);
