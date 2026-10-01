@@ -11,95 +11,139 @@ const ParticipantesEquipesController = require("../controllers/participantesEqui
 const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
 
+
+// =====================================================
+// AUTENTICAÇÃO
+// =====================================================
+
 router.post("/auth/login", AuthController.login);
 router.post("/auth/logout", AuthController.logout);
 router.get("/auth/me", AuthController.sessaoAtual);
 
+
+// =====================================================
+// AGENDAMENTOS
+// =====================================================
+
 router.get("/agendamentos", AgendamentosController.listarAgendamentos);
 router.post("/agendamentos", AgendamentosController.cadastrarAgendamentos);
-router.patch("/agendamentos", AgendamentosController.editarAgendamentos);
-router.delete("/agendamentos", AgendamentosController.apagarAgendamentos);
+router.patch("/agendamentos/:id", AgendamentosController.editarAgendamentos);
+router.delete("/agendamentos/:id", AgendamentosController.apagarAgendamentos);
 
-<<<<<<< HEAD
-router.get('/disponibilidades', DisponibilidadesController.listarDisponibilidades);
-router.post('/disponibilidades', DisponibilidadesController.cadastrarDisponibilidades);
-router.patch('/disponibilidades/:id', DisponibilidadesController.editarDisponibilidades);
-router.delete('/disponibilidades/:id', DisponibilidadesController.apagarDisponibilidades);
-=======
+
+// =====================================================
+// DISPONIBILIDADES
+// =====================================================
+
 router.get(
-  "/disponibilidades",
-  DisponibilidadesController.listarDisponibilidades,
+    "/disponibilidades",
+    DisponibilidadesController.listarDisponibilidades
 );
-router.post(
-  "/disponibilidades",
-  DisponibilidadesController.cadastrarDisponibilidades,
-);
-router.patch(
-  "/disponibilidades",
-  DisponibilidadesController.editarDisponibilidades,
-);
-router.delete(
-  "/disponibilidades",
-  DisponibilidadesController.apagarDisponibilidades,
-);
->>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
 
-router.get("/equipesTorneios", EquipesTorneiosController.listarEquipesTorneios);
 router.post(
-  "/equipesTorneios",
-  EquipesTorneiosController.cadastrarEquipesTorneios,
+    "/disponibilidades",
+    DisponibilidadesController.cadastrarDisponibilidades
 );
+
 router.patch(
-  "/equipesTorneios",
-  EquipesTorneiosController.editarEquipesTorneios,
+    "/disponibilidades/:id",
+    DisponibilidadesController.editarDisponibilidades
 );
+
 router.delete(
-  "/equipesTorneios",
-  EquipesTorneiosController.apagarEquipesTorneios,
+    "/disponibilidades/:id",
+    DisponibilidadesController.apagarDisponibilidades
 );
+
+
+// =====================================================
+// EQUIPES DE TORNEIOS
+// =====================================================
+
+router.get(
+    "/equipesTorneios",
+    EquipesTorneiosController.listarEquipesTorneios
+);
+
+router.post(
+    "/equipesTorneios",
+    EquipesTorneiosController.cadastrarEquipesTorneios
+);
+
+router.patch(
+    "/equipesTorneios/:id",
+    EquipesTorneiosController.editarEquipesTorneios
+);
+
+router.delete(
+    "/equipesTorneios/:id",
+    EquipesTorneiosController.apagarEquipesTorneios
+);
+
+
+// =====================================================
+// PAGAMENTOS
+// =====================================================
 
 router.get("/pagamentos", PagamentosController.listarPagamentos);
 router.post("/pagamentos", PagamentosController.cadastrarPagamentos);
-router.patch("/pagamentos", PagamentosController.editarPagamentos);
-router.delete("/pagamentos", PagamentosController.apagarPagamentos);
+router.patch("/pagamentos/:id", PagamentosController.editarPagamentos);
+router.delete("/pagamentos/:id", PagamentosController.apagarPagamentos);
+
+
+// =====================================================
+// PARTICIPANTES DE EQUIPES
+// =====================================================
 
 router.get(
-  "/participantesEquipes",
-  ParticipantesEquipesController.listarParticipantesEquipes,
-);
-router.post(
-  "/participantesEquipes",
-  ParticipantesEquipesController.cadastrarParticipantesEquipes,
-);
-router.patch(
-  "/participantesEquipes",
-  ParticipantesEquipesController.editarParticipantesEquipes,
-);
-router.delete(
-  "/participantesEquipes",
-  ParticipantesEquipesController.apagarParticipantesEquipes,
+    "/participantesEquipes",
+    ParticipantesEquipesController.listarParticipantesEquipes
 );
 
-<<<<<<< HEAD
-router.get('/quadras', QuadrasController.listarQuadras);
-router.post('/quadras', QuadrasController.cadastrarQuadras);
-router.patch('/quadras/:id', QuadrasController.editarQuadras);
-router.delete('/quadras/:id', QuadrasController.apagarQuadras);
-=======
+router.post(
+    "/participantesEquipes",
+    ParticipantesEquipesController.cadastrarParticipantesEquipes
+);
+
+router.patch(
+    "/participantesEquipes/:id",
+    ParticipantesEquipesController.editarParticipantesEquipes
+);
+
+router.delete(
+    "/participantesEquipes/:id",
+    ParticipantesEquipesController.apagarParticipantesEquipes
+);
+
+
+// =====================================================
+// QUADRAS
+// =====================================================
+
 router.get("/quadras", QuadrasController.listarQuadras);
 router.post("/quadras", QuadrasController.cadastrarQuadras);
-router.patch("/quadras", QuadrasController.editarQuadras);
-router.delete("/quadras", QuadrasController.apagarQuadras);
->>>>>>> 29f67fbc0d758a9bd30d73f72df9821d4e00427b
+router.patch("/quadras/:id", QuadrasController.editarQuadras);
+router.delete("/quadras/:id", QuadrasController.apagarQuadras);
+
+
+// =====================================================
+// TORNEIOS
+// =====================================================
 
 router.get("/torneios", TorneiosController.listarTorneios);
 router.post("/torneios", TorneiosController.cadastrarTorneios);
-router.patch("/torneios", TorneiosController.editarTorneios);
-router.delete("/torneios", TorneiosController.apagarTorneios);
+router.patch("/torneios/:id", TorneiosController.editarTorneios);
+router.delete("/torneios/:id", TorneiosController.apagarTorneios);
+
+
+// =====================================================
+// USUÁRIOS
+// =====================================================
 
 router.get("/usuarios", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
+
 
 module.exports = router;
