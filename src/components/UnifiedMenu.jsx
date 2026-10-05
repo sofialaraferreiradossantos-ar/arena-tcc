@@ -5,6 +5,7 @@ import {
   FaUserCog,
   FaSignInAlt,
   FaUserPlus,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "../styles/navigation.module.css";
@@ -28,6 +29,7 @@ export default function UnifiedMenu() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const isPresentationPage = pathname === "/sobre";
+  const isClienteAutenticado = Boolean(localStorage.getItem("token_sessao"));
 
   useEffect(() => {
     document.body.classList.add("has-unified-menu");
@@ -77,17 +79,27 @@ export default function UnifiedMenu() {
               <FaUserCog />
               <span>Administração</span>
             </NavLink>
-            <NavLink to="/login" className={styles.quickLink}>
-              <FaSignInAlt />
-              <span>Entrar</span>
-            </NavLink>
-            <NavLink
-              to="/cadastro"
-              className={`${styles.quickLink} ${styles.quickLinkPrimary}`}
-            >
-              <FaUserPlus />
-              <span>Cadastrar</span>
-            </NavLink>
+            {!isClienteAutenticado && (
+              <NavLink to="/login" className={styles.quickLink}>
+                <FaSignInAlt />
+                <span>Entrar</span>
+              </NavLink>
+            )}
+            {!isClienteAutenticado && (
+              <NavLink
+                to="/cadastro"
+                className={`${styles.quickLink} ${styles.quickLinkPrimary}`}
+              >
+                <FaUserPlus />
+                <span>Cadastrar</span>
+              </NavLink>
+            )}
+            {isClienteAutenticado && (
+              <NavLink to="/logout" className={styles.quickLink}>
+                <FaSignOutAlt />
+                <span>Sair</span>
+              </NavLink>
+            )}
           </nav>
         )}
       </div>
@@ -117,7 +129,8 @@ export default function UnifiedMenu() {
           <p className={styles.label}>OUTROS</p>
           <nav>{renderLinks(supportItems)}</nav>
         </div>
-        <div className={styles.account}>
+        {!isClienteAutenticado && (
+          <div className={styles.account}>
           <p className={styles.accountLabel}>ACESSO</p>
           <NavLink to="/login" onClick={() => setOpen(false)}>
             <span>👤</span>Entrar
@@ -125,7 +138,17 @@ export default function UnifiedMenu() {
           <NavLink to="/cadastro" onClick={() => setOpen(false)}>
             <span>✚</span>Cadastrar
           </NavLink>
-        </div>
+          </div>
+        )}
+        {isClienteAutenticado && (
+          <div className={styles.account}>
+            <p className={styles.accountLabel}>CONTA</p>
+            <NavLink to="/logout" onClick={() => setOpen(false)}>
+              <FaSignOutAlt />
+              Sair
+            </NavLink>
+          </div>
+        )}
       </aside>
     </>
   );
