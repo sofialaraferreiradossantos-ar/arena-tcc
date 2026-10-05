@@ -18,6 +18,13 @@ const TORNEIOS_MOCK = {
     vagas: "8 vagas disponíveis",
     valor: 80,
   },
+  3: {
+    nome: "Torneio de Futevôlei Pro",
+    quadra: "Beach Tennis Arena 1",
+    data: "30/05 a 30/06",
+    vagas: "16 vagas disponíveis",
+    valor: 100,
+  },
 };
 
 function InscricaoTorneio() {
