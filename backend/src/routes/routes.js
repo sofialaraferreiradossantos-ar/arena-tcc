@@ -151,10 +151,10 @@ router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
 
 
-<<<<<<< HEAD
-=======
+
+
 router.get("/cidades/estados", CidadesController.listarEstados);
 router.get("/cidades", CidadesController.listarCidades);
->>>>>>> 8c1cac70ea9b2d9640e24060741f764718d8cf7f
+
 
 module.exports = router;
