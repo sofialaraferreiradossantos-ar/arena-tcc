@@ -11,7 +11,7 @@ const ParticipantesEquipesController = require("../controllers/participantesEqui
 const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
 
-const CidadesController = require("../controllers/cidades");
+
 
 // =====================================================
 // AUTENTICAÇÃO
@@ -149,6 +149,5 @@ router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
 
 
-router.get("/cidades/estados", CidadesController.listarEstados);
 
 module.exports = router;
