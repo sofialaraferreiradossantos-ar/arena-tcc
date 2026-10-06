@@ -730,6 +730,11 @@
   background: #ff8800;
 }
 
+/* A tela inicial não usa a faixa decorativa no topo do cartão. */
+.homePage .contentCard::before {
+  display: none;
+}
+
 .cadastroCard {
   max-width: 500px;
   margin-top: 40px;

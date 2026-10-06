@@ -9,7 +9,7 @@ body,
 #root {
   width: 100%;
   min-height: 100vh;
-  background: #080a09;
+  background: transparent;
   overflow-x: hidden;
   font-family:
     Inter,
@@ -499,4 +499,297 @@ body.has-unified-menu [class^="_sidebar_"] {
   body.has-unified-menu [class^="_sidebar_"] {
     padding-top: 76px !important;
   }
+}
+
+/* Fundo fotográfico compartilhado por todas as telas. Os módulos antigos
+   aplicam preto no contêiner externo; torná-lo transparente permite que a
+   imagem permaneça visível sem interferir nos cartões e nos menus. */
+html,
+body,
+#root {
+  background-color: transparent !important;
+}
+
+body {
+  background-color: #080a09 !important;
+  background: transparent !important;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url("/arena-background.webp") center / cover no-repeat;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    rgba(8, 10, 9, 0.42),
+    rgba(8, 10, 9, 0.58)
+  );
+  pointer-events: none;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+[class*="container_"],
+[class*="arenaWrapper_"],
+[class*="pageWrapper_"],
+[class*="mainContent_"],
+[class*="detailsContainer_"],
+[class*="authPage_"],
+[class*="app_"],
+[class^="_page_"] {
+  background: transparent !important;
+}
+
+/* A tela de detalhes de torneio usa .container como cartão interno. */
+[class*="pageWrapper_"] > [class*="container_"] {
+  background: rgba(21, 21, 21, 0.92) !important;
+}
+
+/* Tema claro alternável pelo menu global. */
+body.light-mode {
+  --arena-bg: #f2f5f8;
+  --arena-header: rgba(255, 255, 255, 0.88);
+  --arena-sidebar: rgba(255, 255, 255, 0.96);
+  --arena-surface: rgba(255, 255, 255, 0.92);
+  --arena-surface-muted: #f7f9fb;
+  --arena-control: #ffffff;
+  --arena-border: #d5dce5;
+  --arena-border-subtle: #e3e8ee;
+  --arena-text: #000;
+  --arena-text-soft: #000;
+  --arena-text-muted: #000;
+  color: var(--arena-text);
+  color-scheme: light;
+  background-color: transparent !important;
+}
+
+body.light-mode::after {
+  background: linear-gradient(
+    rgba(8, 10, 9, 0.42),
+    rgba(8, 10, 9, 0.58)
+  );
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode strong {
+  color: var(--arena-text) !important;
+}
+
+body.light-mode p,
+body.light-mode label,
+body.light-mode small {
+  color: var(--arena-text-soft) !important;
+}
+
+body.light-mode [class*="topHeader"] {
+  background: var(--arena-header) !important;
+  border-color: var(--arena-border) !important;
+  color: var(--arena-text) !important;
+}
+
+body.light-mode [class*="dock"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.light-mode [class*="_card_"],
+body.light-mode [class*="Card_"],
+body.light-mode [class*="Box_"],
+body.light-mode [class*="section_"],
+body.light-mode [class*="formCard_"],
+body.light-mode [class*="modulePanel_"],
+body.light-mode [class*="reportCard_"],
+body.light-mode [class*="empty_"] {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: var(--arena-border) !important;
+  color: var(--arena-text) !important;
+}
+
+body.light-mode [class*="pageWrapper_"] > [class*="container_"],
+body.light-mode [class*="infoItem_"],
+body.light-mode [class*="calendar_"],
+body.light-mode [class*="listingControls_"],
+body.light-mode [class*="tabs_"],
+body.light-mode [class*="tabContainer_"],
+body.light-mode [class*="resumeBox_"],
+body.light-mode [class*="moduleToolbar_"],
+body.light-mode [class*="recordsList_"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: var(--arena-border) !important;
+  color: var(--arena-text) !important;
+}
+
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: var(--arena-border) !important;
+  color: var(--arena-text) !important;
+}
+
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder {
+  color: #7d8795 !important;
+}
+
+body.light-mode [class*="trigger_"],
+body.light-mode [class*="themeToggle_"],
+body.light-mode [class*="quickLink_"]:not([class*="Primary"]),
+body.light-mode [class*="sidebar_"] a:not([class*="active"]),
+body.light-mode [class*="menuButton"],
+body.light-mode [class*="menuIcon"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: var(--arena-border) !important;
+  color: var(--arena-text) !important;
+}
+
+body.light-mode [class*="trigger_"]:hover,
+body.light-mode [class*="themeToggle_"]:hover,
+body.light-mode [class*="quickLink_"]:not([class*="Primary"]):hover {
+  background: #fff7ed !important;
+  border-color: var(--arena-accent) !important;
+  color: #a54d00 !important;
+}
+
+body.light-mode [class*="sidebar_"] {
+  background: var(--arena-sidebar) !important;
+  border-color: var(--arena-border) !important;
+  box-shadow: 16px 0 45px rgba(35, 47, 62, 0.16) !important;
+}
+
+body.light-mode [class*="sidebar_"] a[class*="active"],
+body.light-mode [class*="quickLink_"][class*="Primary"] {
+  background: var(--arena-accent) !important;
+  border-color: var(--arena-accent) !important;
+  color: #23170b !important;
+}
+
+body.light-mode [class*="overlay_"] {
+  background: rgba(0, 0, 0, 0.18) !important;
+}
+
+body.light-mode [class*="pageWrapper_"] > [class*="container_"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+}
+
+body.light-mode [class*="searchBar_"],
+body.light-mode [class*="selectQuadra_"],
+body.light-mode [class*="categoryButtons_"] button,
+body.light-mode [class*="pagamentoBtn"],
+body.light-mode [class*="calendarNav_"],
+body.light-mode [class*="horarioBtn_"],
+body.light-mode [class*="rowButton_"],
+body.light-mode [class*="moduleButton_"] {
+  background: #fff !important;
+  border-color: var(--arena-border) !important;
+  color: #000 !important;
+}
+
+body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) {
+  background: #fff !important;
+  border-color: var(--arena-border) !important;
+  color: #000 !important;
+}
+
+body.light-mode button,
+body.light-mode button span,
+body.light-mode button svg {
+  color: #000 !important;
+}
+
+body.light-mode button:disabled {
+  background: #e7ebef !important;
+  border-color: #cbd3dc !important;
+  color: #000 !important;
+  opacity: 1;
+}
+
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) {
+  color: #fff !important;
+}
+
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) span,
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) svg {
+  color: #fff !important;
+}
+
+/* O overlay também é um button, mas não pode receber o fundo branco dos
+   demais controles do tema claro. */
+body.light-mode button[class*="overlay_"] {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border: 0 !important;
+  color: transparent !important;
+}
+
+
+/* Contraste textual explícito: branco no escuro e preto no claro. */
+body:not(.light-mode) h1,
+body:not(.light-mode) h2,
+body:not(.light-mode) h3,
+body:not(.light-mode) h4,
+body:not(.light-mode) h5,
+body:not(.light-mode) h6,
+body:not(.light-mode) p,
+body:not(.light-mode) label,
+body:not(.light-mode) small {
+  color: #fff !important;
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode p,
+body.light-mode label,
+body.light-mode small {
+  color: #000 !important;
+}
+
+body.light-mode a,
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+  color: #000 !important;
+}
+
+body:not(.light-mode) a:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]),
+body:not(.light-mode) input,
+body:not(.light-mode) select,
+body:not(.light-mode) textarea {
+  color: #fff !important;
+}
+
+body:not(.light-mode) [class*="trigger_"],
+body:not(.light-mode) [class*="themeToggle_"],
+body:not(.light-mode) [class*="quickLink_"],
+body:not(.light-mode) [class*="sidebar_"] a:not([class*="active"]) {
+  color: #fff !important;
+}
+
+body.light-mode [class*="trigger_"],
+body.light-mode [class*="themeToggle_"],
+body.light-mode [class*="quickLink_"]:not([class*="Primary"]),
+body.light-mode [class*="sidebar_"] a:not([class*="active"]) {
+  color: #000 !important;
 }

@@ -14,6 +14,12 @@
   box-shadow: none;
   pointer-events: none;
 }
+.menuGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
 .trigger {
   position: static;
   min-width: 92px;
@@ -51,7 +57,42 @@
   background: #1b160f;
   transform: translateY(-1px);
 }
+.themeToggle {
+  min-width: 92px;
+  height: 42px;
+  padding: 0 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 11px;
+  background: rgba(23, 23, 23, 0.94);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.42);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+.themeToggle span {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  transform: translateY(2px);
+}
+.themeToggle:hover {
+  border-color: #ff8800;
+  color: #ff9a35;
+  background: #1b160f;
+  transform: translateY(-1px);
+}
 .trigger:focus-visible,
+.themeToggle:focus-visible,
 .quickLink:focus-visible {
   outline: 3px solid rgba(255, 136, 0, 0.35);
   outline-offset: 3px;
@@ -138,9 +179,9 @@
   width: 100%;
   height: 100%;
   border: 0;
-  background: rgba(0, 0, 0, 0.62);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   cursor: default;
 }
 .sidebar {
@@ -258,6 +299,11 @@
     padding: 12px 12px 0;
   }
   .trigger {
+    min-width: 82px;
+    height: 38px;
+    padding-inline: 11px;
+  }
+  .themeToggle {
     min-width: 82px;
     height: 38px;
     padding-inline: 11px;

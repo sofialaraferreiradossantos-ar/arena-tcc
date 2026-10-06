@@ -6,6 +6,8 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaSignOutAlt,
+  FaMoon,
+  FaSun,
 } from "react-icons/fa";
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "../styles/navigation.module.css";
@@ -25,8 +27,16 @@ const supportItems = [
   ["/admin/login", "⚙️", "Administração"],
 ];
 
+function getInitialTheme() {
+  if (typeof window === "undefined") return "dark";
+
+  const savedTheme = window.localStorage.getItem("arena-theme");
+  return savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+}
+
 export default function UnifiedMenu() {
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
   const { pathname } = useLocation();
   const isPresentationPage = pathname === "/sobre";
   const isClienteAutenticado = Boolean(localStorage.getItem("token_sessao"));
@@ -35,6 +45,13 @@ export default function UnifiedMenu() {
     document.body.classList.add("has-unified-menu");
     return () => document.body.classList.remove("has-unified-menu");
   }, []);
+
+  useEffect(() => {
+    const isLight = theme === "light";
+    document.body.classList.toggle("light-mode", isLight);
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem("arena-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     if (!open) return;
@@ -63,16 +80,33 @@ export default function UnifiedMenu() {
   return (
     <>
       <div className={styles.dock}>
-        <button
-          type="button"
-          className={styles.trigger}
-          onClick={() => setOpen((current) => !current)}
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={open}
-        >
-          {open ? <FaTimes /> : <FaBars />}
-          <span>{open ? "Fechar" : "Menu"}</span>
-        </button>
+        <div className={styles.menuGroup}>
+          <button
+            type="button"
+            className={styles.trigger}
+            onClick={() => setOpen((current) => !current)}
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+          >
+            {open ? <FaTimes /> : <FaBars />}
+            <span>{open ? "Fechar" : "Menu"}</span>
+          </button>
+          <button
+            type="button"
+            className={styles.themeToggle}
+            onClick={() =>
+              setTheme((current) => (current === "dark" ? "light" : "dark"))
+            }
+            aria-label={
+              theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
+            }
+            aria-pressed={theme === "light"}
+            title={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
+          >
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
+            <span>{theme === "dark" ? "Claro" : "Escuro"}</span>
+          </button>
+        </div>
         {!isPresentationPage && (
           <nav className={styles.quickActions} aria-label="Acesso rápido">
             <NavLink to="/admin/login" className={styles.quickLink}>
