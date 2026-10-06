@@ -15,10 +15,12 @@ INSERT INTO usuarios (nome_usu, email_usu, senha_usu, status_usu, dt_cad) VALUES
 -- --------------------------------------------------
 -- QUADRAS
 -- --------------------------------------------------
-INSERT INTO quadras (nome_qd, tipo_qd, desc_qd, status_qd, valor_qd) VALUES
-('Quadra 1', 'Vôlei de Praia',  'Quadra oficial de vôlei de praia com areia nivelada',  'disponivel', 80.00),
-('Quadra 2', 'Beach Tennis',    'Quadra de beach tennis com rede padrão profissional',  'disponivel', 70.00),
-('Quadra 3', 'Futevôlei',       'Quadra ampla para futevôlei com iluminação noturna',   'indisponivel', 75.00);
+INSERT INTO quadras
+    (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
+VALUES
+(1, 'Quadra 1', 'Vôlei de Praia', 'Quadra oficial de vôlei de praia com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
+(2, 'Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
+(3, 'Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0);
 
 -- --------------------------------------------------
 -- DISPONIBILIDADES

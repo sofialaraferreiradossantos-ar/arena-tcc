@@ -59,7 +59,7 @@ export default function Home() {
               <h3>
                 <FaMapMarkerAlt /> Endereço
               </h3>
-              <p>Jaú, São Paulo — 17200-000</p>
+              <p>Tupa, São Paulo — 17200-000</p>
             </section>
           </div>
         </div>

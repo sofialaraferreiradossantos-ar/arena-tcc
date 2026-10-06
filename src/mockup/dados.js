@@ -8,17 +8,23 @@ export const quadrasMckp = [
     title: "Quadra coberta",
     image: quadraCoberta,
     available: true,
+    cidade: "Tupa",
+    uf: "SP",
   },
   {
     id: 2,
     title: "Quadra Beach Tennis",
     image: quadraBeachTennis,
     available: true,
+    cidade: "Marilia",
+    uf: "SP",
   },
   {
     id: 3,
     title: "Quadra descoberta",
     image: quadraDesoberta,
     available: false,
+    cidade: "Tupa",
+    uf: "SP",
   },
 ];

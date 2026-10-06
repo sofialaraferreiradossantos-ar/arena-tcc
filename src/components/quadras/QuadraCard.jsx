@@ -3,7 +3,13 @@ import { FaArrowRight } from "react-icons/fa";
 import styles from "../../styles/home.module.css";
 import fallback from "../../assets/quadra.jpeg";
 
-export default function QuadraCard({ id, title, image = fallback, available }) {
+export default function QuadraCard({
+  id,
+  title,
+  image = fallback,
+  available,
+  location = "Localização não informada",
+}) {
   const navigate = useNavigate();
   const open = () => navigate(`/quadra/${id}`);
 
@@ -28,6 +34,7 @@ export default function QuadraCard({ id, title, image = fallback, available }) {
       <div className={styles.courtCardBody}>
         <small>BEACH TENNIS</small>
         <h3>{title}</h3>
+        <p className={styles.courtLocation}>📍 {location}</p>
         <p>Iluminação LED • areia selecionada</p>
         <span className={styles.cardLink}>
           Ver detalhes <FaArrowRight />

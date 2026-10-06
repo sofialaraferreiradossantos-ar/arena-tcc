@@ -1,4 +1,4 @@
-const db = require("../database/connection");
+const db = require("../database/Connection");
 
 module.exports = {
   async listarEquipesTorneios(request, response) {
