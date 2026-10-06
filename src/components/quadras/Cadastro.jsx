@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
 import styles from "../../styles/home.module.css";
 
+const apiUrl = (path) =>
+  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
+
 export default function Cadastro() {
   const navigate = useNavigate();
   const [erro, setErro] = useState("");
@@ -46,8 +49,7 @@ export default function Cadastro() {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3333";
-      const resposta = await fetch(apiUrl + "/usuarios", {
+      const resposta = await fetch(apiUrl("/usuarios"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

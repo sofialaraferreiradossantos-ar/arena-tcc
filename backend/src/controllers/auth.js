@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const db = require("../database/connection");
+const db = require("../database/Connection");
 
 const sessoes = new Map();
 
