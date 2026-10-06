@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
 import styles from "../../styles/home.module.css";
 
+const apiUrl = (path) =>
+  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
+
 export default function Login() {
   const navigate = useNavigate();
   const [erro, setErro] = useState("");
@@ -20,8 +23,7 @@ export default function Login() {
     const senha = String(dados.get("senha") || "");
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3333";
-      const resposta = await fetch(apiUrl + "/auth/login", {
+      const resposta = await fetch(apiUrl("/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha }),

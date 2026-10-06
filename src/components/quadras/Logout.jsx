@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = (path) =>
+  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
+
 export default function Logout() {
   const navigate = useNavigate();
 
@@ -9,7 +12,7 @@ export default function Logout() {
     const token = tokenAdmin || localStorage.getItem("token_sessao");
 
     fetch(
-      `${import.meta.env.VITE_API_URL || "http://localhost:3333"}/auth/logout`,
+      apiUrl("/auth/logout"),
       {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
