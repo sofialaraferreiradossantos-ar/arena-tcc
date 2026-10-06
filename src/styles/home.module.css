@@ -2704,6 +2704,11 @@
 .courtCardBody p {
   color: #888;
 }
+.courtCardBody .courtLocation {
+  margin-top: 10px;
+  color: #ff9b3d;
+  font-weight: 700;
+}
 .cardLink {
   margin-top: 15px;
   display: inline-flex;

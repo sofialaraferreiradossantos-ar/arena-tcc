@@ -20,15 +20,29 @@ CREATE TABLE usuarios (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------
+-- CIDADES
+-- --------------------------------------------------
+CREATE TABLE cidades (
+    id_cidade    INT(11)      NOT NULL AUTO_INCREMENT,
+    nome_cidade  VARCHAR(100) NOT NULL,
+    uf           CHAR(2)      NOT NULL,
+    PRIMARY KEY (id_cidade),
+    UNIQUE KEY uq_cidades_nome_uf (nome_cidade, uf)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------
 -- QUADRAS
 -- --------------------------------------------------
 CREATE TABLE quadras (
     id_qd       INT(11)        NOT NULL AUTO_INCREMENT,
+    id_cidade   INT(11)        NOT NULL,
     nome_qd     VARCHAR(100)   NOT NULL,
     tipo_qd     VARCHAR(50)    NOT NULL,
     desc_qd     VARCHAR(300)   NOT NULL,
     status_qd   VARCHAR(20)    NOT NULL,
     valor_qd    DECIMAL(10,2)  NOT NULL,
+    imagem_qd   VARCHAR(255)   NULL,
+    destaque_qd TINYINT(1)     NOT NULL DEFAULT 0,
     PRIMARY KEY (id_qd)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

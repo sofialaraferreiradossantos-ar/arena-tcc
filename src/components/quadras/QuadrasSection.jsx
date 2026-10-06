@@ -12,6 +12,7 @@ function QuadrasSection({ quadras }) {
           title={quadra.title}
           image={quadra.image}
           available={quadra.available}
+          location={`${quadra.cidade} - ${quadra.uf}`}
         />
       ))}
     </div>

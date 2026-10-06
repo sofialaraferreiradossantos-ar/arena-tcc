@@ -160,6 +160,10 @@ function QuadraDetalhes() {
         <div className={styles.infoBox}>
           <h2>{quadraSelecionada.title}</h2>
 
+          <p className={styles.location}>
+            📍 {quadraSelecionada.cidade} - {quadraSelecionada.uf}
+          </p>
+
           <div>
             <h3>Sobre a quadra</h3>
 

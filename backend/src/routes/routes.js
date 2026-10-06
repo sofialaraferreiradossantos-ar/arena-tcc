@@ -124,6 +124,7 @@ router.delete(
 // =====================================================
 
 router.get("/quadras", QuadrasController.listarQuadras);
+router.get("/quadras/destaques", QuadrasController.listarDestaques);
 router.post("/quadras", QuadrasController.cadastrarQuadras);
 router.patch("/quadras/:id", QuadrasController.editarQuadras);
 router.delete("/quadras/:id", QuadrasController.apagarQuadras);
@@ -134,6 +135,7 @@ router.delete("/quadras/:id", QuadrasController.apagarQuadras);
 // =====================================================
 
 router.get("/torneios", TorneiosController.listarTorneios);
+router.get("/torneios/:id/participantes", TorneiosController.listarParticipantesDoTorneio);
 router.post("/torneios", TorneiosController.cadastrarTorneios);
 router.patch("/torneios/:id", TorneiosController.editarTorneios);
 router.delete("/torneios/:id", TorneiosController.apagarTorneios);
@@ -149,5 +151,10 @@ router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
 
 
+<<<<<<< HEAD
+=======
+router.get("/cidades/estados", CidadesController.listarEstados);
+router.get("/cidades", CidadesController.listarCidades);
+>>>>>>> 8c1cac70ea9b2d9640e24060741f764718d8cf7f
 
 module.exports = router;
