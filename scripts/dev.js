@@ -14,7 +14,7 @@ const children = [
     stdio: "inherit",
     env: process.env,
   }),
-  spawn(nodeExecutable, [viteCli, ...process.argv.slice(2)], {
+  spawn(nodeExecutable, [viteCli, "--configLoader", "native", ...process.argv.slice(2)], {
     cwd: rootDir,
     stdio: "inherit",
     env: process.env,

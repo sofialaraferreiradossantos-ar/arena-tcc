@@ -10,6 +10,7 @@ const PagamentosController = require("../controllers/pagamentos");
 const ParticipantesEquipesController = require("../controllers/participantesEquipes");
 const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
+const CidadesController = require("../controllers/cidades");
 
 
 
