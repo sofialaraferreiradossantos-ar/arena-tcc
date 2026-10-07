@@ -485,6 +485,13 @@ body.has-unified-menu [class*="closeMenu"] {
 body.has-unified-menu [class*="topHeader"] {
   top: 64px !important;
   padding-left: 24px !important;
+  /* O menu unificado já concentra os controles no topo; remove a faixa
+     visual dos cabeçalhos legados que ficava por trás dele. */
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 body.has-unified-menu [class^="_sidebar_"] {
@@ -658,7 +665,7 @@ body.light-mode [class*="sidebar_"] a:not([class*="active"]),
 body.light-mode [class*="menuButton"],
 body.light-mode [class*="menuIcon"] {
   background: rgba(255, 255, 255, 0.92) !important;
-  border-color: var(--arena-border) !important;
+  border-color: rgba(224, 139, 53, 0.48) !important;
   color: var(--arena-text) !important;
 }
 
@@ -700,13 +707,13 @@ body.light-mode [class*="horarioBtn_"],
 body.light-mode [class*="rowButton_"],
 body.light-mode [class*="moduleButton_"] {
   background: #fff !important;
-  border-color: var(--arena-border) !important;
+  border-color: rgba(224, 139, 53, 0.42) !important;
   color: #000 !important;
 }
 
 body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) {
   background: #fff !important;
-  border-color: var(--arena-border) !important;
+  border-color: rgba(224, 139, 53, 0.42) !important;
   color: #000 !important;
 }
 

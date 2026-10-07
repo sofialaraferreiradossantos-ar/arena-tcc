@@ -3116,6 +3116,148 @@
 .courtsPage .quadraCard:hover img {
   transform: scale(1.035);
 }
+
+/* Refinamento visual da listagem de quadras — sem alterar a estrutura */
+.courtsPage {
+  position: relative;
+  isolation: isolate;
+}
+
+.courtsPage::before,
+.courtsPage::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(12px);
+}
+
+.courtsPage::before {
+  top: 6rem;
+  left: -19rem;
+  background: radial-gradient(circle, rgba(255, 136, 0, 0.12), transparent 68%);
+}
+
+.courtsPage::after {
+  top: 28rem;
+  right: -22rem;
+  background: radial-gradient(circle, rgba(255, 136, 0, 0.07), transparent 68%);
+}
+
+.courtsPage .listingIntro {
+  position: relative;
+}
+
+.courtsPage .listingIntro h1 {
+  color: #f8f7f4;
+  line-height: 1;
+}
+
+.courtsPage .listingIntro p {
+  max-width: 33rem;
+  margin-inline: auto;
+  line-height: 1.7;
+}
+
+.listingControls {
+  padding: 20px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(27, 27, 27, 0.94), rgba(13, 13, 13, 0.94));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.listingControls .categoryButtons button {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.listingControls .categoryButtons button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(255, 136, 0, 0.1);
+}
+
+.listingControls .searchBar {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: #0c0c0c;
+}
+
+.resultsHeader {
+  padding-bottom: 18px;
+}
+
+.resultsHeader h2 {
+  color: #f5f4f0;
+  letter-spacing: -0.025em;
+}
+
+.resultsHeader span {
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 136, 0, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 136, 0, 0.07);
+  color: #ffad5c;
+  font-weight: 700;
+}
+
+.courtsPage .quadraCard {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(150deg, #1a1a1a, #101010);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.courtsPage .quadraCard::before {
+  height: 2px;
+  background: linear-gradient(90deg, #e97500, #ffbd73, #e97500);
+  opacity: 0.8;
+}
+
+.courtsPage .quadraCard:hover {
+  border-color: rgba(255, 136, 0, 0.62);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(255, 136, 0, 0.08);
+  transform: translateY(-6px);
+}
+
+.courtImageWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 52%, rgba(0, 0, 0, 0.35));
+}
+
+.courtsPage .quadraCard img {
+  filter: saturate(0.9) contrast(1.04);
+}
+
+.courtsPage .quadraCard:hover img {
+  filter: saturate(1.08) contrast(1.06);
+}
+
+.courtsPage .quadraCard:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.2), 0 22px 42px rgba(0, 0, 0, 0.34);
+}
+
+@media (max-width: 700px) {
+  .courtsPage::before,
+  .courtsPage::after {
+    width: 24rem;
+    height: 24rem;
+  }
+
+  .listingControls {
+    padding: 14px;
+  }
+
+  .resultsHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
 .courtsPage .status {
   position: absolute;
   top: 14px;
