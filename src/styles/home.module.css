@@ -3333,3 +3333,1165 @@
     height: clamp(190px, 55vw, 250px);
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) :global(body) {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .container,
+:global(html[data-theme="light"]) .arenaWrapper {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .app {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .topHeader {
+  background: rgba(253, 253, 254, 0.96);
+  border-bottom: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .menuButton,
+:global(html[data-theme="light"]) .menuIcon {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuButton:hover,
+:global(html[data-theme="light"]) .menuIcon:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .menuIconOpen {
+  border-color: #ff8800;
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .userIcon {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .userIcon:hover {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 span,
+:global(html[data-theme="light"]) .logoArea span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .menuOverlay {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:global(html[data-theme="light"]) .sidebarMenu {
+  background: #fbfbfc;
+  border-right: 1px solid #eaeef2;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .sidebarBrand {
+  border-bottom: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .brandText strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .closeMenu {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .closeMenu:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #383838;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a svg {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a:hover {
+  background: rgba(255, 136, 0, 0.07);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a:hover svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #090909;
+  box-shadow: 0 5px 18px rgba(255, 136, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active svg {
+  color: #090909;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active:hover {
+  border-color: #ff9417;
+  background: #ff9417;
+  color: #090909;
+}
+
+:global(html[data-theme="light"]) .sair {
+  border-top: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu::-webkit-scrollbar-thumb {
+  background: #ebeef3;
+}
+
+:global(html[data-theme="light"]) .categoryButtons button,
+:global(html[data-theme="light"]) .pagamentoBtn {
+  border: 1px solid #dbe2e9;
+  background: #f7f8fa;
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .categoryButtons button:hover,
+:global(html[data-theme="light"]) .pagamentoBtn:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .activeBtn,
+:global(html[data-theme="light"]) .pagamentoBtn.ativo {
+  border-color: #ff8800 !important;
+  background: #ff8800 !important;
+  color: #111 !important;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+:global(html[data-theme="light"]) .activeBtn:hover,
+:global(html[data-theme="light"]) .pagamentoBtn.ativo:hover {
+  background: #ff9417 !important;
+  color: #111 !important;
+}
+
+:global(html[data-theme="light"]) .searchBar {
+  border: 1px solid #dbe2e9;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .searchBar:focus-within {
+  border-color: #ff8800;
+  background: #f4f6f9;
+  box-shadow: 0 0 12px rgba(255, 136, 0, 0.12);
+}
+
+:global(html[data-theme="light"]) .searchBar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .searchBar input::placeholder {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .searchIcon,
+:global(html[data-theme="light"]) .arrowIcon {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .searchBar:focus-within .searchIcon {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .selectQuadra {
+  border: 1px solid #dbe2e9;
+  outline: none;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .selectQuadra:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .quadraCard {
+  background: #f4f6f9;
+  border: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .quadraCard::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .quadraCard:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .quadraCard h3 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .quadraCard p {
+  color: #444444;
+}
+
+:global(html[data-theme="light"]) .quadraCard span {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .status {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .available {
+  color: #1d7d2c;
+}
+
+:global(html[data-theme="light"]) .unavailable {
+  color: #de0000;
+}
+
+:global(html[data-theme="light"]) .dot {
+  background: #dde3eb;
+}
+
+:global(html[data-theme="light"]) .activeDot {
+  background: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.35);
+}
+
+:global(html[data-theme="light"]) .cadastroCard,
+:global(html[data-theme="light"]) .loginCard,
+:global(html[data-theme="light"]) .recuperarCard,
+:global(html[data-theme="light"]) .sobreCard,
+:global(html[data-theme="light"]) .pagamentoCard,
+:global(html[data-theme="light"]) .contentCard {
+  background: #f4f6f9;
+  border: 1px solid #d5dde6;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .cadastroCard::before,
+:global(html[data-theme="light"]) .loginCard::before,
+:global(html[data-theme="light"]) .recuperarCard::before,
+:global(html[data-theme="light"]) .sobreCard::before,
+:global(html[data-theme="light"]) .pagamentoCard::before,
+:global(html[data-theme="light"]) .contentCard::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .sobreCard {
+  background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
+  border-color: rgba(255, 136, 0, 0.28);
+  border-top: 4px solid #ff8800 !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.096),
+    0 0 30px rgba(255, 136, 0, 0.04);
+}
+
+:global(html[data-theme="light"]) .sobreCard::before {
+  background: linear-gradient(90deg, #ff8800, #ffad4d, #ff8800);
+  box-shadow: 0 0 14px rgba(255, 136, 0, 0.28);
+}
+
+:global(html[data-theme="light"]) .cadastroTitle,
+:global(html[data-theme="light"]) .loginTitle,
+:global(html[data-theme="light"]) .recuperarTitle {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .cadastroInput,
+:global(html[data-theme="light"]) .loginInput,
+:global(html[data-theme="light"]) .formPagamento input,
+:global(html[data-theme="light"]) .formPagamento select {
+  border: 1px solid #dbe2e9;
+  outline: none;
+  background: #f7f8fa;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .cadastroInput::placeholder,
+:global(html[data-theme="light"]) .loginInput::placeholder,
+:global(html[data-theme="light"]) .formPagamento input::placeholder {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .cadastroInput:focus,
+:global(html[data-theme="light"]) .loginInput:focus,
+:global(html[data-theme="light"]) .formPagamento input:focus,
+:global(html[data-theme="light"]) .formPagamento select:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+:global(html[data-theme="light"]) .cadastroButton,
+:global(html[data-theme="light"]) .loginButton,
+:global(html[data-theme="light"]) .recuperarButton,
+:global(html[data-theme="light"]) .confirmarPagamento {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .cadastroButton:hover,
+:global(html[data-theme="light"]) .loginButton:hover,
+:global(html[data-theme="light"]) .recuperarButton:hover,
+:global(html[data-theme="light"]) .confirmarPagamento:hover {
+  background: #ff9417;
+  border-color: #ff9417;
+}
+
+:global(html[data-theme="light"]) .cadastroText,
+:global(html[data-theme="light"]) .recuperarText {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .cadastroLink,
+:global(html[data-theme="light"]) .loginLink,
+:global(html[data-theme="light"]) .recuperarLink,
+:global(html[data-theme="light"]) .sobreLink {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .cadastroLink:hover,
+:global(html[data-theme="light"]) .loginLink:hover,
+:global(html[data-theme="light"]) .recuperarLink:hover,
+:global(html[data-theme="light"]) .sobreLink:hover {
+  color: #a65900;
+}
+
+:global(html[data-theme="light"]) .sobreTitulo {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .sobreTitulo span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sobreDescricao {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .sobreSecao {
+  border: 1px solid rgba(255, 136, 0, 0.2);
+  background: linear-gradient(145deg, #f6f8fa, #f8f9fb);
+}
+
+:global(html[data-theme="light"]) .sobreSecao::before {
+  background: linear-gradient(90deg, transparent, #ff8800, transparent);
+}
+
+:global(html[data-theme="light"]) .sobreSecao h3 {
+  color: #a65900;
+}
+
+:global(html[data-theme="light"]) .sobreSecao h3::after {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .sobreSecao p {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .sobreLink {
+  border: 1px solid rgba(255, 136, 0, 0.7);
+  background: rgba(255, 136, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .sidebar {
+  background: #fbfbfc;
+  border-right: 1px solid #e3e8ee;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .logoMark {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .logoText {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuItem {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .menuItem:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+:global(html[data-theme="light"]) .content {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1::after {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .pageTitle p {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .infoCard {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+}
+
+:global(html[data-theme="light"]) .infoCard::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .infoCard:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .infoCard h3 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .infoCardIcon {
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoCard p,
+:global(html[data-theme="light"]) .infoCard small {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .infoCard small {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .scheduleList p {
+  border: 1px solid #dfe5ec;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .scheduleList strong {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .inlineInfo {
+  border: 1px solid #dfe5ec;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .inlineInfo svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .pixArea h4 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .qrCode {
+  background: #fff;
+}
+
+:global(html[data-theme="light"]) .valorArea h3,
+:global(html[data-theme="light"]) .descricaoPagamento h3,
+:global(html[data-theme="light"]) .pagamentoInfo h3,
+:global(html[data-theme="light"]) .resumoPagamento h3 {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .valorArea p {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .descricaoPagamento {
+  border-top: 1px solid #dbe2e9;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .descricaoPagamento p,
+:global(html[data-theme="light"]) .pagamentoInfo p,
+:global(html[data-theme="light"]) .resumoPagamento p {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .formPagamento label {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .resumoPagamento {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+  color: #000000;
+}
+
+@media (max-width: 700px) {
+  :global(html[data-theme="light"]) .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e3e8ee;
+  }
+
+}
+
+:global(html[data-theme="light"]) .authHeader {
+  background: rgba(253, 253, 254, 0.96);
+  border-bottom: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .authBrand {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .authBrand span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarOverlay {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:global(html[data-theme="light"]) .sidebar {
+  background: #fbfbfc;
+  border-right: 1px solid #e3e8ee;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .closeButton {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .closeButton:hover {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .sidebarNav a,
+:global(html[data-theme="light"]) .sidebarBottom a {
+  border: 1px solid transparent;
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a:hover,
+:global(html[data-theme="light"]) .sidebarBottom a:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a.active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+:global(html[data-theme="light"]) .sidebarBottom {
+  border-top: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .authContent {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .authHeading > span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .authHeading p {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .authField {
+  color: #444444;
+}
+
+:global(html[data-theme="light"]) .authField > div {
+  border: 1px solid #dbe2e9;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .authField > div:focus-within {
+  border-color: #ff8800;
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+:global(html[data-theme="light"]) .authField svg {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .authField > div:focus-within svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .authField .cadastroInput,
+:global(html[data-theme="light"]) .authField .loginInput {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:global(html[data-theme="light"]) .loginLinks p {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .pagamentoCard .pixArea {
+  border: 0;
+  background: transparent;
+}
+
+:global(html[data-theme="light"]) .pagamentoInfo,
+:global(html[data-theme="light"]) .resumoPagamento {
+  border: 1px solid #d5dde6;
+  border-top: 3px solid #ff8800;
+  background: #f4f6f9;
+}
+
+:global(html[data-theme="light"]) .paymentHeading > span {
+  color: #aa5500;
+}
+
+:global(html[data-theme="light"]) .paymentHeading h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .paymentHeading p {
+  color: #6f726e;
+}
+
+:global(html[data-theme="light"]) .paymentPage .pagamentoButtons {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .paymentPage .pagamentoCard {
+  background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
+}
+
+:global(html[data-theme="light"]) .paymentPage .qrCode {
+  border: 1px solid rgba(255, 136, 0, 0.25);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+:global(html[data-theme="light"]) .paymentPage .valorArea p {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .paymentPage .pagamentoInfo > div,
+:global(html[data-theme="light"]) .cardPaymentPage .formPagamento {
+  border: 1px solid #d5dde6;
+  border-top: 3px solid #ff8800;
+  background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
+}
+
+:global(html[data-theme="light"]) .paymentPage .confirmarPagamento {
+  border: 0;
+  background: linear-gradient(135deg, #ff8800, #ff9f3d) !important;
+  box-shadow: 0 10px 24px rgba(255, 136, 0, 0.18);
+  color: #17120c;
+}
+
+:global(html[data-theme="light"]) .paymentPage .confirmarPagamento:hover {
+  background: linear-gradient(135deg, #ff9417, #ffb15c) !important;
+  box-shadow: 0 13px 28px rgba(255, 136, 0, 0.28);
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .formPagamento {
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .formPagamento label {
+  color: #282828;
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .formPagamento input {
+  background: #f8f9fb;
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .formPagamento input:focus {
+  background: #faf9f7;
+  box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .resumoPagamento {
+  background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .cardPaymentPage .resumoPagamento p {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+:global(html[data-theme="light"]) .topHeader {
+  background: rgba(251, 251, 252, 0.82);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .menuButton {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:global(html[data-theme="light"]) .logoArea {
+  color: inherit;
+}
+
+:global(html[data-theme="light"]) .logoArea img {
+  border: 1px solid rgba(255, 138, 31, 0.35);
+}
+
+:global(html[data-theme="light"]) .desktopNav a {
+  color: #565955;
+}
+
+:global(html[data-theme="light"]) .desktopNav a:hover,
+:global(html[data-theme="light"]) .desktopNav a[aria-current="page"] {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .profileButton {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #111111;
+}
+
+:global(html[data-theme="light"]) .profileButton svg {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .homeHero::before {
+  background: radial-gradient(circle, rgba(255, 119, 0, 0.12), transparent 64%);
+}
+
+:global(html[data-theme="light"]) .eyebrow {
+  color: #ad5400;
+}
+
+:global(html[data-theme="light"]) .eyebrow::before {
+  background: #ff8a1f;
+}
+
+:global(html[data-theme="light"]) .heroCopy h1 {
+  color: #0d0c07;
+}
+
+:global(html[data-theme="light"]) .heroCopy h1 span {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .heroCopy > p {
+  color: #595c58;
+}
+
+:global(html[data-theme="light"]) .primaryAction {
+  background: #ff8a1f;
+  color: #14120e;
+  box-shadow: 0 12px 35px rgba(255, 120, 0, 0.2);
+}
+
+:global(html[data-theme="light"]) .primaryAction:hover {
+  background: #ffa34f;
+}
+
+:global(html[data-theme="light"]) .secondaryAction {
+  color: #0e0e0b;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.035);
+}
+
+:global(html[data-theme="light"]) .secondaryAction:hover {
+  border-color: #ff8a1f;
+  color: #ad5400;
+}
+
+:global(html[data-theme="light"]) .quickInfo {
+  color: #7e817d;
+}
+
+:global(html[data-theme="light"]) .quickInfo svg {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .heroVisual img {
+  filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.22));
+}
+
+:global(html[data-theme="light"]) .heroGlow {
+  background: radial-gradient(
+    circle at 45% 40%,
+    #ffb04f 0,
+    #d4630b 38%,
+    #feede2 68%,
+    transparent 69%
+  );
+}
+
+:global(html[data-theme="light"]) .floatingCard {
+  background: rgba(245, 247, 249, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.213);
+}
+
+:global(html[data-theme="light"]) .floatingCard small {
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .liveDot {
+  background: #62d36b;
+  box-shadow: 0 0 0 5px rgba(98, 211, 107, 0.12);
+}
+
+:global(html[data-theme="light"]) .statsBar {
+  border-block: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .statsBar div {
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .statsBar div:last-child {
+  border: 0;
+}
+
+:global(html[data-theme="light"]) .statsBar strong {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .statsBar span {
+  color: #777b76;
+}
+
+:global(html[data-theme="light"]) .sectionHeading > p {
+  color: #6f726e;
+}
+
+:global(html[data-theme="light"]) .benefitCard {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(
+    145deg,
+    rgba(0, 0, 0, 0.055),
+    rgba(0, 0, 0, 0.015)
+  );
+}
+
+:global(html[data-theme="light"]) .benefitCard:hover {
+  border-color: rgba(255, 138, 31, 0.45);
+}
+
+:global(html[data-theme="light"]) .benefitIcon {
+  color: #ae5300;
+  background: rgba(255, 138, 31, 0.1);
+}
+
+:global(html[data-theme="light"]) .benefitCard p {
+  color: #6c6f6a;
+}
+
+:global(html[data-theme="light"]) .featureCourt {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .featureCourt::after {
+  background: linear-gradient(
+    90deg,
+    rgba(252, 253, 252, 0.96) 0%,
+    rgba(252, 253, 252, 0.7) 48%,
+    rgba(252, 253, 252, 0.05) 80%
+  );
+}
+
+:global(html[data-theme="light"]) .availablePill {
+  border: 1px solid rgba(98, 211, 107, 0.25);
+  color: #2d7e35;
+  background: rgba(98, 211, 107, 0.08);
+}
+
+:global(html[data-theme="light"]) .availablePill i {
+  background: #62d36b;
+}
+
+:global(html[data-theme="light"]) .featureOverlay p {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .featureOverlay a {
+  color: #ad5400;
+}
+
+:global(html[data-theme="light"]) .homeFooter {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: #737671;
+}
+
+:global(html[data-theme="light"]) .homeFooter strong {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .homeFooter strong span {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .listingIntro h1 span {
+  color: #ae5300;
+}
+
+:global(html[data-theme="light"]) .listingIntro p,
+:global(html[data-theme="light"]) .emptyState {
+  color: #6f726e;
+}
+
+:global(html[data-theme="light"]) .courtCardBody small {
+  color: #ad5400;
+}
+
+:global(html[data-theme="light"]) .courtCardBody p {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .courtCardBody .courtLocation {
+  color: #ad5400;
+}
+
+:global(html[data-theme="light"]) .cardLink {
+  color: #ad5400;
+}
+
+@media (max-width: 820px) {
+  :global(html[data-theme="light"]) .statsBar div:nth-child(2) {
+    border-right: 0;
+  }
+
+  :global(html[data-theme="light"]) .statsBar div:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  :global(html[data-theme="light"]) .featureCourt::after {
+    background: linear-gradient(0deg, rgba(252, 253, 252, 0.96), rgba(252, 253, 252, 0.15));
+  }
+
+}
+
+:global(html[data-theme="light"]) .contentCard {
+  background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
+  border: 1px solid #d5dde6;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.096);
+}
+
+:global(html[data-theme="light"]) .simpleInfoGrid .section {
+  border: 1px solid #dbe2e9;
+  background: linear-gradient(145deg, #f6f8fa, #f8f9fb);
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.025);
+}
+
+:global(html[data-theme="light"]) .simpleInfoGrid .section:hover {
+  border-color: rgba(255, 136, 0, 0.45);
+  background: linear-gradient(145deg, #f9f8f6, #f7f8fa);
+}
+
+:global(html[data-theme="light"]) .simpleInfoGrid .section h3 {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .authPage {
+  background: radial-gradient(circle at 50% 0, #faf5f1 0, #fafbfc 42%);
+}
+
+:global(html[data-theme="light"]) .authCard {
+  border: 1px solid #d5dde6;
+  border-top: 3px solid #ff8800;
+  background: #f4f6f9;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.187);
+}
+
+:global(html[data-theme="light"]) .authBrand span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .authHeading small {
+  color: #a95800;
+}
+
+:global(html[data-theme="light"]) .authHeading h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .authHeading p {
+  color: #727272;
+}
+
+:global(html[data-theme="light"]) .authCard label {
+  color: #2f2f2f;
+}
+
+:global(html[data-theme="light"]) .authCard input {
+  border: 1px solid #d2dbe4;
+  outline: none;
+  background: #f8f9fb;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .authCard input:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .authCard form > button {
+  border: 0;
+  background: #ff8800;
+  color: #17120c;
+}
+
+:global(html[data-theme="light"]) .authCard form > button:hover {
+  background: #ff9c35;
+}
+
+:global(html[data-theme="light"]) .authSwitch {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .authSwitch a,
+:global(html[data-theme="light"]) .forgotLink,
+:global(html[data-theme="light"]) .aboutLink {
+  color: #a95800;
+}
+
+:global(html[data-theme="light"]) .aboutLink {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .listingControls {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .resultsHeader {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .resultsHeader span {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard {
+  outline: none;
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard:focus-visible {
+  border-color: #ff8800;
+  box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .courtsPage::before {
+  background: radial-gradient(circle, rgba(255, 136, 0, 0.12), transparent 68%);
+}
+
+:global(html[data-theme="light"]) .courtsPage::after {
+  background: radial-gradient(circle, rgba(255, 136, 0, 0.07), transparent 68%);
+}
+
+:global(html[data-theme="light"]) .courtsPage .listingIntro h1 {
+  color: #0b0a07;
+}
+
+:global(html[data-theme="light"]) .listingControls {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(242, 244, 247, 0.94), rgba(249, 250, 251, 0.94));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.088), inset 0 1px rgba(0, 0, 0, 0.035);
+}
+
+:global(html[data-theme="light"]) .listingControls .categoryButtons button {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.035);
+}
+
+:global(html[data-theme="light"]) .listingControls .categoryButtons button:hover {
+  box-shadow: 0 8px 18px rgba(255, 136, 0, 0.1);
+}
+
+:global(html[data-theme="light"]) .listingControls .searchBar {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: #f9fafb;
+}
+
+:global(html[data-theme="light"]) .resultsHeader h2 {
+  color: #0f0e0a;
+}
+
+:global(html[data-theme="light"]) .resultsHeader span {
+  border: 1px solid rgba(255, 136, 0, 0.2);
+  background: rgba(255, 136, 0, 0.07);
+  color: #ae5600;
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(150deg, #f2f4f7, #f7f8fa);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard::before {
+  background: linear-gradient(90deg, #e97500, #ffbd73, #e97500);
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard:hover {
+  border-color: rgba(255, 136, 0, 0.62);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.136), 0 0 28px rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .courtImageWrap::after {
+  background: linear-gradient(180deg, transparent 52%, rgba(255, 255, 255, 0.35));
+}
+
+:global(html[data-theme="light"]) .courtsPage .quadraCard:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.2), 0 22px 42px rgba(0, 0, 0, 0.136);
+}
+
+:global(html[data-theme="light"]) .courtsPage .status {
+  background: rgba(251, 252, 253, 0.88);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

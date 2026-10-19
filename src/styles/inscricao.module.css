@@ -396,3 +396,166 @@
     padding: 20px;
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) .pageWrapper {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuOverlay {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+:global(html[data-theme="light"]) .sidebarMenu {
+  background: #fbfbfc;
+  border-right: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a:hover {
+  background: rgba(255, 136, 0, 0.14);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .closeMenu {
+  background: transparent;
+  color: #a85a00;
+  border: none;
+}
+
+:global(html[data-theme="light"]) .menuIcon {
+  background: #fbfbfc;
+  color: #a85a00;
+  border: 1px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .menuIcon:hover {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .header h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .header h1 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .header p {
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .inscricaoCard {
+  background: #f4f6f9;
+  border: 1px solid #d5dde6;
+  border-top: 2px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .torneioInfo {
+  border-bottom: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .trophyIcon {
+  background: rgba(255, 136, 0, 0.08);
+  border: 1px solid #d5dde6;
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoHeader small {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .infoHeader h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .infoItem {
+  background: #f7f8fa;
+  border: 1px solid #dbe2e9;
+}
+
+:global(html[data-theme="light"]) .infoItem > span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoItem small {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .infoItem strong {
+  color: #111111;
+}
+
+:global(html[data-theme="light"]) .formSection h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .formSection > p {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .inputGroup label {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .inputGroup input {
+  background: #f7f8fa;
+  border: 1px solid #d5dde6;
+  color: #000000;
+  outline: none;
+}
+
+:global(html[data-theme="light"]) .inputGroup input:focus {
+  border-color: #ff8800;
+  box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .inputGroup input::placeholder {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .resumo {
+  background: #f7f8fa;
+  border: 1px solid #dbe2e9;
+}
+
+:global(html[data-theme="light"]) .resumo > div {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .resumo strong {
+  color: #111111;
+}
+
+:global(html[data-theme="light"]) .resumo .total {
+  border-top: 1px solid #d5dde6;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .resumo .total strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .confirmarButton {
+  border: none;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .confirmarButton:hover {
+  background: #ff9417;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.2);
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

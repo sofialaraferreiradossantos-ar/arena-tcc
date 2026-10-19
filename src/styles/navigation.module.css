@@ -145,7 +145,8 @@
 .quickLinkPrimary svg {
   color: #15120e;
 }
-.quickLinkPrimary:hover {
+.quickLinkPrimary:hover,
+.quickLinkPrimary[aria-current="page"] {
   background: linear-gradient(135deg, #ff9417, #ffad52);
   border-color: #ffad52;
   color: #15120e;
@@ -323,3 +324,149 @@
     display: none;
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) .dock {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+:global(html[data-theme="light"]) .trigger {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(243, 246, 248, 0.94);
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .trigger {
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.168);
+}
+
+:global(html[data-theme="light"]) .trigger:hover {
+  border-color: #ff8800;
+  color: #aa5500;
+  background: #f9f7f4;
+}
+
+:global(html[data-theme="light"]) .themeToggle {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(243, 246, 248, 0.94);
+  color: #000000;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.168);
+}
+
+:global(html[data-theme="light"]) .themeToggle:hover {
+  border-color: #ff8800;
+  color: #aa5500;
+  background: #f9f7f4;
+}
+
+:global(html[data-theme="light"]) .trigger:focus-visible,
+:global(html[data-theme="light"]) .themeToggle:focus-visible,
+:global(html[data-theme="light"]) .quickLink:focus-visible {
+  outline: 3px solid rgba(255, 136, 0, 0.35);
+}
+
+:global(html[data-theme="light"]) .quickLink {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(247, 248, 250, 0.94);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  color: #2d2d2d;
+}
+
+:global(html[data-theme="light"]) .quickLink svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .quickLink:hover,
+:global(html[data-theme="light"]) .quickLink[aria-current="page"] {
+  border-color: rgba(255, 136, 0, 0.75);
+  color: #000000;
+  background: #f9f7f4;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.128);
+}
+
+:global(html[data-theme="light"]) .quickLinkPrimary {
+  border-color: #ff8800;
+  background: linear-gradient(135deg, #ff8800, #ff9b32);
+  color: #15120e;
+  box-shadow: 0 7px 20px rgba(255, 136, 0, 0.2);
+}
+
+:global(html[data-theme="light"]) .quickLinkPrimary svg {
+  color: #15120e;
+}
+
+:global(html[data-theme="light"]) .quickLinkPrimary:hover,
+:global(html[data-theme="light"]) .quickLinkPrimary[aria-current="page"] {
+  background: linear-gradient(135deg, #ff9417, #ffad52);
+  border-color: #ffad52;
+  color: #15120e;
+  box-shadow: 0 9px 24px rgba(255, 136, 0, 0.26);
+}
+
+:global(html[data-theme="light"]) .dockBrand {
+  color: #111111;
+}
+
+:global(html[data-theme="light"]) .dockBrand img {
+  border: 1px solid #d2dae4;
+}
+
+:global(html[data-theme="light"]) .dockBrand strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .overlay {
+  border: 0;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+:global(html[data-theme="light"]) .sidebar {
+  background: #f9fafb;
+  border-right: 1px solid #dbe2e9;
+  box-shadow: 16px 0 45px rgba(0, 0, 0, 0.24);
+}
+
+:global(html[data-theme="light"]) .brand {
+  border-bottom: 1px solid #dfe5ec;
+}
+
+:global(html[data-theme="light"]) .brand span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .label {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .sidebar a {
+  border: 1px solid transparent;
+  color: #383838;
+}
+
+:global(html[data-theme="light"]) .sidebar a:hover {
+  color: #aa5500;
+  background: rgba(255, 136, 0, 0.07);
+}
+
+:global(html[data-theme="light"]) .sidebar a.active {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #15120e;
+}
+
+:global(html[data-theme="light"]) .menuScroll {
+  scrollbar-color: #d2dbe4 transparent;
+}
+
+:global(html[data-theme="light"]) .account {
+  border-top: 1px solid #dfe5ec;
+}
+
+:global(html[data-theme="light"]) .accountLabel {
+  color: #666;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */
