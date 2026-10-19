@@ -553,7 +553,7 @@
 .agendar:disabled {
   background: #2c2c2c;
   box-shadow: none;
-  color: #666;
+  color: #9a9a9a;
   cursor: not-allowed;
 }
 
@@ -636,3 +636,264 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) :global(body) {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .mainContent {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .topHeader {
+  background: rgba(253, 253, 254, 0.96);
+  border-bottom: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .menuButton {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuButton:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .userIcon {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .userIcon:hover {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarOverlay {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:global(html[data-theme="light"]) .sidebar {
+  background: #fbfbfc;
+  border-right: 1px solid #e3e8ee;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .sidebarBrand {
+  border-bottom: 1px solid #e7ecf1;
+}
+
+:global(html[data-theme="light"]) .sidebarBrand strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .closeButton {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .closeButton:hover {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .sidebarNav a,
+:global(html[data-theme="light"]) .sidebarBottom a {
+  border: 1px solid transparent;
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a:hover,
+:global(html[data-theme="light"]) .sidebarBottom a:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarBottom {
+  border-top: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .sidebarBottom a {
+  color: #dc0000;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1::after {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .pageTitle p {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .stepTag {
+  border: 1px solid rgba(255, 136, 0, 0.35);
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .formCard {
+  border: 1px solid rgba(255, 136, 0, 0.18);
+  background: linear-gradient(180deg, #f4f6f9 0%, #f7f8fa 60%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+:global(html[data-theme="light"]) .label {
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .select {
+  background: #f7f8fa;
+  border: 1px solid #d5dde6;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .select:focus {
+  outline: none;
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .calendar {
+  border: 1px solid #dfe5ec;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .calendarMonth {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .calendarNav {
+  border: 1px solid #d9e0e8;
+  background: #f4f6f9;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .calendarNav:hover:not(:disabled) {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .calendarWeekdays span {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .calendarDay {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .calendarDay:hover:not(:disabled) {
+  border-color: #ff8800;
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .calendarDay:disabled {
+  color: #3a3a3a;
+}
+
+:global(html[data-theme="light"]) .calendarDayToday {
+  border-color: #d2dbe4;
+}
+
+:global(html[data-theme="light"]) .calendarDaySelected {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .calendarDaySelected:hover {
+  color: #111 !important;
+}
+
+:global(html[data-theme="light"]) .periodoLabel {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .horarioBtn {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .horarioBtn:hover:not(:disabled) {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .horarioSelecionado {
+  background: #ff8800;
+  border-color: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .horarioSelecionado:hover {
+  color: #111 !important;
+}
+
+:global(html[data-theme="light"]) .horarioOcupado {
+  background: #fafbfc;
+  border-color: #e6eaf0;
+  color: #3a3a3a;
+}
+
+:global(html[data-theme="light"]) .hintText {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .actionBar {
+  border: 1px solid rgba(255, 136, 0, 0.22);
+  background: rgba(247, 248, 250, 0.92);
+  box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .actionHint {
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .agendar {
+  border: 0;
+  background: linear-gradient(135deg, #ff8800, #ff6a00);
+  color: #111;
+  box-shadow: 0 6px 20px rgba(255, 136, 0, 0.3);
+}
+
+:global(html[data-theme="light"]) .agendar:hover:not(:disabled) {
+  box-shadow: 0 9px 26px rgba(255, 136, 0, 0.42);
+  background: linear-gradient(135deg, #ff9d2e, #ff7d1a);
+}
+
+:global(html[data-theme="light"]) .agendar:disabled {
+  background: #e9edf2;
+  box-shadow: none;
+  color: #656565;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

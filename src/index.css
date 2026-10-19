@@ -565,12 +565,16 @@ body::after {
   background: rgba(21, 21, 21, 0.92) !important;
 }
 
-/* Tema claro alternável pelo menu global. */
+/* Tema claro alternável pelo menu global.
+   O tema claro segue exatamente o padrão do modo escuro (mesmos componentes,
+   estados, bordas e transparências), trocando apenas a paleta. As regras
+   espelhadas de cada tela ficam no fim de cada arquivo de estilo e são
+   geradas por scripts/gerar-tema-claro.mjs a partir das regras do escuro. */
 body.light-mode {
   --arena-bg: #f2f5f8;
-  --arena-header: rgba(255, 255, 255, 0.88);
-  --arena-sidebar: rgba(255, 255, 255, 0.96);
-  --arena-surface: rgba(255, 255, 255, 0.92);
+  --arena-header: rgba(255, 255, 255, 0.96);
+  --arena-sidebar: #ffffff;
+  --arena-surface: #ffffff;
   --arena-surface-muted: #f7f9fb;
   --arena-control: #ffffff;
   --arena-border: #d5dce5;
@@ -580,173 +584,7 @@ body.light-mode {
   --arena-text-muted: #000;
   color: var(--arena-text);
   color-scheme: light;
-  background-color: transparent !important;
 }
-
-body.light-mode::after {
-  background: linear-gradient(
-    rgba(8, 10, 9, 0.42),
-    rgba(8, 10, 9, 0.58)
-  );
-}
-
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3,
-body.light-mode h4,
-body.light-mode h5,
-body.light-mode h6,
-body.light-mode strong {
-  color: var(--arena-text) !important;
-}
-
-body.light-mode p,
-body.light-mode label,
-body.light-mode small {
-  color: var(--arena-text-soft) !important;
-}
-
-body.light-mode [class*="topHeader"] {
-  background: var(--arena-header) !important;
-  border-color: var(--arena-border) !important;
-  color: var(--arena-text) !important;
-}
-
-body.light-mode [class*="dock"] {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-body.light-mode [class*="_card_"],
-body.light-mode [class*="Card_"],
-body.light-mode [class*="Box_"],
-body.light-mode [class*="section_"],
-body.light-mode [class*="formCard_"],
-body.light-mode [class*="modulePanel_"],
-body.light-mode [class*="reportCard_"],
-body.light-mode [class*="empty_"] {
-  background: rgba(255, 255, 255, 0.8) !important;
-  border-color: var(--arena-border) !important;
-  color: var(--arena-text) !important;
-}
-
-body.light-mode [class*="pageWrapper_"] > [class*="container_"],
-body.light-mode [class*="infoItem_"],
-body.light-mode [class*="calendar_"],
-body.light-mode [class*="listingControls_"],
-body.light-mode [class*="tabs_"],
-body.light-mode [class*="tabContainer_"],
-body.light-mode [class*="resumeBox_"],
-body.light-mode [class*="moduleToolbar_"],
-body.light-mode [class*="recordsList_"] {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: var(--arena-border) !important;
-  color: var(--arena-text) !important;
-}
-
-body.light-mode input,
-body.light-mode select,
-body.light-mode textarea {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border-color: var(--arena-border) !important;
-  color: var(--arena-text) !important;
-}
-
-body.light-mode input::placeholder,
-body.light-mode textarea::placeholder {
-  color: #7d8795 !important;
-}
-
-body.light-mode [class*="trigger_"],
-body.light-mode [class*="themeToggle_"],
-body.light-mode [class*="quickLink_"]:not([class*="Primary"]),
-body.light-mode [class*="sidebar_"] a:not([class*="active"]),
-body.light-mode [class*="menuButton"],
-body.light-mode [class*="menuIcon"] {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(224, 139, 53, 0.48) !important;
-  color: var(--arena-text) !important;
-}
-
-body.light-mode [class*="trigger_"]:hover,
-body.light-mode [class*="themeToggle_"]:hover,
-body.light-mode [class*="quickLink_"]:not([class*="Primary"]):hover {
-  background: #fff7ed !important;
-  border-color: var(--arena-accent) !important;
-  color: #a54d00 !important;
-}
-
-body.light-mode [class*="sidebar_"] {
-  background: var(--arena-sidebar) !important;
-  border-color: var(--arena-border) !important;
-  box-shadow: 16px 0 45px rgba(35, 47, 62, 0.16) !important;
-}
-
-body.light-mode [class*="sidebar_"] a[class*="active"],
-body.light-mode [class*="quickLink_"][class*="Primary"] {
-  background: var(--arena-accent) !important;
-  border-color: var(--arena-accent) !important;
-  color: #23170b !important;
-}
-
-body.light-mode [class*="overlay_"] {
-  background: rgba(0, 0, 0, 0.18) !important;
-}
-
-body.light-mode [class*="pageWrapper_"] > [class*="container_"] {
-  background: rgba(255, 255, 255, 0.92) !important;
-}
-
-body.light-mode [class*="searchBar_"],
-body.light-mode [class*="selectQuadra_"],
-body.light-mode [class*="categoryButtons_"] button,
-body.light-mode [class*="pagamentoBtn"],
-body.light-mode [class*="calendarNav_"],
-body.light-mode [class*="horarioBtn_"],
-body.light-mode [class*="rowButton_"],
-body.light-mode [class*="moduleButton_"] {
-  background: #fff !important;
-  border-color: rgba(224, 139, 53, 0.42) !important;
-  color: #000 !important;
-}
-
-body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) {
-  background: #fff !important;
-  border-color: rgba(224, 139, 53, 0.42) !important;
-  color: #000 !important;
-}
-
-body.light-mode button,
-body.light-mode button span,
-body.light-mode button svg {
-  color: #000 !important;
-}
-
-body.light-mode button:disabled {
-  background: #e7ebef !important;
-  border-color: #cbd3dc !important;
-  color: #000 !important;
-  opacity: 1;
-}
-
-body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) {
-  color: #fff !important;
-}
-
-body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) span,
-body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) svg {
-  color: #fff !important;
-}
-
-/* O overlay também é um button, mas não pode receber o fundo branco dos
-   demais controles do tema claro. */
-body.light-mode button[class*="overlay_"] {
-  background: rgba(0, 0, 0, 0.18) !important;
-  border: 0 !important;
-  color: transparent !important;
-}
-
 
 /* Contraste textual explícito: branco no escuro e preto no claro. */
 body:not(.light-mode) h1,
@@ -773,23 +611,37 @@ body.light-mode small {
   color: #000 !important;
 }
 
-body.light-mode a,
-body.light-mode input,
-body.light-mode select,
-body.light-mode textarea {
-  color: #000 !important;
-}
-
-body:not(.light-mode) a:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]),
+/* Botões laranja (inscrever, confirmar, moduleButton, formulários de acesso)
+   mantêm o texto escuro definido nos módulos, nos dois temas. */
+body:not(.light-mode) a:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="inscrever"]),
 body:not(.light-mode) input,
 body:not(.light-mode) select,
 body:not(.light-mode) textarea {
   color: #fff !important;
 }
 
+body.light-mode a:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]),
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+  color: #000 !important;
+}
+
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]):not([class*="confirmar"]):not([class*="moduleButton"]):not([class*="authCard_"] form > button),
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]):not([class*="confirmar"]):not([class*="moduleButton"]):not([class*="authCard_"] form > button) span,
+body:not(.light-mode) button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]):not([class*="confirmar"]):not([class*="moduleButton"]):not([class*="authCard_"] form > button) svg {
+  color: #fff !important;
+}
+
+body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]),
+body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) span,
+body.light-mode button:not([class*="primary"]):not([class*="Primary"]):not([class*="active"]):not([class*="Active"]):not([class*="agendar"]) svg {
+  color: #000 !important;
+}
+
 body:not(.light-mode) [class*="trigger_"],
 body:not(.light-mode) [class*="themeToggle_"],
-body:not(.light-mode) [class*="quickLink_"],
+body:not(.light-mode) [class*="quickLink_"]:not([class*="Primary"]),
 body:not(.light-mode) [class*="sidebar_"] a:not([class*="active"]) {
   color: #fff !important;
 }
@@ -800,3 +652,185 @@ body.light-mode [class*="quickLink_"]:not([class*="Primary"]),
 body.light-mode [class*="sidebar_"] a:not([class*="active"]) {
   color: #000 !important;
 }
+
+/* Menu lateral com a mesma transparência nos dois temas: itens sem fundo
+   próprio e mesmo realce no hover. */
+body.light-mode [class*="sidebar_"] a:not([class*="active"]) {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+body.light-mode [class*="sidebar_"] a:not([class*="active"]):hover {
+  background: rgba(255, 136, 0, 0.07) !important;
+  color: #a54d00 !important;
+}
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background: transparent;
+}
+
+html[data-theme="light"] body {
+  color: #0b0b08;
+}
+
+html[data-theme="light"] ::selection {
+  background: #ff8a1f;
+  color: #10110f;
+}
+
+html[data-theme="light"] :focus-visible {
+  outline: 3px solid rgba(255, 138, 31, 0.55);
+}
+
+html[data-theme="light"] .sidebar {
+  background: var(--arena-sidebar);
+  border-right: 1px solid #e7ecf1;
+}
+
+html[data-theme="light"] .sidebar li {
+  color: #000000;
+}
+
+html[data-theme="light"] .sidebar li:hover {
+  color: #996300;
+}
+
+html[data-theme="light"] [class*="topHeader"] {
+  background: var(--arena-header) !important;
+  border-bottom: 1px solid #e6eaf0 !important;
+}
+
+html[data-theme="light"] [class*="menuButton"],
+html[data-theme="light"] [class*="menuIcon"] {
+  border: 1px solid #d9e0e8 !important;
+  background: var(--arena-control) !important;
+  color: var(--arena-text) !important;
+}
+
+html[data-theme="light"] [class*="menuButton"]:hover,
+html[data-theme="light"] [class*="menuIcon"]:hover {
+  border-color: var(--arena-accent) !important;
+  background: rgba(255, 136, 0, 0.08) !important;
+  color: var(--arena-accent) !important;
+}
+
+html[data-theme="light"] [class*="sidebarOverlay"],
+html[data-theme="light"] [class*="menuOverlay"] {
+  background: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme="light"] [class*="sidebarMenu"],
+html[data-theme="light"] [class^="_sidebar_"] {
+  background: var(--arena-sidebar) !important;
+  border-right: 1px solid #e3e8ee !important;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.18) !important;
+}
+
+html[data-theme="light"] [class*="sidebarMenu"] a,
+html[data-theme="light"] [class*="sidebarNav"] a,
+html[data-theme="light"] [class*="sidebarBottom"] a {
+  border: 1px solid transparent !important;
+  background: transparent;
+  color: #333333 !important;
+}
+
+html[data-theme="light"] [class*="sidebarMenu"] a:hover,
+html[data-theme="light"] [class*="sidebarNav"] a:hover,
+html[data-theme="light"] [class*="sidebarBottom"] a:hover {
+  background: rgba(255, 136, 0, 0.08) !important;
+  color: var(--arena-accent) !important;
+}
+
+html[data-theme="light"] [class*="sidebarMenu"] a[class*="active"],
+html[data-theme="light"] [class*="sidebarNav"] a[class*="active"] {
+  border-color: var(--arena-accent) !important;
+  background: var(--arena-accent) !important;
+  color: #111 !important;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16) !important;
+}
+
+html[data-theme="light"] [class*="closeMenu"],
+html[data-theme="light"] [class*="closeButton"] {
+  border: 1px solid #d9e0e8 !important;
+  background: var(--arena-control) !important;
+  color: #777 !important;
+}
+
+html[data-theme="light"] [class*="closeMenu"]:hover,
+html[data-theme="light"] [class*="closeButton"]:hover {
+  border-color: var(--arena-accent) !important;
+  color: var(--arena-accent) !important;
+  background: rgba(255, 136, 0, 0.08) !important;
+}
+
+html[data-theme="light"] [class*="_card_"],
+html[data-theme="light"] [class*="Card_"],
+html[data-theme="light"] [class*="Box_"] {
+  border-color: var(--arena-border) !important;
+  background-color: var(--arena-surface) !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  border: 1px solid var(--arena-border);
+  background: var(--arena-surface-muted);
+  color: var(--arena-text);
+}
+
+html[data-theme="light"] input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] textarea:focus {
+  outline: none;
+  border-color: var(--arena-accent);
+  box-shadow: 0 0 10px rgba(255, 136, 0, 0.12);
+}
+
+html[data-theme="light"] body.has-unified-menu [class*="topHeader"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background-color: transparent !important;
+}
+
+html[data-theme="light"] body {
+  background-color: #fbfbfc !important;
+  background: transparent !important;
+}
+
+html[data-theme="light"] body::before {
+  background: url("/arena-background.webp") center / cover no-repeat;
+}
+
+html[data-theme="light"] body::after {
+  background: linear-gradient(
+    rgba(251, 251, 252, 0.42),
+    rgba(251, 251, 252, 0.58)
+  );
+}
+
+html[data-theme="light"] [class*="container_"],
+html[data-theme="light"] [class*="arenaWrapper_"],
+html[data-theme="light"] [class*="pageWrapper_"],
+html[data-theme="light"] [class*="mainContent_"],
+html[data-theme="light"] [class*="detailsContainer_"],
+html[data-theme="light"] [class*="authPage_"],
+html[data-theme="light"] [class*="app_"],
+html[data-theme="light"] [class^="_page_"] {
+  background: transparent !important;
+}
+
+html[data-theme="light"] [class*="pageWrapper_"] > [class*="container_"] {
+  background: rgba(244, 246, 249, 0.92) !important;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

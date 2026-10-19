@@ -22,9 +22,9 @@ const mainItems = [
   ["/pagamento", "💳", "Pagamento"],
 ];
 
-const supportItems = [
+const getSupportItems = (adminPath) => [
   ["/sobre", "ℹ️", "Sobre"],
-  ["/admin/login", "⚙️", "Administração"],
+  ...(adminPath ? [[adminPath, "⚙️", "Administração"]] : []),
 ];
 
 function getInitialTheme() {
@@ -39,7 +39,18 @@ export default function UnifiedMenu() {
   const [theme, setTheme] = useState(getInitialTheme);
   const { pathname } = useLocation();
   const isPresentationPage = pathname === "/sobre";
-  const isClienteAutenticado = Boolean(localStorage.getItem("token_sessao"));
+  // Cliente (token_sessao) ou administrador (token_admin) logado: troca
+  // Entrar/Cadastrar pelo botão Sair.
+  const isAdminAutenticado = Boolean(localStorage.getItem("token_admin"));
+  const isClienteAutenticado =
+    !isAdminAutenticado && Boolean(localStorage.getItem("token_sessao"));
+  const isAutenticado = isAdminAutenticado || isClienteAutenticado;
+  // Cliente logado não vê o atalho de Administração.
+  const adminPath = isAdminAutenticado
+    ? "/administrador"
+    : isClienteAutenticado
+      ? null
+      : "/admin/login";
 
   useEffect(() => {
     document.body.classList.add("has-unified-menu");
@@ -109,17 +120,19 @@ export default function UnifiedMenu() {
         </div>
         {!isPresentationPage && (
           <nav className={styles.quickActions} aria-label="Acesso rápido">
-            <NavLink to="/admin/login" className={styles.quickLink}>
-              <FaUserCog />
-              <span>Administração</span>
-            </NavLink>
-            {!isClienteAutenticado && (
+            {adminPath && (
+              <NavLink to={adminPath} className={styles.quickLink}>
+                <FaUserCog />
+                <span>Administração</span>
+              </NavLink>
+            )}
+            {!isAutenticado && (
               <NavLink to="/login" className={styles.quickLink}>
                 <FaSignInAlt />
                 <span>Entrar</span>
               </NavLink>
             )}
-            {!isClienteAutenticado && (
+            {!isAutenticado && (
               <NavLink
                 to="/cadastro"
                 className={`${styles.quickLink} ${styles.quickLinkPrimary}`}
@@ -128,7 +141,7 @@ export default function UnifiedMenu() {
                 <span>Cadastrar</span>
               </NavLink>
             )}
-            {isClienteAutenticado && (
+            {isAutenticado && (
               <NavLink to="/logout" className={styles.quickLink}>
                 <FaSignOutAlt />
                 <span>Sair</span>
@@ -161,9 +174,9 @@ export default function UnifiedMenu() {
           <p className={styles.label}>MENU PRINCIPAL</p>
           <nav>{renderLinks(mainItems)}</nav>
           <p className={styles.label}>OUTROS</p>
-          <nav>{renderLinks(supportItems)}</nav>
+          <nav>{renderLinks(getSupportItems(adminPath))}</nav>
         </div>
-        {!isClienteAutenticado && (
+        {!isAutenticado && (
           <div className={styles.account}>
           <p className={styles.accountLabel}>ACESSO</p>
           <NavLink to="/login" onClick={() => setOpen(false)}>
@@ -174,7 +187,7 @@ export default function UnifiedMenu() {
           </NavLink>
           </div>
         )}
-        {isClienteAutenticado && (
+        {isAutenticado && (
           <div className={styles.account}>
             <p className={styles.accountLabel}>CONTA</p>
             <NavLink to="/logout" onClick={() => setOpen(false)}>

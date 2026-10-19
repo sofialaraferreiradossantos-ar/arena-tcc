@@ -744,3 +744,158 @@
     font-size: 14px;
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) .pageWrapper {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuOverlay {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+:global(html[data-theme="light"]) .sidebarMenu {
+  background: #fbfbfc;
+  border-right: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(255, 136, 0, 0.2);
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a:hover {
+  background: rgba(255, 136, 0, 0.14);
+  color: #a65900;
+}
+
+:global(html[data-theme="light"]) .sidebarMenu a.active:hover {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .closeMenu {
+  background: transparent;
+  color: #a85a00;
+  border: none;
+}
+
+:global(html[data-theme="light"]) .closeMenu:hover {
+  background: rgba(255, 136, 0, 0.14);
+}
+
+:global(html[data-theme="light"]) .menuIcon {
+  background: #fbfbfc;
+  color: #a85a00;
+  border: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .menuIcon:hover {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .topHeader {
+  background: #fbfbfc;
+  border-bottom: 1px solid #e3e8ee;
+}
+
+:global(html[data-theme="light"]) .topHeader strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .content h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .content h1 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .titleLine {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .subtitle {
+  color: #565656;
+}
+
+:global(html[data-theme="light"]) .card {
+  background: #f4f6f9;
+  border: 1px solid #dbe2e9;
+  border-top: 2px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .card:hover {
+  border-color: #ccd6e1;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.14);
+}
+
+:global(html[data-theme="light"]) .trophyIcon {
+  background: rgba(255, 136, 0, 0.08);
+  border: 1px solid rgba(255, 136, 0, 0.35);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .cardLabel {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .cardTitle h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .infoIcon {
+  background: #eff2f5;
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoItem span {
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .infoItem strong {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .detalhesButton {
+  background: transparent;
+  color: #a85a00;
+  border: 1px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .detalhesButton:hover {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .cardRight {
+  border: 1px solid #dbe2e9;
+  background: #eff2f5;
+}
+
+:global(html[data-theme="light"]) .mainContent {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .subtitle {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .card {
+  border: 1px solid #d5dde6;
+  border-top: 3px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .card:hover {
+  border-color: #ff8800;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

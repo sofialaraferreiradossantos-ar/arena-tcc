@@ -1030,3 +1030,245 @@
     font-size: 19px;
   }
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) :global(body) {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .mainContent {
+  background: #ffffff;
+}
+
+:global(html[data-theme="light"]) .topHeader {
+  background: rgba(253, 253, 254, 0.96);
+  border-bottom: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .menuButton {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .menuButton:hover {
+  border-color: #ff8800;
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .logoArea h2 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .userIcon {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .userIcon:hover {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarOverlay {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:global(html[data-theme="light"]) .sidebar {
+  background: #fbfbfc;
+  border-right: 1px solid #e3e8ee;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .sidebarBrand {
+  border-bottom: 1px solid #e7ecf1;
+}
+
+:global(html[data-theme="light"]) .brandText strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .closeButton {
+  border: 1px solid #d9e0e8;
+  background: #f7f8fa;
+  color: #777;
+}
+
+:global(html[data-theme="light"]) .closeButton:hover {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .sidebarNav a,
+:global(html[data-theme="light"]) .sidebarBottom a {
+  border: 1px solid transparent;
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a svg,
+:global(html[data-theme="light"]) .sidebarBottom a svg {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a:hover,
+:global(html[data-theme="light"]) .sidebarBottom a:hover {
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a:hover svg,
+:global(html[data-theme="light"]) .sidebarBottom a:hover svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a.active {
+  background: #ff8800;
+  color: #111;
+  box-shadow: 0 5px 15px rgba(255, 136, 0, 0.16);
+}
+
+:global(html[data-theme="light"]) .sidebarNav a.active svg {
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a.active:hover {
+  background: #ff9417;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .sidebarNav a.active:hover svg {
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .sidebarBottom {
+  border-top: 1px solid #e6eaf0;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1 span {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .pageTitle h1::after {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .pageTitle p {
+  color: #777777;
+}
+
+:global(html[data-theme="light"]) .tabs button,
+:global(html[data-theme="light"]) .tabContainer button,
+:global(html[data-theme="light"]) .tabsContainer button,
+:global(html[data-theme="light"]) .mainContent nav button {
+  border: 1px solid #dbe2e9;
+  background: #f7f8fa;
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .tabs button:hover,
+:global(html[data-theme="light"]) .tabContainer button:hover,
+:global(html[data-theme="light"]) .tabsContainer button:hover,
+:global(html[data-theme="light"]) .mainContent nav button:hover {
+  border-color: #ff8800;
+  color: #a85a00;
+  background: rgba(255, 136, 0, 0.08);
+}
+
+:global(html[data-theme="light"]) .tabs button.active,
+:global(html[data-theme="light"]) .tabContainer button.active,
+:global(html[data-theme="light"]) .tabsContainer button.active,
+:global(html[data-theme="light"]) .mainContent nav button.active {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .card {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+}
+
+:global(html[data-theme="light"]) .card::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .card:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .cardIcon {
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .cardLabel {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .cardTitle {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .infoItem {
+  border: 1px solid #dfe5ec;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .infoIcon {
+  background: rgba(255, 136, 0, 0.08);
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoItem span {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .infoItem strong {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .cancelButton {
+  border: 1px solid #ff8800;
+  background: transparent;
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .cancelButton:hover {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .empty {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+}
+
+:global(html[data-theme="light"]) .emptyIcon {
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  background: rgba(255, 136, 0, 0.07);
+}
+
+:global(html[data-theme="light"]) .empty h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .empty p {
+  color: #777;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

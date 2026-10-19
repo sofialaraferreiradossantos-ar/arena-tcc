@@ -253,3 +253,94 @@
   background: #ff9417;
   color: #111;
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]) .pageWrapper {
+  background: #ffffff;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .container {
+  background: #f4f6f9;
+  border: 1px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .voltar {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .voltar:hover {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .imagem {
+  border: 1px solid #ff8800;
+}
+
+:global(html[data-theme="light"]) .container h1 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .informacoes div {
+  background: #eff2f5;
+}
+
+:global(html[data-theme="light"]) .informacoes svg {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .informacoes span {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .informacoes strong {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .descricao {
+  background: #eff2f5;
+}
+
+:global(html[data-theme="light"]) .descricao h2 {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .descricao p {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .inscrever {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .inscrever:hover {
+  background: #fff;
+}
+
+:global(html[data-theme="light"]) .container {
+  background: #f4f6f9;
+  border: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .container::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .imagem {
+  border: 1px solid #d5dde6;
+}
+
+:global(html[data-theme="light"]) .informacoes div,
+:global(html[data-theme="light"]) .descricao {
+  border: 1px solid #dfe5ec;
+  background: #f7f8fa;
+}
+
+:global(html[data-theme="light"]) .inscrever:hover {
+  background: #ff9417;
+  color: #111;
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */

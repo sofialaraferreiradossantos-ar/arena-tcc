@@ -12,3 +12,13 @@
   color: var(--arena-text);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
+
+:global(html[data-theme="light"]),
+:global(html[data-theme="light"]) :global(body) {
+  background: var(--arena-bg);
+  color: var(--arena-text);
+}
+
+/* ==== FIM DO TEMA CLARO GERADO ==== */
