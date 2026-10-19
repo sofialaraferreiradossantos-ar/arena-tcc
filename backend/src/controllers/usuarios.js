@@ -13,7 +13,6 @@ module.exports = {
                     id_usu,
                     nome_usu,
                     email_usu,
-                    senha_usu,
                     status_usu,
                     dt_cad
                 FROM usuarios
@@ -227,3 +226,4 @@ module.exports = {
     }
 
 };
+
