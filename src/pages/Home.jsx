@@ -1,14 +1,24 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styles from "../styles/home.module.css";
 import CategoryButtons from "../components/quadras/CategoryButtons.jsx";
 import SearchBar from "../components/quadras/SearchBar.jsx";
 import QuadrasSection from "../components/quadras/QuadrasSection.jsx";
-import { quadrasMckp } from "../mockup/dados.js";
+import { modalidades, quadrasMckp } from "../mockup/dados.js";
 
 export default function Quadras() {
   const [search, setSearch] = useState("");
-  const quadras = quadrasMckp.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase()),
+  // A modalidade fica na URL (?modalidade=futevolei) para poder ser linkada.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const modalidade =
+    modalidades.find((item) => item.id === searchParams.get("modalidade")) ||
+    modalidades[0];
+  const setCategoria = (id) => setSearchParams({ modalidade: id });
+
+  const quadras = quadrasMckp.filter(
+    (item) =>
+      item.modalidade === modalidade.id &&
+      item.title.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -25,18 +35,23 @@ export default function Quadras() {
           className={styles.listingControls}
           aria-label="Filtros das quadras"
         >
-          <CategoryButtons />
+          <CategoryButtons
+            categoria={modalidade.id}
+            setCategoria={setCategoria}
+          />
           <SearchBar search={search} setSearch={setSearch} />
         </section>
         <div className={styles.resultsHeader}>
-          <h2>Quadras disponíveis</h2>
+          <h2>Quadras de {modalidade.label.toLowerCase()}</h2>
           <span>
             {quadras.length} {quadras.length === 1 ? "resultado" : "resultados"}
           </span>
         </div>
         <QuadrasSection quadras={quadras} />
         {quadras.length === 0 && (
-          <p className={styles.emptyState}>Nenhuma quadra encontrada.</p>
+          <p className={styles.emptyState}>
+            Nenhuma quadra de {modalidade.label.toLowerCase()} encontrada.
+          </p>
         )}
       </main>
     </div>

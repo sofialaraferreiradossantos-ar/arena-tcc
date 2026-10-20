@@ -9,6 +9,8 @@ export default function QuadraCard({
   image = fallback,
   available,
   location = "Localização não informada",
+  modalidade = "Beach tennis",
+  destaques = "Iluminação LED • areia selecionada",
 }) {
   const navigate = useNavigate();
   const open = () => navigate(`/quadra/${id}`);
@@ -32,10 +34,10 @@ export default function QuadraCard({
         </span>
       </div>
       <div className={styles.courtCardBody}>
-        <small>BEACH TENNIS</small>
+        <small>{modalidade.toUpperCase()}</small>
         <h3>{title}</h3>
         <p className={styles.courtLocation}>📍 {location}</p>
-        <p>Iluminação LED • areia selecionada</p>
+        <p>{destaques}</p>
         <span className={styles.cardLink}>
           Ver detalhes <FaArrowRight />
         </span>
