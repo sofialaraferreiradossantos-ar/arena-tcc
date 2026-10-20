@@ -4,13 +4,14 @@
 
 -- --------------------------------------------------
 -- USUARIOS
+-- A senha de todos é "senha123", gravada já criptografada (hash bcrypt).
 -- --------------------------------------------------
 INSERT INTO usuarios (nome_usu, email_usu, senha_usu, status_usu, dt_cad) VALUES
-('Sofia Almeida',     'sofia.almeida@email.com',   'senha123',  'ativo', '2025-01-10'),
-('Lucas Pereira',     'lucas.pereira@email.com',   'senha123',  'ativo', '2025-01-15'),
-('Marina Costa',      'marina.costa@email.com',    'senha123',  'ativo', '2025-02-01'),
-('Rafael Souza',      'rafael.souza@email.com',    'senha123',  'ativo', '2025-02-10'),
-('Beatriz Lima',      'beatriz.lima@email.com',    'senha123',  'inativo', '2025-03-05');
+('Sofia Almeida',     'sofia.almeida@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-01-10'),
+('Lucas Pereira',     'lucas.pereira@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-01-15'),
+('Marina Costa',      'marina.costa@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-02-01'),
+('Rafael Souza',      'rafael.souza@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-02-10'),
+('Beatriz Lima',      'beatriz.lima@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'inativo', '2025-03-05');
 
 -- --------------------------------------------------
 -- QUADRAS

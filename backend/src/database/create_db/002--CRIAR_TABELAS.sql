@@ -10,9 +10,8 @@ CREATE TABLE usuarios (
     id_usu      INT(11)      NOT NULL AUTO_INCREMENT,
     nome_usu    VARCHAR(100) NOT NULL,
     email_usu   VARCHAR(100) NOT NULL,
-    -- Obs: o MER define VARCHAR(20), mas uma senha com hash (ex: bcrypt)
-    -- costuma precisar de até 60 caracteres. Ajuste se necessário.
-    senha_usu   VARCHAR(20)  NOT NULL,
+    -- Guarda o hash do bcrypt, que tem 60 caracteres
+    senha_usu   VARCHAR(60)  NOT NULL,
     status_usu  VARCHAR(20)  NOT NULL,
     dt_cad      DATE         NOT NULL,
     PRIMARY KEY (id_usu),

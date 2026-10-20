@@ -1,4 +1,38 @@
 const db = require("../database/Connection");
+const { validarId, validarData } = require("../utils/validacoes");
+const montarUpdate = require("../utils/montarUpdate");
+
+const STATUS_TORNEIO = ["aberto", "em breve", "em andamento", "encerrado", "inativo"];
+
+// Valida só os campos presentes (serve para cadastro e edição).
+// Retorna a mensagem de erro ou null se estiver tudo certo.
+function validarCamposTorneio(dados) {
+    const tamanho = (valor) => String(valor ?? "").trim().length;
+
+    if (dados.nome_torn !== undefined && (tamanho(dados.nome_torn) === 0 || tamanho(dados.nome_torn) > 100)) {
+        return "O nome deve ter entre 1 e 100 caracteres.";
+    }
+    if (dados.desc_torn !== undefined && (tamanho(dados.desc_torn) === 0 || tamanho(dados.desc_torn) > 300)) {
+        return "A descrição deve ter entre 1 e 300 caracteres.";
+    }
+    if (dados.dt_torn !== undefined && !validarData(dados.dt_torn)) {
+        return "Data do torneio inválida. Use o formato YYYY-MM-DD.";
+    }
+    if (dados.status_torn !== undefined && !STATUS_TORNEIO.includes(dados.status_torn)) {
+        return `O status deve ser: ${STATUS_TORNEIO.join(", ")}.`;
+    }
+    if (dados.limite_part_torn !== undefined && dados.limite_part_torn !== null && !validarId(dados.limite_part_torn)) {
+        return "O limite de participantes deve ser um número inteiro maior que zero.";
+    }
+    if (dados.premiacao !== undefined && dados.premiacao !== null && tamanho(dados.premiacao) > 300) {
+        return "A premiação deve ter no máximo 300 caracteres.";
+    }
+    if (dados.valor_part !== undefined && dados.valor_part !== null) {
+        const valor = Number.parseFloat(dados.valor_part);
+        if (!Number.isFinite(valor) || valor < 0) return "O valor de participação deve ser um número maior ou igual a zero.";
+    }
+    return null;
+}
 
 module.exports = {
 
@@ -54,12 +88,31 @@ module.exports = {
                 nome_torn,
                 dt_torn,
                 desc_torn,
-                status_torn,
-                limite_part_torn,
-                premiacao,
-                dt_cad,
-                valor_part
-            } = request.body;
+                status_torn = "aberto",
+                limite_part_torn = null,
+                premiacao = null,
+                valor_part = null
+            } = request.body || {};
+
+            // Data de cadastro definida pelo servidor
+            const dt_cad = new Date().toLocaleDateString("sv-SE");
+
+            if (!nome_torn || !dt_torn || !desc_torn) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: "Campos obrigatórios: nome_torn, dt_torn e desc_torn.",
+                    dados: null
+                });
+            }
+
+            const erro = validarCamposTorneio({ nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao, valor_part });
+            if (erro) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: erro,
+                    dados: null
+                });
+            }
 
             const sql = `
                 INSERT INTO torneios
@@ -125,50 +178,58 @@ module.exports = {
         try {
 
             const { id } = request.params;
+            const dados = request.body || {};
 
-            const {
-                nome_torn,
-                dt_torn,
-                desc_torn,
-                status_torn,
-                limite_part_torn,
-                premiacao,
-                dt_cad,
-                valor_part
-            } = request.body;
+            if (!validarId(id)) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: "O id do torneio deve ser numérico.",
+                    dados: null
+                });
+            }
+
+            const erro = validarCamposTorneio(dados);
+            if (erro) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: erro,
+                    dados: null
+                });
+            }
+
+            // Mapeamento dos campos válidos (dt_cad não é editável)
+            const { setClauses, values } = montarUpdate(dados, {
+                nome_torn: "nome_torn",
+                dt_torn: "dt_torn",
+                desc_torn: "desc_torn",
+                status_torn: "status_torn",
+                limite_part_torn: "limite_part_torn",
+                premiacao: "premiacao",
+                valor_part: "valor_part"
+            });
+
+            if (setClauses.length === 0) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: "Nenhum campo válido enviado para atualização.",
+                    dados: null
+                });
+            }
+
+            values.push(id);
 
             const sql = `
                 UPDATE torneios
-                SET
-                    nome_torn = ?,
-                    dt_torn = ?,
-                    desc_torn = ?,
-                    status_torn = ?,
-                    limite_part_torn = ?,
-                    premiacao = ?,
-                    dt_cad = ?,
-                    valor_part = ?
+                SET ${setClauses.join(", ")}
                 WHERE id_torn = ?;
             `;
 
-            const valores = [
-                nome_torn,
-                dt_torn,
-                desc_torn,
-                status_torn,
-                limite_part_torn,
-                premiacao,
-                dt_cad,
-                valor_part,
-                id
-            ];
-
-            const [resultado] = await db.query(sql, valores);
+            const [resultado] = await db.query(sql, values);
 
             if (resultado.affectedRows === 0) {
                 return response.status(404).json({
                     sucesso: false,
-                    mensagem: "Torneio não encontrado.",
+                    mensagem: `Torneio com ID ${id} não encontrado.`,
                     dados: null
                 });
             }
@@ -176,17 +237,7 @@ module.exports = {
             return response.status(200).json({
                 sucesso: true,
                 mensagem: "Torneio atualizado com sucesso.",
-                dados: {
-                    id_torn: id,
-                    nome_torn,
-                    dt_torn,
-                    desc_torn,
-                    status_torn,
-                    limite_part_torn,
-                    premiacao,
-                    dt_cad,
-                    valor_part
-                }
+                dados: { id_torn: Number(id) }
             });
 
         } catch (error) {
