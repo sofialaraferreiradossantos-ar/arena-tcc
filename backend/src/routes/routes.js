@@ -12,6 +12,11 @@ const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
 const CidadesController = require("../controllers/cidades");
 
+const uploadImage = require("../middleware/uploadHelper");
+
+// Middleware configurado para a pasta 'quadras' (backend/public/quadras)
+const uploadQuadras = uploadImage("quadras");
+
 
 
 // =====================================================
@@ -126,8 +131,8 @@ router.delete(
 
 router.get("/quadras", QuadrasController.listarQuadras);
 router.get("/quadras/destaques", QuadrasController.listarDestaques);
-router.post("/quadras", QuadrasController.cadastrarQuadras);
-router.patch("/quadras/:id", QuadrasController.editarQuadras);
+router.post("/quadras", uploadQuadras.single("imagem_qd"), QuadrasController.cadastrarQuadras);
+router.patch("/quadras/:id", uploadQuadras.single("imagem_qd"), QuadrasController.editarQuadras);
 router.delete("/quadras/:id", QuadrasController.apagarQuadras);
 
 

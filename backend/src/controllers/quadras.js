@@ -1,6 +1,25 @@
+const fse = require("fs-extra");
 const db = require("../database/Connection");
 const { validarId } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const { gerarUrl } = require("../utils/gerarUrl");
+
+// Imagem mostrada quando a quadra não tem foto (backend/public/quadras)
+const IMAGEM_PADRAO = "sem-imagem.jpg";
+
+// No multipart (upload) todo campo chega como texto: "0" precisa virar 0.
+function paraBooleano(valor) {
+    return [true, 1, "1", "true", "sim"].includes(valor) ? 1 : 0;
+}
+
+// Responde com erro e apaga a imagem que o multer já salvou nesta requisição,
+// para não acumular arquivos de cadastros recusados.
+async function responderErro(request, response, status, mensagem, dados = null) {
+    if (request.file) {
+        await fse.remove(request.file.path);
+    }
+    return response.status(status).json({ sucesso: false, mensagem, dados });
+}
 
 // Valida só os campos presentes (serve para cadastro e edição).
 // Retorna a mensagem de erro ou null se estiver tudo certo.
@@ -39,7 +58,7 @@ function quadraTratada(quadra) {
         descricao: quadra.descricao,
         valor: quadra.valor,
         disponivel: quadra.status === "disponivel",
-        imagem: quadra.imagem,
+        imagem: gerarUrl(quadra.imagem, "quadras", IMAGEM_PADRAO),
         destaque: Boolean(quadra.destaque),
         cidade: quadra.cidade,
         uf: quadra.uf
@@ -166,32 +185,45 @@ module.exports = {
                 LIMIT 3;
             `;
             const [rows] = await db.query(sql);
-            return response.status(200).json({ sucesso: true, mensagem: "Quadras em destaque.", nItens: rows.length, dados: rows });
+
+            // ALTERNATIVA SEM MEXER COM TODOS OS CAMPOS: só a imagem vira URL
+            const dados = rows.map(quadra => ({
+                ...quadra,
+                imagem: gerarUrl(quadra.imagem, "quadras", IMAGEM_PADRAO)
+            }));
+
+            return response.status(200).json({ sucesso: true, mensagem: "Quadras em destaque.", nItens: dados.length, dados });
         } catch (error) {
             return response.status(500).json({ sucesso: false, mensagem: "Erro ao listar quadras em destaque.", dados: error.message });
         }
     },
 
     // Validações básicas: campos obrigatórios, formatos e cidade existente.
+    // Aceita JSON ou multipart (com a foto no campo "imagem_qd").
     async cadastrarQuadras(request, response) {
         try {
-            const { id_cidade, nome_qd, tipo_qd, desc_qd, status_qd = "disponivel", valor_qd, imagem_qd = null, destaque_qd = 0 } = request.body || {};
+            const { id_cidade, nome_qd, tipo_qd, desc_qd, status_qd = "disponivel", valor_qd, destaque_qd = 0 } = request.body || {};
+
+            // Arquivo enviado pelo multer (upload); sem upload, mantém o nome vindo no body
+            const imagem = request.file;
+            const imagem_qd = imagem ? imagem.filename : (request.body?.imagem_qd || null);
+
             if (!id_cidade || !nome_qd || !tipo_qd || !desc_qd || valor_qd === undefined) {
-                return response.status(400).json({ sucesso: false, mensagem: "Cidade, nome, tipo, descrição e valor são obrigatórios.", dados: null });
+                return responderErro(request, response, 400, "Cidade, nome, tipo, descrição e valor são obrigatórios.");
             }
 
             const erro = validarCamposQuadra({ id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd });
             if (erro) {
-                return response.status(400).json({ sucesso: false, mensagem: erro, dados: null });
+                return responderErro(request, response, 400, erro);
             }
 
             // Verificar se a cidade existe
             if (!(await cidadeExiste(id_cidade))) {
-                return response.status(404).json({ sucesso: false, mensagem: "Cidade não encontrada.", dados: null });
+                return responderErro(request, response, 404, "Cidade não encontrada.");
             }
 
             const valor = Number.parseFloat(valor_qd);
-            const destaque = destaque_qd ? 1 : 0;
+            const destaque = paraBooleano(destaque_qd);
             const sql = `
                 INSERT INTO quadras
                     (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
@@ -201,32 +233,46 @@ module.exports = {
             return response.status(201).json({
                 sucesso: true,
                 mensagem: "Quadra cadastrada com sucesso.",
-                dados: { id_qd: resultado.insertId, id_cidade: Number(id_cidade), nome_qd, tipo_qd, desc_qd, status_qd, valor_qd: valor.toFixed(2), imagem_qd, destaque_qd: destaque }
+                dados: {
+                    id_qd: resultado.insertId,
+                    id_cidade: Number(id_cidade),
+                    nome_qd,
+                    tipo_qd,
+                    desc_qd,
+                    status_qd,
+                    valor_qd: valor.toFixed(2),
+                    imagem_qd,
+                    imagem_url: gerarUrl(imagem_qd, "quadras", IMAGEM_PADRAO),
+                    destaque_qd: destaque
+                }
             });
         } catch (error) {
-            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+            return responderErro(request, response, 500, "Erro na requisição.", error.message);
         }
     },
 
     // Update dinâmico: só altera os campos enviados no body.
+    // Uma nova foto pode ser enviada no campo "imagem_qd" (multipart).
     async editarQuadras(request, response) {
         try {
             const { id } = request.params;
             const dados = { ...request.body };
+            if (request.file) dados.imagem_qd = request.file.filename;
+
             if (!inteiro(id, null)) {
-                return response.status(400).json({ sucesso: false, mensagem: "O id da quadra deve ser numérico.", dados: null });
+                return responderErro(request, response, 400, "O id da quadra deve ser numérico.");
             }
 
             const erro = validarCamposQuadra(dados);
             if (erro) {
-                return response.status(400).json({ sucesso: false, mensagem: erro, dados: null });
+                return responderErro(request, response, 400, erro);
             }
 
             if (dados.id_cidade !== undefined && !(await cidadeExiste(dados.id_cidade))) {
-                return response.status(404).json({ sucesso: false, mensagem: "Cidade não encontrada.", dados: null });
+                return responderErro(request, response, 404, "Cidade não encontrada.");
             }
             if (dados.valor_qd !== undefined) dados.valor_qd = Number.parseFloat(dados.valor_qd);
-            if (dados.destaque_qd !== undefined) dados.destaque_qd = dados.destaque_qd ? 1 : 0;
+            if (dados.destaque_qd !== undefined) dados.destaque_qd = paraBooleano(dados.destaque_qd);
 
             const { setClauses, values } = montarUpdate(dados, {
                 id_cidade: "id_cidade",
@@ -239,17 +285,22 @@ module.exports = {
                 destaque_qd: "destaque_qd"
             });
             if (setClauses.length === 0) {
-                return response.status(400).json({ sucesso: false, mensagem: "Nenhum campo válido enviado para atualização.", dados: null });
+                return responderErro(request, response, 400, "Nenhum campo válido enviado para atualização.");
             }
 
             values.push(id);
             const [resultado] = await db.query(`UPDATE quadras SET ${setClauses.join(", ")} WHERE id_qd = ?;`, values);
             if (resultado.affectedRows === 0) {
-                return response.status(404).json({ sucesso: false, mensagem: `Quadra com ID ${id} não encontrada.`, dados: null });
+                return responderErro(request, response, 404, `Quadra com ID ${id} não encontrada.`);
             }
-            return response.status(200).json({ sucesso: true, mensagem: "Quadra atualizada com sucesso.", dados: { id_qd: Number(id) } });
+
+            const atualizado = { id_qd: Number(id) };
+            if (dados.imagem_qd !== undefined) {
+                atualizado.imagem_url = gerarUrl(dados.imagem_qd, "quadras", IMAGEM_PADRAO);
+            }
+            return response.status(200).json({ sucesso: true, mensagem: "Quadra atualizada com sucesso.", dados: atualizado });
         } catch (error) {
-            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+            return responderErro(request, response, 500, "Erro na requisição.", error.message);
         }
     },
 
