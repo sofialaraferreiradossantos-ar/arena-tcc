@@ -149,6 +149,7 @@ router.delete("/torneios/:id", TorneiosController.apagarTorneios);
 router.get("/usuarios", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
+router.patch("/usuarios/atualiza-senha/:id", UsuariosController.atualizarSenha);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
 
 

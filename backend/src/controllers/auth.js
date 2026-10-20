@@ -1,6 +1,8 @@
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 const db = require("../database/Connection");
 
+const SALT_ROUNDS = 10;
 const sessoes = new Map();
 
 function statusAtivo(status) {
@@ -54,9 +56,14 @@ module.exports = {
 
       const usuarioBanco = rows[0];
 
+      // Compara a senha digitada com o hash salvo no banco (bcrypt)
+      const senhaCorreta = usuarioBanco
+        ? await bcrypt.compare(String(senha), usuarioBanco.senha_usu)
+        : false;
+
       if (
         !usuarioBanco ||
-        usuarioBanco.senha_usu !== senha ||
+        !senhaCorreta ||
         !statusAtivo(usuarioBanco.status_usu)
       ) {
         return response.status(401).json({
@@ -130,9 +137,13 @@ module.exports = {
 
       const administradorBanco = rows[0];
 
+      const senhaCorreta = administradorBanco
+        ? await bcrypt.compare(String(senha), administradorBanco.senha_adm)
+        : false;
+
       if (
         !administradorBanco ||
-        administradorBanco.senha_adm !== senha ||
+        !senhaCorreta ||
         !statusAtivo(administradorBanco.status_adm)
       ) {
         return response.status(401).json({
@@ -189,6 +200,8 @@ module.exports = {
         });
       }
 
+      const hashedPassword = await bcrypt.hash(String(senha_adm), SALT_ROUNDS);
+
       const [resultado] = await db.query(
         `INSERT INTO administradores
           (nome_adm, email_adm, senha_adm, status_adm, dt_cad)
@@ -196,7 +209,7 @@ module.exports = {
         [
           String(nome_adm).trim(),
           emailNormalizado,
-          String(senha_adm),
+          hashedPassword,
           "ativo",
           new Date().toISOString().slice(0, 10),
         ],

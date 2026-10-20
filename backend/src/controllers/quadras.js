@@ -1,4 +1,26 @@
 const db = require("../database/Connection");
+const { validarId } = require("../utils/validacoes");
+const montarUpdate = require("../utils/montarUpdate");
+
+// Valida só os campos presentes (serve para cadastro e edição).
+// Retorna a mensagem de erro ou null se estiver tudo certo.
+function validarCamposQuadra(dados) {
+    if (dados.id_cidade !== undefined && !validarId(dados.id_cidade)) return "O id da cidade deve ser numérico.";
+    if (dados.nome_qd !== undefined && (!texto(dados.nome_qd) || texto(dados.nome_qd).length > 100)) return "O nome deve ter entre 1 e 100 caracteres.";
+    if (dados.tipo_qd !== undefined && (!texto(dados.tipo_qd) || texto(dados.tipo_qd).length > 50)) return "O tipo deve ter entre 1 e 50 caracteres.";
+    if (dados.desc_qd !== undefined && (!texto(dados.desc_qd) || texto(dados.desc_qd).length > 300)) return "A descrição deve ter entre 1 e 300 caracteres.";
+    if (dados.status_qd !== undefined && !["disponivel", "indisponivel"].includes(dados.status_qd)) return "O status deve ser 'disponivel' ou 'indisponivel'.";
+    if (dados.valor_qd !== undefined) {
+        const valor = Number.parseFloat(dados.valor_qd);
+        if (!Number.isFinite(valor) || valor < 0) return "O valor deve ser um número maior ou igual a zero.";
+    }
+    return null;
+}
+
+async function cidadeExiste(id_cidade) {
+    const [rows] = await db.query("SELECT id_cidade FROM cidades WHERE id_cidade = ?;", [id_cidade]);
+    return rows.length > 0;
+}
 
 function inteiro(valor, padrao) {
     const numero = Number.parseInt(valor, 10);
@@ -150,39 +172,82 @@ module.exports = {
         }
     },
 
+    // Validações básicas: campos obrigatórios, formatos e cidade existente.
     async cadastrarQuadras(request, response) {
         try {
             const { id_cidade, nome_qd, tipo_qd, desc_qd, status_qd = "disponivel", valor_qd, imagem_qd = null, destaque_qd = 0 } = request.body || {};
             if (!id_cidade || !nome_qd || !tipo_qd || !desc_qd || valor_qd === undefined) {
-                return response.status(400).json({ sucesso: false, mensagem: "Cidade, nome, tipo, descrição e valor são obrigatórios." });
+                return response.status(400).json({ sucesso: false, mensagem: "Cidade, nome, tipo, descrição e valor são obrigatórios.", dados: null });
             }
 
+            const erro = validarCamposQuadra({ id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd });
+            if (erro) {
+                return response.status(400).json({ sucesso: false, mensagem: erro, dados: null });
+            }
+
+            // Verificar se a cidade existe
+            if (!(await cidadeExiste(id_cidade))) {
+                return response.status(404).json({ sucesso: false, mensagem: "Cidade não encontrada.", dados: null });
+            }
+
+            const valor = Number.parseFloat(valor_qd);
+            const destaque = destaque_qd ? 1 : 0;
             const sql = `
                 INSERT INTO quadras
                     (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
             `;
-            const [resultado] = await db.query(sql, [id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd ? 1 : 0]);
-            return response.status(201).json({ sucesso: true, mensagem: "Quadra cadastrada com sucesso.", dados: { id_qd: resultado.insertId, ...request.body } });
+            const [resultado] = await db.query(sql, [id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor, imagem_qd, destaque]);
+            return response.status(201).json({
+                sucesso: true,
+                mensagem: "Quadra cadastrada com sucesso.",
+                dados: { id_qd: resultado.insertId, id_cidade: Number(id_cidade), nome_qd, tipo_qd, desc_qd, status_qd, valor_qd: valor.toFixed(2), imagem_qd, destaque_qd: destaque }
+            });
         } catch (error) {
             return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
         }
     },
 
+    // Update dinâmico: só altera os campos enviados no body.
     async editarQuadras(request, response) {
         try {
             const { id } = request.params;
-            const { id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd = null, destaque_qd = 0 } = request.body || {};
-            const sql = `
-                UPDATE quadras
-                SET id_cidade = ?, nome_qd = ?, tipo_qd = ?, desc_qd = ?, status_qd = ?, valor_qd = ?, imagem_qd = ?, destaque_qd = ?
-                WHERE id_qd = ?;
-            `;
-            const [resultado] = await db.query(sql, [id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd ? 1 : 0, id]);
-            if (resultado.affectedRows === 0) {
-                return response.status(404).json({ sucesso: false, mensagem: "Quadra não encontrada.", dados: null });
+            const dados = { ...request.body };
+            if (!inteiro(id, null)) {
+                return response.status(400).json({ sucesso: false, mensagem: "O id da quadra deve ser numérico.", dados: null });
             }
-            return response.status(200).json({ sucesso: true, mensagem: "Quadra atualizada com sucesso.", dados: { id_qd: id, ...request.body } });
+
+            const erro = validarCamposQuadra(dados);
+            if (erro) {
+                return response.status(400).json({ sucesso: false, mensagem: erro, dados: null });
+            }
+
+            if (dados.id_cidade !== undefined && !(await cidadeExiste(dados.id_cidade))) {
+                return response.status(404).json({ sucesso: false, mensagem: "Cidade não encontrada.", dados: null });
+            }
+            if (dados.valor_qd !== undefined) dados.valor_qd = Number.parseFloat(dados.valor_qd);
+            if (dados.destaque_qd !== undefined) dados.destaque_qd = dados.destaque_qd ? 1 : 0;
+
+            const { setClauses, values } = montarUpdate(dados, {
+                id_cidade: "id_cidade",
+                nome_qd: "nome_qd",
+                tipo_qd: "tipo_qd",
+                desc_qd: "desc_qd",
+                status_qd: "status_qd",
+                valor_qd: "valor_qd",
+                imagem_qd: "imagem_qd",
+                destaque_qd: "destaque_qd"
+            });
+            if (setClauses.length === 0) {
+                return response.status(400).json({ sucesso: false, mensagem: "Nenhum campo válido enviado para atualização.", dados: null });
+            }
+
+            values.push(id);
+            const [resultado] = await db.query(`UPDATE quadras SET ${setClauses.join(", ")} WHERE id_qd = ?;`, values);
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({ sucesso: false, mensagem: `Quadra com ID ${id} não encontrada.`, dados: null });
+            }
+            return response.status(200).json({ sucesso: true, mensagem: "Quadra atualizada com sucesso.", dados: { id_qd: Number(id) } });
         } catch (error) {
             return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
         }
@@ -191,6 +256,9 @@ module.exports = {
     async apagarQuadras(request, response) {
         try {
             const { id } = request.params;
+            if (!inteiro(id, null)) {
+                return response.status(400).json({ sucesso: false, mensagem: "O id da quadra deve ser numérico.", dados: null });
+            }
             const [resultado] = await db.query("UPDATE quadras SET status_qd = 'indisponivel' WHERE id_qd = ?;", [id]);
             if (resultado.affectedRows === 0) {
                 return response.status(404).json({ sucesso: false, mensagem: "Quadra não encontrada.", dados: null });
