@@ -143,7 +143,6 @@ module.exports = {
                 });
             }
 
-            // Regra do torneio: o usuário não pode estar em duas equipes do mesmo torneio
             const [outraEquipe] = await db.query(
                 `
                     SELECT pe.id_part
