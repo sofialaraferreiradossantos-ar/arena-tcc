@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  FaRegCalendarAlt,
+  FaTrophy,
+  FaUsers,
+  FaVolleyballBall,
+} from "react-icons/fa";
 import styles from "../styles/inscricao.module.css";
 import {
   CATEGORIAS_CLIENTE,
@@ -105,7 +111,7 @@ function InscricaoTorneio() {
           🏠 Início
         </Link>
         <Link to="/quadra" onClick={() => setMenuAberto(false)}>
-          🏐 Quadras
+          🎾 Quadras
         </Link>
         <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>
           🕐 Agendar Horário
@@ -153,7 +159,9 @@ function InscricaoTorneio() {
           {/* INFORMAÇÕES DO TORNEIO */}
           <div className={styles.torneioInfo}>
             <div className={styles.infoHeader}>
-              <div className={styles.trophyIcon}>🏆</div>
+              <div className={styles.trophyIcon}>
+                <FaTrophy />
+              </div>
               <div>
                 <small>TORNEIO</small>
                 <h2>{torneio.nome}</h2>
@@ -162,7 +170,9 @@ function InscricaoTorneio() {
 
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
-                <span>🏐</span>
+                <span>
+                  <FaVolleyballBall />
+                </span>
                 <div>
                   <small>Quadra</small>
                   <strong>{torneio.local}</strong>
@@ -170,7 +180,9 @@ function InscricaoTorneio() {
               </div>
 
               <div className={styles.infoItem}>
-                <span>📅</span>
+                <span>
+                  <FaRegCalendarAlt />
+                </span>
                 <div>
                   <small>Data</small>
                   <strong>{torneio.data}</strong>
@@ -178,7 +190,9 @@ function InscricaoTorneio() {
               </div>
 
               <div className={styles.infoItem}>
-                <span>👥</span>
+                <span>
+                  <FaUsers />
+                </span>
                 <div>
                   <small>Vagas</small>
                   <strong>{torneio.vagas}</strong>

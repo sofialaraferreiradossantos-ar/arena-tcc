@@ -78,7 +78,7 @@ function QuadraDetalhes() {
               : ""
           }
         >
-          <span className={styles.menuEmoji}>🏐</span>
+          <span className={styles.menuEmoji}>🎾</span>
           Quadras
         </Link>
 

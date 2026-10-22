@@ -6,7 +6,7 @@ import logo from "../../assets/logo.jpeg";
 
 const links = [
   ["/home", "Início", "🏠"],
-  ["/quadras", "Quadras", "🏐"],
+  ["/quadras", "Quadras", "🎾"],
   ["/agendar-horario", "Agendar horário", "🕐"],
   ["/agendamentos", "Agendamentos", "📅"],
   ["/torneios", "Torneios", "🏆"],
@@ -44,7 +44,7 @@ export default function Header() {
           </h2>
         </Link>
         <nav className={styles.desktopNav} aria-label="Navegação principal">
-          <NavLink to="/quadras">🏐 Quadras</NavLink>
+          <NavLink to="/quadras">🎾 Quadras</NavLink>
           <NavLink to="/torneios">🏆 Torneios</NavLink>
           <NavLink to="/agendamentos">📅 Agendamentos</NavLink>
         </nav>

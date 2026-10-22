@@ -173,7 +173,6 @@
   margin: 0 auto;
   background: #151515;
   border: 1px solid #303030;
-  border-top: 2px solid #ff8800;
   border-radius: 16px;
   padding: 28px;
   box-sizing: border-box;
@@ -461,7 +460,6 @@
 :global(html[data-theme="light"]) .inscricaoCard {
   background: #f4f6f9;
   border: 1px solid #d5dde6;
-  border-top: 2px solid #ff8800;
 }
 
 :global(html[data-theme="light"]) .torneioInfo {

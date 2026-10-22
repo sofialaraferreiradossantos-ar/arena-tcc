@@ -84,7 +84,7 @@ export default function PagamentoCartao() {
 
                 <input
                   type="text"
-                  placeholder="💳"
+                  placeholder="Visa, Mastercard..."
                   className={styles.loginInput}
                 />
               </div>
@@ -103,8 +103,8 @@ export default function PagamentoCartao() {
             <h3>Resumo do Agendamento</h3>
 
             <p>Quadra 1</p>
-            <p>📅 17/02/2026</p>
-            <p>🕐 11:00 - 12:00</p>
+            <p>17/02/2026</p>
+            <p>11:00 - 12:00</p>
 
             <button
               className={styles.confirmarPagamento}

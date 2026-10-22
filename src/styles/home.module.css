@@ -610,15 +610,6 @@
   transition: 0.25s ease;
 }
 
-.quadraCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: #ff8800;
-}
 
 .quadraCard:hover {
   border-color: #ff8800;
@@ -714,21 +705,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.cadastroCard::before,
-.loginCard::before,
-.recuperarCard::before,
-.sobreCard::before,
-.pagamentoCard::before,
-.contentCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  border-radius: 17px 17px 0 0;
-  background: #ff8800;
-}
 
 /* A tela inicial não usa a faixa decorativa no topo do cartão. */
 .homePage .contentCard::before {
@@ -774,18 +750,10 @@
   gap: 18px;
   background: linear-gradient(145deg, #181818, #131313);
   border-color: rgba(255, 136, 0, 0.28);
-  border-top: 4px solid #ff8800 !important;
   text-align: center;
   box-shadow:
     0 18px 45px rgba(0, 0, 0, 0.24),
     0 0 30px rgba(255, 136, 0, 0.04);
-}
-
-.sobreCard::before {
-  z-index: 2;
-  height: 4px;
-  background: linear-gradient(90deg, #ff8800, #ffad4d, #ff8800);
-  box-shadow: 0 0 14px rgba(255, 136, 0, 0.28);
 }
 
 .sobreCard > .sobreTitulo,
@@ -978,15 +946,6 @@
   text-align: center;
 }
 
-.sobreSecao::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 18%;
-  width: 64%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ff8800, transparent);
-}
 
 .sobreSecao h3 {
   margin-bottom: 10px;
@@ -1153,15 +1112,6 @@
   transition: 0.25s ease;
 }
 
-.infoCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: #ff8800;
-}
 
 .infoCard:hover {
   border-color: #ff8800;
@@ -2046,7 +1996,6 @@
   min-height: 180px;
   padding: 24px;
   border: 1px solid #303030;
-  border-top: 3px solid #ff8800;
   border-radius: 17px;
   background: #151515;
 }
@@ -2139,7 +2088,6 @@
   flex: 1;
   padding: 24px;
   border: 1px solid #303030;
-  border-top: 3px solid #ff8800;
   border-radius: 17px;
   background: linear-gradient(145deg, #181818, #131313);
 }
@@ -2911,7 +2859,6 @@
   width: min(100%, 590px);
   padding: 32px;
   border: 1px solid #303030;
-  border-top: 3px solid #ff8800;
   border-radius: 15px;
   background: #151515;
   box-shadow: 0 18px 50px #0007;
@@ -3561,10 +3508,6 @@
   border: 1px solid #d5dde6;
 }
 
-:global(html[data-theme="light"]) .quadraCard::before {
-  background: #ff8800;
-}
-
 :global(html[data-theme="light"]) .quadraCard:hover {
   border-color: #ff8800;
 }
@@ -3613,26 +3556,11 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-:global(html[data-theme="light"]) .cadastroCard::before,
-:global(html[data-theme="light"]) .loginCard::before,
-:global(html[data-theme="light"]) .recuperarCard::before,
-:global(html[data-theme="light"]) .sobreCard::before,
-:global(html[data-theme="light"]) .pagamentoCard::before,
-:global(html[data-theme="light"]) .contentCard::before {
-  background: #ff8800;
-}
-
 :global(html[data-theme="light"]) .sobreCard {
   background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
   border-color: rgba(255, 136, 0, 0.28);
-  border-top: 4px solid #ff8800 !important;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.096),
     0 0 30px rgba(255, 136, 0, 0.04);
-}
-
-:global(html[data-theme="light"]) .sobreCard::before {
-  background: linear-gradient(90deg, #ff8800, #ffad4d, #ff8800);
-  box-shadow: 0 0 14px rgba(255, 136, 0, 0.28);
 }
 
 :global(html[data-theme="light"]) .cadastroTitle,
@@ -3718,10 +3646,6 @@
   background: linear-gradient(145deg, #f6f8fa, #f8f9fb);
 }
 
-:global(html[data-theme="light"]) .sobreSecao::before {
-  background: linear-gradient(90deg, transparent, #ff8800, transparent);
-}
-
 :global(html[data-theme="light"]) .sobreSecao h3 {
   color: #a65900;
 }
@@ -3793,10 +3717,6 @@
 :global(html[data-theme="light"]) .infoCard {
   border: 1px solid #d5dde6;
   background: #f4f6f9;
-}
-
-:global(html[data-theme="light"]) .infoCard::before {
-  background: #ff8800;
 }
 
 :global(html[data-theme="light"]) .infoCard:hover {
@@ -3999,7 +3919,6 @@
 :global(html[data-theme="light"]) .pagamentoInfo,
 :global(html[data-theme="light"]) .resumoPagamento {
   border: 1px solid #d5dde6;
-  border-top: 3px solid #ff8800;
   background: #f4f6f9;
 }
 
@@ -4036,7 +3955,6 @@
 :global(html[data-theme="light"]) .paymentPage .pagamentoInfo > div,
 :global(html[data-theme="light"]) .cardPaymentPage .formPagamento {
   border: 1px solid #d5dde6;
-  border-top: 3px solid #ff8800;
   background: linear-gradient(145deg, #f3f5f8, #f6f7f9);
 }
 
@@ -4352,7 +4270,6 @@
 
 :global(html[data-theme="light"]) .authCard {
   border: 1px solid #d5dde6;
-  border-top: 3px solid #ff8800;
   background: #f4f6f9;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.187);
 }

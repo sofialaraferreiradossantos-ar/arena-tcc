@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 import styles from "../styles/agendarHorario.module.css";
 import { HORARIOS_OCUPADOS, PERIODOS } from "../mockup/horarios.js";
 
@@ -118,7 +119,9 @@ function AgendarHorario() {
           </h2>
         </div>
 
-        <div className={styles.userIcon}>👤</div>
+        <div className={styles.userIcon}>
+          <FaUserCircle />
+        </div>
       </header>
 
       {menuAberto && (
@@ -190,8 +193,6 @@ function AgendarHorario() {
             <option value="">Selecione uma quadra</option>
             <option value="Beach Tennis">Beach Tennis</option>
             <option value="Futevôlei">Futevôlei</option>
-            <option value="Futebol">Futebol</option>
-            <option value="Vôlei">Vôlei</option>
           </select>
         </section>
 

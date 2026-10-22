@@ -19,7 +19,7 @@ INSERT INTO usuarios (nome_usu, email_usu, senha_usu, status_usu, dt_cad) VALUES
 INSERT INTO quadras
     (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
 VALUES
-(1, 'Quadra 1', 'Vôlei de Praia', 'Quadra oficial de vôlei de praia com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
+(1, 'Quadra 1', 'Futevôlei', 'Quadra oficial de futevôlei com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
 (1, 'Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
 (1, 'Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0),
 (1, 'Quadra 4', 'Beach Tennis', 'Quadra de beach tennis com iluminação LED', 'disponivel', 70.00, 'quadra2.jpg', 0);
@@ -57,14 +57,14 @@ INSERT INTO pagamentos (id_agend, valor_pag, forma_pag, status_pag) VALUES
 -- TORNEIOS
 -- --------------------------------------------------
 INSERT INTO torneios (nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao, dt_cad, valor_part) VALUES
-('Copa Arena Beach 2026',   '2026-10-15', 'Torneio aberto de vôlei de praia, categoria amador', 'aberto',   16, 'Troféu + R$ 1.000,00', '2026-08-01', 50.00),
+('Copa Arena Beach 2026',   '2026-10-15', 'Torneio aberto de futevôlei, categoria amador', 'aberto',   16, 'Troféu + R$ 1.000,00', '2026-08-01', 50.00),
 ('Beach Tennis Open',       '2026-11-20', 'Torneio de beach tennis em duplas mistas',           'em breve', 8,  'Troféu + kit esportivo', '2026-08-10', 40.00);
 
 -- --------------------------------------------------
 -- EQUIPES_TORNEIO
 -- --------------------------------------------------
 INSERT INTO equipes_torneio (id_torn, nome_equipe, desc_equipe, status_equipe) VALUES
-(1, 'Areia Quente',    'Equipe formada por atletas locais de vôlei de praia', 'inscrita'),
+(1, 'Areia Quente',    'Equipe formada por atletas locais de futevôlei', 'inscrita'),
 (1, 'Praia Cheia',     'Equipe mista com foco em categoria amador',           'inscrita'),
 (2, 'Dupla Perfeita',  'Dupla de beach tennis inscrita no torneio',           'inscrita');
 
