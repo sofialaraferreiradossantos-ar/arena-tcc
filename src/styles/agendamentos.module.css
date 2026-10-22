@@ -1031,6 +1031,259 @@
   }
 }
 
+/* =========================================================
+   ADICIONAR / EDITAR AGENDAMENTO
+========================================================= */
+
+.tabsComAcao {
+  width: 100%;
+  max-width: 1300px;
+  margin: 36px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tabsComAcao > div {
+  width: auto;
+  margin: 0;
+}
+
+.addPrimaryButton,
+.editPrimaryButton {
+  min-height: 46px;
+  padding: 11px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #ff8800;
+  border-radius: 9px;
+  background: #ff8800;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addPrimaryButton:hover,
+.editPrimaryButton:hover {
+  border-color: #ff9417;
+  background: #ff9417;
+}
+
+.cardFooter {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.aviso {
+  width: 100%;
+  max-width: 1300px;
+  margin: 18px auto 0;
+  padding: 13px 16px;
+  border: 1px solid #22c55e;
+  border-radius: 10px;
+  background: rgba(21, 128, 61, 0.2);
+  color: #86efac;
+  font-weight: 700;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1700;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.modal {
+  position: relative;
+  width: min(560px, 100%);
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid #303030;
+  border-radius: 16px;
+  background: #151515;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+}
+
+.modalClose {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #303030;
+  border-radius: 9px;
+  background: #101010;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.modalClose:hover {
+  border-color: #ff8800;
+}
+
+.modalAtual,
+.modalDica {
+  margin: 0;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.campo {
+  display: grid;
+  gap: 8px;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.campo select,
+.campo input {
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #303030;
+  border-radius: 9px;
+  background: #101010;
+  color: #fff;
+  font-size: 14px;
+}
+
+.campo select:focus,
+.campo input:focus {
+  outline: none;
+  border-color: #ff8800;
+}
+
+.periodo {
+  display: grid;
+  gap: 6px;
+}
+
+.periodo small {
+  color: #999;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.horarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.horarioBtn {
+  min-width: 74px;
+  height: 40px;
+  border: 1px solid #303030;
+  border-radius: 8px;
+  background: #101010;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.horarioBtn:hover:not(:disabled) {
+  border-color: #ff8800;
+}
+
+.horarioBtn:disabled {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.horarioActive {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+.modalFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.fecharEdicao,
+.confirmarEdicao {
+  min-height: 46px;
+  padding: 11px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fecharEdicao {
+  border: 1px solid #303030;
+  background: transparent;
+  color: #ddd;
+}
+
+.confirmarEdicao {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+.confirmarEdicao:disabled {
+  border-color: #2c2c2c;
+  background: #2c2c2c;
+  color: #9a9a9a;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .tabsComAcao {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal {
+    padding: 22px 18px;
+  }
+
+  .modalFooter > button {
+    flex: 1;
+  }
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {
@@ -1269,6 +1522,113 @@
 
 :global(html[data-theme="light"]) .empty p {
   color: #777;
+}
+
+:global(html[data-theme="light"]) .addPrimaryButton,
+:global(html[data-theme="light"]) .editPrimaryButton {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .addPrimaryButton:hover,
+:global(html[data-theme="light"]) .editPrimaryButton:hover {
+  border-color: #ff9417;
+  background: #ff9417;
+}
+
+:global(html[data-theme="light"]) .aviso {
+  border: 1px solid #22c55e;
+  background: rgba(21, 128, 61, 0.2);
+  color: #117f39;
+}
+
+:global(html[data-theme="light"]) .modalOverlay {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+:global(html[data-theme="light"]) .modal {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+:global(html[data-theme="light"]) .modal::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .modalHeader h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .modalClose {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .modalClose:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .modalAtual,
+:global(html[data-theme="light"]) .modalDica {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .campo {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .campo select,
+:global(html[data-theme="light"]) .campo input {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .campo select:focus,
+:global(html[data-theme="light"]) .campo input:focus {
+  outline: none;
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .periodo small {
+  color: #666666;
+}
+
+:global(html[data-theme="light"]) .horarioBtn {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .horarioBtn:hover:not(:disabled) {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .horarioActive {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .fecharEdicao {
+  border: 1px solid #d5dde6;
+  background: transparent;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .confirmarEdicao {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .confirmarEdicao:disabled {
+  border-color: #d9e0e8;
+  background: #e9edf2;
+  color: #656565;
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */

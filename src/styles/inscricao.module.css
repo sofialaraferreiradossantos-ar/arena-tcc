@@ -292,7 +292,8 @@
   font-size: 13px;
 }
 
-.inputGroup input {
+.inputGroup input,
+.inputGroup select {
   width: 100%;
   height: 43px;
   padding: 0 13px;
@@ -304,7 +305,8 @@
   box-sizing: border-box;
 }
 
-.inputGroup input:focus {
+.inputGroup input:focus,
+.inputGroup select:focus {
   border-color: #ff8800;
   box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.08);
 }
@@ -509,14 +511,16 @@
   color: #222222;
 }
 
-:global(html[data-theme="light"]) .inputGroup input {
+:global(html[data-theme="light"]) .inputGroup input,
+:global(html[data-theme="light"]) .inputGroup select {
   background: #f7f8fa;
   border: 1px solid #d5dde6;
   color: #000000;
   outline: none;
 }
 
-:global(html[data-theme="light"]) .inputGroup input:focus {
+:global(html[data-theme="light"]) .inputGroup input:focus,
+:global(html[data-theme="light"]) .inputGroup select:focus {
   border-color: #ff8800;
   box-shadow: 0 0 0 2px rgba(255, 136, 0, 0.08);
 }

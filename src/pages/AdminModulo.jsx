@@ -56,6 +56,12 @@ const moduleData = {
         role: "Descoberta",
         status: "Manutenção",
       },
+      {
+        name: "Quadra 4",
+        detail: "Futevôlei",
+        role: "Coberta",
+        status: "Disponível",
+      },
     ],
   },
   agendamentos: {
@@ -126,6 +132,9 @@ const reportData = [
 
 function getStatusClass(status) {
   const normalizedStatus = status.toLowerCase();
+  if (normalizedStatus.includes("indisponível")) {
+    return styles.statusDanger;
+  }
   if (
     normalizedStatus.includes("manutenção") ||
     normalizedStatus.includes("pendente") ||

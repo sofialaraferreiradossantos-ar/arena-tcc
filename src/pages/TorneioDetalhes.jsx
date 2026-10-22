@@ -7,82 +7,21 @@ import {
   FaTrophy,
   FaUsers,
   FaMoneyBillWave,
+  FaLayerGroup,
+  FaTags,
 } from "react-icons/fa";
 
 import styles from "../styles/torneioDetalhes.module.css";
 
-import quadra1 from "../mockup/imagens/quadraCoberta.jpg";
+import {
+  CATEGORIAS_CLIENTE,
+  NIVEIS,
+  formatarValor,
+  torneiosMckp as torneios,
+} from "../mockup/torneios.js";
 
-const torneios = [
-  {
-    id: 1,
-
-    nome: "Torneio de Futevôlei Pro",
-
-    data: "25/05 a 25/06",
-
-    local: "Beach Tennis Arena 1",
-
-    horario: "08:00 às 18:00",
-
-    valor: "R$ 100,00",
-
-    premiacao: "R$ 1.000,00",
-
-    participantes: "Até 16 duplas",
-
-    imagem: quadra1,
-
-    descricao:
-      "Torneio de Futevôlei Pro destinado aos participantes interessados em competir e participar de uma experiência esportiva.",
-  },
-
-  {
-    id: 2,
-
-    nome: "Torneio de Futevôlei Pro",
-
-    data: "14/06 a 24/06",
-
-    local: "Beach Tennis Arena 1",
-
-    horario: "08:00 às 18:00",
-
-    valor: "R$ 100,00",
-
-    premiacao: "R$ 1.000,00",
-
-    participantes: "Até 16 duplas",
-
-    imagem: quadra1,
-
-    descricao:
-      "Torneio de Futevôlei Pro destinado aos participantes interessados em competir e participar de uma experiência esportiva.",
-  },
-
-  {
-    id: 3,
-
-    nome: "Torneio de Futevôlei Pro",
-
-    data: "30/05 a 30/06",
-
-    local: "Beach Tennis Arena 1",
-
-    horario: "08:00 às 18:00",
-
-    valor: "R$ 100,00",
-
-    premiacao: "R$ 1.000,00",
-
-    participantes: "Até 16 duplas",
-
-    imagem: quadra1,
-
-    descricao:
-      "Torneio de Futevôlei Pro destinado aos participantes interessados em competir e participar de uma experiência esportiva.",
-  },
-];
+const listarComE = (itens) =>
+  `${itens.slice(0, -1).join(", ")} e ${itens[itens.length - 1]}`;
 
 function TorneioDetalhes() {
   const { id } = useParams();
@@ -183,7 +122,27 @@ function TorneioDetalhes() {
             <span>
               <strong>Valor da inscrição</strong>
 
-              {torneio.valor}
+              {formatarValor(torneio.valor)}
+            </span>
+          </div>
+
+          <div>
+            <FaLayerGroup />
+
+            <span>
+              <strong>Níveis</strong>
+
+              {listarComE(NIVEIS)}
+            </span>
+          </div>
+
+          <div>
+            <FaTags />
+
+            <span>
+              <strong>Categorias</strong>
+
+              {listarComE(CATEGORIAS_CLIENTE)}
             </span>
           </div>
         </div>

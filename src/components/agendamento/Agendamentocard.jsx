@@ -3,11 +3,12 @@ import {
   FaRegClock,
   FaMapMarkerAlt,
   FaTrashAlt,
+  FaPen,
 } from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
 
-function AgendamentoCard({ quadra, data, horario, onCancelar }) {
+function AgendamentoCard({ quadra, data, horario, onCancelar, onEditar }) {
   return (
     <article className={styles.card}>
       {/* CABEÇALHO DO CARD */}
@@ -52,9 +53,21 @@ function AgendamentoCard({ quadra, data, horario, onCancelar }) {
         </div>
       </div>
 
-      {/* BOTÃO */}
+      {/* BOTÕES */}
 
       <div className={styles.cardFooter}>
+        {onEditar && (
+          <button
+            type="button"
+            className={styles.editPrimaryButton}
+            onClick={onEditar}
+          >
+            <FaPen />
+
+            <span>Editar agendamento</span>
+          </button>
+        )}
+
         <button
           type="button"
           className={styles.cancelButton}

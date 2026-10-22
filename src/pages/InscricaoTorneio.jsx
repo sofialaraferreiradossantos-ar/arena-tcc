@@ -1,37 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import styles from "../styles/inscricao.module.css";
-
-// Dados de exemplo — troque por fetch(`/api/torneios/${id}`) quando o backend estiver pronto
-const TORNEIOS_MOCK = {
-  1: {
-    nome: "Torneio de Verão Arena Beach",
-    quadra: "Quadra Beach Tennis",
-    data: "17/02/2026",
-    vagas: "12 vagas disponíveis",
-    valor: 100,
-  },
-  2: {
-    nome: "Copa Futevôlei Arena Beach",
-    quadra: "Quadra Futevôlei",
-    data: "05/03/2026",
-    vagas: "8 vagas disponíveis",
-    valor: 80,
-  },
-  3: {
-    nome: "Torneio de Futevôlei Pro",
-    quadra: "Beach Tennis Arena 1",
-    data: "30/05 a 30/06",
-    vagas: "16 vagas disponíveis",
-    valor: 100,
-  },
-};
+import {
+  CATEGORIAS_CLIENTE,
+  NIVEIS,
+  carregarMinhaCategoria,
+  torneiosMckp,
+} from "../mockup/torneios.js";
 
 function InscricaoTorneio() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
-  const torneio = TORNEIOS_MOCK[id];
+  const torneio = torneiosMckp.find((item) => item.id === Number(id));
 
   useEffect(() => {
     // Quando tiver API: fetch(`/api/torneios/${id}`).then(res => res.json()).then(setTorneio)
@@ -42,10 +23,16 @@ function InscricaoTorneio() {
     }
   }, [torneio, navigate]);
 
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    telefone: "",
+  // Nível e categoria já vêm preenchidos com "Minha categoria", se houver.
+  const [form, setForm] = useState(() => {
+    const minhaCategoria = carregarMinhaCategoria();
+    return {
+      nome: "",
+      email: "",
+      telefone: "",
+      nivel: minhaCategoria?.nivel ?? "",
+      categoria: minhaCategoria?.categoria ?? "",
+    };
   });
 
   const handleChange = (e) => {
@@ -56,7 +43,13 @@ function InscricaoTorneio() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.nome || !form.email || !form.telefone) {
+    if (
+      !form.nome ||
+      !form.email ||
+      !form.telefone ||
+      !form.nivel ||
+      !form.categoria
+    ) {
       alert("Preencha todos os campos!");
       return;
     }
@@ -112,7 +105,7 @@ function InscricaoTorneio() {
           🏠 Início
         </Link>
         <Link to="/quadra" onClick={() => setMenuAberto(false)}>
-          📍 Quadras
+          🏐 Quadras
         </Link>
         <Link to="/agendar-horario" onClick={() => setMenuAberto(false)}>
           🕐 Agendar Horário
@@ -169,10 +162,10 @@ function InscricaoTorneio() {
 
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
-                <span>📍</span>
+                <span>🏐</span>
                 <div>
                   <small>Quadra</small>
-                  <strong>{torneio.quadra}</strong>
+                  <strong>{torneio.local}</strong>
                 </div>
               </div>
 
@@ -237,6 +230,40 @@ function InscricaoTorneio() {
                   onChange={handleChange}
                   placeholder="(00) 00000-0000"
                 />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="nivel">Nível</label>
+                <select
+                  id="nivel"
+                  name="nivel"
+                  value={form.nivel}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione seu nível</option>
+                  {NIVEIS.map((nivel) => (
+                    <option key={nivel} value={nivel}>
+                      {nivel}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="categoria">Categoria</label>
+                <select
+                  id="categoria"
+                  name="categoria"
+                  value={form.categoria}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione sua categoria</option>
+                  {CATEGORIAS_CLIENTE.map((categoria) => (
+                    <option key={categoria} value={categoria}>
+                      Categoria {categoria}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 

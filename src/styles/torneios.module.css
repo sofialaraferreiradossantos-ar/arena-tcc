@@ -745,6 +745,223 @@
   }
 }
 
+/* ========================================
+   MINHA CATEGORIA
+======================================== */
+
+.minhaCategoria {
+  margin: -14px 0 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+
+.categoriaPrimaryButton {
+  min-height: 46px;
+  padding: 11px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #ff8800;
+  border-radius: 9px;
+  background: #ff8800;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.categoriaPrimaryButton:hover {
+  border-color: #ff9417;
+  background: #ff9417;
+}
+
+.categoriaResumo {
+  margin: 0;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.verTodos {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1700;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.modal {
+  position: relative;
+  width: min(560px, 100%);
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid #303030;
+  border-radius: 16px;
+  background: #151515;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #ff8800;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+}
+
+.modalClose {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #303030;
+  border-radius: 9px;
+  background: #101010;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.modalClose:hover {
+  border-color: #ff8800;
+}
+
+.modalDica {
+  margin: 0;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.grupoEscolha {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.grupoEscolha legend {
+  margin-bottom: 9px;
+  padding: 0;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.opcao {
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid #303030;
+  border-radius: 999px;
+  background: #101010;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.opcao:hover {
+  border-color: #ff8800;
+}
+
+.opcaoActive {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+.modalFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.limparCategoria,
+.confirmarCategoria {
+  min-height: 46px;
+  padding: 11px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.limparCategoria {
+  border: 1px solid #303030;
+  background: transparent;
+  color: #ddd;
+}
+
+.confirmarCategoria {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+.confirmarCategoria:disabled {
+  border-color: #2c2c2c;
+  background: #2c2c2c;
+  color: #9a9a9a;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .minhaCategoria {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .categoriaPrimaryButton {
+    justify-content: center;
+  }
+
+  .modal {
+    padding: 22px 18px;
+  }
+
+  .modalFooter > button {
+    flex: 1;
+  }
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) .pageWrapper {
@@ -896,6 +1113,100 @@
 
 :global(html[data-theme="light"]) .card:hover {
   border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .categoriaPrimaryButton {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .categoriaPrimaryButton:hover {
+  border-color: #ff9417;
+  background: #ff9417;
+}
+
+:global(html[data-theme="light"]) .categoriaResumo {
+  color: #333333;
+}
+
+:global(html[data-theme="light"]) .verTodos {
+  border: 0;
+  background: transparent;
+}
+
+:global(html[data-theme="light"]) .modalOverlay {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+:global(html[data-theme="light"]) .modal {
+  border: 1px solid #d5dde6;
+  background: #f4f6f9;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+:global(html[data-theme="light"]) .modal::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .modalHeader h2 {
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .modalClose {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .modalClose:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .modalDica {
+  color: #555555;
+}
+
+:global(html[data-theme="light"]) .grupoEscolha {
+  border: 0;
+}
+
+:global(html[data-theme="light"]) .grupoEscolha legend {
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .opcao {
+  border: 1px solid #d5dde6;
+  background: #f7f8fa;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .opcao:hover {
+  border-color: #ff8800;
+}
+
+:global(html[data-theme="light"]) .opcaoActive {
+  border-color: #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .limparCategoria {
+  border: 1px solid #d5dde6;
+  background: transparent;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .confirmarCategoria {
+  border: 1px solid #ff8800;
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .confirmarCategoria:disabled {
+  border-color: #d9e0e8;
+  background: #e9edf2;
+  color: #656565;
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */

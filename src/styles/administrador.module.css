@@ -570,6 +570,12 @@
   color: #ffb762 !important;
 }
 
+.statusDanger {
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.1);
+  color: #ff8a8a !important;
+}
+
 .rowButton {
   min-height: 32px;
   padding: 0 10px;
@@ -1134,6 +1140,12 @@
   border: 1px solid rgba(255, 171, 74, 0.28);
   background: rgba(255, 171, 74, 0.1);
   color: #a45900 !important;
+}
+
+:global(html[data-theme="light"]) .statusDanger {
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.1);
+  color: #dc0000 !important;
 }
 
 :global(html[data-theme="light"]) .rowButton {

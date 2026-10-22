@@ -36,7 +36,7 @@ export default function QuadraCard({
       <div className={styles.courtCardBody}>
         <small>{modalidade.toUpperCase()}</small>
         <h3>{title}</h3>
-        <p className={styles.courtLocation}>📍 {location}</p>
+        <p className={styles.courtLocation}>{location}</p>
         <p>{destaques}</p>
         <span className={styles.cardLink}>
           Ver detalhes <FaArrowRight />

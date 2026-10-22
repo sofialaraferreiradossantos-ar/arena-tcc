@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserTag } from "react-icons/fa";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -9,37 +9,29 @@ import styles from "../styles/torneios.module.css";
 import logo from "../assets/logo.jpeg";
 
 import TorneioCard from "../components/torneios/TorneioCard";
+import MinhaCategoriaForm from "../components/torneios/MinhaCategoriaForm";
 
-import quadra1 from "../mockup/imagens/quadraCoberta.jpg";
-
-const torneios = [
-  {
-    id: 1,
-    nome: "Torneio de Futevôlei Pro",
-    data: "25/05 a 25/06",
-    local: "Beach Tennis Arena 1",
-    imagem: quadra1,
-  },
-
-  {
-    id: 2,
-    nome: "Torneio de Futevôlei Pro",
-    data: "14/06 a 24/06",
-    local: "Beach Tennis Arena 1",
-    imagem: quadra1,
-  },
-
-  {
-    id: 3,
-    nome: "Torneio de Futevôlei Pro",
-    data: "30/05 a 30/06",
-    local: "Beach Tennis Arena 1",
-    imagem: quadra1,
-  },
-];
+import {
+  carregarMinhaCategoria,
+  salvarMinhaCategoria,
+  torneioCombina,
+  torneiosMckp,
+} from "../mockup/torneios.js";
 
 function Torneios() {
   const [menuAberto, setMenuAberto] = useState(false);
+  const [minhaCategoria, setMinhaCategoria] = useState(carregarMinhaCategoria);
+  const [escolhendoCategoria, setEscolhendoCategoria] = useState(false);
+
+  const torneios = torneiosMckp.filter((torneio) =>
+    torneioCombina(torneio, minhaCategoria),
+  );
+
+  function atualizarMinhaCategoria(novaCategoria) {
+    salvarMinhaCategoria(novaCategoria);
+    setMinhaCategoria(novaCategoria);
+    setEscolhendoCategoria(false);
+  }
 
   const location = useLocation();
 
@@ -165,6 +157,41 @@ function Torneios() {
             Confira os torneios disponíveis e participe das competições.
           </p>
 
+          {/* MINHA CATEGORIA */}
+
+          <div className={styles.minhaCategoria}>
+            <button
+              type="button"
+              className={styles.categoriaPrimaryButton}
+              onClick={() => setEscolhendoCategoria(true)}
+            >
+              <FaUserTag />
+              <span>
+                {minhaCategoria
+                  ? "Alterar minha categoria"
+                  : "Selecionar minha categoria"}
+              </span>
+            </button>
+
+            {minhaCategoria && (
+              <p className={styles.categoriaResumo}>
+                <strong>
+                  {minhaCategoria.genero} · {minhaCategoria.nivel} · Categoria{" "}
+                  {minhaCategoria.categoria}
+                </strong>{" "}
+                — mostrando {torneios.length} de {torneiosMckp.length} torneios
+                (do seu gênero e mistos).{" "}
+                <button
+                  type="button"
+                  className={styles.verTodos}
+                  onClick={() => atualizarMinhaCategoria(null)}
+                >
+                  Ver todos
+                </button>
+              </p>
+            )}
+          </div>
+
           {/* CARDS */}
 
           <div className={styles.cardsArea}>
@@ -173,6 +200,8 @@ function Torneios() {
                 key={torneio.id}
                 id={torneio.id}
                 nome={torneio.nome}
+                modalidade={torneio.modalidade}
+                categoria={torneio.categoria}
                 data={torneio.data}
                 local={torneio.local}
                 imagem={torneio.imagem}
@@ -181,6 +210,15 @@ function Torneios() {
           </div>
         </section>
       </main>
+
+      {escolhendoCategoria && (
+        <MinhaCategoriaForm
+          atual={minhaCategoria}
+          onSalvar={atualizarMinhaCategoria}
+          onLimpar={() => atualizarMinhaCategoria(null)}
+          onFechar={() => setEscolhendoCategoria(false)}
+        />
+      )}
     </div>
   );
 }

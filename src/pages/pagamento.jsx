@@ -85,7 +85,7 @@ export default function Pagamento() {
           <div>
             <h3>Resumo do Agendamento</h3>
 
-            <p>📍 Quadra 1</p>
+            <p>Quadra 1</p>
 
             <p>📅 17/02/2026</p>
 

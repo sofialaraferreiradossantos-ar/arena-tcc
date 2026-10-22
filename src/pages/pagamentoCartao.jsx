@@ -102,7 +102,7 @@ export default function PagamentoCartao() {
           <div className={styles.resumoPagamento}>
             <h3>Resumo do Agendamento</h3>
 
-            <p>📍 Quadra 1</p>
+            <p>Quadra 1</p>
             <p>📅 17/02/2026</p>
             <p>🕐 11:00 - 12:00</p>
 

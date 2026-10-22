@@ -7,24 +7,29 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import styles from "../styles/quadras.module.css";
 
 import logo from "../assets/logo.jpeg";
-import { quadrasMckp } from "../mockup/dados.js";
+import { modalidades, quadrasMckp } from "../mockup/dados.js";
+
+const DESCRICOES = {
+  "beach-tennis":
+    "Quadra de areia preparada para o beach tennis, com rede na altura oficial e marcações visíveis. Ideal para jogos em dupla, aulas e treinos, do iniciante ao avançado.",
+  futevolei:
+    "Quadra de areia preparada para o futevôlei, com rede na altura oficial e espaço livre ao redor para as jogadas. Ideal para partidas entre amigos, treinos e aulas.",
+};
 
 function QuadraDetalhes() {
   const { id } = useParams();
   const quadraSelecionada =
     quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0];
-
-  const imagens = [
-    quadraSelecionada.image,
-    ...quadrasMckp
-      .filter((item) => item.id !== quadraSelecionada.id)
-      .map((item) => item.image),
-  ].filter(
-    (imagem, index, imagensDaGaleria) =>
-      imagensDaGaleria.indexOf(imagem) === index,
-  );
-
-  const [imagemAtiva, setImagemAtiva] = useState(0);
+  const modalidade =
+    modalidades.find((item) => item.id === quadraSelecionada.modalidade)
+      ?.label || "Beach tennis";
+  const estrutura = [
+    ...quadraSelecionada.destaques
+      .split(" • ")
+      .map((item) => item.charAt(0).toUpperCase() + item.slice(1)),
+    "Agendamento online",
+    "Eventos e torneios",
+  ];
 
   const [menuAberto, setMenuAberto] = useState(false);
 
@@ -133,27 +138,13 @@ function QuadraDetalhes() {
       </h1>
 
       <div className={styles.detailsContent}>
-        {/* GALERIA */}
+        {/* IMAGEM DA QUADRA */}
         <div className={styles.galleryBox}>
           <img
-            src={imagens[imagemAtiva]}
-            alt="Quadra"
+            src={quadraSelecionada.image}
+            alt={quadraSelecionada.title}
             className={styles.mainImage}
           />
-
-          <div className={styles.thumbContainer}>
-            {imagens.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Quadra ${index + 1}`}
-                className={`${styles.thumb} ${
-                  imagemAtiva === index ? styles.activeThumb : ""
-                }`}
-                onClick={() => setImagemAtiva(index)}
-              />
-            ))}
-          </div>
         </div>
 
         {/* INFORMAÇÕES */}
@@ -161,21 +152,56 @@ function QuadraDetalhes() {
           <h2>{quadraSelecionada.title}</h2>
 
           <p className={styles.location}>
-            📍 {quadraSelecionada.cidade} - {quadraSelecionada.uf}
+            {quadraSelecionada.cidade} - {quadraSelecionada.uf}
           </p>
+
+          <div className={styles.infoTags}>
+            <span className={styles.infoTag}>{modalidade}</span>
+            <span
+              className={`${styles.infoTag} ${
+                quadraSelecionada.available
+                  ? styles.tagDisponivel
+                  : styles.tagIndisponivel
+              }`}
+            >
+              {quadraSelecionada.available ? "Disponível" : "Indisponível"}
+            </span>
+          </div>
 
           <div>
             <h3>Sobre a quadra</h3>
 
             <p>
-              A quadra conta com iluminação LED e areia selecionada. Possui
-              opções para agendamentos de eventos, torneios e jogos.
+              {DESCRICOES[quadraSelecionada.modalidade] ||
+                DESCRICOES["beach-tennis"]}{" "}
+              A quadra conta com iluminação LED e areia selecionada, e pode ser
+              reservada para jogos, eventos e torneios.
             </p>
+          </div>
+
+          <div>
+            <h3>Estrutura</h3>
+
+            <ul className={styles.estrutura}>
+              {estrutura.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </div>
 
           <div className={styles.horario}>
             <strong>Horário de Funcionamento:</strong> 06:00 às 23:00
           </div>
+
+          {quadraSelecionada.available ? (
+            <Link to="/agendar-horario" className={styles.agendarPrimary}>
+              Agendar horário
+            </Link>
+          ) : (
+            <p className={styles.avisoIndisponivel}>
+              Esta quadra está indisponível no momento.
+            </p>
+          )}
         </div>
       </div>
     </div>

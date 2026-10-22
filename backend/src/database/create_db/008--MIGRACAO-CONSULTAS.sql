@@ -26,11 +26,8 @@ ALTER TABLE quadras
 
 UPDATE quadras
 SET
-    id_cidade = CASE id_qd
-        WHEN 1 THEN (SELECT id_cidade FROM cidades WHERE nome_cidade = 'Tupã' AND uf = 'SP')
-        WHEN 2 THEN (SELECT id_cidade FROM cidades WHERE nome_cidade = 'Marilia' AND uf = 'SP')
-        ELSE (SELECT id_cidade FROM cidades WHERE nome_cidade = 'Tupã' AND uf = 'SP')
-    END,
+    -- Todas as quadras ficam em Tupã/SP.
+    id_cidade = (SELECT id_cidade FROM cidades WHERE nome_cidade = 'Tupã' AND uf = 'SP'),
     imagem_qd = CASE id_qd
         WHEN 1 THEN 'quadra1.jpg'
         WHEN 2 THEN 'quadra2.jpg'

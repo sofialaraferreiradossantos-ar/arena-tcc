@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import styles from "../../styles/torneios.module.css";
 
-function TorneioCard({ id, nome, data, local, imagem }) {
+function TorneioCard({ id, nome, modalidade, categoria, data, local, imagem }) {
   return (
     <article className={styles.card}>
       {/* INFORMAÇÕES */}
@@ -16,7 +16,12 @@ function TorneioCard({ id, nome, data, local, imagem }) {
           </div>
 
           <div>
-            <span className={styles.cardLabel}>TORNEIO</span>
+            <span className={styles.cardLabel}>
+              {["TORNEIO", modalidade, categoria]
+                .filter(Boolean)
+                .join(" · ")
+                .toUpperCase()}
+            </span>
 
             <h2>{nome}</h2>
           </div>

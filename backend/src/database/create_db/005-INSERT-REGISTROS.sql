@@ -14,14 +14,15 @@ INSERT INTO usuarios (nome_usu, email_usu, senha_usu, status_usu, dt_cad) VALUES
 ('Beatriz Lima',      'beatriz.lima@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'inativo', '2025-03-05');
 
 -- --------------------------------------------------
--- QUADRAS
+-- QUADRAS (todas em Tupã/SP, id_cidade = 1)
 -- --------------------------------------------------
 INSERT INTO quadras
     (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
 VALUES
 (1, 'Quadra 1', 'Vôlei de Praia', 'Quadra oficial de vôlei de praia com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
-(2, 'Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
-(3, 'Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0);
+(1, 'Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
+(1, 'Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0),
+(1, 'Quadra 4', 'Beach Tennis', 'Quadra de beach tennis com iluminação LED', 'disponivel', 70.00, 'quadra2.jpg', 0);
 
 -- --------------------------------------------------
 -- DISPONIBILIDADES
@@ -31,7 +32,8 @@ INSERT INTO disponibilidades (id_qd, dia_semana, hora_inicio, hora_fim, status_d
 (1, 'Terça-feira',   '08:00:00', '22:00:00', 'disponivel'),
 (2, 'Segunda-feira', '08:00:00', '20:00:00', 'disponivel'),
 (2, 'Quarta-feira',  '08:00:00', '20:00:00', 'disponivel'),
-(3, 'Sexta-feira',   '10:00:00', '23:00:00', 'indisponivel');
+(3, 'Sexta-feira',   '10:00:00', '23:00:00', 'indisponivel'),
+(4, 'Sábado',        '08:00:00', '20:00:00', 'disponivel');
 
 -- --------------------------------------------------
 -- AGENDAMENTOS

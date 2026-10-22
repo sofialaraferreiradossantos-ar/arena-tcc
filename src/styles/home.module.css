@@ -3268,6 +3268,18 @@
   background: rgba(8, 8, 8, 0.88);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
+/* Selo de disponibilidade: verde quando disponível, vermelho quando não.
+   Seletor composto para vencer ".quadraCard span". */
+.courtsPage .status.available {
+  border: 1px solid #22c55e;
+  background: #15803d;
+  color: #fff;
+}
+.courtsPage .status.unavailable {
+  border: 1px solid #f87171;
+  background: #dc2626;
+  color: #fff;
+}
 .courtCardBody {
   flex: 1;
   padding: 22px;
@@ -4492,6 +4504,18 @@
 :global(html[data-theme="light"]) .courtsPage .status {
   background: rgba(251, 252, 253, 0.88);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+
+:global(html[data-theme="light"]) .courtsPage .status.available {
+  border: 1px solid #22c55e;
+  background: #15803d;
+  color: #fff;
+}
+
+:global(html[data-theme="light"]) .courtsPage .status.unavailable {
+  border: 1px solid #f87171;
+  background: #dc2626;
+  color: #fff;
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */

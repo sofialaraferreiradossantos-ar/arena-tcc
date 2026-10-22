@@ -971,6 +971,151 @@
   }
 }
 
+/* Detalhes: imagem maior da própria quadra e painel lateral da mesma altura. */
+.detailsContent {
+  grid-template-columns: minmax(0, 1.6fr) minmax(360px, 0.9fr);
+  align-items: stretch;
+}
+
+.galleryBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainImage {
+  flex: 1;
+  height: auto;
+  min-height: 600px;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.infoBox h2,
+.infoBox .location {
+  margin-bottom: 0;
+}
+
+.infoBox .location {
+  margin-top: -8px;
+}
+
+.infoBox h3 {
+  margin-top: 0;
+}
+
+.infoTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.infoTag {
+  padding: 6px 12px;
+  border: 1px solid #3a3a3a;
+  border-radius: 999px;
+  background: #1d1d1d;
+  color: #ddd;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tagDisponivel {
+  border-color: #22c55e;
+  background: #15803d;
+  color: #fff;
+}
+
+.tagIndisponivel {
+  border-color: #f87171;
+  background: #dc2626;
+  color: #fff;
+}
+
+.estrutura {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+  list-style: none;
+}
+
+.estrutura li {
+  position: relative;
+  padding-left: 20px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.estrutura li::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff8800;
+}
+
+.horario {
+  margin-top: 0;
+}
+
+.agendarPrimary {
+  margin-top: auto;
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: #ff8800;
+  color: #111;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.agendarPrimary:hover {
+  background: #ff9417;
+  transform: translateY(-1px);
+}
+
+.avisoIndisponivel {
+  margin-top: auto;
+  padding: 14px;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.12);
+  color: #ff8a8a;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .detailsContent {
+    grid-template-columns: 1fr;
+  }
+
+  .mainImage {
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 800px) {
+  .mainImage {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainImage {
+    min-height: 230px;
+  }
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {
@@ -1147,6 +1292,47 @@
   border-color: #ff8800;
   background: rgba(255, 136, 0, 0.08);
   color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .infoTag {
+  border: 1px solid #ccd6e1;
+  background: #f1f3f6;
+  color: #222222;
+}
+
+:global(html[data-theme="light"]) .tagDisponivel {
+  border-color: #22c55e;
+  background: #15803d;
+  color: #fff;
+}
+
+:global(html[data-theme="light"]) .tagIndisponivel {
+  border-color: #f87171;
+  background: #dc2626;
+  color: #fff;
+}
+
+:global(html[data-theme="light"]) .estrutura li {
+  color: #444444;
+}
+
+:global(html[data-theme="light"]) .estrutura li::before {
+  background: #ff8800;
+}
+
+:global(html[data-theme="light"]) .agendarPrimary {
+  background: #ff8800;
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .agendarPrimary:hover {
+  background: #ff9417;
+}
+
+:global(html[data-theme="light"]) .avisoIndisponivel {
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  background: rgba(220, 38, 38, 0.12);
+  color: #dc0000;
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */
