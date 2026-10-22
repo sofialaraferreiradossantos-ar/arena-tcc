@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const db = require("../database/Connection");
+const { validarEmail } = require("../utils/validacoes");
 
 const SALT_ROUNDS = 10;
 const sessoes = new Map();
@@ -112,11 +113,12 @@ module.exports = {
       .toLowerCase();
     const adminSenha = process.env.ADMIN_SENHA || "";
 
+    // Acesso de emergência configurado no .env
     if (adminEmail && emailNormalizado === adminEmail && senha === adminSenha) {
       const administrador = {
-        id_adm: "admin-env",
-        nome_adm: "Administrador",
-        email_adm: adminEmail,
+        id_usu: "admin-env",
+        nome_usu: "Administrador",
+        email_usu: adminEmail,
         tipo: "admin",
       };
 
@@ -129,22 +131,23 @@ module.exports = {
     }
 
     try {
+      // Administrador é um usuário com tipo_usu = 'admin' (conforme o MER)
       const [rows] = await db.query(
-        "SELECT id_adm, nome_adm, email_adm, senha_adm, status_adm " +
-          "FROM administradores WHERE LOWER(email_adm) = ? LIMIT 1;",
+        "SELECT id_usu, nome_usu, email_usu, senha_usu, tipo_usu, status_usu " +
+          "FROM usuarios WHERE LOWER(email_usu) = ? LIMIT 1;",
         [emailNormalizado],
       );
 
-      const administradorBanco = rows[0];
+      const usuarioBanco = rows[0];
 
-      const senhaCorreta = administradorBanco
-        ? await bcrypt.compare(String(senha), administradorBanco.senha_adm)
+      const senhaCorreta = usuarioBanco
+        ? await bcrypt.compare(String(senha), usuarioBanco.senha_usu)
         : false;
 
       if (
-        !administradorBanco ||
+        !usuarioBanco ||
         !senhaCorreta ||
-        !statusAtivo(administradorBanco.status_adm)
+        !statusAtivo(usuarioBanco.status_usu)
       ) {
         return response.status(401).json({
           sucesso: false,
@@ -152,10 +155,17 @@ module.exports = {
         });
       }
 
+      if (usuarioBanco.tipo_usu !== "admin") {
+        return response.status(403).json({
+          sucesso: false,
+          mensagem: "Este usuário não tem acesso administrativo.",
+        });
+      }
+
       const administrador = {
-        id_adm: administradorBanco.id_adm,
-        nome_adm: administradorBanco.nome_adm,
-        email_adm: administradorBanco.email_adm,
+        id_usu: usuarioBanco.id_usu,
+        nome_usu: usuarioBanco.nome_usu,
+        email_usu: usuarioBanco.email_usu,
         tipo: "admin",
       };
 
@@ -188,37 +198,51 @@ module.exports = {
         });
       }
 
-      if (
-        String(nome_adm).length > 100 ||
-        emailNormalizado.length > 100 ||
-        String(senha_adm).length > 20
-      ) {
+      if (String(nome_adm).length > 100 || !validarEmail(emailNormalizado) || emailNormalizado.length > 100) {
         return response.status(400).json({
           sucesso: false,
-          mensagem:
-            "Nome e e-mail podem ter até 100 caracteres; a senha, até 20.",
+          mensagem: "Nome com até 100 caracteres e um e-mail válido são obrigatórios.",
+        });
+      }
+
+      if (String(senha_adm).length < 6 || String(senha_adm).length > 20) {
+        return response.status(400).json({
+          sucesso: false,
+          mensagem: "A senha deve ter entre 6 e 20 caracteres.",
+        });
+      }
+
+      const [emailExiste] = await db.query(
+        "SELECT id_usu FROM usuarios WHERE LOWER(email_usu) = ?;",
+        [emailNormalizado],
+      );
+
+      if (emailExiste.length > 0) {
+        return response.status(409).json({
+          sucesso: false,
+          mensagem: "Este e-mail já está cadastrado.",
         });
       }
 
       const hashedPassword = await bcrypt.hash(String(senha_adm), SALT_ROUNDS);
 
+      // O administrador é gravado em usuarios com tipo_usu = 'admin'
       const [resultado] = await db.query(
-        `INSERT INTO administradores
-          (nome_adm, email_adm, senha_adm, status_adm, dt_cad)
-         VALUES (?, ?, ?, ?, ?);`,
+        `INSERT INTO usuarios
+          (nome_usu, email_usu, senha_usu, tipo_usu, status_usu, dt_cad)
+         VALUES (?, ?, ?, 'admin', 'ativo', ?);`,
         [
           String(nome_adm).trim(),
           emailNormalizado,
           hashedPassword,
-          "ativo",
-          new Date().toISOString().slice(0, 10),
+          new Date().toLocaleDateString("sv-SE"),
         ],
       );
 
       return response.status(201).json({
         sucesso: true,
         mensagem: "Administrador cadastrado com sucesso.",
-        dados: { id_adm: resultado.insertId },
+        dados: { id_usu: resultado.insertId, tipo_usu: "admin" },
       });
     } catch (error) {
       if (error.code === "ER_DUP_ENTRY") {

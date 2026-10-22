@@ -47,17 +47,6 @@ ALTER TABLE quadras
         ON UPDATE CASCADE
         ON DELETE RESTRICT;
 
-CREATE TABLE IF NOT EXISTS administradores (
-    id_adm      INT(11)      NOT NULL AUTO_INCREMENT,
-    nome_adm    VARCHAR(100) NOT NULL,
-    email_adm   VARCHAR(100) NOT NULL,
-    senha_adm   VARCHAR(60)  NOT NULL,
-    status_adm  VARCHAR(20)  NOT NULL,
-    dt_cad      DATE         NOT NULL,
-    PRIMARY KEY (id_adm),
-    UNIQUE KEY uq_administradores_email (email_adm)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 CREATE INDEX idx_quadras_status ON quadras (status_qd);
 CREATE INDEX idx_quadras_tipo ON quadras (tipo_qd);
 CREATE INDEX idx_quadras_destaque ON quadras (destaque_qd);

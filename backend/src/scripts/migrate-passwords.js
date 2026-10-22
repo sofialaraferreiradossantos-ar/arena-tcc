@@ -8,9 +8,9 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
 // Tabelas que guardam senha: [tabela, coluna id, coluna senha]
+// (administradores ficam em usuarios, com tipo_usu = 'admin')
 const TABELAS = [
-    ["usuarios", "id_usu", "senha_usu"],
-    ["administradores", "id_adm", "senha_adm"]
+    ["usuarios", "id_usu", "senha_usu"]
 ];
 
 async function migrate() {

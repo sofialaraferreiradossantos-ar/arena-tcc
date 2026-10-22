@@ -4,14 +4,16 @@
 
 -- --------------------------------------------------
 -- USUARIOS
--- A senha de todos é "senha123", gravada já criptografada (hash bcrypt).
+-- Clientes: a senha de todos é "senha123", gravada já criptografada (hash bcrypt).
+-- Administrador: mesma senha do ADMIN_SENHA do .env, também em hash.
 -- --------------------------------------------------
-INSERT INTO usuarios (nome_usu, email_usu, senha_usu, status_usu, dt_cad) VALUES
-('Sofia Almeida',     'sofia.almeida@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-01-10'),
-('Lucas Pereira',     'lucas.pereira@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-01-15'),
-('Marina Costa',      'marina.costa@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-02-01'),
-('Rafael Souza',      'rafael.souza@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'ativo', '2025-02-10'),
-('Beatriz Lima',      'beatriz.lima@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'inativo', '2025-03-05');
+INSERT INTO usuarios (nome_usu, email_usu, senha_usu, tipo_usu, status_usu, dt_cad) VALUES
+('Sofia Almeida',     'sofia.almeida@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'cliente', 'ativo', '2025-01-10'),
+('Lucas Pereira',     'lucas.pereira@email.com',   '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'cliente', 'ativo', '2025-01-15'),
+('Marina Costa',      'marina.costa@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'cliente', 'ativo', '2025-02-01'),
+('Rafael Souza',      'rafael.souza@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'cliente', 'ativo', '2025-02-10'),
+('Beatriz Lima',      'beatriz.lima@email.com',    '$2b$10$az6OmaEYrc8xEiW7uW26Ce06dtwDQPTmaLc8sgtmjaZWHaVdu0Iou',  'cliente', 'inativo', '2025-03-05'),
+('Administrador',     'admin@arena-beach.com',     '$2b$10$jqifi6lL4NDjTvl6gAR70O76mejJX/bXC.7j2aJt6hHLu/XHX828S',  'admin',   'ativo', '2025-01-01');
 
 -- --------------------------------------------------
 -- QUADRAS (todas em Tupã/SP, id_cidade = 1)
@@ -56,7 +58,7 @@ INSERT INTO pagamentos (id_agend, valor_pag, forma_pag, status_pag) VALUES
 -- --------------------------------------------------
 -- TORNEIOS
 -- --------------------------------------------------
-INSERT INTO torneios (nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao, dt_cad, valor_part) VALUES
+INSERT INTO torneios (nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao_torn, dt_cad, valor_part) VALUES
 ('Copa Arena Beach 2026',   '2026-10-15', 'Torneio aberto de vôlei de praia, categoria amador', 'aberto',   16, 'Troféu + R$ 1.000,00', '2026-08-01', 50.00),
 ('Beach Tennis Open',       '2026-11-20', 'Torneio de beach tennis em duplas mistas',           'em breve', 8,  'Troféu + kit esportivo', '2026-08-10', 40.00);
 
