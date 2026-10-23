@@ -10,7 +10,6 @@ const PagamentosController = require("../controllers/pagamentos");
 const ParticipantesEquipesController = require("../controllers/participantesEquipes");
 const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
-const CidadesController = require("../controllers/cidades");
 
 const uploadImage = require("../middleware/uploadHelper");
 
@@ -130,6 +129,7 @@ router.delete(
 // =====================================================
 
 router.get("/quadras", QuadrasController.listarQuadras);
+router.get("/quadras/tipos", QuadrasController.listarTipos);
 router.get("/quadras/destaques", QuadrasController.listarDestaques);
 router.post("/quadras", uploadQuadras.single("imagem_qd"), QuadrasController.cadastrarQuadras);
 router.patch("/quadras/:id", uploadQuadras.single("imagem_qd"), QuadrasController.editarQuadras);
@@ -156,12 +156,6 @@ router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
 router.patch("/usuarios/atualiza-senha/:id", UsuariosController.atualizarSenha);
 router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
-
-
-
-
-router.get("/cidades/estados", CidadesController.listarEstados);
-router.get("/cidades", CidadesController.listarCidades);
 
 
 module.exports = router;

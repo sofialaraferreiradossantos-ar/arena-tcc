@@ -16,15 +16,15 @@ INSERT INTO usuarios (nome_usu, email_usu, senha_usu, tipo_usu, status_usu, dt_c
 ('Administrador',     'admin@arena-beach.com',     '$2b$10$jqifi6lL4NDjTvl6gAR70O76mejJX/bXC.7j2aJt6hHLu/XHX828S',  'admin',   'ativo', '2025-01-01');
 
 -- --------------------------------------------------
--- QUADRAS (todas em Tupã/SP, id_cidade = 1)
+-- QUADRAS (todas na mesma arena, em Tupã/SP)
 -- --------------------------------------------------
 INSERT INTO quadras
-    (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
+    (nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
 VALUES
-(1, 'Quadra 1', 'Futevôlei', 'Quadra oficial de futevôlei com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
-(1, 'Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
-(1, 'Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0),
-(1, 'Quadra 4', 'Beach Tennis', 'Quadra de beach tennis com iluminação LED', 'disponivel', 70.00, 'quadra2.jpg', 0);
+('Quadra 1', 'Futevôlei', 'Quadra oficial de futevôlei com areia nivelada', 'disponivel', 80.00, 'quadra1.jpg', 1),
+('Quadra 2', 'Beach Tennis', 'Quadra de beach tennis com rede padrão profissional', 'disponivel', 70.00, 'quadra2.jpg', 1),
+('Quadra 3', 'Futevôlei', 'Quadra ampla para futevôlei com iluminação noturna', 'indisponivel', 75.00, 'quadra3.jpg', 0),
+('Quadra 4', 'Beach Tennis', 'Quadra de beach tennis com iluminação LED', 'disponivel', 70.00, 'quadra2.jpg', 0);
 
 -- --------------------------------------------------
 -- DISPONIBILIDADES
@@ -58,13 +58,8 @@ INSERT INTO pagamentos (id_agend, valor_pag, forma_pag, status_pag) VALUES
 -- --------------------------------------------------
 -- TORNEIOS
 -- --------------------------------------------------
-<<<<<<< HEAD
 INSERT INTO torneios (nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao_torn, dt_cad, valor_part) VALUES
-('Copa Arena Beach 2026',   '2026-10-15', 'Torneio aberto de vôlei de praia, categoria amador', 'aberto',   16, 'Troféu + R$ 1.000,00', '2026-08-01', 50.00),
-=======
-INSERT INTO torneios (nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao, dt_cad, valor_part) VALUES
 ('Copa Arena Beach 2026',   '2026-10-15', 'Torneio aberto de futevôlei, categoria amador', 'aberto',   16, 'Troféu + R$ 1.000,00', '2026-08-01', 50.00),
->>>>>>> 05fa60abf4688d02542bd298ae91f92d68c514f3
 ('Beach Tennis Open',       '2026-11-20', 'Torneio de beach tennis em duplas mistas',           'em breve', 8,  'Troféu + kit esportivo', '2026-08-10', 40.00);
 
 -- --------------------------------------------------
