@@ -1,5 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  FaBorderAll,
+  FaChartBar,
+  FaCog,
+  FaRegCalendarAlt,
+  FaTrophy,
+  FaUserCircle,
+  FaUsers,
+} from "react-icons/fa";
 import styles from "../styles/administrador.module.css";
 
 function Administrador() {
@@ -7,37 +16,37 @@ function Administrador() {
 
   const cards = [
     {
-      icon: "👥",
+      icon: <FaUsers />,
       label: "Usuários",
       desc: "Gerenciar usuários",
       to: "/administrador/usuarios",
     },
     {
-      icon: "▦",
+      icon: <FaBorderAll />,
       label: "Quadras",
       desc: "Gerenciar quadras",
       to: "/administrador/quadras",
     },
     {
-      icon: "📅",
+      icon: <FaRegCalendarAlt />,
       label: "Agendamentos",
       desc: "Gerenciar agendamentos",
       to: "/administrador/agendamentos",
     },
     {
-      icon: "🏆",
+      icon: <FaTrophy />,
       label: "Torneios",
       desc: "Gerenciar torneios",
       to: "/administrador/torneios",
     },
     {
-      icon: "📊",
+      icon: <FaChartBar />,
       label: "Relatórios",
       desc: "Ver estatísticas",
       to: "/administrador/relatorios",
     },
     {
-      icon: "⚙️",
+      icon: <FaCog />,
       label: "Configurações",
       desc: "Configurações do sistema",
       to: "/administrador/configuracoes",
@@ -62,7 +71,9 @@ function Administrador() {
           </h2>
         </div>
 
-        <div className={styles.userIcon}>👤</div>
+        <div className={styles.userIcon}>
+          <FaUserCircle />
+        </div>
       </header>
 
       {/* OVERLAY + SIDEBAR */}

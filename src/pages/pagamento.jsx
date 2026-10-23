@@ -87,9 +87,9 @@ export default function Pagamento() {
 
             <p>Quadra 1</p>
 
-            <p>📅 17/02/2026</p>
+            <p>17/02/2026</p>
 
-            <p>⏰ 11:00 - 12:00</p>
+            <p>11:00 - 12:00</p>
           </div>
         </div>
 

@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import {
+  FaBorderAll,
+  FaChartBar,
+  FaCog,
+  FaRegCalendarAlt,
+  FaTrophy,
+  FaUsers,
+} from "react-icons/fa";
 import styles from "../styles/administrador.module.css";
 
 const moduleData = {
   usuarios: {
-    icon: "👥",
+    icon: <FaUsers />,
     title: "Usuários",
     description: "Gerencie os acessos e os perfis cadastrados no sistema.",
     action: "Adicionar usuário",
@@ -31,7 +39,7 @@ const moduleData = {
     ],
   },
   quadras: {
-    icon: "▦",
+    icon: <FaBorderAll />,
     title: "Quadras",
     description:
       "Controle as quadras disponíveis, modalidades e situação de uso.",
@@ -65,7 +73,7 @@ const moduleData = {
     ],
   },
   agendamentos: {
-    icon: "📅",
+    icon: <FaRegCalendarAlt />,
     title: "Agendamentos",
     description:
       "Acompanhe as reservas e mantenha a agenda das quadras organizada.",
@@ -93,7 +101,7 @@ const moduleData = {
     ],
   },
   torneios: {
-    icon: "🏆",
+    icon: <FaTrophy />,
     title: "Torneios",
     description:
       "Organize competições, acompanhe inscrições e atualize os eventos.",
@@ -161,7 +169,8 @@ function AdminModulo() {
 
   const currentTitle =
     config?.title || (modulo === "relatorios" ? "Relatórios" : "Configurações");
-  const currentIcon = config?.icon || (modulo === "relatorios" ? "📊" : "⚙️");
+  const currentIcon =
+    config?.icon || (modulo === "relatorios" ? <FaChartBar /> : <FaCog />);
   const currentDescription =
     config?.description ||
     (modulo === "relatorios"

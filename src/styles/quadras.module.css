@@ -148,18 +148,6 @@
   transition: 0.25s ease;
 }
 
-.galleryBox::before {
-  content: "";
-
-  display: block;
-
-  width: 100%;
-  height: 3px;
-
-  margin: -18px 0 18px;
-
-  background: #ff8800;
-}
 
 .galleryBox:hover {
   border-color: #ff8800;
@@ -269,19 +257,6 @@
   border-color: #ff8800;
 }
 
-.infoBox::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 3px;
-
-  background: #ff8800;
-}
 
 /* =========================================================
    TÃTULO DAS INFORMAÃ‡Ã•ES
@@ -1151,10 +1126,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-:global(html[data-theme="light"]) .galleryBox::before {
-  background: #ff8800;
-}
-
 :global(html[data-theme="light"]) .galleryBox:hover {
   border-color: #ff8800;
 }
@@ -1185,10 +1156,6 @@
 
 :global(html[data-theme="light"]) .infoBox:hover {
   border-color: #ff8800;
-}
-
-:global(html[data-theme="light"]) .infoBox::before {
-  background: #ff8800;
 }
 
 :global(html[data-theme="light"]) .infoBox h2 {

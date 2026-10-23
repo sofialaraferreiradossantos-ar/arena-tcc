@@ -1,5 +1,5 @@
 import quadraCoberta from "../mockup/imagens/quadraCobertaAlta.png";
-import quadraDesoberta from "../mockup/imagens/quadraDescobertaAlta.png";
+import quadraDesoberta from "../mockup/imagens/quadra.jpeg";
 import quadraBeachTennis from "../mockup/imagens/quadraBeachTennis.jpg";
 
 export const modalidades = [

@@ -15,7 +15,7 @@ import logo from "../assets/logo.jpeg";
 
 const mainItems = [
   ["/home", "🏠", "Início"],
-  ["/quadras", "🏐", "Quadras"],
+  ["/quadras", "🎾", "Quadras"],
   ["/agendar-horario", "🕐", "Agendar horário"],
   ["/agendamentos", "📅", "Agendamentos"],
   ["/torneios", "🏆", "Torneios"],

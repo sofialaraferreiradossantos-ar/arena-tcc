@@ -51,7 +51,7 @@ export default function Sidebar({ menuOpen, setMenuOpen, logo }) {
             onClick={fecharMenu}
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            <span className={styles.menuEmoji}>🏐</span>
+            <span className={styles.menuEmoji}>🎾</span>
             <span>Quadras</span>
           </NavLink>
 

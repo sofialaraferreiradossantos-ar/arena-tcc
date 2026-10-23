@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 import styles from "../styles/agendamentos.module.css";
 import quadra from "../mockup/imagens/quadra.jpeg";
@@ -86,7 +87,7 @@ function AgendamentoSucesso() {
             navegar("/quadras");
           }}
         >
-          🏟️
+          🎾
           <span>Quadras</span>
         </a>
 
@@ -159,7 +160,7 @@ function AgendamentoSucesso() {
           onClick={() => navegar("/perfil")}
           aria-label="Perfil"
         >
-          👤
+          <FaUserCircle />
         </button>
       </header>
 

@@ -76,7 +76,7 @@ function Torneios() {
           onClick={fecharMenu}
           className={location.pathname === "/quadra" ? styles.active : ""}
         >
-          <span className={styles.menuEmoji}>🏐</span>
+          <span className={styles.menuEmoji}>🎾</span>
           Quadras
         </Link>
 

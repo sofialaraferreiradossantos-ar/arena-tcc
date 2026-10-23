@@ -30,7 +30,7 @@ export default function Sobre() {
 
             <p>
               A Arena Beach é um espaço ideal para quem ama esportes de areia.
-              Aqui você encontra quadras de beach tênis, vôlei e futevôlei, além
+              Aqui você encontra quadras de beach tênis e futevôlei, além
               de eventos e uma estrutura completa para aproveitar com os amigos.
             </p>
           </div>

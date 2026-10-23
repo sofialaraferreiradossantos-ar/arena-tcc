@@ -90,7 +90,7 @@ function HeaderAgendamentos() {
           </Link>
 
           <Link to="/quadra" onClick={fecharMenu}>
-            <span className={styles.menuEmoji}>🏐</span>
+            <span className={styles.menuEmoji}>🎾</span>
             <span>Quadras</span>
           </Link>
 

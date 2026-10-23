@@ -23,10 +23,10 @@ export default function Home() {
             </p>
             <div className={styles.heroActions}>
               <Link to="/agendar-horario" className={styles.primaryAction}>
-                🕐 Agendar horário
+                Agendar horário
               </Link>
               <Link to="/quadras" className={styles.secondaryAction}>
-                🏐 Ver quadras
+                Ver quadras
               </Link>
             </div>
           </header>

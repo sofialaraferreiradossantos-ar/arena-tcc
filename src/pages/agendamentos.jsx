@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaRegCalendarAlt } from "react-icons/fa";
 
 import styles from "../styles/agendamentos.module.css";
 
@@ -126,7 +126,9 @@ function Agendamentos() {
         <section className={styles.cardsArea}>
           {filtrados.length === 0 && (
             <div className={styles.empty}>
-              <div className={styles.emptyIcon}>📅</div>
+              <div className={styles.emptyIcon}>
+                <FaRegCalendarAlt />
+              </div>
 
               <h2>Nenhum agendamento encontrado</h2>
 
