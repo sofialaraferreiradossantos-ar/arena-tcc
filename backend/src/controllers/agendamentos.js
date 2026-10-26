@@ -31,30 +31,55 @@ module.exports = {
 
     // =====================================================
     // LISTAR AGENDAMENTOS - GET
+    // INNER JOIN pelas chaves estrangeiras: traz o nome da quadra
+    // e o nome do cliente em vez de só os números (id_qd, id_usu).
     // =====================================================
     async listarAgendamentos(request, response) {
         try {
 
             const sql = `
                 SELECT
-                    id_agend,
-                    id_qd,
-                    id_usu,
-                    dt_agend,
-                    hora_inicio,
-                    hora_fim,
-                    status_agend
-                FROM agendamentos
-                ORDER BY id_agend;
+                    a.id_agend,
+                    DATE_FORMAT(a.dt_agend, '%Y-%m-%d') AS dt_agend,
+                    TIME_FORMAT(a.hora_inicio, '%H:%i') AS hora_inicio,
+                    TIME_FORMAT(a.hora_fim, '%H:%i') AS hora_fim,
+                    a.status_agend,
+                    q.id_qd,
+                    q.nome_qd,
+                    q.tipo_qd,
+                    u.id_usu,
+                    u.nome_usu
+                FROM agendamentos a
+                INNER JOIN quadras q ON q.id_qd = a.id_qd
+                INNER JOIN usuarios u ON u.id_usu = a.id_usu
+                ORDER BY a.dt_agend, a.hora_inicio;
             `;
 
             const [rows] = await db.query(sql);
 
+            // Devolve os dados com os nomes dos campos tratados
+            const dados = rows.map(agendamento => ({
+                id: agendamento.id_agend,
+                data: agendamento.dt_agend,
+                horaInicio: agendamento.hora_inicio,
+                horaFim: agendamento.hora_fim,
+                status: agendamento.status_agend,
+                quadra: {
+                    id: agendamento.id_qd,
+                    nome: agendamento.nome_qd,
+                    tipo: agendamento.tipo_qd
+                },
+                cliente: {
+                    id: agendamento.id_usu,
+                    nome: agendamento.nome_usu
+                }
+            }));
+
             return response.status(200).json({
                 sucesso: true,
                 mensagem: "Lista de agendamentos.",
-                items: rows.length,
-                dados: rows
+                items: dados.length,
+                dados
             });
 
         } catch (error) {

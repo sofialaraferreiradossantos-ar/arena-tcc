@@ -1,6 +1,5 @@
 const fse = require("fs-extra");
 const db = require("../database/Connection");
-const { validarId } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
 const { gerarUrl } = require("../utils/gerarUrl");
 
@@ -24,7 +23,6 @@ async function responderErro(request, response, status, mensagem, dados = null) 
 // Valida só os campos presentes (serve para cadastro e edição).
 // Retorna a mensagem de erro ou null se estiver tudo certo.
 function validarCamposQuadra(dados) {
-    if (dados.id_cidade !== undefined && !validarId(dados.id_cidade)) return "O id da cidade deve ser numérico.";
     if (dados.nome_qd !== undefined && (!texto(dados.nome_qd) || texto(dados.nome_qd).length > 100)) return "O nome deve ter entre 1 e 100 caracteres.";
     if (dados.tipo_qd !== undefined && (!texto(dados.tipo_qd) || texto(dados.tipo_qd).length > 50)) return "O tipo deve ter entre 1 e 50 caracteres.";
     if (dados.desc_qd !== undefined && (!texto(dados.desc_qd) || texto(dados.desc_qd).length > 300)) return "A descrição deve ter entre 1 e 300 caracteres.";
@@ -34,11 +32,6 @@ function validarCamposQuadra(dados) {
         if (!Number.isFinite(valor) || valor < 0) return "O valor deve ser um número maior ou igual a zero.";
     }
     return null;
-}
-
-async function cidadeExiste(id_cidade) {
-    const [rows] = await db.query("SELECT id_cidade FROM cidades WHERE id_cidade = ?;", [id_cidade]);
-    return rows.length > 0;
 }
 
 function inteiro(valor, padrao) {
@@ -59,17 +52,40 @@ function quadraTratada(quadra) {
         valor: quadra.valor,
         disponivel: quadra.status === "disponivel",
         imagem: gerarUrl(quadra.imagem, "quadras", IMAGEM_PADRAO),
-        destaque: Boolean(quadra.destaque),
-        cidade: quadra.cidade,
-        uf: quadra.uf
+        destaque: Boolean(quadra.destaque)
     };
 }
 
 module.exports = {
-    // Consulta parametrizada + INNER JOIN + paginação + total de itens.
+    // Instrução SQL de retorno simples com DISTINCT: os tipos de quadra
+    // da arena, sem repetição (ex.: para montar o filtro do site).
+    async listarTipos(request, response) {
+        try {
+            const sql = `
+                SELECT DISTINCT
+                    tipo_qd AS tipo
+                FROM quadras
+                WHERE status_qd = 'disponivel'
+                ORDER BY tipo_qd ASC;
+            `;
+
+            const [rows] = await db.query(sql);
+
+            return response.status(200).json({
+                sucesso: true,
+                mensagem: "Tipos de quadra.",
+                nItens: rows.length,
+                dados: rows
+            });
+        } catch (error) {
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+        }
+    },
+
+    // Consulta parametrizada + paginação + total de itens.
     async listarQuadras(request, response) {
         try {
-            const { id, nome, tipo, valor, disponivel = "1", uf, cidade } = request.query;
+            const { id, nome, tipo, valor, disponivel = "1" } = request.query;
             const page = inteiro(request.query.page, 1);
             const limit = Math.min(inteiro(request.query.limit, 5), 100);
             const offset = (page - 1) * limit;
@@ -112,20 +128,9 @@ module.exports = {
                 valores.push(valorNumero);
             }
 
-            if (texto(uf)) {
-                filtros.push("c.uf = ?");
-                valores.push(texto(uf).toUpperCase());
-            }
-
-            if (texto(cidade)) {
-                filtros.push("c.nome_cidade LIKE ?");
-                valores.push(`%${texto(cidade)}%`);
-            }
-
             const where = filtros.length ? `WHERE ${filtros.join(" AND ")}` : "";
             const from = `
                 FROM quadras q
-                INNER JOIN cidades c ON c.id_cidade = q.id_cidade
                 ${where}
             `;
 
@@ -140,9 +145,7 @@ module.exports = {
                     q.valor_qd AS valor,
                     q.status_qd AS status,
                     q.imagem_qd AS imagem,
-                    q.destaque_qd AS destaque,
-                    c.nome_cidade AS cidade,
-                    c.uf
+                    q.destaque_qd AS destaque
                 ${from}
                 ORDER BY q.id_qd
                 LIMIT ? OFFSET ?;
@@ -175,11 +178,8 @@ module.exports = {
                     q.id_qd AS id,
                     q.nome_qd AS nome,
                     q.valor_qd AS valor,
-                    q.imagem_qd AS imagem,
-                    c.nome_cidade AS cidade,
-                    c.uf
+                    q.imagem_qd AS imagem
                 FROM quadras q
-                INNER JOIN cidades c ON c.id_cidade = q.id_cidade
                 WHERE q.status_qd = 'disponivel' AND q.destaque_qd = 1
                 ORDER BY RAND()
                 LIMIT 3;
@@ -198,44 +198,44 @@ module.exports = {
         }
     },
 
-    // Validações básicas: campos obrigatórios, formatos e cidade existente.
+    // Validações básicas: campos obrigatórios e formatos.
     // Aceita JSON ou multipart (com a foto no campo "imagem_qd").
     async cadastrarQuadras(request, response) {
         try {
-            const { id_cidade, nome_qd, tipo_qd, desc_qd, status_qd = "disponivel", valor_qd, destaque_qd = 0 } = request.body || {};
+            const { nome_qd, tipo_qd, desc_qd, status_qd = "disponivel", valor_qd, destaque_qd = 0 } = request.body || {};
 
             // Arquivo enviado pelo multer (upload); sem upload, mantém o nome vindo no body
             const imagem = request.file;
             const imagem_qd = imagem ? imagem.filename : (request.body?.imagem_qd || null);
 
-            if (!id_cidade || !nome_qd || !tipo_qd || !desc_qd || valor_qd === undefined) {
-                return responderErro(request, response, 400, "Cidade, nome, tipo, descrição e valor são obrigatórios.");
+            if (!nome_qd || !tipo_qd || !desc_qd || valor_qd === undefined) {
+                return responderErro(request, response, 400, "Nome, tipo, descrição e valor são obrigatórios.");
             }
 
-            const erro = validarCamposQuadra({ id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd });
+            const erro = validarCamposQuadra({ nome_qd, tipo_qd, desc_qd, status_qd, valor_qd });
             if (erro) {
                 return responderErro(request, response, 400, erro);
             }
 
-            // Verificar se a cidade existe
-            if (!(await cidadeExiste(id_cidade))) {
-                return responderErro(request, response, 404, "Cidade não encontrada.");
+            // Verificar se já existe uma quadra com esse nome na arena
+            const [nomeExiste] = await db.query("SELECT id_qd FROM quadras WHERE nome_qd = ?;", [texto(nome_qd)]);
+            if (nomeExiste.length > 0) {
+                return responderErro(request, response, 409, "Já existe uma quadra com esse nome.");
             }
 
             const valor = Number.parseFloat(valor_qd);
             const destaque = paraBooleano(destaque_qd);
             const sql = `
                 INSERT INTO quadras
-                    (id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                    (nome_qd, tipo_qd, desc_qd, status_qd, valor_qd, imagem_qd, destaque_qd)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
             `;
-            const [resultado] = await db.query(sql, [id_cidade, nome_qd, tipo_qd, desc_qd, status_qd, valor, imagem_qd, destaque]);
+            const [resultado] = await db.query(sql, [texto(nome_qd), tipo_qd, desc_qd, status_qd, valor, imagem_qd, destaque]);
             return response.status(201).json({
                 sucesso: true,
                 mensagem: "Quadra cadastrada com sucesso.",
                 dados: {
                     id_qd: resultado.insertId,
-                    id_cidade: Number(id_cidade),
                     nome_qd,
                     tipo_qd,
                     desc_qd,
@@ -268,14 +268,10 @@ module.exports = {
                 return responderErro(request, response, 400, erro);
             }
 
-            if (dados.id_cidade !== undefined && !(await cidadeExiste(dados.id_cidade))) {
-                return responderErro(request, response, 404, "Cidade não encontrada.");
-            }
             if (dados.valor_qd !== undefined) dados.valor_qd = Number.parseFloat(dados.valor_qd);
             if (dados.destaque_qd !== undefined) dados.destaque_qd = paraBooleano(dados.destaque_qd);
 
             const { setClauses, values } = montarUpdate(dados, {
-                id_cidade: "id_cidade",
                 nome_qd: "nome_qd",
                 tipo_qd: "tipo_qd",
                 desc_qd: "desc_qd",

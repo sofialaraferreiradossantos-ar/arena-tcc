@@ -12,6 +12,8 @@ CREATE TABLE usuarios (
     email_usu   VARCHAR(100) NOT NULL,
     -- Guarda o hash do bcrypt, que tem 60 caracteres
     senha_usu   VARCHAR(60)  NOT NULL,
+    -- 'cliente' ou 'admin' (administrador é um usuário com tipo 'admin')
+    tipo_usu    VARCHAR(20)  NOT NULL DEFAULT 'cliente',
     status_usu  VARCHAR(20)  NOT NULL,
     dt_cad      DATE         NOT NULL,
     PRIMARY KEY (id_usu),
@@ -19,22 +21,10 @@ CREATE TABLE usuarios (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------
--- CIDADES
--- --------------------------------------------------
-CREATE TABLE cidades (
-    id_cidade    INT(11)      NOT NULL AUTO_INCREMENT,
-    nome_cidade  VARCHAR(100) NOT NULL,
-    uf           CHAR(2)      NOT NULL,
-    PRIMARY KEY (id_cidade),
-    UNIQUE KEY uq_cidades_nome_uf (nome_cidade, uf)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------
--- QUADRAS
+-- QUADRAS (todas da mesma arena, em Tupã/SP)
 -- --------------------------------------------------
 CREATE TABLE quadras (
     id_qd       INT(11)        NOT NULL AUTO_INCREMENT,
-    id_cidade   INT(11)        NOT NULL,
     nome_qd     VARCHAR(100)   NOT NULL,
     tipo_qd     VARCHAR(50)    NOT NULL,
     desc_qd     VARCHAR(300)   NOT NULL,
@@ -110,7 +100,7 @@ CREATE TABLE torneios (
     desc_torn         VARCHAR(300)  NOT NULL,
     status_torn       VARCHAR(20)   NOT NULL,
     limite_part_torn  INT(11)       NULL,
-    premiacao         VARCHAR(300)  NULL,
+    premiacao_torn    VARCHAR(300)  NULL,
     dt_cad            DATE          NOT NULL,
     valor_part        DECIMAL(10,2) NULL,
     PRIMARY KEY (id_torn)

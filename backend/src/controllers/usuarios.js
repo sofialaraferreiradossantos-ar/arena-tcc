@@ -18,6 +18,7 @@ module.exports = {
                     id_usu,
                     nome_usu,
                     email_usu,
+                    tipo_usu,
                     status_usu,
                     dt_cad
                 FROM usuarios
@@ -107,18 +108,20 @@ module.exports = {
             // Criptografa a senha antes de gravar (bcrypt)
             const hashedPassword = await bcrypt.hash(senha_usu, SALT_ROUNDS);
 
-            // Status e data de cadastro são definidos pelo servidor
+            // Tipo, status e data de cadastro são definidos pelo servidor.
+            // Administradores são cadastrados por /auth/admin/cadastro.
+            const tipo_usu = "cliente";
             const status_usu = "ativo";
             const dt_cad = new Date().toLocaleDateString("sv-SE"); // YYYY-MM-DD
 
             const sql = `
                 INSERT INTO usuarios
-                    (nome_usu, email_usu, senha_usu, status_usu, dt_cad)
+                    (nome_usu, email_usu, senha_usu, tipo_usu, status_usu, dt_cad)
                 VALUES
-                    (?, ?, ?, ?, ?);
+                    (?, ?, ?, ?, ?, ?);
             `;
 
-            const valores = [nome_usu, email_usu, hashedPassword, status_usu, dt_cad];
+            const valores = [nome_usu, email_usu, hashedPassword, tipo_usu, status_usu, dt_cad];
 
             const [resultado] = await db.query(sql, valores);
 
@@ -129,6 +132,7 @@ module.exports = {
                     id_usu: resultado.insertId,
                     nome_usu,
                     email_usu,
+                    tipo_usu,
                     status_usu,
                     dt_cad
                 }

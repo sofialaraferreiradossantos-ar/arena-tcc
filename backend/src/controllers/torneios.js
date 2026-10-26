@@ -24,7 +24,7 @@ function validarCamposTorneio(dados) {
     if (dados.limite_part_torn !== undefined && dados.limite_part_torn !== null && !validarId(dados.limite_part_torn)) {
         return "O limite de participantes deve ser um número inteiro maior que zero.";
     }
-    if (dados.premiacao !== undefined && dados.premiacao !== null && tamanho(dados.premiacao) > 300) {
+    if (dados.premiacao_torn !== undefined && dados.premiacao_torn !== null && tamanho(dados.premiacao_torn) > 300) {
         return "A premiação deve ter no máximo 300 caracteres.";
     }
     if (dados.valor_part !== undefined && dados.valor_part !== null) {
@@ -50,7 +50,7 @@ module.exports = {
                     desc_torn,
                     status_torn,
                     limite_part_torn,
-                    premiacao,
+                    premiacao_torn,
                     dt_cad,
                     valor_part
                 FROM torneios
@@ -90,7 +90,7 @@ module.exports = {
                 desc_torn,
                 status_torn = "aberto",
                 limite_part_torn = null,
-                premiacao = null,
+                premiacao_torn = null,
                 valor_part = null
             } = request.body || {};
 
@@ -105,7 +105,7 @@ module.exports = {
                 });
             }
 
-            const erro = validarCamposTorneio({ nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao, valor_part });
+            const erro = validarCamposTorneio({ nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao_torn, valor_part });
             if (erro) {
                 return response.status(400).json({
                     sucesso: false,
@@ -122,7 +122,7 @@ module.exports = {
                         desc_torn,
                         status_torn,
                         limite_part_torn,
-                        premiacao,
+                        premiacao_torn,
                         dt_cad,
                         valor_part
                     )
@@ -136,7 +136,7 @@ module.exports = {
                 desc_torn,
                 status_torn,
                 limite_part_torn,
-                premiacao,
+                premiacao_torn,
                 dt_cad,
                 valor_part
             ];
@@ -153,7 +153,7 @@ module.exports = {
                     desc_torn,
                     status_torn,
                     limite_part_torn,
-                    premiacao,
+                    premiacao_torn,
                     dt_cad,
                     valor_part
                 }
@@ -204,7 +204,7 @@ module.exports = {
                 desc_torn: "desc_torn",
                 status_torn: "status_torn",
                 limite_part_torn: "limite_part_torn",
-                premiacao: "premiacao",
+                premiacao_torn: "premiacao_torn",
                 valor_part: "valor_part"
             });
 
