@@ -30,8 +30,6 @@ function HeaderAgendamentos() {
         </button>
 
         <div className={styles.logoArea}>
-          <img src={logo} alt="Arena Beach" />
-
           <h2>
             Meus <span>Agendamentos</span>
           </h2>

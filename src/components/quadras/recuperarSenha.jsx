@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "../../styles/home.module.css";
-import logo from "../../assets/logo.jpeg";
 
 export default function RecuperarSenha() {
   return (
     <main className={styles.authPage}>
       <section className={styles.authCard + " " + styles.authCardSmall}>
         <div className={styles.authBrand}>
-          <img src={logo} alt="Arena Beach" />
           <strong>
             ARENA <span>BEACH</span>
           </strong>

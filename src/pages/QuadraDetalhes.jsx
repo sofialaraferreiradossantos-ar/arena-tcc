@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaArrowLeft, FaBars, FaTimes } from "react-icons/fa";
 
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 
 import styles from "../styles/quadras.module.css";
 
@@ -41,6 +41,16 @@ function QuadraDetalhes() {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Volta para a tela anterior (mantém o filtro de modalidade da lista).
+  // Se a página foi aberta direto pelo endereço, vai para a lista de quadras.
+  const voltar = (event) => {
+    if (location.key !== "default") {
+      event.preventDefault();
+      navigate(-1);
+    }
+  };
 
   const fecharMenu = () => {
     setMenuAberto(false);
@@ -136,8 +146,16 @@ function QuadraDetalhes() {
       {/* BOTÃO PARA ABRIR */}
       <FaBars className={styles.menuIcon} onClick={() => setMenuAberto(true)} />
 
-      {/* LOGO */}
-      <img src={logo} alt="Arena Beach" className={styles.logoDetails} />
+      {/* VOLTAR (no topo, ao lado do menu) */}
+      <Link
+        to="/quadras"
+        className={styles.voltarTopo}
+        onClick={voltar}
+        aria-label="Voltar para quadras"
+      >
+        <FaArrowLeft aria-hidden="true" />
+        <span>Voltar</span>
+      </Link>
 
       {/* TÍTULO */}
       <h1 className={styles.titleDetails}>

@@ -64,12 +64,6 @@ const moduleData = {
         role: "Descoberta",
         status: "Manutenção",
       },
-      {
-        name: "Quadra 4",
-        detail: "Futevôlei",
-        role: "Coberta",
-        status: "Disponível",
-      },
     ],
   },
   agendamentos: {

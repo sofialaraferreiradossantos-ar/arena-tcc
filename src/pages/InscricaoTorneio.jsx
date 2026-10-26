@@ -142,11 +142,6 @@ function InscricaoTorneio() {
       {/* CONTEÚDO PRINCIPAL */}
       <div className={styles.mainContent}>
         <div className={styles.header}>
-          <img
-            src="/logo-arena-beach.png"
-            alt="Arena Beach"
-            className={styles.logo}
-          />
           <div>
             <h1>
               Inscrição no <span>Torneio</span>

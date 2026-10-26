@@ -149,9 +149,7 @@ function AgendamentoSucesso() {
       ========================================= */}
 
       <header className={styles.topHeader}>
-        <div className={styles.logoArea}>
-          <img src="/logo.png" alt="Arena Beach" />
-        </div>
+        <div className={styles.logoArea} />
 
         {/* USUÁRIO */}
 

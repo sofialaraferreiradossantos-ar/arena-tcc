@@ -1,6 +1,3 @@
-import quadraCoberta from "../mockup/imagens/quadraCobertaAlta.png";
-import quadraDesoberta from "../mockup/imagens/quadra.jpeg";
-import quadraBeachTennis from "../mockup/imagens/quadraBeachTennis.jpg";
 // Fotos reais da arena: Quadra 1 (rede rosa), Quadra 2 (rede laranja), Quadra 3 (rede branca)
 import fotoQuadra1 from "../mockup/imagens/quadra1.jpg";
 import fotoQuadra2 from "../mockup/imagens/quadra2.jpg";
@@ -53,55 +50,5 @@ export const quadrasMckp = [
     uf: "SP",
     modalidade: ["beach-tennis", "futevolei"],
     destaques: "Iluminação LED • areia selecionada",
-  },
-  {
-    id: 7,
-    title: "Quadra Beach Tennis 2",
-    image: quadraBeachTennis,
-    available: true,
-    cidade: "Tupã",
-    uf: "SP",
-    modalidade: "beach-tennis",
-    destaques: "Rede profissional • iluminação LED",
-  },
-  {
-    id: 4,
-    title: "Quadra Futevôlei Central",
-    image: quadraCoberta,
-    available: true,
-    cidade: "Tupã",
-    uf: "SP",
-    modalidade: "futevolei",
-    destaques: "Rede oficial • areia fofa • iluminação noturna",
-  },
-  {
-    id: 5,
-    title: "Quadra Futevôlei Arena 2",
-    image: quadraBeachTennis,
-    available: true,
-    cidade: "Tupã",
-    uf: "SP",
-    modalidade: "futevolei",
-    destaques: "Rede regulável • areia selecionada",
-  },
-  {
-    id: 6,
-    title: "Quadra Futevôlei Treino",
-    image: quadraDesoberta,
-    available: false,
-    cidade: "Tupã",
-    uf: "SP",
-    modalidade: "futevolei",
-    destaques: "Ideal para treinos e aulas • areia fofa",
-  },
-  {
-    id: 8,
-    title: "Quadra Futevôlei Praia",
-    image: quadraBeachTennis,
-    available: true,
-    cidade: "Tupã",
-    uf: "SP",
-    modalidade: "futevolei",
-    destaques: "Rede oficial • areia selecionada",
   },
 ];

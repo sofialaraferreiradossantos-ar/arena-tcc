@@ -137,8 +137,6 @@ function Torneios() {
         {/* CABEÇALHO */}
 
         <header className={styles.topHeader}>
-          <img src={logo} alt="Arena Beach" className={styles.headerLogo} />
-
           <span>
             Torneios <strong>Disponíveis</strong>
           </span>

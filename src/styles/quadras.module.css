@@ -1106,6 +1106,116 @@
   object-position: center;
 }
 
+/* Botão de voltar no topo, ao lado dos botões do menu, com a mesma cor e
+   estilização dos botões Menu/Claro do menu unificado. */
+.voltarTopo {
+  position: fixed;
+  top: 14px;
+  left: 222px;
+  z-index: 900;
+  min-width: 92px;
+  height: 42px;
+  padding: 0 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 11px;
+  background: rgba(23, 23, 23, 0.94);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.42);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.voltarTopo span {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  transform: translateY(2px);
+}
+
+.voltarTopo:hover {
+  border-color: #ff8800;
+  color: #ff9a35;
+  background: #1b160f;
+  transform: translateY(-1px);
+}
+
+.voltarTopo:focus-visible {
+  outline: 3px solid rgba(255, 136, 0, 0.35);
+  outline-offset: 3px;
+}
+
+/* Mesmo ajuste de tamanho que os botões do menu recebem abaixo de 900px. */
+@media (max-width: 900px) {
+  .voltarTopo {
+    top: 12px;
+    left: 192px;
+    min-width: 82px;
+    height: 38px;
+    padding-inline: 11px;
+  }
+}
+
+/* Em telas bem estreitas não cabe na linha do menu: fica logo abaixo do
+   botão Menu. */
+@media (max-width: 480px) {
+  .voltarTopo {
+    top: 58px;
+    left: 12px;
+  }
+}
+
+/* Detalhes: a foto cresce junto com a tela.
+   - Até 1199px: foto em cima, na largura toda, e informações embaixo.
+   - A partir de 1200px: lado a lado; o painel de informações tem largura
+     quase fixa (340px a 440px) e a foto ocupa todo o resto. */
+@media (max-width: 1199px) {
+  .detailsContent {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .detailsContent {
+    max-width: 1760px;
+    grid-template-columns: minmax(0, 1fr) clamp(340px, 26vw, 440px);
+  }
+
+  .galleryBox {
+    padding: 12px;
+  }
+}
+
+/* Lado a lado: a foto fica com a mesma altura do painel de informações ao
+   lado e preenche todo o quadro (corta as bordas se precisar). */
+@media (min-width: 1200px) {
+  .detailsContent {
+    align-items: stretch;
+  }
+
+  .galleryBox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mainImage {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {
@@ -1315,6 +1425,23 @@
   border: 1px solid rgba(248, 113, 113, 0.35);
   background: rgba(220, 38, 38, 0.12);
   color: #dc0000;
+}
+
+:global(html[data-theme="light"]) .voltarTopo {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(243, 246, 248, 0.94);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.168);
+  color: #000000;
+}
+
+:global(html[data-theme="light"]) .voltarTopo:hover {
+  border-color: #ff8800;
+  color: #aa5500;
+  background: #f9f7f4;
+}
+
+:global(html[data-theme="light"]) .voltarTopo:focus-visible {
+  outline: 3px solid rgba(255, 136, 0, 0.35);
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */
