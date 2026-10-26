@@ -7,22 +7,29 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import styles from "../styles/quadras.module.css";
 
 import logo from "../assets/logo.jpeg";
-import { modalidades, quadrasMckp } from "../mockup/dados.js";
+import {
+  listaModalidades,
+  nomesModalidades,
+  quadrasMckp,
+} from "../mockup/dados.js";
 
 const DESCRICOES = {
   "beach-tennis":
     "Quadra de areia preparada para o beach tennis, com rede na altura oficial e marcações visíveis. Ideal para jogos em dupla, aulas e treinos, do iniciante ao avançado.",
   futevolei:
     "Quadra de areia preparada para o futevôlei, com rede na altura oficial e espaço livre ao redor para as jogadas. Ideal para partidas entre amigos, treinos e aulas.",
+  multiuso:
+    "Quadra de areia preparada para o beach tennis e o futevôlei, com rede na altura oficial, marcações visíveis e espaço livre ao redor para as jogadas. Ideal para jogos em dupla, partidas entre amigos, aulas e treinos.",
 };
 
 function QuadraDetalhes() {
   const { id } = useParams();
   const quadraSelecionada =
     quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0];
-  const modalidade =
-    modalidades.find((item) => item.id === quadraSelecionada.modalidade)
-      ?.label || "Beach tennis";
+  const modalidade = nomesModalidades(quadraSelecionada) || "Beach tennis";
+  const listaDaQuadra = listaModalidades(quadraSelecionada);
+  const chaveDescricao =
+    listaDaQuadra.length > 1 ? "multiuso" : listaDaQuadra[0];
   const estrutura = [
     ...quadraSelecionada.destaques
       .split(" • ")
@@ -172,7 +179,7 @@ function QuadraDetalhes() {
             <h3>Sobre a quadra</h3>
 
             <p>
-              {DESCRICOES[quadraSelecionada.modalidade] ||
+              {DESCRICOES[chaveDescricao] ||
                 DESCRICOES["beach-tennis"]}{" "}
               A quadra conta com iluminação LED e areia selecionada, e pode ser
               reservada para jogos, eventos e torneios.

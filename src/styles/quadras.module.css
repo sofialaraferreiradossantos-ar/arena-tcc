@@ -1091,6 +1091,21 @@
   }
 }
 
+/* Detalhes: foto da quadra em 16:9, sem esticar até a altura do painel
+   lateral (isso deixava a imagem quase quadrada e cortava as laterais). */
+.detailsContent {
+  align-items: start;
+}
+
+.mainImage {
+  flex: none;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {

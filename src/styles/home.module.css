@@ -3293,6 +3293,15 @@
   }
 }
 
+/* Fotos das quadras sempre em 16:9 (a proporção das fotos), em qualquer tela. */
+.quadraCard img,
+.courtsPage .quadraCard img {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {

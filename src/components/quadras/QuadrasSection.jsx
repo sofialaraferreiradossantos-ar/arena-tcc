@@ -1,10 +1,7 @@
 import styles from "../../styles/home.module.css";
 
 import QuadraCard from "./QuadraCard";
-import { modalidades } from "../../mockup/dados.js";
-
-const nomeDaModalidade = (id) =>
-  modalidades.find((item) => item.id === id)?.label;
+import { nomesModalidades } from "../../mockup/dados.js";
 
 function QuadrasSection({ quadras }) {
   return (
@@ -17,7 +14,7 @@ function QuadrasSection({ quadras }) {
           image={quadra.image}
           available={quadra.available}
           location={`${quadra.cidade} - ${quadra.uf}`}
-          modalidade={nomeDaModalidade(quadra.modalidade)}
+          modalidade={nomesModalidades(quadra)}
           destaques={quadra.destaques}
         />
       ))}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
-import { modalidades, quadrasMckp } from "../../mockup/dados.js";
+import { modalidades, quadrasMckp, temModalidade } from "../../mockup/dados.js";
 import { HORARIOS_OCUPADOS, PERIODOS } from "../../mockup/horarios.js";
 import { dataISO, formatarData } from "../../mockup/agendamentos.js";
 
@@ -105,7 +105,7 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
             {modalidades.map((modalidade) => (
               <optgroup key={modalidade.id} label={modalidade.label}>
                 {quadrasDisponiveis
-                  .filter((quadra) => quadra.modalidade === modalidade.id)
+                  .filter((quadra) => temModalidade(quadra, modalidade.id))
                   .map((quadra) => (
                     <option key={quadra.id} value={quadra.id}>
                       {quadra.title}

@@ -4,7 +4,7 @@ import styles from "../styles/home.module.css";
 import CategoryButtons from "../components/quadras/CategoryButtons.jsx";
 import SearchBar from "../components/quadras/SearchBar.jsx";
 import QuadrasSection from "../components/quadras/QuadrasSection.jsx";
-import { modalidades, quadrasMckp } from "../mockup/dados.js";
+import { modalidades, quadrasMckp, temModalidade } from "../mockup/dados.js";
 
 export default function Quadras() {
   const [search, setSearch] = useState("");
@@ -17,7 +17,7 @@ export default function Quadras() {
 
   const quadras = quadrasMckp.filter(
     (item) =>
-      item.modalidade === modalidade.id &&
+      temModalidade(item, modalidade.id) &&
       item.title.toLowerCase().includes(search.toLowerCase()),
   );
 
