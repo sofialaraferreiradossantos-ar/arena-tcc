@@ -1,4 +1,5 @@
 import {
+  FaArrowRight,
   FaClock,
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -22,11 +23,13 @@ export default function Home() {
               esporte.
             </p>
             <div className={styles.heroActions}>
-              <Link to="/agendar-horario" className={styles.primaryAction}>
+              <Link to="/agendar-horario" className={styles.secondaryAction}>
                 Agendar horário
+                <FaArrowRight className={styles.actionArrow} aria-hidden="true" />
               </Link>
               <Link to="/quadras" className={styles.secondaryAction}>
                 Ver quadras
+                <FaArrowRight className={styles.actionArrow} aria-hidden="true" />
               </Link>
             </div>
           </header>

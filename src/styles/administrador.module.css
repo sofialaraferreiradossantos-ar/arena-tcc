@@ -1193,3 +1193,16 @@
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */
+
+/* Erro ao falar com o back-end (ex.: tela de quadras do admin) */
+.errorMessage {
+  margin-top: 15px;
+  color: #ff8a8a;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.rowButton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

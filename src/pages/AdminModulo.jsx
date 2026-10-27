@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   FaBorderAll,
@@ -9,6 +9,21 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import styles from "../styles/administrador.module.css";
+
+const apiUrl = (path) =>
+  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
+
+// Converte a quadra que vem do back-end (GET /quadras) para uma linha da lista
+function quadraParaLinha(quadra) {
+  return {
+    id: quadra.id,
+    name: quadra.nome,
+    detail: quadra.tipo,
+    role: `R$ ${Number(quadra.valor).toFixed(2).replace(".", ",")}`,
+    status: quadra.disponivel ? "Disponível" : "Indisponível",
+    disponivel: quadra.disponivel,
+  };
+}
 
 const moduleData = {
   usuarios: {
@@ -43,28 +58,9 @@ const moduleData = {
     title: "Quadras",
     description:
       "Controle as quadras disponíveis, modalidades e situação de uso.",
-    action: "Adicionar quadra",
-    placeholder: "Nome da nova quadra",
-    rows: [
-      {
-        name: "Quadra 1",
-        detail: "Beach Tennis",
-        role: "Coberta",
-        status: "Disponível",
-      },
-      {
-        name: "Quadra 2",
-        detail: "Futevôlei",
-        role: "Descoberta",
-        status: "Disponível",
-      },
-      {
-        name: "Quadra 3",
-        detail: "Beach Tennis",
-        role: "Descoberta",
-        status: "Manutenção",
-      },
-    ],
+    // As quadras vêm do banco de dados (GET /quadras), não de dados fixos
+    usaBanco: true,
+    rows: [],
   },
   agendamentos: {
     icon: <FaRegCalendarAlt />,
@@ -156,6 +152,46 @@ function AdminModulo() {
   const [notice, setNotice] = useState("");
   const [notifications, setNotifications] = useState(true);
   const [maintenance, setMaintenance] = useState(false);
+  const usaBanco = Boolean(config?.usaBanco);
+  const [carregando, setCarregando] = useState(usaBanco);
+  const [erroBanco, setErroBanco] = useState("");
+  const [salvandoId, setSalvandoId] = useState(null);
+
+  // Busca todas as quadras (disponíveis e indisponíveis) no back-end
+  useEffect(() => {
+    if (!usaBanco) return undefined;
+    let ativo = true;
+
+    setCarregando(true);
+    fetch(apiUrl("/quadras?disponivel=todos&limit=100"))
+      .then(async (resposta) => {
+        const resultado = await resposta.json().catch(() => null);
+        if (!resposta.ok || !resultado?.sucesso) {
+          throw new Error(resultado?.mensagem || "Não foi possível carregar as quadras.");
+        }
+        return resultado.dados;
+      })
+      .then((dados) => {
+        if (!ativo) return;
+        setRows(dados.map(quadraParaLinha));
+        setErroBanco("");
+      })
+      .catch((error) => {
+        if (!ativo) return;
+        setErroBanco(
+          error.message === "Failed to fetch"
+            ? "Não foi possível conectar ao servidor. Verifique se o backend está iniciado."
+            : error.message,
+        );
+      })
+      .finally(() => {
+        if (ativo) setCarregando(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, [usaBanco]);
 
   if (!config && modulo !== "relatorios" && modulo !== "configuracoes") {
     return <Navigate to="/administrador" replace />;
@@ -193,6 +229,56 @@ function AdminModulo() {
           : row,
       ),
     );
+  };
+
+  // Deixa a quadra disponível ou indisponível no banco (PATCH /quadras/:id).
+  // Só muda o status: nenhuma quadra é apagada.
+  const alterarDisponibilidade = async (row) => {
+    const ficaDisponivel = !row.disponivel;
+    setSalvandoId(row.id);
+    setNotice("");
+    setErroBanco("");
+
+    try {
+      const resposta = await fetch(apiUrl(`/quadras/${row.id}`), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token_admin") || ""}`,
+        },
+        body: JSON.stringify({
+          status_qd: ficaDisponivel ? "disponivel" : "indisponivel",
+        }),
+      });
+      const resultado = await resposta.json().catch(() => null);
+
+      if (!resposta.ok || !resultado?.sucesso) {
+        throw new Error(resultado?.mensagem || "Não foi possível atualizar a quadra.");
+      }
+
+      setRows((currentRows) =>
+        currentRows.map((item) =>
+          item.id === row.id
+            ? {
+                ...item,
+                disponivel: ficaDisponivel,
+                status: ficaDisponivel ? "Disponível" : "Indisponível",
+              }
+            : item,
+        ),
+      );
+      setNotice(
+        `${row.name} agora está ${ficaDisponivel ? "disponível" : "indisponível"}.`,
+      );
+    } catch (error) {
+      setErroBanco(
+        error.message === "Failed to fetch"
+          ? "Não foi possível conectar ao servidor. Verifique se o backend está iniciado."
+          : error.message,
+      );
+    } finally {
+      setSalvandoId(null);
+    }
   };
 
   return (
@@ -284,15 +370,21 @@ function AdminModulo() {
             <div className={styles.moduleToolbar}>
               <div>
                 <span className={styles.panelEyebrow}>VISÃO GERAL</span>
-                <h2>{rows.length} registros cadastrados</h2>
+                <h2>
+                  {carregando
+                    ? "Carregando..."
+                    : `${rows.length} registros cadastrados`}
+                </h2>
               </div>
-              <button
-                type="button"
-                className={styles.moduleButton}
-                onClick={() => setShowForm((current) => !current)}
-              >
-                {showForm ? "Cancelar" : config.action}
-              </button>
+              {config.action && (
+                <button
+                  type="button"
+                  className={styles.moduleButton}
+                  onClick={() => setShowForm((current) => !current)}
+                >
+                  {showForm ? "Cancelar" : config.action}
+                </button>
+              )}
             </div>
 
             {showForm && (
@@ -335,9 +427,28 @@ function AdminModulo() {
                       Alterar status
                     </button>
                   )}
+                  {usaBanco && (
+                    <button
+                      type="button"
+                      className={styles.rowButton}
+                      onClick={() => alterarDisponibilidade(row)}
+                      disabled={salvandoId === row.id}
+                    >
+                      {salvandoId === row.id
+                        ? "Salvando..."
+                        : row.disponivel
+                          ? "Deixar indisponível"
+                          : "Deixar disponível"}
+                    </button>
+                  )}
                 </article>
               ))}
             </div>
+            {erroBanco && (
+              <p className={styles.errorMessage} role="alert">
+                {erroBanco}
+              </p>
+            )}
             {notice && <p className={styles.successMessage}>{notice}</p>}
           </section>
         )}

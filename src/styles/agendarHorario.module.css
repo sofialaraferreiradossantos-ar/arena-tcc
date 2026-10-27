@@ -897,3 +897,17 @@
 }
 
 /* ==== FIM DO TEMA CLARO GERADO ==== */
+
+/* Etapa 1: modalidade e número da quadra lado a lado */
+.quadraCampos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 700px) {
+  .quadraCampos {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

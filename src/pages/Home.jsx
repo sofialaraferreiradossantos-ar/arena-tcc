@@ -5,6 +5,9 @@ import CategoryButtons from "../components/quadras/CategoryButtons.jsx";
 import SearchBar from "../components/quadras/SearchBar.jsx";
 import QuadrasSection from "../components/quadras/QuadrasSection.jsx";
 import { modalidades, quadrasMckp, temModalidade } from "../mockup/dados.js";
+import useDisponibilidadeQuadras, {
+  comDisponibilidade,
+} from "../hooks/useDisponibilidadeQuadras.js";
 
 export default function Quadras() {
   const [search, setSearch] = useState("");
@@ -14,12 +17,16 @@ export default function Quadras() {
     modalidades.find((item) => item.id === searchParams.get("modalidade")) ||
     modalidades[0];
   const setCategoria = (id) => setSearchParams({ modalidade: id });
+  // Disponível/indisponível vem do banco (o admin muda em Administração > Quadras)
+  const disponibilidade = useDisponibilidadeQuadras();
 
-  const quadras = quadrasMckp.filter(
-    (item) =>
-      temModalidade(item, modalidade.id) &&
-      item.title.toLowerCase().includes(search.toLowerCase()),
-  );
+  const quadras = quadrasMckp
+    .map((item) => comDisponibilidade(item, disponibilidade))
+    .filter(
+      (item) =>
+        temModalidade(item, modalidade.id) &&
+        item.title.toLowerCase().includes(search.toLowerCase()),
+    );
 
   return (
     <div className={styles.container}>

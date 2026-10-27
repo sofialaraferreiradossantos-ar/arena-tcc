@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { FaArrowLeft, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 
 import styles from "../styles/quadras.module.css";
 
@@ -12,6 +12,9 @@ import {
   nomesModalidades,
   quadrasMckp,
 } from "../mockup/dados.js";
+import useDisponibilidadeQuadras, {
+  comDisponibilidade,
+} from "../hooks/useDisponibilidadeQuadras.js";
 
 const DESCRICOES = {
   "beach-tennis":
@@ -24,8 +27,12 @@ const DESCRICOES = {
 
 function QuadraDetalhes() {
   const { id } = useParams();
-  const quadraSelecionada =
-    quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0];
+  // Disponível/indisponível vem do banco (o admin muda em Administração > Quadras)
+  const disponibilidade = useDisponibilidadeQuadras();
+  const quadraSelecionada = comDisponibilidade(
+    quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0],
+    disponibilidade,
+  );
   const modalidade = nomesModalidades(quadraSelecionada) || "Beach tennis";
   const listaDaQuadra = listaModalidades(quadraSelecionada);
   const chaveDescricao =
@@ -41,16 +48,6 @@ function QuadraDetalhes() {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // Volta para a tela anterior (mantém o filtro de modalidade da lista).
-  // Se a página foi aberta direto pelo endereço, vai para a lista de quadras.
-  const voltar = (event) => {
-    if (location.key !== "default") {
-      event.preventDefault();
-      navigate(-1);
-    }
-  };
 
   const fecharMenu = () => {
     setMenuAberto(false);
@@ -146,16 +143,7 @@ function QuadraDetalhes() {
       {/* BOTÃO PARA ABRIR */}
       <FaBars className={styles.menuIcon} onClick={() => setMenuAberto(true)} />
 
-      {/* VOLTAR (no topo, ao lado do menu) */}
-      <Link
-        to="/quadras"
-        className={styles.voltarTopo}
-        onClick={voltar}
-        aria-label="Voltar para quadras"
-      >
-        <FaArrowLeft aria-hidden="true" />
-        <span>Voltar</span>
-      </Link>
+      {/* O botão Voltar agora fica no menu do topo (UnifiedMenu) */}
 
       {/* TÍTULO */}
       <h1 className={styles.titleDetails}>

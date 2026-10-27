@@ -2355,7 +2355,7 @@
 .primaryAction {
   background: #ff8a1f;
   color: #14120e;
-  box-shadow: 0 12px 35px rgba(255, 120, 0, 0.2);
+  box-shadow: none;
 }
 .primaryAction:hover {
   background: #ffa34f;
@@ -3302,6 +3302,40 @@
   object-position: center;
 }
 
+/* QR code do Pix: fica fora da regra 16:9 das fotos, sempre quadrado e inteiro. */
+.quadraCard img.qrCode {
+  width: 160px;
+  height: 160px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@media (max-width: 420px) {
+  .quadraCard img.qrCode {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* Setinha no canto inferior direito dos botões do Início */
+.heroActions .secondaryAction {
+  position: relative;
+}
+
+.actionArrow {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  font-size: 10px;
+  color: #ff8a1f;
+  transition: transform 0.2s;
+}
+
+.secondaryAction:hover .actionArrow {
+  transform: translateX(2px);
+}
+
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {
@@ -4067,7 +4101,7 @@
 :global(html[data-theme="light"]) .primaryAction {
   background: #ff8a1f;
   color: #14120e;
-  box-shadow: 0 12px 35px rgba(255, 120, 0, 0.2);
+  box-shadow: none;
 }
 
 :global(html[data-theme="light"]) .primaryAction:hover {

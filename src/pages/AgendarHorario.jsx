@@ -1,8 +1,11 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import styles from "../styles/agendarHorario.module.css";
 import { HORARIOS_OCUPADOS, PERIODOS } from "../mockup/horarios.js";
+
+const apiUrl = (path) =>
+  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MESES = [
@@ -24,6 +27,48 @@ function AgendarHorario() {
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
   const [quadra, setQuadra] = useState("");
+  // id da quadra escolhida (vem do banco de dados)
+  const [numeroQuadra, setNumeroQuadra] = useState("");
+  const [quadrasBanco, setQuadrasBanco] = useState([]);
+  const [carregandoQuadras, setCarregandoQuadras] = useState(true);
+  const [erroQuadras, setErroQuadras] = useState("");
+
+  // Só as quadras disponíveis no banco aparecem para agendar.
+  // O administrador muda isso em Administração > Quadras.
+  useEffect(() => {
+    let ativo = true;
+
+    fetch(apiUrl("/quadras?disponivel=1&limit=100"))
+      .then(async (resposta) => {
+        const resultado = await resposta.json().catch(() => null);
+        if (!resposta.ok || !resultado?.sucesso) {
+          throw new Error(resultado?.mensagem || "Não foi possível carregar as quadras.");
+        }
+        return resultado.dados;
+      })
+      .then((dados) => {
+        if (ativo) setQuadrasBanco(dados);
+      })
+      .catch(() => {
+        if (ativo) {
+          setErroQuadras(
+            "Não foi possível carregar as quadras. Verifique se o backend está iniciado.",
+          );
+        }
+      })
+      .finally(() => {
+        if (ativo) setCarregandoQuadras(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  const quadraEscolhida = quadrasBanco.find(
+    (item) => String(item.id) === numeroQuadra,
+  );
+  const nomeQuadra = quadraEscolhida?.nome || "";
   const [horario, setHorario] = useState("");
 
   const hoje = useMemo(() => {
@@ -86,7 +131,7 @@ function AgendarHorario() {
     });
   };
 
-  const podeConfirmar = quadra && dataSelecionada && horario;
+  const podeConfirmar = quadra && numeroQuadra && dataSelecionada && horario;
 
   const irParaPagamento = () => {
     if (!podeConfirmar) return;
@@ -94,6 +139,8 @@ function AgendarHorario() {
       state: {
         agendamento: {
           quadra,
+          quadraId: quadraEscolhida?.id,
+          numeroQuadra: nomeQuadra,
           data: dataSelecionada?.toISOString(),
           horario,
         },
@@ -181,19 +228,54 @@ function AgendarHorario() {
         {/* ETAPA 1 - QUADRA */}
         <section className={`${styles.formCard} ${styles.cardFull}`}>
           <span className={styles.stepTag}>Etapa 1</span>
-          <label htmlFor="quadra" className={styles.label}>
-            Quadra
-          </label>
-          <select
-            id="quadra"
-            className={styles.select}
-            value={quadra}
-            onChange={(e) => setQuadra(e.target.value)}
-          >
-            <option value="">Selecione uma quadra</option>
-            <option value="Beach Tennis">Beach Tennis</option>
-            <option value="Futevôlei">Futevôlei</option>
-          </select>
+          <div className={styles.quadraCampos}>
+            <div>
+              <label htmlFor="quadra" className={styles.label}>
+                Modalidade
+              </label>
+              <select
+                id="quadra"
+                className={styles.select}
+                value={quadra}
+                onChange={(e) => setQuadra(e.target.value)}
+              >
+                <option value="">Selecione uma modalidade</option>
+                <option value="Beach Tennis">Beach Tennis</option>
+                <option value="Futevôlei">Futevôlei</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="numeroQuadra" className={styles.label}>
+                Número da quadra
+              </label>
+              <select
+                id="numeroQuadra"
+                className={styles.select}
+                value={numeroQuadra}
+                onChange={(e) => setNumeroQuadra(e.target.value)}
+                disabled={carregandoQuadras || quadrasBanco.length === 0}
+              >
+                <option value="">
+                  {carregandoQuadras
+                    ? "Carregando quadras..."
+                    : quadrasBanco.length === 0
+                      ? "Nenhuma quadra disponível"
+                      : "Selecione a quadra"}
+                </option>
+                {quadrasBanco.map((item) => (
+                  <option key={item.id} value={String(item.id)}>
+                    {item.nome}
+                  </option>
+                ))}
+              </select>
+              {erroQuadras && (
+                <p className={styles.hintText} role="alert">
+                  {erroQuadras}
+                </p>
+              )}
+            </div>
+          </div>
         </section>
 
         {/* ETAPA 2 - DATA */}
@@ -317,8 +399,8 @@ function AgendarHorario() {
       <div className={styles.actionBar}>
         <p className={styles.actionHint}>
           {podeConfirmar
-            ? `${quadra} • ${formatarDataResumo(dataSelecionada)} • ${horario}`
-            : "Preencha quadra, data e horário para continuar."}
+            ? `${quadra} • ${nomeQuadra} • ${formatarDataResumo(dataSelecionada)} • ${horario}`
+            : "Preencha modalidade, quadra, data e horário para continuar."}
         </p>
 
         <button

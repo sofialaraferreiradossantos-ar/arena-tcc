@@ -8,8 +8,9 @@ import {
   FaSignOutAlt,
   FaMoon,
   FaSun,
+  FaArrowLeft,
 } from "react-icons/fa";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/navigation.module.css";
 import logo from "../assets/logo.jpeg";
 
@@ -37,7 +38,21 @@ function getInitialTheme() {
 export default function UnifiedMenu() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
+  const navigate = useNavigate();
+  // Botão Voltar aparece em todas as páginas, menos no Início.
+  const isInicio = pathname === "/" || pathname === "/home";
+
+  // Volta para a tela anterior. Se a página foi aberta direto pelo
+  // endereço (sem histórico), vai para a lista de quadras ou para o Início.
+  const voltar = () => {
+    if (location.key !== "default") {
+      navigate(-1);
+    } else {
+      navigate(pathname.startsWith("/quadra/") ? "/quadras" : "/home");
+    }
+  };
   const isPresentationPage = pathname === "/sobre";
   // Cliente (token_sessao) ou administrador (token_admin) logado: troca
   // Entrar/Cadastrar pelo botão Sair.
@@ -117,6 +132,18 @@ export default function UnifiedMenu() {
             {theme === "dark" ? <FaSun /> : <FaMoon />}
             <span>{theme === "dark" ? "Claro" : "Escuro"}</span>
           </button>
+          {!isInicio && (
+            <button
+              type="button"
+              className={styles.themeToggle}
+              onClick={voltar}
+              aria-label="Voltar para a página anterior"
+              title="Voltar"
+            >
+              <FaArrowLeft />
+              <span>Voltar</span>
+            </button>
+          )}
         </div>
         {!isPresentationPage && (
           <nav className={styles.quickActions} aria-label="Acesso rápido">
