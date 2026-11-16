@@ -261,8 +261,13 @@
 }
 .sidebar a > span {
   width: 20px;
-  text-align: center;
+  display: inline-flex;
+  justify-content: center;
   font-size: 15px;
+}
+/* Ícone do Flaticon centralizado na linha do texto */
+.sidebar a > span i {
+  display: flex;
 }
 .sidebar a:hover {
   color: #ff9a35;

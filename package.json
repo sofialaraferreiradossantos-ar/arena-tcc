@@ -13,6 +13,7 @@
     "tema-claro": "node scripts/gerar-tema-claro.mjs"
   },
   "dependencies": {
+    "@flaticon/flaticon-uicons": "^3.3.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-icons": "^5.6.0",

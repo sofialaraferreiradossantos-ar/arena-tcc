@@ -11,21 +11,30 @@ import {
   FaArrowLeft,
 } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+// Ícones do Flaticon (UIcons, estilo regular arredondado: classes fi-rr-*)
+import "@flaticon/flaticon-uicons/css/regular/rounded.css";
 import styles from "../styles/navigation.module.css";
 import logo from "../assets/logo.jpeg";
 
+// Ícone do Flaticon dentro do menu lateral
+const Icone = ({ nome }) => (
+  <span>
+    <i className={`fi fi-rr-${nome}`} aria-hidden="true" />
+  </span>
+);
+
 const mainItems = [
-  ["/home", "🏠", "Início"],
-  ["/quadras", "🎾", "Quadras"],
-  ["/agendar-horario", "🕐", "Agendar horário"],
-  ["/agendamentos", "📅", "Agendamentos"],
-  ["/torneios", "🏆", "Torneios"],
-  ["/pagamento", "💳", "Pagamento"],
+  ["/home", "home", "Início"],
+  ["/quadras", "tennis", "Quadras"],
+  ["/agendar-horario", "calendar-clock", "Agendar horário"],
+  ["/agendamentos", "calendar", "Agendamentos"],
+  ["/torneios", "trophy", "Torneios"],
+  ["/pagamento", "credit-card", "Pagamento"],
 ];
 
 const getSupportItems = (adminPath) => [
-  ["/sobre", "ℹ️", "Sobre"],
-  ...(adminPath ? [[adminPath, "⚙️", "Administração"]] : []),
+  ["/sobre", "info", "Sobre"],
+  ...(adminPath ? [[adminPath, "settings", "Administração"]] : []),
 ];
 
 function getInitialTheme() {
@@ -91,14 +100,14 @@ export default function UnifiedMenu() {
   }, [open]);
 
   const renderLinks = (items) =>
-    items.map(([to, emoji, label]) => (
+    items.map(([to, icone, label]) => (
       <NavLink
         key={to}
         to={to}
         onClick={() => setOpen(false)}
         className={({ isActive }) => (isActive ? styles.active : "")}
       >
-        <span>{emoji}</span>
+        <Icone nome={icone} />
         {label}
       </NavLink>
     ));
@@ -207,10 +216,12 @@ export default function UnifiedMenu() {
           <div className={styles.account}>
           <p className={styles.accountLabel}>ACESSO</p>
           <NavLink to="/login" onClick={() => setOpen(false)}>
-            <span>👤</span>Entrar
+            <Icone nome="user" />
+            Entrar
           </NavLink>
           <NavLink to="/cadastro" onClick={() => setOpen(false)}>
-            <span>✚</span>Cadastrar
+            <Icone nome="user-add" />
+            Cadastrar
           </NavLink>
           </div>
         )}
@@ -218,7 +229,7 @@ export default function UnifiedMenu() {
           <div className={styles.account}>
             <p className={styles.accountLabel}>CONTA</p>
             <NavLink to="/logout" onClick={() => setOpen(false)}>
-              <FaSignOutAlt />
+              <Icone nome="sign-out-alt" />
               Sair
             </NavLink>
           </div>
