@@ -1,5 +1,4 @@
 import {
-  FaArrowRight,
   FaClock,
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -25,11 +24,9 @@ export default function Home() {
             <div className={styles.heroActions}>
               <Link to="/agendar-horario" className={styles.secondaryAction}>
                 Agendar horário
-                <FaArrowRight className={styles.actionArrow} aria-hidden="true" />
               </Link>
               <Link to="/quadras" className={styles.secondaryAction}>
                 Ver quadras
-                <FaArrowRight className={styles.actionArrow} aria-hidden="true" />
               </Link>
             </div>
           </header>
@@ -48,21 +45,20 @@ export default function Home() {
               <h3>
                 <FaClock /> Horário
               </h3>
-              <p>Segunda a sexta: 08h às 21h</p>
-              <p>Sábado: 08h às 18h</p>
-              <p>Domingo: fechado</p>
+              <p>Segunda a sexta: 08h às 22h</p>
+              <p>Sábado e domingo: 08h às 18h</p>
             </section>
             <section className={styles.section}>
               <h3>
                 <FaPhoneAlt /> Contato
               </h3>
-              <p>(14) 99835-8654</p>
+              <p>(14) 99681-9354</p>
             </section>
             <section className={styles.section}>
               <h3>
                 <FaMapMarkerAlt /> Endereço
               </h3>
-              <p>Tupã, São Paulo — 17200-000</p>
+              <p>Tupã, São Paulo — 17600-000</p>
             </section>
           </div>
         </div>

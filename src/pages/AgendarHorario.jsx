@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import styles from "../styles/agendarHorario.module.css";
-import { HORARIOS_OCUPADOS, PERIODOS } from "../mockup/horarios.js";
+import { HORARIOS_OCUPADOS, periodosDoDia } from "../mockup/horarios.js";
 
 const apiUrl = (path) =>
   `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
@@ -362,7 +362,7 @@ function AgendarHorario() {
                 Selecione uma data para ver os horários disponíveis.
               </p>
             ) : (
-              PERIODOS.map((periodo) => (
+              periodosDoDia(dataSelecionada).map((periodo) => (
                 <div key={periodo.label} className={styles.periodo}>
                   <span className={styles.periodoLabel}>{periodo.label}</span>
 

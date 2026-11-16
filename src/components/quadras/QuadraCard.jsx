@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
 import styles from "../../styles/home.module.css";
 import fallback from "../../assets/quadra.jpeg";
 
@@ -38,9 +37,7 @@ export default function QuadraCard({
         <h3>{title}</h3>
         <p className={styles.courtLocation}>{location}</p>
         <p>{destaques}</p>
-        <span className={styles.cardLink}>
-          Ver detalhes <FaArrowRight />
-        </span>
+        <span className={styles.cardLink}>Ver detalhes</span>
       </div>
     </article>
   );

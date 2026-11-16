@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
 import { modalidades, quadrasMckp, temModalidade } from "../../mockup/dados.js";
-import { HORARIOS_OCUPADOS, PERIODOS } from "../../mockup/horarios.js";
+import { HORARIOS_OCUPADOS, periodosDoDia } from "../../mockup/horarios.js";
 import { dataISO, formatarData } from "../../mockup/agendamentos.js";
 
 const quadrasDisponiveis = quadrasMckp.filter((quadra) => quadra.available);
@@ -43,7 +43,12 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
   ]);
 
   const dataValida = data && data >= hoje;
-  const horarioValido = horario && !ocupados.has(horario);
+  // Horários do dia escolhido (no fim de semana fecha às 18h)
+  const periodos = dataValida ? periodosDoDia(data) : [];
+  const horarioNoDia = periodos.some((periodo) =>
+    periodo.horarios.includes(horario),
+  );
+  const horarioValido = horario && horarioNoDia && !ocupados.has(horario);
   const semMudancas =
     editando &&
     String(agendamento.quadraId) === quadraId &&
@@ -134,7 +139,7 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
               Escolha a quadra e uma data a partir de hoje para ver os horários.
             </p>
           ) : (
-            PERIODOS.map((periodo) => (
+            periodos.map((periodo) => (
               <div key={periodo.label} className={styles.periodo}>
                 <small>{periodo.label}</small>
                 <div className={styles.horarios}>

@@ -54,7 +54,7 @@ export default function Sobre() {
           <div className={styles.sobreSecao}>
             <h3>Endereço</h3>
 
-            <p>Rua Exemplo, 123 - Tupã/SP - 17600-000</p>
+            <p>Tupã, São Paulo — 17600-000</p>
           </div>
 
           <Link to="/home" className={styles.sobreLink}>

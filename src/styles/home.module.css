@@ -3318,24 +3318,6 @@
   }
 }
 
-/* Setinha no canto inferior direito dos botões do Início */
-.heroActions .secondaryAction {
-  position: relative;
-}
-
-.actionArrow {
-  position: absolute;
-  right: 8px;
-  bottom: 7px;
-  font-size: 10px;
-  color: #ff8a1f;
-  transition: transform 0.2s;
-}
-
-.secondaryAction:hover .actionArrow {
-  transform: translateX(2px);
-}
-
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
 
 :global(html[data-theme="light"]) {
