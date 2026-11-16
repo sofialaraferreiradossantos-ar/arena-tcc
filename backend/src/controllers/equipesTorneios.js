@@ -2,7 +2,7 @@ const db = require("../database/Connection");
 const { validarId } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
 
-const STATUS_EQUIPE = ["inscrita", "confirmada", "eliminada", "inativo"];
+const STATUS_EQUIPE = ["inscrita", "confirmada", "eliminada", "inativa"];
 
 // Valida só os campos presentes (serve para cadastro e edição).
 // Retorna a mensagem de erro ou null se estiver tudo certo.
@@ -278,7 +278,7 @@ module.exports = {
 
             const sql = `
                 UPDATE equipes_torneio
-                SET status_equipe = 'inativo'
+                SET status_equipe = 'inativa'
                 WHERE id_equipe = ?;
             `;
 

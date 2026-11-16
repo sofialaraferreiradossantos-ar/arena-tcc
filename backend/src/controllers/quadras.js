@@ -74,7 +74,7 @@ module.exports = {
             return response.status(200).json({
                 sucesso: true,
                 mensagem: "Tipos de quadra.",
-                nItens: rows.length,
+                items: rows.length,
                 dados: rows
             });
         } catch (error) {
@@ -159,7 +159,6 @@ module.exports = {
                 sucesso: true,
                 mensagem: "Lista de quadras.",
                 items: dados.length,
-                nItens: dados.length,
                 total,
                 pagina: page,
                 limite: limit,
@@ -192,7 +191,7 @@ module.exports = {
                 imagem: gerarUrl(quadra.imagem, "quadras", IMAGEM_PADRAO)
             }));
 
-            return response.status(200).json({ sucesso: true, mensagem: "Quadras em destaque.", nItens: dados.length, dados });
+            return response.status(200).json({ sucesso: true, mensagem: "Quadras em destaque.", items: dados.length, dados });
         } catch (error) {
             return response.status(500).json({ sucesso: false, mensagem: "Erro ao listar quadras em destaque.", dados: error.message });
         }

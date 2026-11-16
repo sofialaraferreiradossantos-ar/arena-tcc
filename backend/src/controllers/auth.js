@@ -10,7 +10,7 @@ function statusAtivo(status) {
   const valor = String(status ?? "")
     .trim()
     .toLowerCase();
-  return valor !== "" && !["0", "inativo", "inactive", "false"].includes(valor);
+  return valor !== "" && !["0", "inativo", "false"].includes(valor);
 }
 
 function criarSessao(usuario) {
