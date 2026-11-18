@@ -2,7 +2,8 @@ import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import styles from "../styles/agendarHorario.module.css";
-import { HORARIOS_OCUPADOS, periodosDoDia } from "../mockup/horarios.js";
+import { periodosDoDia } from "../mockup/horarios.js";
+import useHorariosOcupados from "../hooks/useHorariosOcupados.js";
 
 const apiUrl = (path) =>
   `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
@@ -131,7 +132,23 @@ function AgendarHorario() {
     });
   };
 
-  const podeConfirmar = quadra && numeroQuadra && dataSelecionada && horario;
+  // Horários já reservados no banco para a quadra e o dia escolhidos
+  const {
+    ocupados,
+    carregando: carregandoHorarios,
+    erro: erroHorarios,
+  } = useHorariosOcupados(
+    numeroQuadra,
+    dataSelecionada?.toLocaleDateString("sv-SE"),
+  );
+
+  const podeConfirmar =
+    quadra &&
+    numeroQuadra &&
+    dataSelecionada &&
+    horario &&
+    !carregandoHorarios &&
+    !ocupados.has(horario);
 
   const irParaPagamento = () => {
     if (!podeConfirmar) return;
@@ -141,8 +158,11 @@ function AgendarHorario() {
           quadra,
           quadraId: quadraEscolhida?.id,
           numeroQuadra: nomeQuadra,
-          data: dataSelecionada?.toISOString(),
+          // Data local "AAAA-MM-DD" (toISOString usaria o fuso UTC)
+          data: dataSelecionada?.toLocaleDateString("sv-SE"),
           horario,
+          // Só para exibir: o valor cobrado é calculado pelo backend
+          valor: quadraEscolhida?.valor,
         },
       },
     });
@@ -357,9 +377,15 @@ function AgendarHorario() {
           <span className={styles.label}>Horário</span>
 
           <div className={styles.horariosBlock}>
-            {!dataSelecionada ? (
+            {!dataSelecionada || !numeroQuadra ? (
               <p className={styles.hintText}>
-                Selecione uma data para ver os horários disponíveis.
+                Selecione a quadra e uma data para ver os horários disponíveis.
+              </p>
+            ) : carregandoHorarios ? (
+              <p className={styles.hintText}>Carregando horários...</p>
+            ) : erroHorarios ? (
+              <p className={styles.hintText} role="alert">
+                {erroHorarios}
               </p>
             ) : (
               periodosDoDia(dataSelecionada).map((periodo) => (
@@ -368,7 +394,7 @@ function AgendarHorario() {
 
                   <div className={styles.horarios}>
                     {periodo.horarios.map((item) => {
-                      const ocupado = HORARIOS_OCUPADOS.includes(item);
+                      const ocupado = ocupados.has(item);
                       const selecionado = horario === item;
 
                       return (

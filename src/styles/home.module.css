@@ -2121,6 +2121,48 @@
   transform: translateY(-2px);
 }
 
+.paymentPage .confirmarPagamento:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
+/* Botão de pagamento usado como link (<Link>) */
+.paymentPage .pagamentoLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Avisos da tela de pagamento (Stripe) */
+.pagamentoAviso,
+.pagamentoErro {
+  width: min(100%, 920px);
+  margin: 22px auto 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pagamentoAviso {
+  border: 1px solid rgba(255, 136, 0, 0.25);
+  background: rgba(255, 136, 0, 0.08);
+  color: #d7d7d7;
+}
+
+.pagamentoErro {
+  border: 1px solid rgba(255, 82, 82, 0.4);
+  background: rgba(255, 82, 82, 0.1);
+  color: #ff8a8a;
+}
+
+.pagamentoErro a {
+  color: #ff9a35;
+  font-weight: 700;
+}
+
 .cardPaymentPage .pagamentoContainer {
   max-width: 920px;
   align-items: flex-start;
@@ -3993,6 +4035,14 @@
 :global(html[data-theme="light"]) .paymentPage .confirmarPagamento:hover {
   background: linear-gradient(135deg, #ff9417, #ffb15c) !important;
   box-shadow: 0 13px 28px rgba(255, 136, 0, 0.28);
+}
+
+:global(html[data-theme="light"]) .pagamentoAviso {
+  color: #3a3a3a;
+}
+
+:global(html[data-theme="light"]) .pagamentoErro {
+  color: #b42318;
 }
 
 :global(html[data-theme="light"]) .cardPaymentPage .formPagamento {

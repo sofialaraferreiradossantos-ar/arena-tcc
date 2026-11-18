@@ -34,7 +34,15 @@ function obterToken(request) {
   return request.headers["x-session-token"];
 }
 
+// Usado pelo middleware de autenticação para saber quem está logado
+function obterSessao(request) {
+  const token = obterToken(request);
+  return token ? sessoes.get(token) || null : null;
+}
+
 module.exports = {
+  obterSessao,
+
   async login(request, response) {
     const { email, senha } = request.body || {};
     const emailNormalizado = String(email || "")

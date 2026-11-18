@@ -8,7 +8,15 @@ import {
 
 import styles from "../../styles/agendamentos.module.css";
 
-function AgendamentoCard({ quadra, data, horario, onCancelar, onEditar }) {
+// status: { texto, tipo: "confirmado" | "pendente" } (opcional)
+function AgendamentoCard({
+  quadra,
+  data,
+  horario,
+  status,
+  onCancelar,
+  onEditar,
+}) {
   return (
     <article className={styles.card}>
       {/* CABEÇALHO DO CARD */}
@@ -22,6 +30,16 @@ function AgendamentoCard({ quadra, data, horario, onCancelar, onEditar }) {
           <span className={styles.cardLabel}>QUADRA</span>
 
           <h2 className={styles.cardTitle}>{quadra}</h2>
+
+          {status && (
+            <span
+              className={`${styles.statusBadge} ${
+                status.tipo === "pendente" ? styles.statusPendente : ""
+              }`}
+            >
+              {status.texto}
+            </span>
+          )}
         </div>
       </div>
 
@@ -68,15 +86,17 @@ function AgendamentoCard({ quadra, data, horario, onCancelar, onEditar }) {
           </button>
         )}
 
-        <button
-          type="button"
-          className={styles.cancelButton}
-          onClick={onCancelar}
-        >
-          <FaTrashAlt />
+        {onCancelar && (
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={onCancelar}
+          >
+            <FaTrashAlt />
 
-          <span>Cancelar agendamento</span>
-        </button>
+            <span>Cancelar agendamento</span>
+          </button>
+        )}
       </div>
     </article>
   );

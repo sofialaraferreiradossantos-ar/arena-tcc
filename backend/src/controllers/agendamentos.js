@@ -1,30 +1,38 @@
 const db = require("../database/Connection");
 const { validarId, validarData, validarHora } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const {
+    normalizarHora,
+    existeConflito,
+    estaNoFuturo,
+    validarReservaCliente
+} = require("../utils/agendamento");
+const { cancelarPagamentoOnline } = require("./stripe");
 
 const STATUS_AGENDAMENTO = ["pendente", "confirmado", "cancelado"];
 
-// "09:00" -> "09:00:00", para comparar horários como texto
-function normalizarHora(hora) {
-    return String(hora).length === 5 ? `${hora}:00` : String(hora);
+// Agendamento do cliente logado (null se não existir ou for de outra pessoa)
+async function buscarAgendamentoDoCliente(id_agend, id_usu, conexao = db, bloquear = false) {
+    const [rows] = await conexao.query(
+        `
+            SELECT
+                id_agend,
+                id_qd,
+                DATE_FORMAT(dt_agend, '%Y-%m-%d') AS dt_agend,
+                TIME_FORMAT(hora_inicio, '%H:%i:%s') AS hora_inicio,
+                TIME_FORMAT(hora_fim, '%H:%i:%s') AS hora_fim,
+                status_agend
+            FROM agendamentos
+            WHERE id_agend = ? AND id_usu = ?
+            ${bloquear ? "FOR UPDATE" : ""};
+        `,
+        [id_agend, id_usu]
+    );
+    return rows[0] || null;
 }
 
-// Existe outro agendamento ativo na mesma quadra e data com horário sobreposto?
-async function existeConflito(id_qd, dt_agend, hora_inicio, hora_fim, ignorarId = 0) {
-    const [rows] = await db.query(
-        `
-            SELECT id_agend
-            FROM agendamentos
-            WHERE id_qd = ?
-              AND dt_agend = ?
-              AND status_agend <> 'cancelado'
-              AND id_agend <> ?
-              AND hora_inicio < ?
-              AND hora_fim > ?;
-        `,
-        [id_qd, dt_agend, ignorarId, hora_fim, hora_inicio]
-    );
-    return rows.length > 0;
+function erro(response, status, mensagem) {
+    return response.status(status).json({ sucesso: false, mensagem, dados: null });
 }
 
 module.exports = {
@@ -428,6 +436,248 @@ module.exports = {
                 dados: error.message
             });
 
+        }
+    },
+
+
+    // =====================================================
+    // HORÁRIOS OCUPADOS - GET /agendamentos/ocupados?id_qd=1&dt_agend=AAAA-MM-DD
+    // Público: devolve só os intervalos ocupados, sem dados dos clientes.
+    // =====================================================
+    async listarOcupados(request, response) {
+        try {
+            const { id_qd, dt_agend } = request.query;
+
+            if (!validarId(id_qd) || !validarData(dt_agend)) {
+                return erro(response, 400, "Informe id_qd e dt_agend (AAAA-MM-DD).");
+            }
+
+            const [rows] = await db.query(
+                `
+                    SELECT
+                        TIME_FORMAT(hora_inicio, '%H:%i') AS inicio,
+                        TIME_FORMAT(hora_fim, '%H:%i') AS fim
+                    FROM agendamentos
+                    WHERE id_qd = ?
+                      AND dt_agend = ?
+                      AND status_agend <> 'cancelado'
+                    ORDER BY hora_inicio;
+                `,
+                [id_qd, dt_agend]
+            );
+
+            return response.status(200).json({
+                sucesso: true,
+                mensagem: "Horários ocupados.",
+                items: rows.length,
+                dados: rows
+            });
+        } catch (error) {
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+        }
+    },
+
+
+    // =====================================================
+    // MEUS AGENDAMENTOS - GET /agendamentos/meus (cliente logado)
+    // =====================================================
+    async listarMeus(request, response) {
+        try {
+            const [rows] = await db.query(
+                `
+                    SELECT
+                        a.id_agend,
+                        DATE_FORMAT(a.dt_agend, '%Y-%m-%d') AS dt_agend,
+                        TIME_FORMAT(a.hora_inicio, '%H:%i') AS hora_inicio,
+                        TIME_FORMAT(a.hora_fim, '%H:%i') AS hora_fim,
+                        a.status_agend,
+                        q.id_qd,
+                        q.nome_qd,
+                        q.tipo_qd,
+                        (
+                            SELECT p.status_pag
+                            FROM pagamentos p
+                            WHERE p.id_agend = a.id_agend
+                            ORDER BY p.id_pag DESC
+                            LIMIT 1
+                        ) AS status_pag
+                    FROM agendamentos a
+                    INNER JOIN quadras q ON q.id_qd = a.id_qd
+                    WHERE a.id_usu = ?
+                      AND a.status_agend <> 'cancelado'
+                    ORDER BY a.dt_agend, a.hora_inicio;
+                `,
+                [request.usuario.id_usu]
+            );
+
+            const dados = rows.map((agendamento) => ({
+                id: agendamento.id_agend,
+                data: agendamento.dt_agend,
+                horaInicio: agendamento.hora_inicio,
+                horaFim: agendamento.hora_fim,
+                status: agendamento.status_agend,
+                pagamento: agendamento.status_pag,
+                quadra: {
+                    id: agendamento.id_qd,
+                    nome: agendamento.nome_qd,
+                    tipo: agendamento.tipo_qd
+                }
+            }));
+
+            return response.status(200).json({
+                sucesso: true,
+                mensagem: "Seus agendamentos.",
+                items: dados.length,
+                dados
+            });
+        } catch (error) {
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+        }
+    },
+
+
+    // =====================================================
+    // REMARCAR - PATCH /agendamentos/meus/:id (cliente logado)
+    // Body: { dt_agend, hora_inicio }. Só muda data/horário: a quadra
+    // continua a mesma, então o valor pago continua correto.
+    // =====================================================
+    async remarcarMeu(request, response) {
+        const { id } = request.params;
+        const { dt_agend, hora_inicio } = request.body || {};
+
+        if (!validarId(id)) return erro(response, 400, "O id do agendamento deve ser numérico.");
+
+        const validacao = validarReservaCliente(dt_agend, hora_inicio);
+        if (validacao.erro) return erro(response, 400, validacao.erro);
+
+        const conexao = await db.getConnection();
+
+        try {
+            await conexao.beginTransaction();
+
+            const atual = await buscarAgendamentoDoCliente(id, request.usuario.id_usu, conexao, true);
+
+            if (!atual) {
+                await conexao.rollback();
+                return erro(response, 404, "Agendamento não encontrado.");
+            }
+
+            if (atual.status_agend !== "confirmado") {
+                await conexao.rollback();
+                return erro(response, 400, atual.status_agend === "pendente"
+                    ? "Conclua o pagamento antes de remarcar."
+                    : "Este agendamento foi cancelado.");
+            }
+
+            if (!estaNoFuturo(atual.dt_agend, atual.hora_inicio)) {
+                await conexao.rollback();
+                return erro(response, 400, "Não é possível remarcar uma reserva que já começou.");
+            }
+
+            // Trava a quadra para ninguém reservar o mesmo horário ao mesmo tempo
+            const [quadras] = await conexao.query(
+                "SELECT status_qd FROM quadras WHERE id_qd = ? FOR UPDATE;",
+                [atual.id_qd]
+            );
+
+            if (quadras[0]?.status_qd !== "disponivel") {
+                await conexao.rollback();
+                return erro(response, 400, "Esta quadra está indisponível no momento.");
+            }
+
+            if (await existeConflito(atual.id_qd, dt_agend, validacao.inicio, validacao.fim, id, conexao)) {
+                await conexao.rollback();
+                return erro(response, 409, "Este horário já está ocupado. Escolha outro.");
+            }
+
+            await conexao.query(
+                "UPDATE agendamentos SET dt_agend = ?, hora_inicio = ?, hora_fim = ? WHERE id_agend = ?;",
+                [dt_agend, validacao.inicio, validacao.fim, id]
+            );
+
+            await conexao.commit();
+
+            return response.status(200).json({
+                sucesso: true,
+                mensagem: "Agendamento remarcado com sucesso.",
+                dados: {
+                    id_agend: Number(id),
+                    dt_agend,
+                    hora_inicio: validacao.inicio.slice(0, 5),
+                    hora_fim: validacao.fim.slice(0, 5)
+                }
+            });
+        } catch (error) {
+            await conexao.rollback().catch(() => {});
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+        } finally {
+            conexao.release();
+        }
+    },
+
+
+    // =====================================================
+    // CANCELAR - DELETE /agendamentos/meus/:id (cliente logado)
+    // Pagamento online pendente: a cobrança é encerrada no Stripe.
+    // Pagamento online pago: o valor é estornado automaticamente.
+    // =====================================================
+    async cancelarMeu(request, response) {
+        try {
+            const { id } = request.params;
+
+            if (!validarId(id)) return erro(response, 400, "O id do agendamento deve ser numérico.");
+
+            const agendamento = await buscarAgendamentoDoCliente(id, request.usuario.id_usu);
+
+            if (!agendamento) return erro(response, 404, "Agendamento não encontrado.");
+            if (agendamento.status_agend === "cancelado") return erro(response, 400, "Este agendamento já foi cancelado.");
+
+            if (!estaNoFuturo(agendamento.dt_agend, agendamento.hora_inicio)) {
+                return erro(response, 400, "Não é possível cancelar uma reserva que já começou.");
+            }
+
+            const [pagamentos] = await db.query(
+                `SELECT id_pag, id_agend, status_pag, stripe_session_id
+                 FROM pagamentos
+                 WHERE id_agend = ? AND status_pag IN ('pendente', 'pago');`,
+                [id]
+            );
+
+            // Pago no balcão (sem Stripe): o estorno precisa ser feito pela arena
+            if (pagamentos.some((p) => !p.stripe_session_id && p.status_pag === "pago")) {
+                return erro(response, 409, "Esta reserva foi paga na arena. Para cancelar, fale com a recepção.");
+            }
+
+            let estornado = false;
+
+            for (const pagamento of pagamentos) {
+                if (pagamento.stripe_session_id) {
+                    try {
+                        const resultado = await cancelarPagamentoOnline(pagamento);
+                        if (resultado === "estornado") estornado = true;
+                    } catch (error) {
+                        console.error("[stripe] Erro ao cancelar pagamento:", error.message);
+                        return erro(response, 502, "Não foi possível cancelar o pagamento no Stripe. Tente novamente.");
+                    }
+                } else {
+                    await db.query(
+                        "UPDATE pagamentos SET status_pag = 'cancelado' WHERE id_pag = ? AND status_pag = 'pendente';",
+                        [pagamento.id_pag]
+                    );
+                }
+            }
+
+            await db.query("UPDATE agendamentos SET status_agend = 'cancelado' WHERE id_agend = ?;", [id]);
+
+            return response.status(200).json({
+                sucesso: true,
+                mensagem: estornado
+                    ? "Reserva cancelada. O valor foi estornado e volta pela mesma forma de pagamento."
+                    : "Reserva cancelada.",
+                dados: { id_agend: Number(id), estornado }
+            });
+        } catch (error) {
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
         }
     }
 

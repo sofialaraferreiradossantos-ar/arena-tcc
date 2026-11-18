@@ -1,9 +1,13 @@
 const db = require("../database/Connection");
 const { validarId } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const { estornarNoStripe } = require("./stripe");
 
+// Formas aceitas no cadastro MANUAL (feito pelo administrador, ex.: pagamento
+// no balcão). Pagamentos online são criados pelo Stripe (forma "Online",
+// trocada para "Pix" ou "Cartão" quando o Stripe confirma).
 const FORMAS_PAGAMENTO = ["Pix", "Cartão", "Dinheiro"];
-const STATUS_PAGAMENTO = ["pendente", "pago", "estornado"];
+const STATUS_PAGAMENTO = ["pendente", "pago", "estornado", "cancelado"];
 
 // Regra de negócio: pagamento "pago" confirma o agendamento
 async function confirmarAgendamento(id_agend) {
@@ -27,7 +31,8 @@ module.exports = {
                     id_agend,
                     valor_pag,
                     forma_pag,
-                    status_pag
+                    status_pag,
+                    stripe_session_id IS NOT NULL AS online
                 FROM pagamentos
                 ORDER BY id_pag;
             `;
@@ -203,7 +208,7 @@ module.exports = {
             }
 
             const [pagamento] = await db.query(
-                "SELECT id_agend FROM pagamentos WHERE id_pag = ?;",
+                "SELECT id_agend, stripe_session_id FROM pagamentos WHERE id_pag = ?;",
                 [id]
             );
 
@@ -211,6 +216,15 @@ module.exports = {
                 return response.status(404).json({
                     sucesso: false,
                     mensagem: `Pagamento com ID ${id} não encontrado.`,
+                    dados: null
+                });
+            }
+
+            // Pagamento online: quem decide o status e o valor é o Stripe
+            if (pagamento[0].stripe_session_id) {
+                return response.status(409).json({
+                    sucesso: false,
+                    mensagem: "Pagamentos online são atualizados automaticamente pelo Stripe. Para devolver o dinheiro, cancele o pagamento (estorno).",
                     dados: null
                 });
             }
@@ -307,7 +321,7 @@ module.exports = {
             }
 
             const [pagamento] = await db.query(
-                "SELECT id_agend, status_pag FROM pagamentos WHERE id_pag = ?;",
+                "SELECT id_agend, status_pag, stripe_session_id FROM pagamentos WHERE id_pag = ?;",
                 [id]
             );
 
@@ -319,14 +333,36 @@ module.exports = {
                 });
             }
 
-            const { id_agend, status_pag } = pagamento[0];
+            const { id_agend, status_pag, stripe_session_id } = pagamento[0];
 
-            if (status_pag === "estornado") {
+            if (status_pag === "estornado" || status_pag === "cancelado") {
                 return response.status(400).json({
                     sucesso: false,
                     mensagem: "Este pagamento já foi cancelado.",
                     dados: null
                 });
+            }
+
+            // Pagamento online pendente: ainda não há dinheiro para devolver
+            if (stripe_session_id && status_pag === "pendente") {
+                return response.status(409).json({
+                    sucesso: false,
+                    mensagem: "Este pagamento online ainda está aguardando o cliente. Ele é cancelado automaticamente se não for pago.",
+                    dados: null
+                });
+            }
+
+            // Pagamento online pago: devolve o dinheiro de verdade no Stripe
+            if (stripe_session_id && status_pag === "pago") {
+                try {
+                    await estornarNoStripe(stripe_session_id);
+                } catch (error) {
+                    return response.status(502).json({
+                        sucesso: false,
+                        mensagem: "Não foi possível realizar o estorno no Stripe.",
+                        dados: error.message
+                    });
+                }
             }
 
             await db.query(

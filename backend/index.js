@@ -1,15 +1,29 @@
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, ".env") });
+// .env.local (fora do git, chaves secretas como a do Stripe) tem prioridade sobre o .env
+require("dotenv").config({
+  path: [path.join(__dirname, ".env.local"), path.join(__dirname, ".env")],
+  quiet: true,
+});
 
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 
 const router = require("./src/routes/routes");
+const StripeController = require("./src/controllers/stripe");
 
 const app = express();
 
 app.use(cors());
+
+// O Stripe assina o corpo exato da requisição; por isso o webhook recebe o
+// corpo "cru" e precisa vir ANTES do express.json().
+app.post(
+  "/webhooks/stripe",
+  express.raw({ type: "application/json" }),
+  StripeController.webhook,
+);
+
 app.use(express.json());
 
 app.use(router);

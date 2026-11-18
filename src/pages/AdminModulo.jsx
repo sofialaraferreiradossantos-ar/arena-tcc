@@ -143,8 +143,14 @@ function getStatusClass(status) {
   return styles.statusSuccess;
 }
 
+// A "key" recria a tela a cada módulo (/administrador/quadras,
+// /administrador/usuarios...), assim o estado de um módulo não vaza para o outro.
 function AdminModulo() {
   const { modulo } = useParams();
+  return <ConteudoModulo key={modulo} modulo={modulo} />;
+}
+
+function ConteudoModulo({ modulo }) {
   const config = moduleData[modulo];
   const [rows, setRows] = useState(config?.rows || []);
   const [showForm, setShowForm] = useState(false);
@@ -162,7 +168,7 @@ function AdminModulo() {
     if (!usaBanco) return undefined;
     let ativo = true;
 
-    setCarregando(true);
+    // "carregando" já começa true quando o módulo usa o banco
     fetch(apiUrl("/quadras?disponivel=todos&limit=100"))
       .then(async (resposta) => {
         const resultado = await resposta.json().catch(() => null);

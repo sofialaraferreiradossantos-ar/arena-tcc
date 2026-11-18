@@ -25,8 +25,7 @@ export function periodosDoDia(data) {
   })).filter((periodo) => periodo.horarios.length > 0);
 }
 
-// Simula horários já ocupados vindos do backend (por enquanto fixo)
-export const HORARIOS_OCUPADOS = ["10:00", "15:00"];
+// Os horários ocupados vêm do banco: ver hooks/useHorariosOcupados.js
 
 export function horarioFim(inicio) {
   const hora = Number(inicio.slice(0, 2)) + 1;

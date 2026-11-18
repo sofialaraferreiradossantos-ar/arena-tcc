@@ -2,45 +2,32 @@ import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 import styles from "../../styles/agendamentos.module.css";
-import { modalidades, quadrasMckp, temModalidade } from "../../mockup/dados.js";
-import { HORARIOS_OCUPADOS, periodosDoDia } from "../../mockup/horarios.js";
+import { periodosDoDia } from "../../mockup/horarios.js";
 import { dataISO, formatarData } from "../../mockup/agendamentos.js";
+import useHorariosOcupados from "../../hooks/useHorariosOcupados.js";
 
-const quadrasDisponiveis = quadrasMckp.filter((quadra) => quadra.available);
-
-// Janela para adicionar (agendamento = null) ou editar um agendamento.
-// Só lista quadras disponíveis e bloqueia horários já ocupados na mesma
-// quadra e data, inclusive pelos outros agendamentos do cliente.
-function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
-  const editando = Boolean(agendamento);
+// Janela para REMARCAR uma reserva já paga. A quadra continua a mesma
+// (o valor pago não muda); só a data e o horário podem ser trocados.
+// Os horários ocupados vêm do banco de dados.
+function AgendamentoForm({ agendamento, onSalvar, onFechar }) {
   const hoje = dataISO(new Date());
 
-  const quadraAtualDisponivel = quadrasDisponiveis.some(
-    (quadra) => quadra.id === agendamento?.quadraId,
+  const [data, setData] = useState(agendamento.data);
+  const [horario, setHorario] = useState(agendamento.horaInicio);
+  const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState("");
+
+  const { ocupados, carregando, erro: erroHorarios } = useHorariosOcupados(
+    agendamento.quadra.id,
+    data,
+    agendamento,
   );
-  const [quadraId, setQuadraId] = useState(
-    quadraAtualDisponivel ? String(agendamento.quadraId) : "",
-  );
-  const [data, setData] = useState(agendamento?.data ?? "");
-  const [horario, setHorario] = useState(agendamento?.horario ?? "");
 
   useEffect(() => {
     const fecharComEsc = (event) => event.key === "Escape" && onFechar();
     window.addEventListener("keydown", fecharComEsc);
     return () => window.removeEventListener("keydown", fecharComEsc);
   }, [onFechar]);
-
-  const ocupados = new Set([
-    ...HORARIOS_OCUPADOS,
-    ...agendamentos
-      .filter(
-        (item) =>
-          item.id !== agendamento?.id &&
-          String(item.quadraId) === quadraId &&
-          item.data === data,
-      )
-      .map((item) => item.horario),
-  ]);
 
   const dataValida = data && data >= hoje;
   // Horários do dia escolhido (no fim de semana fecha às 18h)
@@ -50,20 +37,23 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
   );
   const horarioValido = horario && horarioNoDia && !ocupados.has(horario);
   const semMudancas =
-    editando &&
-    String(agendamento.quadraId) === quadraId &&
-    agendamento.data === data &&
-    agendamento.horario === horario;
-  const podeSalvar = quadraId && dataValida && horarioValido && !semMudancas;
+    agendamento.data === data && agendamento.horaInicio === horario;
+  const podeSalvar =
+    dataValida && horarioValido && !semMudancas && !carregando && !salvando;
 
-  const quadraAtual = quadrasMckp.find(
-    (quadra) => quadra.id === agendamento?.quadraId,
-  );
-
-  function salvar(event) {
+  async function salvar(event) {
     event.preventDefault();
     if (!podeSalvar) return;
-    onSalvar({ quadraId: Number(quadraId), data, horario });
+
+    setSalvando(true);
+    setErro("");
+
+    try {
+      await onSalvar({ dt_agend: data, hora_inicio: horario });
+    } catch (error) {
+      setErro(error.message);
+      setSalvando(false);
+    }
   }
 
   return (
@@ -77,9 +67,7 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
         onSubmit={salvar}
       >
         <div className={styles.modalHeader}>
-          <h2 id="titulo-agendamento">
-            {editando ? "Editar agendamento" : "Novo agendamento"}
-          </h2>
+          <h2 id="titulo-agendamento">Remarcar agendamento</h2>
           <button
             type="button"
             className={styles.modalClose}
@@ -90,36 +78,10 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
           </button>
         </div>
 
-        {editando && (
-          <p className={styles.modalAtual}>
-            Atual: {quadraAtual?.title ?? "Quadra"} •{" "}
-            {formatarData(agendamento.data)} • {agendamento.horario}
-            {!quadraAtualDisponivel && " (quadra indisponível, escolha outra)"}
-          </p>
-        )}
-
-        <label className={styles.campo}>
-          Quadra
-          <select
-            value={quadraId}
-            onChange={(event) => setQuadraId(event.target.value)}
-            autoFocus
-            required
-          >
-            <option value="">Selecione uma quadra disponível</option>
-            {modalidades.map((modalidade) => (
-              <optgroup key={modalidade.id} label={modalidade.label}>
-                {quadrasDisponiveis
-                  .filter((quadra) => temModalidade(quadra, modalidade.id))
-                  .map((quadra) => (
-                    <option key={quadra.id} value={quadra.id}>
-                      {quadra.title}
-                    </option>
-                  ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        <p className={styles.modalAtual}>
+          Atual: {agendamento.quadra.nome} • {formatarData(agendamento.data)} •{" "}
+          {agendamento.horaInicio}
+        </p>
 
         <label className={styles.campo}>
           Data
@@ -128,15 +90,22 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
             value={data}
             min={hoje}
             onChange={(event) => setData(event.target.value)}
+            autoFocus
             required
           />
         </label>
 
         <div className={styles.campo}>
           <span>Horário</span>
-          {!quadraId || !dataValida ? (
+          {!dataValida ? (
             <p className={styles.modalDica}>
-              Escolha a quadra e uma data a partir de hoje para ver os horários.
+              Escolha uma data a partir de hoje para ver os horários.
+            </p>
+          ) : carregando ? (
+            <p className={styles.modalDica}>Carregando horários...</p>
+          ) : erroHorarios ? (
+            <p className={styles.modalDica} role="alert">
+              {erroHorarios}
             </p>
           ) : (
             periodos.map((periodo) => (
@@ -169,6 +138,12 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
           )}
         </div>
 
+        {erro && (
+          <p className={styles.erroForm} role="alert">
+            {erro}
+          </p>
+        )}
+
         <div className={styles.modalFooter}>
           <button
             type="button"
@@ -182,7 +157,7 @@ function AgendamentoForm({ agendamento, agendamentos, onSalvar, onFechar }) {
             className={styles.confirmarEdicao}
             disabled={!podeSalvar}
           >
-            {editando ? "Salvar alterações" : "Adicionar agendamento"}
+            {salvando ? "Salvando..." : "Salvar alterações"}
           </button>
         </div>
       </form>

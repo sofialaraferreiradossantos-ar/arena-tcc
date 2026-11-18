@@ -1,103 +1,164 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/home.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { horarioFim } from "../mockup/horarios.js";
+import { requisicaoApi } from "../services/api.js";
+
+function formatarValor(valor) {
+  const numero = Number(valor);
+  if (!Number.isFinite(numero)) return "—";
+  return `R$ ${numero.toFixed(2).replace(".", ",")}`;
+}
+
+function formatarData(dataISO) {
+  if (!dataISO) return "";
+  const [ano, mes, dia] = dataISO.slice(0, 10).split("-");
+  return `${dia}/${mes}/${ano}`;
+}
 
 export default function Pagamento() {
   const location = useLocation();
+  const agendamento = location.state?.agendamento;
   const inscricao = location.state?.inscricao;
 
-  // Valor vindo da inscrição do torneio (fallback: valor fixo antigo)
-  const valorTotal = inscricao?.valor ?? 100;
-  const valorFormatado = `R$ ${valorTotal.toFixed(2).replace(".", ",")}`;
+  const [carregando, setCarregando] = useState(false);
+  const [erro, setErro] = useState("");
+  const [precisaLogin, setPrecisaLogin] = useState(false);
 
-  const [metodo, setMetodo] = useState("pix");
+  // Cria a sessão no backend e leva o cliente para a página segura do Stripe.
+  // Nenhum dado de cartão passa por aqui.
+  const pagarComStripe = async () => {
+    const token = localStorage.getItem("token_sessao");
 
-  const navigate = useNavigate();
+    if (!token) {
+      setPrecisaLogin(true);
+      setErro("Entre na sua conta para pagar a reserva.");
+      return;
+    }
+
+    setCarregando(true);
+    setErro("");
+
+    try {
+      const resultado = await requisicaoApi("/pagamentos/stripe/checkout", {
+        method: "POST",
+        autenticado: true,
+        body: {
+          id_qd: agendamento.quadraId,
+          dt_agend: agendamento.data,
+          hora_inicio: agendamento.horario,
+        },
+      });
+
+      window.location.assign(resultado.dados.url);
+    } catch (error) {
+      if (error.precisaLogin) setPrecisaLogin(true);
+      setErro(error.message);
+      setCarregando(false);
+    }
+  };
+
+  // Inscrição de torneio: os torneios ainda são dados de exemplo (mockup),
+  // então ainda não existe cobrança online para eles.
+  if (!agendamento && inscricao) {
+    return (
+      <div className={styles.container}>
+        <main className={`${styles.app} ${styles.paymentPage}`}>
+          <header className={styles.paymentHeading}>
+            <span>INSCRIÇÃO EM TORNEIO</span>
+            <h1>{inscricao.torneio}</h1>
+            <p>Valor da inscrição: {formatarValor(inscricao.valor)}</p>
+          </header>
+
+          <p className={styles.pagamentoAviso}>
+            O pagamento online de inscrições ainda não está disponível. A
+            inscrição deve ser paga diretamente na arena.
+          </p>
+
+          <Link
+            to="/torneios"
+            className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
+          >
+            Voltar aos torneios
+          </Link>
+        </main>
+      </div>
+    );
+  }
+
+  if (!agendamento) {
+    return (
+      <div className={styles.container}>
+        <main className={`${styles.app} ${styles.paymentPage}`}>
+          <header className={styles.paymentHeading}>
+            <span>PAGAMENTO</span>
+            <h1>Nenhuma reserva selecionada</h1>
+            <p>Escolha a quadra, a data e o horário antes de pagar.</p>
+          </header>
+
+          <Link
+            to="/agendar-horario"
+            className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
+          >
+            Agendar horário
+          </Link>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <main className={`${styles.app} ${styles.paymentPage}`}>
         <header className={styles.paymentHeading}>
           <span>FINALIZE SUA RESERVA</span>
-          <h1>Escolha a forma de pagamento</h1>
-          <p>Faça o pagamento com segurança para confirmar seu agendamento.</p>
+          <h1>Pagamento seguro</h1>
+          <p>
+            Você será levado ao ambiente seguro do Stripe para pagar com
+            cartão ou Pix. Os dados do seu cartão não passam pelos nossos
+            servidores.
+          </p>
         </header>
-
-        <div className={styles.pagamentoButtons}>
-          <button
-            className={
-              metodo === "pix"
-                ? `${styles.activeBtn} ${styles.pagamentoBtn}`
-                : styles.pagamentoBtn
-            }
-            onClick={() => setMetodo("pix")}
-          >
-            Pix
-          </button>
-
-          <button
-            className={styles.pagamentoBtn}
-            onClick={() => {
-              setMetodo("cartao");
-
-              navigate("/pagamentoCartao");
-            }}
-          >
-            Cartão
-          </button>
-        </div>
 
         <div className={`${styles.quadraCard} ${styles.pagamentoCard}`}>
           <div className={styles.pixArea}>
             <div>
-              <h4>Escaneie para pagar</h4>
-
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PagamentoArena"
-                alt="QR Code"
-                className={styles.qrCode}
-              />
+              <h4>Resumo do agendamento</h4>
+              <p>
+                {agendamento.quadra} • {agendamento.numeroQuadra}
+              </p>
+              <p>{formatarData(agendamento.data)}</p>
+              <p>
+                {agendamento.horario} - {horarioFim(agendamento.horario)}
+              </p>
             </div>
 
             <div className={styles.valorArea}>
               <h3>Valor Total:</h3>
-
-              <p>{valorFormatado}</p>
-
-              {inscricao && <small>{inscricao.torneio}</small>}
+              <p>{formatarValor(agendamento.valor)}</p>
             </div>
           </div>
         </div>
 
-        <div className={styles.pagamentoInfo}>
-          <div>
-            <h3>Descrição pagamento:</h3>
+        <p className={styles.pagamentoAviso}>
+          🔒 Aceitamos cartão de crédito/débito e Pix. Você tem 30 minutos para
+          concluir o pagamento; depois disso o horário é liberado.
+        </p>
 
-            <p>Realizado por via pix.</p>
-
-            <p>Destinatário: xxx.xxx.xxx-xx</p>
-
-            <p>Dia: 20/01/2026</p>
-
-            <p>Horário: 13:00</p>
-          </div>
-
-          <div>
-            <h3>Resumo do Agendamento</h3>
-
-            <p>Quadra 1</p>
-
-            <p>17/02/2026</p>
-
-            <p>11:00 - 12:00</p>
-          </div>
-        </div>
+        {erro && (
+          <p className={styles.pagamentoErro} role="alert">
+            {erro}{" "}
+            {precisaLogin && <Link to="/login">Fazer login</Link>}
+          </p>
+        )}
 
         <button
+          type="button"
           className={`${styles.activeBtn} ${styles.confirmarPagamento}`}
-          onClick={() => navigate("/home")}
+          onClick={pagarComStripe}
+          disabled={carregando}
         >
-          Confirmar pagamento
+          {carregando ? "Abrindo pagamento seguro..." : "Pagar com Stripe"}
         </button>
       </main>
     </div>
