@@ -9,9 +9,43 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import styles from "../styles/administrador.module.css";
+import { requisicaoApi } from "../services/api.js";
 
 const apiUrl = (path) =>
   `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
+
+const STATUS_AGENDAMENTO = {
+  confirmado: "Confirmado",
+  pendente: "Aguardando pagamento",
+  cancelado: "Cancelado",
+};
+
+// Converte o agendamento do banco (GET /agendamentos) para uma linha da lista,
+// mostrando quem fez a reserva
+function agendamentoParaLinha(agendamento) {
+  const [ano, mes, dia] = agendamento.data.split("-");
+  return {
+    id: agendamento.id,
+    name: agendamento.quadra.nome,
+    detail: `${dia}/${mes}/${ano} · ${agendamento.horaInicio} - ${agendamento.horaFim}`,
+    role: `Feito por ${agendamento.cliente.nome}`,
+    roleDetail: agendamento.cliente.email,
+    status: STATUS_AGENDAMENTO[agendamento.status] || agendamento.status,
+  };
+}
+
+// Busca os registros do módulo no back-end
+const CARREGAR = {
+  quadras: () =>
+    requisicaoApi("/quadras?disponivel=todos&limit=100").then((resultado) =>
+      resultado.dados.map(quadraParaLinha),
+    ),
+  // Todos os agendamentos feitos pelos clientes (somente admin)
+  agendamentos: () =>
+    requisicaoApi("/agendamentos", { autenticado: "admin" }).then(
+      (resultado) => resultado.dados.map(agendamentoParaLinha),
+    ),
+};
 
 // Converte a quadra que vem do back-end (GET /quadras) para uma linha da lista
 function quadraParaLinha(quadra) {
@@ -59,36 +93,19 @@ const moduleData = {
     description:
       "Controle as quadras disponíveis, modalidades e situação de uso.",
     // As quadras vêm do banco de dados (GET /quadras), não de dados fixos
-    usaBanco: true,
+    fonte: "quadras",
     rows: [],
   },
   agendamentos: {
     icon: <FaRegCalendarAlt />,
     title: "Agendamentos",
     description:
-      "Acompanhe as reservas e mantenha a agenda das quadras organizada.",
-    action: "Adicionar agendamento",
-    placeholder: "Nome do novo agendamento",
-    rows: [
-      {
-        name: "Quadra 1",
-        detail: "17/02/2026 · 11:00 - 12:00",
-        role: "Mariana Souza",
-        status: "Confirmado",
-      },
-      {
-        name: "Quadra 2",
-        detail: "18/02/2026 · 14:00 - 15:00",
-        role: "Carlos Oliveira",
-        status: "Pendente",
-      },
-      {
-        name: "Quadra 1",
-        detail: "19/02/2026 · 18:00 - 19:00",
-        role: "Fernanda Lima",
-        status: "Confirmado",
-      },
-    ],
+      "Todas as reservas feitas pelos clientes, com quem fez cada uma.",
+    // Só aparecem reservas reais: as que os clientes fazem pelo site
+    fonte: "agendamentos",
+    vazio:
+      "Nenhum agendamento ainda. As reservas aparecem aqui quando um cliente agenda uma quadra.",
+    rows: [],
   },
   torneios: {
     icon: <FaTrophy />,
@@ -130,12 +147,16 @@ const reportData = [
 
 function getStatusClass(status) {
   const normalizedStatus = status.toLowerCase();
-  if (normalizedStatus.includes("indisponível")) {
+  if (
+    normalizedStatus.includes("indisponível") ||
+    normalizedStatus.includes("cancelado")
+  ) {
     return styles.statusDanger;
   }
   if (
     normalizedStatus.includes("manutenção") ||
     normalizedStatus.includes("pendente") ||
+    normalizedStatus.includes("aguardando") ||
     normalizedStatus.includes("preparação")
   ) {
     return styles.statusPending;
@@ -158,35 +179,29 @@ function ConteudoModulo({ modulo }) {
   const [notice, setNotice] = useState("");
   const [notifications, setNotifications] = useState(true);
   const [maintenance, setMaintenance] = useState(false);
-  const usaBanco = Boolean(config?.usaBanco);
-  const [carregando, setCarregando] = useState(usaBanco);
+  // Módulos ligados ao banco: "quadras" e "agendamentos"
+  const fonte = config?.fonte;
+  const [carregando, setCarregando] = useState(Boolean(fonte));
   const [erroBanco, setErroBanco] = useState("");
   const [salvandoId, setSalvandoId] = useState(null);
 
-  // Busca todas as quadras (disponíveis e indisponíveis) no back-end
+  // Busca os registros do módulo no back-end
   useEffect(() => {
-    if (!usaBanco) return undefined;
+    if (!fonte) return undefined;
     let ativo = true;
 
     // "carregando" já começa true quando o módulo usa o banco
-    fetch(apiUrl("/quadras?disponivel=todos&limit=100"))
-      .then(async (resposta) => {
-        const resultado = await resposta.json().catch(() => null);
-        if (!resposta.ok || !resultado?.sucesso) {
-          throw new Error(resultado?.mensagem || "Não foi possível carregar as quadras.");
-        }
-        return resultado.dados;
-      })
-      .then((dados) => {
+    CARREGAR[fonte]()
+      .then((linhas) => {
         if (!ativo) return;
-        setRows(dados.map(quadraParaLinha));
+        setRows(linhas);
         setErroBanco("");
       })
       .catch((error) => {
         if (!ativo) return;
         setErroBanco(
-          error.message === "Failed to fetch"
-            ? "Não foi possível conectar ao servidor. Verifique se o backend está iniciado."
+          error.precisaLogin
+            ? "Sua sessão expirou. Saia e entre novamente no painel."
             : error.message,
         );
       })
@@ -197,7 +212,7 @@ function ConteudoModulo({ modulo }) {
     return () => {
       ativo = false;
     };
-  }, [usaBanco]);
+  }, [fonte]);
 
   if (!config && modulo !== "relatorios" && modulo !== "configuracoes") {
     return <Navigate to="/administrador" replace />;
@@ -409,6 +424,9 @@ function ConteudoModulo({ modulo }) {
             )}
 
             <div className={styles.recordsList}>
+              {!carregando && !erroBanco && rows.length === 0 && config.vazio && (
+                <p className={styles.recordsEmpty}>{config.vazio}</p>
+              )}
               {rows.map((row, index) => (
                 <article
                   className={styles.recordRow}
@@ -418,7 +436,14 @@ function ConteudoModulo({ modulo }) {
                     <strong>{row.name}</strong>
                     <span>{row.detail}</span>
                   </div>
-                  <span className={styles.recordRole}>{row.role}</span>
+                  <span className={styles.recordRole}>
+                    {row.role}
+                    {row.roleDetail && (
+                      <small className={styles.recordRoleDetail}>
+                        {row.roleDetail}
+                      </small>
+                    )}
+                  </span>
                   <span
                     className={`${styles.status} ${getStatusClass(row.status)}`}
                   >
@@ -433,7 +458,7 @@ function ConteudoModulo({ modulo }) {
                       Alterar status
                     </button>
                   )}
-                  {usaBanco && (
+                  {fonte === "quadras" && (
                     <button
                       type="button"
                       className={styles.rowButton}

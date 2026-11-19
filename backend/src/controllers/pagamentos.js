@@ -32,7 +32,9 @@ module.exports = {
                     valor_pag,
                     forma_pag,
                     status_pag,
-                    stripe_session_id IS NOT NULL AS online
+                    stripe_session_id IS NOT NULL AS online,
+                    stripe_invoice_id IS NOT NULL AS fatura,
+                    stripe_invoice_id
                 FROM pagamentos
                 ORDER BY id_pag;
             `;
@@ -150,6 +152,20 @@ module.exports = {
                 });
             }
 
+            // Já está numa fatura mensal em aberto: registrar outro pagamento cobraria duas vezes
+            const [faturaResult] = await db.query(
+                "SELECT id_pag FROM pagamentos WHERE id_agend = ? AND status_pag = 'pendente' AND stripe_invoice_id IS NOT NULL;",
+                [id_agend]
+            );
+
+            if (faturaResult.length > 0) {
+                return response.status(409).json({
+                    sucesso: false,
+                    mensagem: "Este agendamento já está numa fatura mensal em aberto.",
+                    dados: null
+                });
+            }
+
             const sql = `
                 INSERT INTO pagamentos
                     (id_agend, valor_pag, forma_pag, status_pag)
@@ -208,7 +224,7 @@ module.exports = {
             }
 
             const [pagamento] = await db.query(
-                "SELECT id_agend, stripe_session_id FROM pagamentos WHERE id_pag = ?;",
+                "SELECT id_agend, stripe_session_id, stripe_invoice_id FROM pagamentos WHERE id_pag = ?;",
                 [id]
             );
 
@@ -216,6 +232,15 @@ module.exports = {
                 return response.status(404).json({
                     sucesso: false,
                     mensagem: `Pagamento com ID ${id} não encontrado.`,
+                    dados: null
+                });
+            }
+
+            // Pagamento de fatura mensal: o status vem da fatura no Stripe
+            if (pagamento[0].stripe_invoice_id) {
+                return response.status(409).json({
+                    sucesso: false,
+                    mensagem: "Este pagamento faz parte de uma fatura mensal e é atualizado automaticamente pelo Stripe. Para alterar, edite ou anule a fatura no Dashboard do Stripe.",
                     dados: null
                 });
             }
@@ -321,7 +346,7 @@ module.exports = {
             }
 
             const [pagamento] = await db.query(
-                "SELECT id_agend, status_pag, stripe_session_id FROM pagamentos WHERE id_pag = ?;",
+                "SELECT id_agend, status_pag, stripe_session_id, stripe_invoice_id FROM pagamentos WHERE id_pag = ?;",
                 [id]
             );
 
@@ -333,7 +358,17 @@ module.exports = {
                 });
             }
 
-            const { id_agend, status_pag, stripe_session_id } = pagamento[0];
+            const { id_agend, status_pag, stripe_session_id, stripe_invoice_id } = pagamento[0];
+
+            // Uma fatura junta várias reservas: cancelar uma linha aqui deixaria
+            // a fatura cobrando o valor cheio. Anule ou estorne pela fatura.
+            if (stripe_invoice_id && (status_pag === "pendente" || status_pag === "pago")) {
+                return response.status(409).json({
+                    sucesso: false,
+                    mensagem: "Este pagamento faz parte de uma fatura mensal. Para cancelar, anule a fatura (ou emita um reembolso) no Dashboard do Stripe.",
+                    dados: null
+                });
+            }
 
             if (status_pag === "estornado" || status_pag === "cancelado") {
                 return response.status(400).json({

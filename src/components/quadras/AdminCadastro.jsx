@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 
 const apiUrl = (path) =>
   `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
 
 export default function AdminCadastro() {
-  const navigate = useNavigate();
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+  // Depois de enviar, a conta fica aguardando aprovação de outro admin
+  const [solicitacaoEnviada, setSolicitacaoEnviada] = useState("");
 
   async function cadastrar(event) {
     event.preventDefault();
@@ -47,7 +48,7 @@ export default function AdminCadastro() {
         throw new Error(resultado?.mensagem || "Não foi possível realizar o cadastro administrativo.");
       }
 
-      navigate("/admin/login", { replace: true });
+      setSolicitacaoEnviada(resultado.mensagem);
     } catch (error) {
       const mensagem =
         error.message === "Failed to fetch"
@@ -68,10 +69,27 @@ export default function AdminCadastro() {
           </strong>
         </div>
 
+        {solicitacaoEnviada ? (
+          <>
+            <div className={styles.authHeading}>
+              <small>ÁREA ADMINISTRATIVA</small>
+              <h1>Solicitação enviada</h1>
+              <p role="status">{solicitacaoEnviada}</p>
+            </div>
+
+            <p className={styles.authSwitch}>
+              Já foi aprovado? <Link to="/admin/login">Entrar</Link>
+            </p>
+          </>
+        ) : (
+          <>
         <div className={styles.authHeading}>
           <small>ÁREA ADMINISTRATIVA</small>
-          <h1>Cadastre um administrador</h1>
-          <p>Crie uma conta separada para acessar o painel da Arena Beach.</p>
+          <h1>Solicite acesso de administrador</h1>
+          <p>
+            Crie sua conta administrativa. Ela só será liberada depois que
+            outro administrador aprovar o seu acesso.
+          </p>
         </div>
 
         <form onSubmit={cadastrar}>
@@ -130,7 +148,7 @@ export default function AdminCadastro() {
           {erro && <p role="alert">{erro}</p>}
 
           <button type="submit" disabled={carregando}>
-            {carregando ? "Cadastrando..." : "Criar conta administrativa"}
+            {carregando ? "Enviando..." : "Solicitar acesso"}
           </button>
         </form>
 
@@ -141,6 +159,8 @@ export default function AdminCadastro() {
         <p className={styles.authSwitch}>
           Quer uma conta de cliente? <Link to="/cadastro">Cadastrar cliente</Link>
         </p>
+          </>
+        )}
       </section>
     </main>
   );

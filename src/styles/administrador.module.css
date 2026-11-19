@@ -354,6 +354,219 @@
 }
 
 /* =========================================================
+   SOLICITAÇÕES DE ACESSO DE ADMINISTRADOR
+========================================================= */
+.solicitacoes {
+  width: 100%;
+  max-width: 1300px;
+  margin: 32px auto 0;
+  padding: 26px 30px;
+  border: 1px solid #303030;
+  border-radius: 15px;
+  background: #151515;
+}
+
+.solicitacoesTopo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.solicitacoesTopo h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.solicitacoesTopo p {
+  margin-top: 4px;
+  color: #888;
+  font-size: 13px;
+}
+
+.solicitacoesContador {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #ff8800;
+  color: #15120e;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.solicitacoesLista {
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.solicitacao {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  background: #101010;
+}
+
+.solicitacaoInfo {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.solicitacaoInfo strong {
+  color: #fff;
+  font-size: 15px;
+}
+
+.solicitacaoInfo span {
+  color: #c7c7c7;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.solicitacaoInfo small {
+  color: #777;
+  font-size: 12px;
+}
+
+.solicitacaoAcoes {
+  display: flex;
+  gap: 8px;
+}
+
+.botaoAprovar,
+.botaoRecusar {
+  min-height: 40px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botaoAprovar {
+  border: 1px solid #22c55e;
+  background: #16a34a;
+  color: #fff;
+}
+
+.botaoAprovar:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.botaoRecusar {
+  border: 1px solid rgba(255, 82, 82, 0.6);
+  background: transparent;
+  color: #ff8a8a;
+}
+
+.botaoRecusar:hover:not(:disabled) {
+  background: rgba(255, 82, 82, 0.12);
+}
+
+.botaoAprovar:disabled,
+.botaoRecusar:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.solicitacoesVazio {
+  margin-top: 18px;
+  color: #888;
+  font-size: 14px;
+}
+
+.solicitacoesAviso,
+.solicitacoesErro {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.solicitacoesAviso {
+  border: 1px solid #22c55e;
+  background: rgba(21, 128, 61, 0.2);
+  color: #86efac;
+}
+
+.solicitacoesErro {
+  border: 1px solid rgba(255, 82, 82, 0.5);
+  background: rgba(255, 82, 82, 0.12);
+  color: #ff8a8a;
+}
+
+.solicitacoesErro a {
+  color: #ff9a35;
+}
+
+:global(html[data-theme="light"]) .solicitacoes {
+  border-color: #d5dde6;
+  background: #f4f6f9;
+}
+
+:global(html[data-theme="light"]) .solicitacoesTopo h2,
+:global(html[data-theme="light"]) .solicitacaoInfo strong {
+  color: #000;
+}
+
+:global(html[data-theme="light"]) .solicitacao {
+  border-color: #dfe5ec;
+  background: #fff;
+}
+
+:global(html[data-theme="light"]) .solicitacaoInfo span {
+  color: #3a3a3a;
+}
+
+:global(html[data-theme="light"]) .botaoRecusar {
+  color: #b42318;
+}
+
+:global(html[data-theme="light"]) .solicitacoesAviso {
+  color: #117f39;
+}
+
+:global(html[data-theme="light"]) .solicitacoesErro {
+  color: #b42318;
+}
+
+@media (max-width: 600px) {
+  .solicitacoes {
+    padding: 20px 16px;
+  }
+
+  .solicitacaoAcoes {
+    width: 100%;
+  }
+
+  .botaoAprovar,
+  .botaoRecusar {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
    MÓDULOS ADMINISTRATIVOS
 ========================================================= */
 .modulePage {
@@ -527,7 +740,34 @@
 }
 
 .recordRole {
+  display: grid;
+  gap: 3px;
   color: #c2c2c2 !important;
+}
+
+/* E-mail de quem fez a reserva, abaixo do nome */
+.recordRoleDetail {
+  color: #8d8d8d;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.recordsEmpty {
+  padding: 18px;
+  border: 1px dashed #333;
+  border-radius: 12px;
+  color: #8d8d8d;
+  font-size: 13px;
+  text-align: center;
+}
+
+:global(html[data-theme="light"]) .recordRoleDetail,
+:global(html[data-theme="light"]) .recordsEmpty {
+  color: #666;
+}
+
+:global(html[data-theme="light"]) .recordsEmpty {
+  border-color: #d5dde6;
 }
 
 .status {

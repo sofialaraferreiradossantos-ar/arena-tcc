@@ -2,6 +2,7 @@ const Stripe = require("stripe");
 const db = require("../database/Connection");
 const { validarId } = require("../utils/validacoes");
 const { validarReservaCliente, existeConflito } = require("../utils/agendamento");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 // =====================================================
 // PAGAMENTO ONLINE COM STRIPE CHECKOUT
@@ -51,6 +52,43 @@ function paraCentavos(valor) {
     return Math.round(Number(valor) * 100);
 }
 
+// -----------------------------------------------------
+// Cliente no Stripe (Customer)
+// Cada usuário ganha um Customer na primeira vez que precisa dele
+// (pagamento online ou fatura). Assim os pagamentos e as faturas
+// ficam agrupados por cliente no Dashboard do Stripe.
+// -----------------------------------------------------
+async function obterCustomer(id_usu) {
+    const [rows] = await db.query(
+        "SELECT id_usu, nome_usu, email_usu, stripe_customer_id FROM usuarios WHERE id_usu = ?;",
+        [id_usu]
+    );
+    const usuario = rows[0];
+    if (!usuario) throw new Error(`Usuário ${id_usu} não encontrado.`);
+    if (usuario.stripe_customer_id) return usuario.stripe_customer_id;
+
+    // A chave de idempotência evita criar dois Customers para o mesmo usuário
+    // se duas requisições chegarem ao mesmo tempo.
+    const customer = await stripe().customers.create(
+        {
+            name: usuario.nome_usu,
+            email: usuario.email_usu,
+            preferred_locales: ["pt-BR"],
+            metadata: { id_usu: String(usuario.id_usu) }
+        },
+        { idempotencyKey: `customer-usuario-${usuario.id_usu}` }
+    );
+
+    await db.query(
+        "UPDATE usuarios SET stripe_customer_id = ? WHERE id_usu = ? AND stripe_customer_id IS NULL;",
+        [customer.id, usuario.id_usu]
+    );
+
+    // Se outra requisição gravou primeiro, usa o que está no banco
+    const [atual] = await db.query("SELECT stripe_customer_id FROM usuarios WHERE id_usu = ?;", [usuario.id_usu]);
+    return atual[0].stripe_customer_id;
+}
+
 function formaDoStripe(sessao) {
     const tipo = sessao.payment_intent?.payment_method?.type;
     if (tipo === "pix") return "Pix";
@@ -74,6 +112,41 @@ async function marcarComoPago(pagamento, forma) {
             "UPDATE agendamentos SET status_agend = 'confirmado' WHERE id_agend = ? AND status_agend = 'pendente';",
             [pagamento.id_agend]
         );
+        await avisarNovaReserva(pagamento, forma);
+    }
+}
+
+// Avisa os administradores que uma reserva foi paga e confirmada.
+// A chave evita aviso duplicado se o webhook e a tela confirmarem juntos.
+async function avisarNovaReserva(pagamento, forma) {
+    try {
+        const [[reserva]] = await db.query(
+            `
+                SELECT
+                    u.nome_usu,
+                    q.nome_qd,
+                    DATE_FORMAT(a.dt_agend, '%d/%m/%Y') AS data,
+                    TIME_FORMAT(a.hora_inicio, '%H:%i') AS inicio,
+                    TIME_FORMAT(a.hora_fim, '%H:%i') AS fim
+                FROM agendamentos a
+                INNER JOIN usuarios u ON u.id_usu = a.id_usu
+                INNER JOIN quadras q ON q.id_qd = a.id_qd
+                WHERE a.id_agend = ?;
+            `,
+            [pagamento.id_agend]
+        );
+
+        if (!reserva) return;
+
+        await notificarAdmins({
+            tipo: "nova_reserva",
+            titulo: "Nova reserva confirmada",
+            mensagem: `${reserva.nome_usu} reservou ${reserva.nome_qd} em ${reserva.data}, das ${reserva.inicio} às ${reserva.fim} (pago via ${forma}).`,
+            link: "/administrador/agendamentos",
+            chave: `reserva-paga-${pagamento.id_pag}`
+        });
+    } catch (error) {
+        console.error("[notificacoes] Erro ao avisar nova reserva:", error.message);
     }
 }
 
@@ -128,6 +201,90 @@ async function sincronizarSessao(idSessao, { falhou = false } = {}) {
         [pagamento.id_pag]
     );
     return atualizado[0];
+}
+
+// -----------------------------------------------------
+// Faturas mensais (ver controllers/faturas.js)
+// Uma fatura junta várias reservas: todos os pagamentos com o mesmo
+// stripe_invoice_id mudam de status juntos.
+// -----------------------------------------------------
+
+// Fatura paga: consulta o Stripe (fonte confiável) e confirma as reservas
+async function sincronizarFaturaPaga(idFatura) {
+    const fatura = await stripe().invoices.retrieve(idFatura);
+    if (fatura.status !== "paid") return;
+
+    const [pendentes] = await db.query(
+        "SELECT id_pag, valor_pag FROM pagamentos WHERE stripe_invoice_id = ? AND status_pag = 'pendente';",
+        [idFatura]
+    );
+    if (pendentes.length === 0) return;
+
+    // O admin pode ter dado desconto na fatura pelo Dashboard: só avisa no log
+    const esperado = pendentes.reduce((total, p) => total + paraCentavos(p.valor_pag), 0);
+    if (fatura.currency !== "brl" || fatura.total !== esperado) {
+        console.warn(
+            `[stripe] Fatura ${idFatura} paga com valor diferente das reservas: ` +
+            `${fatura.total} ${fatura.currency}, esperado ${esperado} brl.`
+        );
+    }
+
+    await db.query(
+        "UPDATE pagamentos SET status_pag = 'pago' WHERE stripe_invoice_id = ? AND status_pag = 'pendente';",
+        [idFatura]
+    );
+    await db.query(
+        `UPDATE agendamentos a
+         INNER JOIN pagamentos p ON p.id_agend = a.id_agend
+         SET a.status_agend = 'confirmado'
+         WHERE p.stripe_invoice_id = ? AND p.status_pag = 'pago' AND a.status_agend = 'pendente';`,
+        [idFatura]
+    );
+}
+
+// Fatura anulada no Dashboard: as reservas voltam a poder ser faturadas
+async function cancelarFatura(idFatura) {
+    await db.query(
+        "UPDATE pagamentos SET status_pag = 'cancelado' WHERE stripe_invoice_id = ? AND status_pag = 'pendente';",
+        [idFatura]
+    );
+}
+
+// Estorno total feito fora do sistema (ex.: pelo Dashboard do Stripe).
+// Os estornos feitos pelo próprio sistema também disparam este evento;
+// como o UPDATE só age em pagamentos ainda "pago", não há efeito duplo.
+async function sincronizarEstorno(cobranca) {
+    if (!cobranca.refunded) return; // estorno parcial: não muda a reserva
+
+    let id_pag = cobranca.metadata?.id_pag;
+
+    if (!id_pag && cobranca.payment_intent) {
+        const idIntent = typeof cobranca.payment_intent === "string"
+            ? cobranca.payment_intent
+            : cobranca.payment_intent.id;
+        const intent = await stripe().paymentIntents.retrieve(idIntent);
+        id_pag = intent.metadata?.id_pag;
+    }
+
+    // Pagamentos de fatura não têm id_pag no metadata: são tratados no Dashboard
+    if (!id_pag) return;
+
+    const [rows] = await db.query("SELECT id_pag, id_agend FROM pagamentos WHERE id_pag = ?;", [id_pag]);
+    if (rows.length === 0) return;
+
+    const [resultado] = await db.query(
+        "UPDATE pagamentos SET status_pag = 'estornado' WHERE id_pag = ? AND status_pag = 'pago';",
+        [id_pag]
+    );
+
+    // Mesma regra do cancelamento feito pelo admin (pagamentos.js):
+    // pagamento estornado -> agendamento volta a aguardar pagamento
+    if (resultado.affectedRows > 0) {
+        await db.query(
+            "UPDATE agendamentos SET status_agend = 'pendente' WHERE id_agend = ? AND status_agend = 'confirmado';",
+            [rows[0].id_agend]
+        );
+    }
 }
 
 // Busca o pagamento online e confere se ele é do usuário logado
@@ -202,6 +359,12 @@ async function validarSessaoDaRequisicao(request, response) {
 }
 
 module.exports = {
+
+    // Usados pelas faturas mensais (controllers/faturas.js)
+    stripe,
+    obterCustomer,
+    paraCentavos,
+    dataBR,
 
     // =====================================================
     // CRIAR CHECKOUT - POST /pagamentos/stripe/checkout
@@ -306,10 +469,20 @@ module.exports = {
             conexao.release();
         }
 
+        // Liga o pagamento ao cliente no Stripe. Se não conseguir criar o
+        // Customer, segue só com o e-mail para não travar a reserva.
+        let identificacaoCliente;
+        try {
+            identificacaoCliente = { customer: await obterCustomer(usuario.id_usu) };
+        } catch (error) {
+            console.error("[stripe] Não foi possível obter o Customer:", error.message);
+            identificacaoCliente = { customer_email: usuario.email_usu };
+        }
+
         const dadosSessao = {
             mode: "payment",
             client_reference_id: String(id_pag),
-            customer_email: usuario.email_usu,
+            ...identificacaoCliente,
             line_items: [
                 {
                     quantity: 1,
@@ -401,6 +574,26 @@ module.exports = {
 
                 case "checkout.session.async_payment_failed":
                     await sincronizarSessao(evento.data.object.id, { falhou: true });
+                    break;
+
+                // Faturas mensais
+                case "invoice.paid":
+                    await sincronizarFaturaPaga(evento.data.object.id);
+                    break;
+
+                case "invoice.voided":
+                    await cancelarFatura(evento.data.object.id);
+                    break;
+
+                case "invoice.payment_failed":
+                    // O cliente pode tentar de novo na página da fatura; o Stripe
+                    // manda os lembretes. Só registra para o admin acompanhar.
+                    console.warn(`[stripe] Falha no pagamento da fatura ${evento.data.object.id}.`);
+                    break;
+
+                // Estorno feito pelo Dashboard do Stripe
+                case "charge.refunded":
+                    await sincronizarEstorno(evento.data.object);
                     break;
 
                 default:

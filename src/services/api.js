@@ -16,7 +16,8 @@ export class ErroApi extends Error {
 }
 
 // Faz a requisição e devolve o JSON de sucesso, ou lança ErroApi com a
-// mensagem do backend. "autenticado" envia o token do cliente logado.
+// mensagem do backend. "autenticado": true envia o token do cliente logado;
+// "admin" envia o token do administrador.
 export async function requisicaoApi(
   path,
   { method = "GET", body, autenticado = false } = {},
@@ -24,7 +25,8 @@ export async function requisicaoApi(
   const headers = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (autenticado) {
-    headers.Authorization = `Bearer ${localStorage.getItem("token_sessao") || ""}`;
+    const chave = autenticado === "admin" ? "token_admin" : "token_sessao";
+    headers.Authorization = `Bearer ${localStorage.getItem(chave) || ""}`;
   }
 
   let resposta;
@@ -45,10 +47,13 @@ export async function requisicaoApi(
   const resultado = await resposta.json().catch(() => null);
 
   if (!resposta.ok || !resultado?.sucesso) {
-    throw new ErroApi(
-      resultado?.mensagem || "Erro na requisição.",
-      resposta.status,
-    );
+    // Sem JSON na resposta: normalmente é o backend desatualizado (rota nova
+    // que ainda não existe nele). Reiniciar o npm run dev resolve.
+    const semResposta =
+      resposta.status === 404
+        ? "Este recurso não foi encontrado no servidor. Reinicie o backend (npm run dev)."
+        : "Não foi possível completar a ação. Tente novamente.";
+    throw new ErroApi(resultado?.mensagem || semResposta, resposta.status);
   }
 
   return resultado;

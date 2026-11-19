@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaPlus, FaRegCalendarAlt } from "react-icons/fa";
 
 import styles from "../styles/agendamentos.module.css";
@@ -65,6 +65,11 @@ function Agendamentos() {
   const filtrados = agendamentos.filter((agendamento) =>
     tabAtiva === "proximo" ? agendamento.data >= hoje : agendamento.data < hoje,
   );
+
+  // Administrador vê todas as reservas (com quem fez) no painel
+  if (localStorage.getItem("token_admin")) {
+    return <Navigate to="/administrador/agendamentos" replace />;
+  }
 
   async function cancelar(agendamento) {
     const pago = agendamento.status === "confirmado";

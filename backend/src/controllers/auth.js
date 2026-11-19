@@ -1,16 +1,34 @@
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const db = require("../database/Connection");
-const { validarEmail } = require("../utils/validacoes");
+const { validarEmail, validarId } = require("../utils/validacoes");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 const SALT_ROUNDS = 10;
 const sessoes = new Map();
+
+// Novo administrador começa "pendente" e só entra depois que outro
+// administrador aprovar. Se for recusado, fica "recusado".
+const MENSAGENS_STATUS = {
+  pendente:
+    "Seu acesso de administrador ainda não foi aprovado. Aguarde a autorização de outro administrador.",
+  recusado: "Sua solicitação de acesso administrativo foi recusada.",
+};
 
 function statusAtivo(status) {
   const valor = String(status ?? "")
     .trim()
     .toLowerCase();
-  return valor !== "" && !["0", "inativo", "false"].includes(valor);
+  return (
+    valor !== "" &&
+    !["0", "inativo", "false", "pendente", "recusado"].includes(valor)
+  );
+}
+
+// Mensagem específica para conta pendente/recusada (só depois de a senha
+// estar correta, para não revelar a situação de contas de outras pessoas)
+function mensagemDeBloqueio(status) {
+  return MENSAGENS_STATUS[String(status ?? "").trim().toLowerCase()] || null;
 }
 
 function criarSessao(usuario) {
@@ -69,6 +87,13 @@ module.exports = {
       const senhaCorreta = usuarioBanco
         ? await bcrypt.compare(String(senha), usuarioBanco.senha_usu)
         : false;
+
+      const bloqueio =
+        senhaCorreta && mensagemDeBloqueio(usuarioBanco.status_usu);
+
+      if (bloqueio) {
+        return response.status(403).json({ sucesso: false, mensagem: bloqueio });
+      }
 
       if (
         !usuarioBanco ||
@@ -152,6 +177,13 @@ module.exports = {
         ? await bcrypt.compare(String(senha), usuarioBanco.senha_usu)
         : false;
 
+      const bloqueio =
+        senhaCorreta && mensagemDeBloqueio(usuarioBanco.status_usu);
+
+      if (bloqueio) {
+        return response.status(403).json({ sucesso: false, mensagem: bloqueio });
+      }
+
       if (
         !usuarioBanco ||
         !senhaCorreta ||
@@ -234,11 +266,12 @@ module.exports = {
 
       const hashedPassword = await bcrypt.hash(String(senha_adm), SALT_ROUNDS);
 
-      // O administrador é gravado em usuarios com tipo_usu = 'admin'
+      // O administrador é gravado em usuarios com tipo_usu = 'admin', mas
+      // fica "pendente" até outro administrador aprovar o acesso.
       const [resultado] = await db.query(
         `INSERT INTO usuarios
           (nome_usu, email_usu, senha_usu, tipo_usu, status_usu, dt_cad)
-         VALUES (?, ?, ?, 'admin', 'ativo', ?);`,
+         VALUES (?, ?, ?, 'admin', 'pendente', ?);`,
         [
           String(nome_adm).trim(),
           emailNormalizado,
@@ -247,10 +280,18 @@ module.exports = {
         ],
       );
 
+      await notificarAdmins({
+        tipo: "pedido_admin",
+        titulo: "Novo pedido de acesso de administrador",
+        mensagem: `${String(nome_adm).trim()} (${emailNormalizado}) pediu acesso ao painel. Aprove ou recuse em Solicitações de acesso.`,
+        link: "/administrador",
+      });
+
       return response.status(201).json({
         sucesso: true,
-        mensagem: "Administrador cadastrado com sucesso.",
-        dados: { id_usu: resultado.insertId, tipo_usu: "admin" },
+        mensagem:
+          "Solicitação enviada! Um administrador precisa aprovar seu acesso antes do primeiro login.",
+        dados: { id_usu: resultado.insertId, tipo_usu: "admin", status_usu: "pendente" },
       });
     } catch (error) {
       if (error.code === "ER_DUP_ENTRY") {
@@ -263,6 +304,79 @@ module.exports = {
       return response.status(500).json({
         sucesso: false,
         mensagem: "Não foi possível realizar o cadastro administrativo.",
+        dados: error.message,
+      });
+    }
+  },
+
+  // =====================================================
+  // SOLICITAÇÕES DE ACESSO ADMINISTRATIVO (somente administrador)
+  // =====================================================
+
+  // GET /auth/admin/solicitacoes
+  async listarSolicitacoes(request, response) {
+    try {
+      const [rows] = await db.query(
+        `SELECT id_usu, nome_usu, email_usu, DATE_FORMAT(dt_cad, '%Y-%m-%d') AS dt_cad
+         FROM usuarios
+         WHERE tipo_usu = 'admin' AND status_usu = 'pendente'
+         ORDER BY dt_cad, id_usu;`,
+      );
+
+      return response.status(200).json({
+        sucesso: true,
+        mensagem: "Solicitações de acesso pendentes.",
+        items: rows.length,
+        dados: rows,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
+        dados: error.message,
+      });
+    }
+  },
+
+  // PATCH /auth/admin/solicitacoes/:id/aprovar e /recusar
+  async responderSolicitacao(request, response) {
+    const { id, acao } = request.params;
+    const novoStatus = { aprovar: "ativo", recusar: "recusado" }[acao];
+
+    if (!validarId(id) || !novoStatus) {
+      return response.status(400).json({
+        sucesso: false,
+        mensagem: "Solicitação inválida.",
+      });
+    }
+
+    try {
+      // Só muda contas de administrador que ainda estão pendentes
+      const [resultado] = await db.query(
+        `UPDATE usuarios SET status_usu = ?
+         WHERE id_usu = ? AND tipo_usu = 'admin' AND status_usu = 'pendente';`,
+        [novoStatus, id],
+      );
+
+      if (resultado.affectedRows === 0) {
+        return response.status(404).json({
+          sucesso: false,
+          mensagem: "Solicitação não encontrada ou já respondida.",
+        });
+      }
+
+      return response.status(200).json({
+        sucesso: true,
+        mensagem:
+          acao === "aprovar"
+            ? "Acesso aprovado. O novo administrador já pode entrar."
+            : "Solicitação recusada.",
+        dados: { id_usu: Number(id), status_usu: novoStatus },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        sucesso: false,
+        mensagem: "Erro na requisição.",
         dados: error.message,
       });
     }

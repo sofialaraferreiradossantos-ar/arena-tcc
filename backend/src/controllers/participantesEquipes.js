@@ -1,6 +1,7 @@
 const db = require("../database/Connection");
 const { validarId, validarData } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 const STATUS_PARTICIPANTE = ["pendente", "confirmado", "cancelado"];
 
@@ -170,6 +171,33 @@ module.exports = {
             `;
 
             const [resultado] = await db.query(sql, [id_equipe, id_usu, dt_part, status_part]);
+
+            // Avisa os administradores sobre a nova inscrição
+            // (um erro aqui não desfaz a inscrição, que já foi gravada)
+            try {
+                const [[inscricao]] = await db.query(
+                    `
+                        SELECT u.nome_usu, e.nome_equipe, t.nome_torn
+                        FROM participantes_equipe pe
+                        INNER JOIN usuarios u ON u.id_usu = pe.id_usu
+                        INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                        INNER JOIN torneios t ON t.id_torn = e.id_torn
+                        WHERE pe.id_part = ?;
+                    `,
+                    [resultado.insertId]
+                );
+
+                if (inscricao) {
+                    await notificarAdmins({
+                        tipo: "inscricao_torneio",
+                        titulo: "Nova inscrição em torneio",
+                        mensagem: `${inscricao.nome_usu} se inscreveu no ${inscricao.nome_torn} (equipe ${inscricao.nome_equipe}).`,
+                        link: "/administrador/torneios"
+                    });
+                }
+            } catch (error) {
+                console.error("[notificacoes] Erro ao avisar inscrição:", error.message);
+            }
 
             return response.status(201).json({
                 sucesso: true,

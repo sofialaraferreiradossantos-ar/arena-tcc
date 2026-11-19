@@ -1,0 +1,212 @@
+/* =========================================================
+   SINO DE NOTIFICAÇÕES (barra do topo)
+========================================================= */
+.area {
+  position: relative;
+  pointer-events: auto;
+}
+
+.sino {
+  position: relative;
+  cursor: pointer;
+}
+
+.sino svg {
+  font-size: 15px;
+}
+
+.contador {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #111;
+  border-radius: 999px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Painel fixo abaixo da barra, alinhado à direita da tela */
+.painel {
+  position: fixed;
+  top: 66px;
+  right: 22px;
+  z-index: 1700;
+  width: min(380px, calc(100vw - 24px));
+  max-height: min(520px, calc(100dvh - 90px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #2c2c2c;
+  border-radius: 14px;
+  background: #121212;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+
+.topo {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid #262626;
+}
+
+.topo strong {
+  color: #fff;
+  font-size: 15px;
+}
+
+.marcarTodas {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #ff9a35;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.marcarTodas:hover {
+  text-decoration: underline;
+}
+
+.vazio {
+  padding: 22px 18px;
+  color: #8a8a8a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.lista {
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}
+
+.item {
+  width: 100%;
+  padding: 12px 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: rgba(255, 136, 0, 0.08);
+  outline: none;
+}
+
+.naoLida {
+  background: rgba(255, 136, 0, 0.05);
+}
+
+.icone {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  border-radius: 9px;
+  background: rgba(255, 136, 0, 0.08);
+  color: #ff8800;
+  font-size: 14px;
+}
+
+.texto {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 3px;
+}
+
+.texto strong {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.texto span {
+  color: #b5b5b5;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.texto small {
+  color: #777;
+  font-size: 11px;
+}
+
+.ponto {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #ff8800;
+}
+
+@media (max-width: 900px) {
+  .painel {
+    top: 60px;
+    right: 12px;
+  }
+}
+
+/* Tema claro */
+:global(html[data-theme="light"]) .contador {
+  border-color: #fff;
+}
+
+:global(html[data-theme="light"]) .painel {
+  border-color: #dbe2e9;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+:global(html[data-theme="light"]) .topo {
+  border-bottom-color: #e6ebf0;
+}
+
+:global(html[data-theme="light"]) .topo strong,
+:global(html[data-theme="light"]) .texto strong {
+  color: #111;
+}
+
+:global(html[data-theme="light"]) .marcarTodas {
+  color: #a85a00;
+}
+
+:global(html[data-theme="light"]) .texto span {
+  color: #444;
+}
+
+:global(html[data-theme="light"]) .vazio,
+:global(html[data-theme="light"]) .texto small {
+  color: #6b6b6b;
+}
+
+:global(html[data-theme="light"]) .icone {
+  color: #a85a00;
+}

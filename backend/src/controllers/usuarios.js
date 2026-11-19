@@ -2,6 +2,7 @@ const db = require("../database/Connection");
 const bcrypt = require("bcrypt");
 const { validarEmail, validarId } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 const SALT_ROUNDS = 10;
 
@@ -124,6 +125,13 @@ module.exports = {
             const valores = [nome_usu, email_usu, hashedPassword, tipo_usu, status_usu, dt_cad];
 
             const [resultado] = await db.query(sql, valores);
+
+            await notificarAdmins({
+                tipo: "novo_cliente",
+                titulo: "Novo cliente cadastrado",
+                mensagem: `${nome_usu} (${email_usu}) criou uma conta no site.`,
+                link: "/administrador/usuarios"
+            });
 
             return response.status(201).json({
                 sucesso: true,

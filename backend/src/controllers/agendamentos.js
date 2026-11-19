@@ -8,6 +8,7 @@ const {
     validarReservaCliente
 } = require("../utils/agendamento");
 const { cancelarPagamentoOnline } = require("./stripe");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 const STATUS_AGENDAMENTO = ["pendente", "confirmado", "cancelado"];
 
@@ -56,11 +57,12 @@ module.exports = {
                     q.nome_qd,
                     q.tipo_qd,
                     u.id_usu,
-                    u.nome_usu
+                    u.nome_usu,
+                    u.email_usu
                 FROM agendamentos a
                 INNER JOIN quadras q ON q.id_qd = a.id_qd
                 INNER JOIN usuarios u ON u.id_usu = a.id_usu
-                ORDER BY a.dt_agend, a.hora_inicio;
+                ORDER BY a.dt_agend DESC, a.hora_inicio DESC;
             `;
 
             const [rows] = await db.query(sql);
@@ -79,7 +81,8 @@ module.exports = {
                 },
                 cliente: {
                     id: agendamento.id_usu,
-                    nome: agendamento.nome_usu
+                    nome: agendamento.nome_usu,
+                    email: agendamento.email_usu
                 }
             }));
 
@@ -637,11 +640,16 @@ module.exports = {
             }
 
             const [pagamentos] = await db.query(
-                `SELECT id_pag, id_agend, status_pag, stripe_session_id
+                `SELECT id_pag, id_agend, status_pag, stripe_session_id, stripe_invoice_id
                  FROM pagamentos
                  WHERE id_agend = ? AND status_pag IN ('pendente', 'pago');`,
                 [id]
             );
+
+            // Reserva cobrada na fatura mensal: a fatura já tem o valor dela
+            if (pagamentos.some((p) => p.stripe_invoice_id)) {
+                return erro(response, 409, "Esta reserva está na sua fatura mensal. Para cancelar, fale com a recepção.");
+            }
 
             // Pago no balcão (sem Stripe): o estorno precisa ser feito pela arena
             if (pagamentos.some((p) => !p.stripe_session_id && p.status_pag === "pago")) {
@@ -668,6 +676,22 @@ module.exports = {
             }
 
             await db.query("UPDATE agendamentos SET status_agend = 'cancelado' WHERE id_agend = ?;", [id]);
+
+            // Reserva que estava confirmada: avisa os administradores que o
+            // horário foi liberado (reserva só pendente não gera aviso)
+            if (agendamento.status_agend === "confirmado") {
+                const [[quadra]] = await db
+                    .query("SELECT nome_qd FROM quadras WHERE id_qd = ?;", [agendamento.id_qd])
+                    .catch(() => [[null]]);
+                const [ano, mes, dia] = agendamento.dt_agend.split("-");
+
+                await notificarAdmins({
+                    tipo: "reserva_cancelada",
+                    titulo: "Reserva cancelada pelo cliente",
+                    mensagem: `${request.usuario.nome_usu} cancelou a reserva de ${quadra?.nome_qd ?? "quadra"} em ${dia}/${mes}/${ano} às ${agendamento.hora_inicio.slice(0, 5)}${estornado ? " (valor estornado)" : ""}. O horário está livre.`,
+                    link: "/administrador/agendamentos"
+                });
+            }
 
             return response.status(200).json({
                 sucesso: true,

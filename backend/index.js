@@ -63,3 +63,13 @@ app.listen(porta, () => {
 app.get("/", (request, response) => {
   response.send("Hello Word");
 });
+
+// Rota que não existe: responde em JSON, no mesmo padrão da API
+// (sem isso o Express devolve uma página HTML e o site não entende)
+app.use((request, response) => {
+  response.status(404).json({
+    sucesso: false,
+    mensagem: "Rota não encontrada.",
+    dados: null,
+  });
+});

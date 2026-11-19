@@ -9,11 +9,13 @@ import {
   FaMoon,
   FaSun,
   FaArrowLeft,
+  FaHome,
 } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // Ícones do Flaticon (UIcons, estilo regular arredondado: classes fi-rr-*)
 import "@flaticon/flaticon-uicons/css/regular/rounded.css";
 import styles from "../styles/navigation.module.css";
+import Notificacoes from "./Notificacoes.jsx";
 import logo from "../assets/logo.jpeg";
 
 // Ícone do Flaticon dentro do menu lateral
@@ -56,6 +58,8 @@ export default function UnifiedMenu() {
   // Volta para a tela anterior. Se a página foi aberta direto pelo
   // endereço (sem histórico), vai para a lista de quadras ou para o Início.
   const voltar = () => {
+    // Se o menu estiver aberto, fecha junto com a navegação
+    setOpen(false);
     if (location.key !== "default") {
       navigate(-1);
     } else {
@@ -128,7 +132,7 @@ export default function UnifiedMenu() {
           </button>
           <button
             type="button"
-            className={styles.themeToggle}
+            className={`${styles.themeToggle} ${styles.iconButton}`}
             onClick={() =>
               setTheme((current) => (current === "dark" ? "light" : "dark"))
             }
@@ -139,23 +143,51 @@ export default function UnifiedMenu() {
             title={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
-            <span>{theme === "dark" ? "Claro" : "Escuro"}</span>
           </button>
           {!isInicio && (
             <button
               type="button"
-              className={styles.themeToggle}
+              className={`${styles.themeToggle} ${styles.iconButton} ${
+                open ? styles.escondido : ""
+              }`}
               onClick={voltar}
               aria-label="Voltar para a página anterior"
               title="Voltar"
+              // Com o menu aberto o botão sai da tela e não pode ser focado
+              aria-hidden={open}
+              tabIndex={open ? -1 : undefined}
             >
               <FaArrowLeft />
-              <span>Voltar</span>
+            </button>
+          )}
+          {!isInicio && (
+            <button
+              type="button"
+              className={`${styles.themeToggle} ${styles.iconButton} ${
+                open ? styles.escondido : ""
+              }`}
+              onClick={() => {
+                setOpen(false);
+                navigate("/home");
+              }}
+              aria-label="Ir para o Início"
+              title="Início"
+              // Igual ao Voltar: some enquanto o menu lateral está aberto
+              aria-hidden={open}
+              tabIndex={open ? -1 : undefined}
+            >
+              <FaHome />
             </button>
           )}
         </div>
         {!isPresentationPage && (
           <nav className={styles.quickActions} aria-label="Acesso rápido">
+            {isAutenticado && (
+              <Notificacoes
+                admin={isAdminAutenticado}
+                classeBotao={styles.quickLink}
+              />
+            )}
             {adminPath && (
               <NavLink to={adminPath} className={styles.quickLink}>
                 <FaUserCog />

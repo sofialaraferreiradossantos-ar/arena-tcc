@@ -11,8 +11,10 @@ const ParticipantesEquipesController = require("../controllers/participantesEqui
 const QuadrasController = require("../controllers/quadras");
 const TorneiosController = require("../controllers/torneios");
 const StripeController = require("../controllers/stripe");
+const FaturasController = require("../controllers/faturas");
+const NotificacoesController = require("../controllers/notificacoes");
 
-const { exigirUsuario, exigirAdmin } = require("../middleware/autenticacao");
+const { exigirLogin, exigirUsuario, exigirAdmin } = require("../middleware/autenticacao");
 
 const uploadImage = require("../middleware/uploadHelper");
 
@@ -27,9 +29,21 @@ const uploadQuadras = uploadImage("quadras");
 
 router.post("/auth/login", AuthController.login);
 router.post("/auth/admin/login", AuthController.adminLogin);
+// Cria a conta de admin como "pendente": só entra depois de aprovada
 router.post("/auth/admin/cadastro", AuthController.adminCadastro);
+router.get("/auth/admin/solicitacoes", exigirAdmin, AuthController.listarSolicitacoes);
+router.patch("/auth/admin/solicitacoes/:id/:acao", exigirAdmin, AuthController.responderSolicitacao);
 router.post("/auth/logout", AuthController.logout);
 router.get("/auth/me", AuthController.sessaoAtual);
+
+
+// =====================================================
+// NOTIFICAÇÕES (cliente vê as dele; admin vê as dos administradores)
+// =====================================================
+
+router.get("/notificacoes", exigirLogin, NotificacoesController.listar);
+router.patch("/notificacoes/lidas", exigirLogin, NotificacoesController.marcarTodas);
+router.patch("/notificacoes/:id/lida", exigirLogin, NotificacoesController.marcarLida);
 
 
 // =====================================================
@@ -118,6 +132,11 @@ router.post("/pagamentos", exigirAdmin, PagamentosController.cadastrarPagamentos
 router.patch("/pagamentos/:id", exigirAdmin, PagamentosController.editarPagamentos);
 router.delete("/pagamentos/:id", exigirAdmin, PagamentosController.apagarPagamentos);
 
+// Faturas mensais dos clientes fixos (somente administrador)
+// Também dá para rodar pelo terminal: npm run faturar -- AAAA-MM
+router.get("/faturas/pendentes", exigirAdmin, FaturasController.listarPendentes);
+router.post("/faturas", exigirAdmin, FaturasController.criarFatura);
+
 // O webhook do Stripe (POST /webhooks/stripe) fica no index.js, porque
 // precisa do corpo da requisição sem passar pelo express.json().
 
@@ -174,11 +193,14 @@ router.delete("/torneios/:id", TorneiosController.apagarTorneios);
 // USUÁRIOS
 // =====================================================
 
-router.get("/usuarios", UsuariosController.listarUsuarios);
+// Cadastro de cliente e troca de senha (exige a senha atual) são públicos.
+// Listar/editar/inativar é só do admin: sem isso, um admin "pendente"
+// poderia se ativar sozinho com PATCH /usuarios/:id {status_usu: "ativo"}.
+router.get("/usuarios", exigirAdmin, UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
-router.patch("/usuarios/:id", UsuariosController.editarUsuarios);
+router.patch("/usuarios/:id", exigirAdmin, UsuariosController.editarUsuarios);
 router.patch("/usuarios/atualiza-senha/:id", UsuariosController.atualizarSenha);
-router.delete("/usuarios/:id", UsuariosController.apagarUsuarios);
+router.delete("/usuarios/:id", exigirAdmin, UsuariosController.apagarUsuarios);
 
 
 module.exports = router;

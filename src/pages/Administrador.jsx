@@ -10,6 +10,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import styles from "../styles/administrador.module.css";
+import SolicitacoesAdmin from "../components/admin/SolicitacoesAdmin.jsx";
 
 function Administrador() {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -136,6 +137,9 @@ function Administrador() {
         </h1>
         <p>Gerencie as informações do sistema.</p>
       </div>
+
+      {/* NOVOS ADMINISTRADORES AGUARDANDO APROVAÇÃO */}
+      <SolicitacoesAdmin />
 
       {/* CARDS */}
       <section className={styles.cardsArea}>
