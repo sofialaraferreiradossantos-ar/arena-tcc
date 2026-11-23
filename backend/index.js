@@ -34,6 +34,16 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 // Erros do upload de imagem (formato inválido, arquivo grande, campo errado)
 // devolvem JSON no mesmo padrão das outras respostas da API.
 app.use((error, request, response, next) => {
+  // JSON mal escrito no corpo (ex.: vírgula sobrando no Insomnia): responde
+  // 400 em JSON, sem encher o terminal com a pilha de erro
+  if (error.type === "entity.parse.failed") {
+    return response.status(400).json({
+      sucesso: false,
+      mensagem: "JSON inválido no corpo da requisição. Confira aspas e vírgulas.",
+      dados: null,
+    });
+  }
+
   const erroDeUpload =
     error instanceof multer.MulterError ||
     String(error.message).startsWith("Formato de imagem");
