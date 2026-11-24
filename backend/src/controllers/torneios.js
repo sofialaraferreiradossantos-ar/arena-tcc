@@ -1,6 +1,7 @@
 const db = require("../database/Connection");
 const { validarId, validarData } = require("../utils/validacoes");
 const montarUpdate = require("../utils/montarUpdate");
+const { notificarAdmins } = require("../utils/notificacoes");
 
 const STATUS_TORNEIO = ["aberto", "em breve", "em andamento", "encerrado", "inativo"];
 
@@ -42,19 +43,26 @@ module.exports = {
     async listarTorneios(request, response) {
         try {
 
+            // "inscritos" = participantes que não cancelaram (usado para mostrar as vagas)
             const sql = `
                 SELECT
-                    id_torn,
-                    nome_torn,
-                    dt_torn,
-                    desc_torn,
-                    status_torn,
-                    limite_part_torn,
-                    premiacao_torn,
-                    dt_cad,
-                    valor_part
-                FROM torneios
-                ORDER BY id_torn;
+                    t.id_torn,
+                    t.nome_torn,
+                    DATE_FORMAT(t.dt_torn, '%Y-%m-%d') AS dt_torn,
+                    t.desc_torn,
+                    t.status_torn,
+                    t.limite_part_torn,
+                    t.premiacao_torn,
+                    DATE_FORMAT(t.dt_cad, '%Y-%m-%d') AS dt_cad,
+                    t.valor_part,
+                    (
+                        SELECT COUNT(*)
+                        FROM participantes_equipe pe
+                        INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                        WHERE e.id_torn = t.id_torn AND pe.status_part <> 'cancelado'
+                    ) AS inscritos
+                FROM torneios t
+                ORDER BY t.dt_torn, t.id_torn;
             `;
 
             const [rows] = await db.query(sql);
@@ -295,6 +303,136 @@ module.exports = {
         }
     },
 
+    // =====================================================
+    // INSCRIÇÃO PELO SITE - POST /torneios/:id/inscricao (cliente logado)
+    // Grava a equipe (equipes_torneio) e o cliente como participante
+    // (participantes_equipe) numa transação só. Confere: torneio aberto,
+    // vagas (limite_part_torn), uma equipe por torneio e nome de equipe repetido.
+    // =====================================================
+    async inscreverNoTorneio(request, response) {
+        const { id } = request.params;
+        const id_usu = request.usuario.id_usu;
+        const nome_equipe = String(request.body?.nome_equipe ?? "").trim();
+        const desc_equipe = String(request.body?.desc_equipe ?? "").trim() || "Equipe inscrita pelo site.";
+
+        const erro = (status, mensagem) => response.status(status).json({ sucesso: false, mensagem, dados: null });
+
+        if (!validarId(id)) return erro(400, "O id do torneio deve ser numérico.");
+        if (!nome_equipe || nome_equipe.length > 100) return erro(400, "Informe o nome da equipe (até 100 caracteres).");
+        if (desc_equipe.length > 300) return erro(400, "A descrição da equipe deve ter no máximo 300 caracteres.");
+
+        const conexao = await db.getConnection();
+        let torneio;
+        let id_equipe;
+        let id_part;
+        const dt_part = new Date().toLocaleDateString("sv-SE");
+
+        try {
+            await conexao.beginTransaction();
+
+            // FOR UPDATE: duas inscrições ao mesmo tempo não passam do limite de vagas
+            [[torneio]] = await conexao.query(
+                "SELECT id_torn, nome_torn, status_torn, limite_part_torn, valor_part FROM torneios WHERE id_torn = ? FOR UPDATE;",
+                [id]
+            );
+
+            if (!torneio) {
+                await conexao.rollback();
+                return erro(404, "Torneio não encontrado.");
+            }
+
+            if (torneio.status_torn !== "aberto") {
+                await conexao.rollback();
+                return erro(400, "As inscrições deste torneio não estão abertas.");
+            }
+
+            const [[jaInscrito]] = await conexao.query(
+                `
+                    SELECT pe.id_part
+                    FROM participantes_equipe pe
+                    INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                    WHERE e.id_torn = ? AND pe.id_usu = ? AND pe.status_part <> 'cancelado'
+                    LIMIT 1;
+                `,
+                [id, id_usu]
+            );
+
+            if (jaInscrito) {
+                await conexao.rollback();
+                return erro(409, "Você já está inscrito neste torneio.");
+            }
+
+            if (torneio.limite_part_torn) {
+                const [[{ inscritos }]] = await conexao.query(
+                    `
+                        SELECT COUNT(*) AS inscritos
+                        FROM participantes_equipe pe
+                        INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                        WHERE e.id_torn = ? AND pe.status_part <> 'cancelado';
+                    `,
+                    [id]
+                );
+
+                if (Number(inscritos) >= Number(torneio.limite_part_torn)) {
+                    await conexao.rollback();
+                    return erro(409, "Não há mais vagas neste torneio.");
+                }
+            }
+
+            const [[nomeRepetido]] = await conexao.query(
+                "SELECT id_equipe FROM equipes_torneio WHERE id_torn = ? AND LOWER(nome_equipe) = LOWER(?) LIMIT 1;",
+                [id, nome_equipe]
+            );
+
+            if (nomeRepetido) {
+                await conexao.rollback();
+                return erro(409, "Já existe uma equipe com esse nome neste torneio.");
+            }
+
+            const [equipe] = await conexao.query(
+                "INSERT INTO equipes_torneio (id_torn, nome_equipe, desc_equipe, status_equipe) VALUES (?, ?, ?, 'inscrita');",
+                [id, nome_equipe, desc_equipe]
+            );
+            id_equipe = equipe.insertId;
+
+            const [participante] = await conexao.query(
+                "INSERT INTO participantes_equipe (id_equipe, id_usu, dt_part, status_part) VALUES (?, ?, ?, 'pendente');",
+                [id_equipe, id_usu, dt_part]
+            );
+            id_part = participante.insertId;
+
+            await conexao.commit();
+        } catch (error) {
+            await conexao.rollback().catch(() => {});
+            return response.status(500).json({ sucesso: false, mensagem: "Erro ao fazer a inscrição.", dados: error.message });
+        } finally {
+            conexao.release();
+        }
+
+        // Aviso para os administradores (um erro aqui não desfaz a inscrição)
+        await notificarAdmins({
+            tipo: "inscricao_torneio",
+            titulo: "Nova inscrição em torneio",
+            mensagem: `${request.usuario.nome_usu} se inscreveu no ${torneio.nome_torn} (equipe ${nome_equipe}).`,
+            link: "/administrador/torneios"
+        });
+
+        return response.status(201).json({
+            sucesso: true,
+            mensagem: "Inscrição realizada com sucesso.",
+            dados: {
+                id_torn: Number(id),
+                nome_torn: torneio.nome_torn,
+                valor_part: torneio.valor_part,
+                id_equipe,
+                nome_equipe,
+                id_part,
+                dt_part,
+                status_part: "pendente"
+            }
+        });
+    },
+
     // INNER JOIN da relação N:N: torneio -> equipes -> usuários.
     async listarParticipantesDoTorneio(request, response) {
         try {
@@ -313,7 +451,9 @@ module.exports = {
                 SELECT
                     e.id_equipe AS id_equipe,
                     e.nome_equipe AS nome_equipe,
+                    e.desc_equipe AS desc_equipe,
                     e.status_equipe AS status_equipe,
+                    pe.id_part AS id_part,
                     u.id_usu AS id_usuario,
                     u.nome_usu AS nome_usuario,
                     u.email_usu AS email_usuario,
@@ -333,12 +473,14 @@ module.exports = {
                     equipe = {
                         id: row.id_equipe,
                         nome: row.nome_equipe,
+                        descricao: row.desc_equipe,
                         status: row.status_equipe,
                         participantes: []
                     };
                     equipes.push(equipe);
                 }
                 equipe.participantes.push({
+                    idParticipacao: row.id_part,
                     id: row.id_usuario,
                     nome: row.nome_usuario,
                     email: row.email_usuario,

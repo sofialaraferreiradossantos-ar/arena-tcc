@@ -7,43 +7,22 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import styles from "../styles/quadras.module.css";
 
 import logo from "../assets/logo.jpeg";
-import {
-  listaModalidades,
-  nomesModalidades,
-  quadrasMckp,
-} from "../mockup/dados.js";
-import useDisponibilidadeQuadras, {
-  comDisponibilidade,
-} from "../hooks/useDisponibilidadeQuadras.js";
+import { formatarValor, useQuadras } from "../services/quadras.js";
 
-const DESCRICOES = {
-  "beach-tennis":
-    "Quadra de areia preparada para o beach tennis, com rede na altura oficial e marcações visíveis. Ideal para jogos em dupla, aulas e treinos, do iniciante ao avançado.",
-  futevolei:
-    "Quadra de areia preparada para o futevôlei, com rede na altura oficial e espaço livre ao redor para as jogadas. Ideal para partidas entre amigos, treinos e aulas.",
-  multiuso:
-    "Quadra de areia preparada para o beach tennis e o futevôlei, com rede na altura oficial, marcações visíveis e espaço livre ao redor para as jogadas. Ideal para jogos em dupla, partidas entre amigos, aulas e treinos.",
-};
+// Estrutura da arena (é a mesma em todas as quadras)
+const ESTRUTURA = [
+  "Iluminação LED",
+  "Areia selecionada",
+  "Agendamento online",
+  "Eventos e torneios",
+];
 
 function QuadraDetalhes() {
   const { id } = useParams();
-  // Disponível/indisponível vem do banco (o admin muda em Administração > Quadras)
-  const disponibilidade = useDisponibilidadeQuadras();
-  const quadraSelecionada = comDisponibilidade(
-    quadrasMckp.find((item) => item.id === Number(id)) || quadrasMckp[0],
-    disponibilidade,
-  );
-  const modalidade = nomesModalidades(quadraSelecionada) || "Beach tennis";
-  const listaDaQuadra = listaModalidades(quadraSelecionada);
-  const chaveDescricao =
-    listaDaQuadra.length > 1 ? "multiuso" : listaDaQuadra[0];
-  const estrutura = [
-    ...quadraSelecionada.destaques
-      .split(" • ")
-      .map((item) => item.charAt(0).toUpperCase() + item.slice(1)),
-    "Agendamento online",
-    "Eventos e torneios",
-  ];
+  // Quadras do banco de dados (GET /quadras)
+  const { quadras, carregando, erro } = useQuadras();
+  const quadraSelecionada =
+    quadras.find((item) => item.id === Number(id)) || quadras[0];
 
   const [menuAberto, setMenuAberto] = useState(false);
 
@@ -52,6 +31,19 @@ function QuadraDetalhes() {
   const fecharMenu = () => {
     setMenuAberto(false);
   };
+
+  if (!quadraSelecionada) {
+    return (
+      <div className={styles.detailsContainer}>
+        <h1 className={styles.titleDetails}>
+          Detalhes da <span>Quadra</span>
+        </h1>
+        <p className={styles.avisoIndisponivel}>
+          {carregando ? "Carregando quadra..." : erro || "Quadra não encontrada."}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.detailsContainer}>
@@ -169,7 +161,10 @@ function QuadraDetalhes() {
           </p>
 
           <div className={styles.infoTags}>
-            <span className={styles.infoTag}>{modalidade}</span>
+            <span className={styles.infoTag}>{quadraSelecionada.tipo}</span>
+            <span className={styles.infoTag}>
+              {formatarValor(quadraSelecionada.valor)} por hora
+            </span>
             <span
               className={`${styles.infoTag} ${
                 quadraSelecionada.available
@@ -185,10 +180,8 @@ function QuadraDetalhes() {
             <h3>Sobre a quadra</h3>
 
             <p>
-              {DESCRICOES[chaveDescricao] ||
-                DESCRICOES["beach-tennis"]}{" "}
-              A quadra conta com iluminação LED e areia selecionada, e pode ser
-              reservada para jogos, eventos e torneios.
+              {quadraSelecionada.descricao}. A quadra pode ser reservada para
+              jogos, aulas, eventos e torneios.
             </p>
           </div>
 
@@ -196,14 +189,15 @@ function QuadraDetalhes() {
             <h3>Estrutura</h3>
 
             <ul className={styles.estrutura}>
-              {estrutura.map((item) => (
+              {ESTRUTURA.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
 
           <div className={styles.horario}>
-            <strong>Horário de Funcionamento:</strong> 06:00 às 23:00
+            <strong>Horário de Funcionamento:</strong> segunda a sexta, das 08h
+            às 21h; sábado, das 08h às 18h
           </div>
 
           {quadraSelecionada.available ? (

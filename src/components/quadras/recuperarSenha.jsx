@@ -13,21 +13,19 @@ export default function RecuperarSenha() {
         <div className={styles.authHeading}>
           <small>RECUPERAÇÃO DE ACESSO</small>
           <h1>Esqueceu sua senha?</h1>
-          <p>Informe seu e-mail e enviaremos as instruções de recuperação.</p>
+          {/* O sistema não envia e-mails: a senha é redefinida pela arena,
+              depois de confirmar quem é o cliente. */}
+          <p>
+            Entre em contato com a administração da Arena Beach pelo telefone{" "}
+            <strong>(14) 99681-9354</strong>, informando o e-mail da sua conta.
+            Depois de confirmar seus dados, a equipe da arena redefine o seu
+            acesso.
+          </p>
+          <p>
+            Se você lembra a senha atual e só quer trocá-la, entre na sua conta
+            normalmente.
+          </p>
         </div>
-        <form onSubmit={(event) => event.preventDefault()}>
-          <label>
-            E-mail
-            <input
-              name="email"
-              type="email"
-              placeholder="voce@email.com"
-              autoComplete="email"
-              required
-            />
-          </label>
-          <button type="submit">Enviar instruções</button>
-        </form>
         <p className={styles.authSwitch}>
           <Link to="/login">← Voltar para o login</Link>
         </p>

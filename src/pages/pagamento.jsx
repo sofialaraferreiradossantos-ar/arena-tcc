@@ -58,8 +58,8 @@ export default function Pagamento() {
     }
   };
 
-  // Inscrição de torneio: os torneios ainda são dados de exemplo (mockup),
-  // então ainda não existe cobrança online para eles.
+  // Inscrição de torneio: já foi gravada no banco (status pendente). Ainda não
+  // existe cobrança online para inscrições: o valor é pago na arena.
   if (!agendamento && inscricao) {
     return (
       <div className={styles.container}>
@@ -71,8 +71,9 @@ export default function Pagamento() {
           </header>
 
           <p className={styles.pagamentoAviso}>
-            O pagamento online de inscrições ainda não está disponível. A
-            inscrição deve ser paga diretamente na arena.
+            Sua inscrição foi registrada e está pendente. O valor deve ser pago
+            diretamente na arena; depois disso, o administrador confirma a sua
+            participação.
           </p>
 
           <Link

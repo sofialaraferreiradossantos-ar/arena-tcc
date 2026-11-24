@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FaBars, FaTimes, FaUserTag } from "react-icons/fa";
 
@@ -14,16 +14,28 @@ import MinhaCategoriaForm from "../components/torneios/MinhaCategoriaForm";
 import {
   carregarMinhaCategoria,
   salvarMinhaCategoria,
-  torneioCombina,
-  torneiosMckp,
 } from "../mockup/torneios.js";
+
+import { buscarTorneios, torneioCombina } from "../services/torneios.js";
 
 function Torneios() {
   const [menuAberto, setMenuAberto] = useState(false);
   const [minhaCategoria, setMinhaCategoria] = useState(carregarMinhaCategoria);
   const [escolhendoCategoria, setEscolhendoCategoria] = useState(false);
 
-  const torneios = torneiosMckp.filter((torneio) =>
+  // Torneios do banco de dados (GET /torneios)
+  const [todosTorneios, setTodosTorneios] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => {
+    buscarTorneios()
+      .then(setTodosTorneios)
+      .catch((error) => setErro(error.message))
+      .finally(() => setCarregando(false));
+  }, []);
+
+  const torneios = todosTorneios.filter((torneio) =>
     torneioCombina(torneio, minhaCategoria),
   );
 
@@ -177,7 +189,7 @@ function Torneios() {
                   {minhaCategoria.genero} · {minhaCategoria.nivel} · Categoria{" "}
                   {minhaCategoria.categoria}
                 </strong>{" "}
-                — mostrando {torneios.length} de {torneiosMckp.length} torneios
+                — mostrando {torneios.length} de {todosTorneios.length} torneios
                 (do seu gênero e mistos).{" "}
                 <button
                   type="button"
@@ -190,6 +202,18 @@ function Torneios() {
             )}
           </div>
 
+          {carregando && <p className={styles.subtitle}>Carregando torneios...</p>}
+
+          {erro && (
+            <p className={styles.subtitle} role="alert">
+              {erro}
+            </p>
+          )}
+
+          {!carregando && !erro && torneios.length === 0 && (
+            <p className={styles.subtitle}>Nenhum torneio disponível no momento.</p>
+          )}
+
           {/* CARDS */}
 
           <div className={styles.cardsArea}>
@@ -198,10 +222,10 @@ function Torneios() {
                 key={torneio.id}
                 id={torneio.id}
                 nome={torneio.nome}
-                modalidade={torneio.modalidade}
+                status={torneio.statusTexto}
                 categoria={torneio.categoria}
                 data={torneio.data}
-                local={torneio.local}
+                vagas={torneio.vagasTexto}
                 imagem={torneio.imagem}
               />
             ))}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   FaBorderAll,
@@ -11,14 +11,44 @@ import {
 import styles from "../styles/administrador.module.css";
 import { requisicaoApi } from "../services/api.js";
 
-const apiUrl = (path) =>
-  `${(import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "")}${path}`;
-
 const STATUS_AGENDAMENTO = {
   confirmado: "Confirmado",
   pendente: "Aguardando pagamento",
   cancelado: "Cancelado",
 };
+
+const STATUS_USUARIO = {
+  ativo: "Ativo",
+  inativo: "Inativo",
+  pendente: "Pendente",
+  recusado: "Recusado",
+};
+
+const STATUS_TORNEIO = {
+  aberto: "Inscrições abertas",
+  "em breve": "Em breve",
+  "em andamento": "Em andamento",
+  encerrado: "Encerrado",
+  inativo: "Inativo",
+};
+
+const reais = (valor) =>
+  `R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}`;
+
+const dataBR = (iso) => {
+  if (!iso) return "—";
+  const [ano, mes, dia] = String(iso).slice(0, 10).split("-");
+  return `${dia}/${mes}/${ano}`;
+};
+
+// Administrador logado (salvo no login): usado em "Minha conta"
+function adminLogado() {
+  try {
+    return JSON.parse(localStorage.getItem("administrador")) || null;
+  } catch {
+    return null;
+  }
+}
 
 // Converte o agendamento do banco (GET /agendamentos) para uma linha da lista,
 // mostrando quem fez a reserva
@@ -34,6 +64,49 @@ function agendamentoParaLinha(agendamento) {
   };
 }
 
+// Converte a quadra que vem do back-end (GET /quadras) para uma linha da lista
+function quadraParaLinha(quadra) {
+  return {
+    id: quadra.id,
+    name: quadra.nome,
+    detail: quadra.tipo,
+    role: reais(quadra.valor),
+    status: quadra.disponivel ? "Disponível" : "Indisponível",
+    disponivel: quadra.disponivel,
+  };
+}
+
+// Usuário do banco (GET /usuarios?status=todos)
+function usuarioParaLinha(usuario) {
+  return {
+    id: usuario.id_usu,
+    name: usuario.nome_usu,
+    detail: usuario.email_usu,
+    role: usuario.tipo_usu === "admin" ? "Administrador" : "Cliente",
+    roleDetail: `Cadastro em ${dataBR(usuario.dt_cad)}`,
+    status: STATUS_USUARIO[usuario.status_usu] || usuario.status_usu,
+    statusBanco: usuario.status_usu,
+  };
+}
+
+// Torneio do banco (GET /torneios)
+function torneioParaLinha(torneio) {
+  const limite = torneio.limite_part_torn;
+  return {
+    id: torneio.id_torn,
+    name: torneio.nome_torn,
+    detail: `${dataBR(torneio.dt_torn)} · ${
+      torneio.valor_part === null ? "Gratuito" : reais(torneio.valor_part)
+    }`,
+    role: limite
+      ? `${torneio.inscritos} de ${limite} inscritos`
+      : `${torneio.inscritos} inscritos`,
+    roleDetail: torneio.premiacao_torn || "",
+    status: STATUS_TORNEIO[torneio.status_torn] || torneio.status_torn,
+    statusBanco: torneio.status_torn,
+  };
+}
+
 // Busca os registros do módulo no back-end
 const CARREGAR = {
   quadras: () =>
@@ -45,19 +118,34 @@ const CARREGAR = {
     requisicaoApi("/agendamentos", { autenticado: "admin" }).then(
       (resultado) => resultado.dados.map(agendamentoParaLinha),
     ),
+  usuarios: () =>
+    requisicaoApi("/usuarios?status=todos", { autenticado: "admin" }).then(
+      (resultado) => resultado.dados.map(usuarioParaLinha),
+    ),
+  torneios: () =>
+    requisicaoApi("/torneios").then((resultado) =>
+      resultado.dados
+        .filter((torneio) => torneio.status_torn !== "inativo")
+        .map(torneioParaLinha),
+    ),
 };
 
-// Converte a quadra que vem do back-end (GET /quadras) para uma linha da lista
-function quadraParaLinha(quadra) {
-  return {
-    id: quadra.id,
-    name: quadra.nome,
-    detail: quadra.tipo,
-    role: `R$ ${Number(quadra.valor).toFixed(2).replace(".", ",")}`,
-    status: quadra.disponivel ? "Disponível" : "Indisponível",
-    disponivel: quadra.disponivel,
-  };
-}
+// Campos do formulário "Adicionar" de cada módulo
+const CAMPOS = {
+  usuarios: [
+    { name: "nome_usu", placeholder: "Nome completo" },
+    { name: "email_usu", placeholder: "E-mail", type: "email" },
+    { name: "senha_usu", placeholder: "Senha inicial (6 a 20 caracteres)", type: "password" },
+  ],
+  torneios: [
+    { name: "nome_torn", placeholder: "Nome do torneio" },
+    { name: "dt_torn", placeholder: "Data", type: "date" },
+    { name: "desc_torn", placeholder: "Descrição" },
+    { name: "limite_part_torn", placeholder: "Limite de participantes", type: "number" },
+    { name: "premiacao_torn", placeholder: "Premiação" },
+    { name: "valor_part", placeholder: "Valor da inscrição (R$)", type: "number" },
+  ],
+};
 
 const moduleData = {
   usuarios: {
@@ -65,27 +153,9 @@ const moduleData = {
     title: "Usuários",
     description: "Gerencie os acessos e os perfis cadastrados no sistema.",
     action: "Adicionar usuário",
-    placeholder: "Nome do novo usuário",
-    rows: [
-      {
-        name: "Mariana Souza",
-        detail: "mariana@email.com",
-        role: "Administrador",
-        status: "Ativo",
-      },
-      {
-        name: "Carlos Oliveira",
-        detail: "carlos@email.com",
-        role: "Cliente",
-        status: "Ativo",
-      },
-      {
-        name: "Fernanda Lima",
-        detail: "fernanda@email.com",
-        role: "Cliente",
-        status: "Pendente",
-      },
-    ],
+    fonte: "usuarios",
+    vazio: "Nenhum usuário cadastrado.",
+    rows: [],
   },
   quadras: {
     icon: <FaBorderAll />,
@@ -113,43 +183,20 @@ const moduleData = {
     description:
       "Organize competições, acompanhe inscrições e atualize os eventos.",
     action: "Adicionar torneio",
-    placeholder: "Nome do novo torneio",
-    rows: [
-      {
-        name: "Arena Open",
-        detail: "Beach Tennis · 22/02/2026",
-        role: "16 inscritos",
-        status: "Inscrições abertas",
-      },
-      {
-        name: "Copa Verão",
-        detail: "Futevôlei · 01/03/2026",
-        role: "8 inscritos",
-        status: "Em preparação",
-      },
-    ],
+    fonte: "torneios",
+    vazio: "Nenhum torneio cadastrado.",
+    rows: [],
   },
 };
 
-const reportData = [
-  {
-    value: "128",
-    label: "Reservas no mês",
-    detail: "+18% em relação ao mês anterior",
-  },
-  {
-    value: "86%",
-    label: "Taxa de ocupação",
-    detail: "Melhor horário: 18h às 20h",
-  },
-  { value: "42", label: "Usuários ativos", detail: "6 novos nesta semana" },
-];
-
 function getStatusClass(status) {
-  const normalizedStatus = status.toLowerCase();
+  const normalizedStatus = String(status).toLowerCase();
   if (
     normalizedStatus.includes("indisponível") ||
-    normalizedStatus.includes("cancelado")
+    normalizedStatus.includes("cancelado") ||
+    normalizedStatus.includes("inativ") ||
+    normalizedStatus.includes("recusado") ||
+    normalizedStatus.includes("encerrado")
   ) {
     return styles.statusDanger;
   }
@@ -157,7 +204,8 @@ function getStatusClass(status) {
     normalizedStatus.includes("manutenção") ||
     normalizedStatus.includes("pendente") ||
     normalizedStatus.includes("aguardando") ||
-    normalizedStatus.includes("preparação")
+    normalizedStatus.includes("preparação") ||
+    normalizedStatus.includes("em breve")
   ) {
     return styles.statusPending;
   }
@@ -175,44 +223,49 @@ function ConteudoModulo({ modulo }) {
   const config = moduleData[modulo];
   const [rows, setRows] = useState(config?.rows || []);
   const [showForm, setShowForm] = useState(false);
-  const [newItem, setNewItem] = useState("");
+  const [formDados, setFormDados] = useState({});
   const [notice, setNotice] = useState("");
-  const [notifications, setNotifications] = useState(true);
-  const [maintenance, setMaintenance] = useState(false);
-  // Módulos ligados ao banco: "quadras" e "agendamentos"
+  // Módulos ligados ao banco: quadras, agendamentos, usuários e torneios
   const fonte = config?.fonte;
   const [carregando, setCarregando] = useState(Boolean(fonte));
   const [erroBanco, setErroBanco] = useState("");
   const [salvandoId, setSalvandoId] = useState(null);
+  // Torneios: inscritos do torneio aberto na lista
+  const [inscritosDe, setInscritosDe] = useState(null);
+  const [equipes, setEquipes] = useState([]);
+  // Relatórios e Minha conta
+  const [relatorio, setRelatorio] = useState(null);
+  const [senhas, setSenhas] = useState({ senhaAtual: "", novaSenha: "" });
+  const admin = adminLogado();
+
+  const mensagemErro = (error) =>
+    error.precisaLogin
+      ? "Sua sessão expirou. Saia e entre novamente no painel."
+      : error.message;
 
   // Busca os registros do módulo no back-end
-  useEffect(() => {
-    if (!fonte) return undefined;
-    let ativo = true;
-
-    // "carregando" já começa true quando o módulo usa o banco
-    CARREGAR[fonte]()
+  const recarregar = useCallback(() => {
+    if (!fonte) return Promise.resolve();
+    return CARREGAR[fonte]()
       .then((linhas) => {
-        if (!ativo) return;
         setRows(linhas);
         setErroBanco("");
       })
-      .catch((error) => {
-        if (!ativo) return;
-        setErroBanco(
-          error.precisaLogin
-            ? "Sua sessão expirou. Saia e entre novamente no painel."
-            : error.message,
-        );
-      })
-      .finally(() => {
-        if (ativo) setCarregando(false);
-      });
-
-    return () => {
-      ativo = false;
-    };
+      .catch((error) => setErroBanco(mensagemErro(error)))
+      .finally(() => setCarregando(false));
   }, [fonte]);
+
+  useEffect(() => {
+    recarregar();
+  }, [recarregar]);
+
+  // Relatórios calculados no banco (GET /relatorios)
+  useEffect(() => {
+    if (modulo !== "relatorios") return;
+    requisicaoApi("/relatorios", { autenticado: "admin" })
+      .then((resultado) => setRelatorio(resultado.dados))
+      .catch((error) => setErroBanco(mensagemErro(error)));
+  }, [modulo]);
 
   if (!config && modulo !== "relatorios" && modulo !== "configuracoes") {
     return <Navigate to="/administrador" replace />;
@@ -226,81 +279,181 @@ function ConteudoModulo({ modulo }) {
     config?.description ||
     (modulo === "relatorios"
       ? "Acompanhe os principais indicadores da Arena Beach."
-      : "Personalize o funcionamento e as preferências do sistema.");
+      : "Dados da sua conta de administrador.");
 
-  const handleAdd = (event) => {
-    event.preventDefault();
-    const name = newItem.trim();
-    if (!name) return;
-
-    setRows((currentRows) => [
-      ...currentRows,
-      { name, detail: "Novo cadastro", role: "A definir", status: "Pendente" },
-    ]);
-    setNewItem("");
-    setShowForm(false);
-    setNotice(`${currentTitle.slice(0, -1)} adicionado com sucesso.`);
-  };
-
-  const toggleRowStatus = (index) => {
-    setRows((currentRows) =>
-      currentRows.map((row, rowIndex) =>
-        rowIndex === index
-          ? { ...row, status: row.status === "Ativo" ? "Inativo" : "Ativo" }
-          : row,
-      ),
-    );
-  };
-
-  // Deixa a quadra disponível ou indisponível no banco (PATCH /quadras/:id).
-  // Só muda o status: nenhuma quadra é apagada.
-  const alterarDisponibilidade = async (row) => {
-    const ficaDisponivel = !row.disponivel;
-    setSalvandoId(row.id);
+  const executar = async (id, acao, sucesso) => {
+    setSalvandoId(id);
     setNotice("");
     setErroBanco("");
-
     try {
-      const resposta = await fetch(apiUrl(`/quadras/${row.id}`), {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token_admin") || ""}`,
-        },
-        body: JSON.stringify({
-          status_qd: ficaDisponivel ? "disponivel" : "indisponivel",
-        }),
-      });
-      const resultado = await resposta.json().catch(() => null);
-
-      if (!resposta.ok || !resultado?.sucesso) {
-        throw new Error(resultado?.mensagem || "Não foi possível atualizar a quadra.");
-      }
-
-      setRows((currentRows) =>
-        currentRows.map((item) =>
-          item.id === row.id
-            ? {
-                ...item,
-                disponivel: ficaDisponivel,
-                status: ficaDisponivel ? "Disponível" : "Indisponível",
-              }
-            : item,
-        ),
-      );
-      setNotice(
-        `${row.name} agora está ${ficaDisponivel ? "disponível" : "indisponível"}.`,
-      );
+      await acao();
+      setNotice(sucesso);
+      await recarregar();
     } catch (error) {
-      setErroBanco(
-        error.message === "Failed to fetch"
-          ? "Não foi possível conectar ao servidor. Verifique se o backend está iniciado."
-          : error.message,
-      );
+      setErroBanco(mensagemErro(error));
     } finally {
       setSalvandoId(null);
     }
   };
+
+  // "Adicionar usuário" (POST /usuarios) e "Adicionar torneio" (POST /torneios)
+  const handleAdd = async (event) => {
+    event.preventDefault();
+    const dados = { ...formDados };
+    let caminho = "/usuarios";
+    if (modulo === "torneios") {
+      caminho = "/torneios";
+      dados.status_torn = "aberto";
+      ["limite_part_torn", "valor_part", "premiacao_torn"].forEach((campo) => {
+        if (dados[campo] === "" || dados[campo] === undefined) dados[campo] = null;
+      });
+    }
+    await executar(
+      "novo",
+      () => requisicaoApi(caminho, { method: "POST", body: dados, autenticado: "admin" }),
+      modulo === "torneios" ? "Torneio cadastrado com sucesso." : "Usuário cadastrado com sucesso.",
+    );
+    setFormDados({});
+    setShowForm(false);
+  };
+
+  // Usuários: ativa ou inativa a conta (PATCH /usuarios/:id)
+  const alterarStatusUsuario = (row) => {
+    const novo = row.statusBanco === "ativo" ? "inativo" : "ativo";
+    executar(
+      row.id,
+      () =>
+        requisicaoApi(`/usuarios/${row.id}`, {
+          method: "PATCH",
+          body: { status_usu: novo },
+          autenticado: "admin",
+        }),
+      `${row.name} agora está ${novo}.`,
+    );
+  };
+
+  // Usuários: senha nova para quem esqueceu (PATCH /usuarios/:id/redefinir-senha)
+  const redefinirSenha = (row) => {
+    const novaSenha = window.prompt(
+      `Nova senha para ${row.name} (6 a 20 caracteres). Informe essa senha ao cliente.`,
+    );
+    if (!novaSenha) return;
+    executar(
+      `s${row.id}`,
+      () =>
+        requisicaoApi(`/usuarios/${row.id}/redefinir-senha`, {
+          method: "PATCH",
+          body: { novaSenha },
+          autenticado: "admin",
+        }),
+      `Senha de ${row.name} redefinida.`,
+    );
+  };
+
+  // Torneios: abre ou encerra as inscrições (PATCH /torneios/:id)
+  const alterarStatusTorneio = (row) => {
+    const novo = row.statusBanco === "aberto" ? "encerrado" : "aberto";
+    executar(
+      row.id,
+      () =>
+        requisicaoApi(`/torneios/${row.id}`, {
+          method: "PATCH",
+          body: { status_torn: novo },
+          autenticado: "admin",
+        }),
+      novo === "aberto"
+        ? `Inscrições abertas em ${row.name}.`
+        : `Inscrições encerradas em ${row.name}.`,
+    );
+  };
+
+  // Torneios: lista as equipes e participantes (GET /torneios/:id/participantes)
+  const carregarInscritos = async (idTorneio) => {
+    const resultado = await requisicaoApi(`/torneios/${idTorneio}/participantes`);
+    setEquipes(resultado.dados.equipes);
+  };
+
+  const verInscritos = async (row) => {
+    if (inscritosDe === row.id) {
+      setInscritosDe(null);
+      return;
+    }
+    setErroBanco("");
+    try {
+      await carregarInscritos(row.id);
+      setInscritosDe(row.id);
+    } catch (error) {
+      setErroBanco(mensagemErro(error));
+    }
+  };
+
+  // Confirma a inscrição depois do pagamento na arena (PATCH /participantesEquipes/:id)
+  const confirmarInscricao = (participante) => {
+    executar(
+      `p${participante.idParticipacao}`,
+      async () => {
+        await requisicaoApi(`/participantesEquipes/${participante.idParticipacao}`, {
+          method: "PATCH",
+          body: { status_part: "confirmado" },
+          autenticado: "admin",
+        });
+        await carregarInscritos(inscritosDe);
+      },
+      `Inscrição de ${participante.nome} confirmada.`,
+    );
+  };
+
+  // Quadras: deixa a quadra disponível ou indisponível (PATCH /quadras/:id)
+  const alterarDisponibilidade = (row) => {
+    const ficaDisponivel = !row.disponivel;
+    executar(
+      row.id,
+      () =>
+        requisicaoApi(`/quadras/${row.id}`, {
+          method: "PATCH",
+          body: { status_qd: ficaDisponivel ? "disponivel" : "indisponivel" },
+          autenticado: "admin",
+        }),
+      `${row.name} agora está ${ficaDisponivel ? "disponível" : "indisponível"}.`,
+    );
+  };
+
+  // Minha conta: troca a senha do administrador (PATCH /usuarios/atualiza-senha/:id)
+  const trocarSenha = (event) => {
+    event.preventDefault();
+    executar(
+      "senha",
+      () =>
+        requisicaoApi(`/usuarios/atualiza-senha/${admin.id_usu}`, {
+          method: "PATCH",
+          body: senhas,
+        }),
+      "Senha alterada com sucesso.",
+    );
+    setSenhas({ senhaAtual: "", novaSenha: "" });
+  };
+
+  const cards = relatorio
+    ? [
+        {
+          value: String(relatorio.reservasMes),
+          label: "Reservas no mês",
+          detail: `${reais(relatorio.receitaMes)} recebidos em reservas pagas`,
+        },
+        {
+          value: String(relatorio.clientesAtivos),
+          label: "Clientes ativos",
+          detail: `${relatorio.clientesNovosMes} novos neste mês`,
+        },
+        {
+          value: `${relatorio.quadrasDisponiveis} de ${relatorio.quadrasTotal}`,
+          label: "Quadras disponíveis",
+          detail: relatorio.horarioMaisReservado
+            ? `Horário mais reservado: ${relatorio.horarioMaisReservado}`
+            : "Ainda não há reservas",
+        },
+      ]
+    : [];
 
   return (
     <div className={styles.mainContent}>
@@ -323,66 +476,101 @@ function ConteudoModulo({ modulo }) {
             className={styles.reportGrid}
             aria-label="Indicadores do sistema"
           >
-            {reportData.map((report) => (
+            {!relatorio && !erroBanco && (
+              <article className={styles.reportCard}>
+                <span>Carregando indicadores...</span>
+              </article>
+            )}
+            {cards.map((report) => (
               <article className={styles.reportCard} key={report.label}>
                 <span>{report.label}</span>
                 <strong>{report.value}</strong>
                 <small>{report.detail}</small>
               </article>
             ))}
-            <article
-              className={`${styles.modulePanel} ${styles.reportHighlight}`}
-            >
-              <div>
-                <span className={styles.panelEyebrow}>DESEMPENHO</span>
-                <h2>O movimento da Arena está crescendo</h2>
-                <p>
-                  Use os dados de reservas para planejar horários, torneios e a
-                  disponibilidade das quadras.
-                </p>
-              </div>
-              <span className={styles.reportTrend}>↗ 18%</span>
-            </article>
+            {relatorio && (
+              <article
+                className={`${styles.modulePanel} ${styles.reportHighlight}`}
+              >
+                <div>
+                  <span className={styles.panelEyebrow}>TORNEIOS</span>
+                  <h2>
+                    {relatorio.torneiosAbertos}{" "}
+                    {relatorio.torneiosAbertos === 1
+                      ? "torneio com inscrições abertas"
+                      : "torneios com inscrições abertas"}
+                  </h2>
+                  <p>
+                    {relatorio.inscricoesConfirmadas} inscrições confirmadas e{" "}
+                    {relatorio.inscricoesPendentes} aguardando confirmação.
+                  </p>
+                </div>
+                <span className={styles.reportTrend}>
+                  {relatorio.inscricoesPendentes}
+                </span>
+              </article>
+            )}
+            {erroBanco && (
+              <p className={styles.errorMessage} role="alert">
+                {erroBanco}
+              </p>
+            )}
           </section>
         )}
 
         {modulo === "configuracoes" && (
           <section className={styles.modulePanel}>
             <div className={styles.settingsList}>
-              <label className={styles.settingRow}>
+              <div className={styles.settingRow}>
                 <span>
-                  <strong>Notificações de agendamento</strong>
-                  <small>
-                    Receber avisos quando uma nova reserva for criada.
-                  </small>
+                  <strong>{admin?.nome_usu || "Administrador"}</strong>
+                  <small>{admin?.email_usu || "—"}</small>
                 </span>
-                <input
-                  type="checkbox"
-                  checked={notifications}
-                  onChange={(event) => setNotifications(event.target.checked)}
-                />
-              </label>
-              <label className={styles.settingRow}>
-                <span>
-                  <strong>Modo de manutenção</strong>
-                  <small>
-                    Bloquear novas reservas temporariamente para ajustes.
-                  </small>
-                </span>
-                <input
-                  type="checkbox"
-                  checked={maintenance}
-                  onChange={(event) => setMaintenance(event.target.checked)}
-                />
-              </label>
+              </div>
             </div>
-            <button
-              type="button"
-              className={styles.moduleButton}
-              onClick={() => setNotice("Configurações salvas com sucesso.")}
-            >
-              {notice || "Salvar configurações"}
-            </button>
+
+            {admin && Number.isInteger(Number(admin.id_usu)) ? (
+              <form className={styles.moduleForm} onSubmit={trocarSenha}>
+                <input
+                  type="password"
+                  value={senhas.senhaAtual}
+                  onChange={(event) =>
+                    setSenhas((atual) => ({ ...atual, senhaAtual: event.target.value }))
+                  }
+                  placeholder="Senha atual"
+                  aria-label="Senha atual"
+                  required
+                />
+                <input
+                  type="password"
+                  value={senhas.novaSenha}
+                  onChange={(event) =>
+                    setSenhas((atual) => ({ ...atual, novaSenha: event.target.value }))
+                  }
+                  placeholder="Nova senha (6 a 20 caracteres)"
+                  aria-label="Nova senha"
+                  required
+                />
+                <button
+                  type="submit"
+                  className={styles.moduleButton}
+                  disabled={salvandoId === "senha"}
+                >
+                  {salvandoId === "senha" ? "Salvando..." : "Trocar senha"}
+                </button>
+              </form>
+            ) : (
+              <p className={styles.recordsEmpty}>
+                Esta é a conta de acesso de emergência, definida no arquivo
+                .env do servidor. A senha dela é alterada nesse arquivo.
+              </p>
+            )}
+            {erroBanco && (
+              <p className={styles.errorMessage} role="alert">
+                {erroBanco}
+              </p>
+            )}
+            {notice && <p className={styles.successMessage}>{notice}</p>}
           </section>
         )}
 
@@ -409,16 +597,35 @@ function ConteudoModulo({ modulo }) {
             </div>
 
             {showForm && (
-              <form className={styles.moduleForm} onSubmit={handleAdd}>
-                <input
-                  value={newItem}
-                  onChange={(event) => setNewItem(event.target.value)}
-                  placeholder={config.placeholder}
-                  aria-label={config.placeholder}
-                  autoFocus
-                />
-                <button type="submit" className={styles.moduleButton}>
-                  Salvar
+              <form
+                className={styles.moduleForm}
+                style={{ flexWrap: "wrap" }}
+                onSubmit={handleAdd}
+              >
+                {(CAMPOS[modulo] || []).map((campo) => (
+                  <input
+                    key={campo.name}
+                    type={campo.type || "text"}
+                    step={campo.type === "number" ? "any" : undefined}
+                    min={campo.type === "number" ? "0" : undefined}
+                    value={formDados[campo.name] ?? ""}
+                    onChange={(event) =>
+                      setFormDados((atual) => ({
+                        ...atual,
+                        [campo.name]: event.target.value,
+                      }))
+                    }
+                    placeholder={campo.placeholder}
+                    aria-label={campo.placeholder}
+                    style={{ minWidth: "200px" }}
+                  />
+                ))}
+                <button
+                  type="submit"
+                  className={styles.moduleButton}
+                  disabled={salvandoId === "novo"}
+                >
+                  {salvandoId === "novo" ? "Salvando..." : "Salvar"}
                 </button>
               </form>
             )}
@@ -428,51 +635,140 @@ function ConteudoModulo({ modulo }) {
                 <p className={styles.recordsEmpty}>{config.vazio}</p>
               )}
               {rows.map((row, index) => (
-                <article
-                  className={styles.recordRow}
-                  key={`${row.name}-${index}`}
-                >
-                  <div>
-                    <strong>{row.name}</strong>
-                    <span>{row.detail}</span>
-                  </div>
-                  <span className={styles.recordRole}>
-                    {row.role}
-                    {row.roleDetail && (
-                      <small className={styles.recordRoleDetail}>
-                        {row.roleDetail}
-                      </small>
+                <div key={`${row.id}-${index}`}>
+                  <article className={styles.recordRow}>
+                    <div>
+                      <strong>{row.name}</strong>
+                      <span>{row.detail}</span>
+                    </div>
+                    <span className={styles.recordRole}>
+                      {row.role}
+                      {row.roleDetail && (
+                        <small className={styles.recordRoleDetail}>
+                          {row.roleDetail}
+                        </small>
+                      )}
+                    </span>
+                    <span
+                      className={`${styles.status} ${getStatusClass(row.status)}`}
+                    >
+                      {row.status}
+                    </span>
+                    {fonte === "usuarios" &&
+                      ["ativo", "inativo"].includes(row.statusBanco) &&
+                      String(row.id) !== String(admin?.id_usu) && (
+                        <span style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                          <button
+                            type="button"
+                            className={styles.rowButton}
+                            onClick={() => alterarStatusUsuario(row)}
+                            disabled={salvandoId === row.id}
+                          >
+                            {salvandoId === row.id
+                              ? "Salvando..."
+                              : row.statusBanco === "ativo"
+                                ? "Inativar"
+                                : "Reativar"}
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.rowButton}
+                            onClick={() => redefinirSenha(row)}
+                            disabled={salvandoId === `s${row.id}`}
+                          >
+                            Redefinir senha
+                          </button>
+                        </span>
+                      )}
+                    {fonte === "torneios" && (
+                      <span style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        <button
+                          type="button"
+                          className={styles.rowButton}
+                          onClick={() => verInscritos(row)}
+                        >
+                          {inscritosDe === row.id ? "Fechar inscritos" : "Ver inscritos"}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.rowButton}
+                          onClick={() => alterarStatusTorneio(row)}
+                          disabled={salvandoId === row.id}
+                        >
+                          {salvandoId === row.id
+                            ? "Salvando..."
+                            : row.statusBanco === "aberto"
+                              ? "Encerrar inscrições"
+                              : "Abrir inscrições"}
+                        </button>
+                      </span>
                     )}
-                  </span>
-                  <span
-                    className={`${styles.status} ${getStatusClass(row.status)}`}
-                  >
-                    {row.status}
-                  </span>
-                  {modulo === "usuarios" && (
-                    <button
-                      type="button"
-                      className={styles.rowButton}
-                      onClick={() => toggleRowStatus(index)}
-                    >
-                      Alterar status
-                    </button>
+                    {fonte === "quadras" && (
+                      <button
+                        type="button"
+                        className={styles.rowButton}
+                        onClick={() => alterarDisponibilidade(row)}
+                        disabled={salvandoId === row.id}
+                      >
+                        {salvandoId === row.id
+                          ? "Salvando..."
+                          : row.disponivel
+                            ? "Deixar indisponível"
+                            : "Deixar disponível"}
+                      </button>
+                    )}
+                  </article>
+
+                  {fonte === "torneios" && inscritosDe === row.id && (
+                    <div className={styles.recordsList} style={{ paddingLeft: "18px" }}>
+                      {equipes.length === 0 && (
+                        <p className={styles.recordsEmpty}>
+                          Nenhuma inscrição neste torneio ainda.
+                        </p>
+                      )}
+                      {equipes.map((equipe) =>
+                        equipe.participantes.map((participante) => (
+                          <article
+                            className={styles.recordRow}
+                            key={participante.idParticipacao}
+                          >
+                            <div>
+                              <strong>{participante.nome}</strong>
+                              <span>{participante.email}</span>
+                            </div>
+                            <span className={styles.recordRole}>
+                              Equipe {equipe.nome}
+                              {equipe.descricao && (
+                                <small className={styles.recordRoleDetail}>
+                                  {equipe.descricao}
+                                </small>
+                              )}
+                            </span>
+                            <span
+                              className={`${styles.status} ${getStatusClass(participante.status)}`}
+                            >
+                              {participante.status === "confirmado"
+                                ? "Confirmado"
+                                : participante.status === "cancelado"
+                                  ? "Cancelado"
+                                  : "Pendente"}
+                            </span>
+                            {participante.status === "pendente" && (
+                              <button
+                                type="button"
+                                className={styles.rowButton}
+                                onClick={() => confirmarInscricao(participante)}
+                                disabled={salvandoId === `p${participante.idParticipacao}`}
+                              >
+                                Confirmar inscrição
+                              </button>
+                            )}
+                          </article>
+                        )),
+                      )}
+                    </div>
                   )}
-                  {fonte === "quadras" && (
-                    <button
-                      type="button"
-                      className={styles.rowButton}
-                      onClick={() => alterarDisponibilidade(row)}
-                      disabled={salvandoId === row.id}
-                    >
-                      {salvandoId === row.id
-                        ? "Salvando..."
-                        : row.disponivel
-                          ? "Deixar indisponível"
-                          : "Deixar disponível"}
-                    </button>
-                  )}
-                </article>
+                </div>
               ))}
             </div>
             {erroBanco && (

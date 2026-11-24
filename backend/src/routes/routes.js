@@ -13,6 +13,7 @@ const TorneiosController = require("../controllers/torneios");
 const StripeController = require("../controllers/stripe");
 const FaturasController = require("../controllers/faturas");
 const NotificacoesController = require("../controllers/notificacoes");
+const RelatoriosController = require("../controllers/relatorios");
 
 const { exigirLogin, exigirUsuario, exigirAdmin } = require("../middleware/autenticacao");
 
@@ -44,6 +45,13 @@ router.get("/auth/me", AuthController.sessaoAtual);
 router.get("/notificacoes", exigirLogin, NotificacoesController.listar);
 router.patch("/notificacoes/lidas", exigirLogin, NotificacoesController.marcarTodas);
 router.patch("/notificacoes/:id/lida", exigirLogin, NotificacoesController.marcarLida);
+
+
+// =====================================================
+// RELATÓRIOS (painel do administrador)
+// =====================================================
+
+router.get("/relatorios", exigirAdmin, RelatoriosController.resumo);
 
 
 // =====================================================
@@ -184,6 +192,8 @@ router.delete("/quadras/:id", QuadrasController.apagarQuadras);
 
 router.get("/torneios", TorneiosController.listarTorneios);
 router.get("/torneios/:id/participantes", TorneiosController.listarParticipantesDoTorneio);
+// Inscrição pelo site: o cliente logado cria a equipe e entra nela
+router.post("/torneios/:id/inscricao", exigirUsuario, TorneiosController.inscreverNoTorneio);
 router.post("/torneios", TorneiosController.cadastrarTorneios);
 router.patch("/torneios/:id", TorneiosController.editarTorneios);
 router.delete("/torneios/:id", TorneiosController.apagarTorneios);
@@ -200,6 +210,8 @@ router.get("/usuarios", exigirAdmin, UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:id", exigirAdmin, UsuariosController.editarUsuarios);
 router.patch("/usuarios/atualiza-senha/:id", UsuariosController.atualizarSenha);
+// O administrador define uma senha nova quando o cliente esquece a dele
+router.patch("/usuarios/:id/redefinir-senha", exigirAdmin, UsuariosController.redefinirSenha);
 router.delete("/usuarios/:id", exigirAdmin, UsuariosController.apagarUsuarios);
 
 

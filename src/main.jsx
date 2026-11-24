@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import AgendamentoSucesso from "./pages/AgendamentoSucesso.jsx";
 import Agendamentos from "./pages/agendamentos.jsx";
 import Cadastro from "./components/quadras/Cadastro.jsx";
 import Home from "./components/quadras/Home.jsx";
@@ -35,7 +34,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Home />} />
         <Route path="/quadra" element={<QuadraDetalhes />} />
         <Route path="/quadra/:id" element={<QuadraDetalhes />} />
-        <Route path="/sucesso" element={<AgendamentoSucesso />} />
         <Route path="/agendamentos" element={<Agendamentos />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/home" element={<Home />} />

@@ -14,6 +14,10 @@ module.exports = {
     async listarUsuarios(request, response) {
         try {
 
+            // Padrão: só os ativos. ?status=todos traz também inativos e
+            // pendentes (usado no painel do administrador).
+            const todos = String(request.query?.status ?? "").toLowerCase() === "todos";
+
             const sql = `
                 SELECT
                     id_usu,
@@ -23,7 +27,7 @@ module.exports = {
                     status_usu,
                     dt_cad
                 FROM usuarios
-                WHERE status_usu = 'ativo'
+                ${todos ? "" : "WHERE status_usu = 'ativo'"}
                 ORDER BY id_usu;
             `;
 
@@ -372,6 +376,44 @@ module.exports = {
                 mensagem: "Erro na requisição.",
                 dados: error.message
             });
+
+        }
+    },
+
+
+    // =====================================================
+    // REDEFINIR SENHA PELO ADMINISTRADOR - PATCH (somente admin)
+    // Usado quando o cliente esquece a senha e pede ajuda à arena.
+    // =====================================================
+    async redefinirSenha(request, response) {
+        try {
+
+            const { id } = request.params;
+            const novaSenha = String(request.body?.novaSenha ?? "");
+
+            if (!validarId(id)) {
+                return response.status(400).json({ sucesso: false, mensagem: "O id do usuário deve ser numérico.", dados: null });
+            }
+
+            if (novaSenha.length < 6 || novaSenha.length > 20) {
+                return response.status(400).json({ sucesso: false, mensagem: "A nova senha deve ter entre 6 e 20 caracteres.", dados: null });
+            }
+
+            const hashedPassword = await bcrypt.hash(novaSenha, SALT_ROUNDS);
+            const [resultado] = await db.query(
+                "UPDATE usuarios SET senha_usu = ? WHERE id_usu = ?;",
+                [hashedPassword, id]
+            );
+
+            if (resultado.affectedRows === 0) {
+                return response.status(404).json({ sucesso: false, mensagem: "Usuário não encontrado.", dados: null });
+            }
+
+            return response.status(200).json({ sucesso: true, mensagem: "Senha redefinida com sucesso.", dados: { id_usu: Number(id) } });
+
+        } catch (error) {
+
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
 
         }
     },

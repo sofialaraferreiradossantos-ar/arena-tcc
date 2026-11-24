@@ -4,10 +4,8 @@ import styles from "../styles/home.module.css";
 import CategoryButtons from "../components/quadras/CategoryButtons.jsx";
 import SearchBar from "../components/quadras/SearchBar.jsx";
 import QuadrasSection from "../components/quadras/QuadrasSection.jsx";
-import { modalidades, quadrasMckp, temModalidade } from "../mockup/dados.js";
-import useDisponibilidadeQuadras, {
-  comDisponibilidade,
-} from "../hooks/useDisponibilidadeQuadras.js";
+import { modalidades, temModalidade } from "../mockup/dados.js";
+import { useQuadras } from "../services/quadras.js";
 
 export default function Quadras() {
   const [search, setSearch] = useState("");
@@ -17,11 +15,10 @@ export default function Quadras() {
     modalidades.find((item) => item.id === searchParams.get("modalidade")) ||
     modalidades[0];
   const setCategoria = (id) => setSearchParams({ modalidade: id });
-  // Disponível/indisponível vem do banco (o admin muda em Administração > Quadras)
-  const disponibilidade = useDisponibilidadeQuadras();
+  // Quadras do banco de dados (GET /quadras)
+  const { quadras: todasQuadras, carregando, erro } = useQuadras();
 
-  const quadras = quadrasMckp
-    .map((item) => comDisponibilidade(item, disponibilidade))
+  const quadras = todasQuadras
     .filter(
       (item) =>
         temModalidade(item, modalidade.id) &&
@@ -55,7 +52,13 @@ export default function Quadras() {
           </span>
         </div>
         <QuadrasSection quadras={quadras} />
-        {quadras.length === 0 && (
+        {carregando && <p className={styles.emptyState}>Carregando quadras...</p>}
+        {erro && (
+          <p className={styles.emptyState} role="alert">
+            {erro}
+          </p>
+        )}
+        {!carregando && !erro && quadras.length === 0 && (
           <p className={styles.emptyState}>
             Nenhuma quadra de {modalidade.label.toLowerCase()} encontrada.
           </p>

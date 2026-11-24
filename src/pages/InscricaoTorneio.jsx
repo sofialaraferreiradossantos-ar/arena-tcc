@@ -1,41 +1,62 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
+  FaFlag,
   FaRegCalendarAlt,
   FaTrophy,
   FaUsers,
-  FaVolleyballBall,
 } from "react-icons/fa";
 import styles from "../styles/inscricao.module.css";
 import {
   CATEGORIAS_CLIENTE,
   NIVEIS,
   carregarMinhaCategoria,
-  torneiosMckp,
 } from "../mockup/torneios.js";
+import {
+  buscarTorneio,
+  formatarValor,
+  inscreverNoTorneio,
+} from "../services/torneios.js";
+
+// Cliente logado (salvo no login): nome e e-mail vêm da conta
+function usuarioLogado() {
+  if (!localStorage.getItem("token_sessao")) return null;
+  try {
+    return JSON.parse(localStorage.getItem("usuario")) || null;
+  } catch {
+    return null;
+  }
+}
 
 function InscricaoTorneio() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
-  const torneio = torneiosMckp.find((item) => item.id === Number(id));
+  const usuario = usuarioLogado();
+
+  // Torneio do banco de dados (GET /torneios)
+  const [torneio, setTorneio] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+  const [precisaLogin, setPrecisaLogin] = useState(!usuario);
+  const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
-    // Quando tiver API: fetch(`/api/torneios/${id}`).then(res => res.json()).then(setTorneio)
-    if (!torneio) {
-      alert("Torneio não encontrado.");
-      navigate("/torneios");
-      return;
-    }
-  }, [torneio, navigate]);
+    buscarTorneio(id)
+      .then((encontrado) => {
+        if (!encontrado) setErro("Torneio não encontrado.");
+        setTorneio(encontrado);
+      })
+      .catch((error) => setErro(error.message))
+      .finally(() => setCarregando(false));
+  }, [id]);
 
-  // Nível e categoria já vêm preenchidos com "Minha categoria", se houver.
+  // Campos da equipe; nível e categoria já vêm de "Minha categoria", se houver
   const [form, setForm] = useState(() => {
     const minhaCategoria = carregarMinhaCategoria();
     return {
-      nome: "",
-      email: "",
-      telefone: "",
+      nome_equipe: "",
+      desc_equipe: "",
       nivel: minhaCategoria?.nivel ?? "",
       categoria: minhaCategoria?.categoria ?? "",
     };
@@ -46,34 +67,49 @@ function InscricaoTorneio() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // Grava a equipe e o cliente como participante (POST /torneios/:id/inscricao)
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErro("");
 
-    if (
-      !form.nome ||
-      !form.email ||
-      !form.telefone ||
-      !form.nivel ||
-      !form.categoria
-    ) {
-      alert("Preencha todos os campos!");
+    if (!form.nome_equipe.trim() || !form.nivel || !form.categoria) {
+      setErro("Preencha o nome da equipe, o nível e a categoria.");
       return;
     }
 
-    // Leva para a tela de pagamento com os dados da inscrição
-    navigate("/pagamento", {
-      state: {
-        inscricao: {
-          torneioId: id,
-          torneio: torneio.nome,
-          valor: torneio.valor,
-          ...form,
+    setEnviando(true);
+    try {
+      await inscreverNoTorneio(id, form);
+      // Mostra o valor da inscrição (pago na arena)
+      navigate("/pagamento", {
+        state: {
+          inscricao: { torneioId: id, torneio: torneio.nome, valor: torneio.valor },
         },
-      },
-    });
+      });
+    } catch (error) {
+      if (error.precisaLogin) setPrecisaLogin(true);
+      setErro(error.message);
+      setEnviando(false);
+    }
   };
 
-  if (!torneio) return null;
+  if (carregando || !torneio) {
+    return (
+      <div className={styles.pageWrapper}>
+        <div className={styles.mainContent}>
+          <div className={styles.header}>
+            <div>
+              <h1>
+                Inscrição no <span>Torneio</span>
+              </h1>
+              <p>{carregando ? "Carregando torneio..." : erro}</p>
+              {!carregando && <Link to="/torneios">← Voltar para torneios</Link>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.pageWrapper}>
@@ -166,11 +202,11 @@ function InscricaoTorneio() {
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
                 <span>
-                  <FaVolleyballBall />
+                  <FaFlag />
                 </span>
                 <div>
-                  <small>Quadra</small>
-                  <strong>{torneio.local}</strong>
+                  <small>Situação</small>
+                  <strong>{torneio.statusTexto}</strong>
                 </div>
               </div>
 
@@ -190,7 +226,7 @@ function InscricaoTorneio() {
                 </span>
                 <div>
                   <small>Vagas</small>
-                  <strong>{torneio.vagas}</strong>
+                  <strong>{torneio.vagasTexto}</strong>
                 </div>
               </div>
             </div>
@@ -198,103 +234,120 @@ function InscricaoTorneio() {
 
           {/* FORMULÁRIO */}
           <form className={styles.formSection} onSubmit={handleSubmit}>
-            <h2>Seus dados</h2>
-            <p>As informações abaixo serão usadas na sua inscrição.</p>
+            <h2>Dados da equipe</h2>
+            <p>
+              {usuario
+                ? `Inscrição em nome de ${usuario.nome_usu} (${usuario.email_usu}).`
+                : "Entre na sua conta para se inscrever."}
+            </p>
 
-            <div className={styles.formGrid}>
-              <div className={styles.inputGroup}>
-                <label htmlFor="nome">Nome completo</label>
-                <input
-                  id="nome"
-                  name="nome"
-                  type="text"
-                  value={form.nome}
-                  onChange={handleChange}
-                  placeholder="Digite seu nome"
-                />
-              </div>
+            {precisaLogin ? (
+              <Link to="/login" className={styles.confirmarButton}>
+                Entrar na minha conta
+              </Link>
+            ) : !torneio.aceitaInscricao ? (
+              <p role="alert">
+                {torneio.status === "aberto"
+                  ? "Não há mais vagas neste torneio."
+                  : "As inscrições deste torneio não estão abertas."}
+              </p>
+            ) : (
+              <>
+                <div className={styles.formGrid}>
+                  <div
+                    className={styles.inputGroup}
+                    style={{ gridColumn: "1 / -1" }}
+                  >
+                    <label htmlFor="nome_equipe">Nome da equipe</label>
+                    <input
+                      id="nome_equipe"
+                      name="nome_equipe"
+                      type="text"
+                      maxLength={100}
+                      value={form.nome_equipe}
+                      onChange={handleChange}
+                      placeholder="Ex.: Areia Quente"
+                    />
+                  </div>
 
-              <div className={styles.inputGroup}>
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="Digite seu email"
-                />
-              </div>
+                  <div className={styles.inputGroup}>
+                    <label htmlFor="nivel">Nível</label>
+                    <select
+                      id="nivel"
+                      name="nivel"
+                      value={form.nivel}
+                      onChange={handleChange}
+                    >
+                      <option value="">Selecione seu nível</option>
+                      {NIVEIS.map((nivel) => (
+                        <option key={nivel} value={nivel}>
+                          {nivel}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div
-                className={styles.inputGroup}
-                style={{ gridColumn: "1 / -1" }}
-              >
-                <label htmlFor="telefone">Telefone</label>
-                <input
-                  id="telefone"
-                  name="telefone"
-                  type="tel"
-                  value={form.telefone}
-                  onChange={handleChange}
-                  placeholder="(00) 00000-0000"
-                />
-              </div>
+                  <div className={styles.inputGroup}>
+                    <label htmlFor="categoria">Categoria</label>
+                    <select
+                      id="categoria"
+                      name="categoria"
+                      value={form.categoria}
+                      onChange={handleChange}
+                    >
+                      <option value="">Selecione sua categoria</option>
+                      {CATEGORIAS_CLIENTE.map((categoria) => (
+                        <option key={categoria} value={categoria}>
+                          Categoria {categoria}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div className={styles.inputGroup}>
-                <label htmlFor="nivel">Nível</label>
-                <select
-                  id="nivel"
-                  name="nivel"
-                  value={form.nivel}
-                  onChange={handleChange}
+                  <div
+                    className={styles.inputGroup}
+                    style={{ gridColumn: "1 / -1" }}
+                  >
+                    <label htmlFor="desc_equipe">Descrição da equipe (opcional)</label>
+                    <input
+                      id="desc_equipe"
+                      name="desc_equipe"
+                      type="text"
+                      maxLength={300}
+                      value={form.desc_equipe}
+                      onChange={handleChange}
+                      placeholder="Ex.: dupla formada por atletas de Tupã"
+                    />
+                  </div>
+                </div>
+
+                {/* RESUMO DE VALORES */}
+                <div className={styles.resumo}>
+                  <div>
+                    <span>Valor da inscrição</span>
+                    <strong>{formatarValor(torneio.valor)}</strong>
+                  </div>
+                  <div>
+                    <span>Taxa de serviço</span>
+                    <strong>R$ 0,00</strong>
+                  </div>
+                  <div className={styles.total}>
+                    <span>Total</span>
+                    <strong>{formatarValor(torneio.valor)}</strong>
+                  </div>
+                </div>
+
+                {erro && <p role="alert">{erro}</p>}
+
+                <button
+                  type="submit"
+                  className={styles.confirmarButton}
+                  disabled={enviando}
                 >
-                  <option value="">Selecione seu nível</option>
-                  {NIVEIS.map((nivel) => (
-                    <option key={nivel} value={nivel}>
-                      {nivel}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label htmlFor="categoria">Categoria</label>
-                <select
-                  id="categoria"
-                  name="categoria"
-                  value={form.categoria}
-                  onChange={handleChange}
-                >
-                  <option value="">Selecione sua categoria</option>
-                  {CATEGORIAS_CLIENTE.map((categoria) => (
-                    <option key={categoria} value={categoria}>
-                      Categoria {categoria}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* RESUMO DE VALORES */}
-            <div className={styles.resumo}>
-              <div>
-                <span>Valor da inscrição</span>
-                <strong>R$ {torneio.valor.toFixed(2).replace(".", ",")}</strong>
-              </div>
-              <div>
-                <span>Taxa de serviço</span>
-                <strong>R$ 0,00</strong>
-              </div>
-              <div className={styles.total}>
-                <span>Total</span>
-                <strong>R$ {torneio.valor.toFixed(2).replace(".", ",")}</strong>
-              </div>
-            </div>
-
-            <button type="submit" className={styles.confirmarButton}>
-              Confirmar Inscrição
-            </button>
+                  {enviando ? "Enviando..." : "Confirmar Inscrição"}
+                </button>
+              </>
+            )}
           </form>
         </div>
       </div>
