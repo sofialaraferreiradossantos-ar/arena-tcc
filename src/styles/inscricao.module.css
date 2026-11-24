@@ -1,4 +1,4 @@
-﻿/* ================================
+/* ================================
    PÃGINA
 ================================ */
 .pageWrapper {
@@ -420,7 +420,7 @@
 
 :global(html[data-theme="light"]) .sidebarMenu a:hover {
   background: rgba(255, 136, 0, 0.14);
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .sidebarMenu a.active {
@@ -430,13 +430,13 @@
 
 :global(html[data-theme="light"]) .closeMenu {
   background: transparent;
-  color: #a85a00;
+  color: #ff8800;
   border: none;
 }
 
 :global(html[data-theme="light"]) .menuIcon {
   background: #fbfbfc;
-  color: #a85a00;
+  color: #ff8800;
   border: 1px solid #ff8800;
 }
 
@@ -450,7 +450,7 @@
 }
 
 :global(html[data-theme="light"]) .header h1 span {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .header p {
@@ -469,7 +469,7 @@
 :global(html[data-theme="light"]) .trophyIcon {
   background: rgba(255, 136, 0, 0.08);
   border: 1px solid #d5dde6;
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .infoHeader small {
@@ -486,7 +486,7 @@
 }
 
 :global(html[data-theme="light"]) .infoItem > span {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .infoItem small {
@@ -546,7 +546,7 @@
 }
 
 :global(html[data-theme="light"]) .resumo .total strong {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .confirmarButton {

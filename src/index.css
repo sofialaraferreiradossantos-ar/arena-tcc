@@ -662,7 +662,7 @@ body.light-mode [class*="sidebar_"] a:not([class*="active"]) {
 
 body.light-mode [class*="sidebar_"] a:not([class*="active"]):hover {
   background: rgba(255, 136, 0, 0.07) !important;
-  color: #a54d00 !important;
+  color: #ff9a35 !important;
 }
 
 /* ==== TEMA CLARO (gerado por scripts/gerar-tema-claro.mjs — não edite à mão) ==== */
@@ -696,7 +696,7 @@ html[data-theme="light"] .sidebar li {
 }
 
 html[data-theme="light"] .sidebar li:hover {
-  color: #996300;
+  color: orange;
 }
 
 html[data-theme="light"] [class*="topHeader"] {

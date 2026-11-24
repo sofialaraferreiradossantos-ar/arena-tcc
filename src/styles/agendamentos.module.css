@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    CONFIGURAÃ‡ÃƒO GERAL
 ========================================================= */
 
@@ -1326,7 +1326,7 @@
 :global(html[data-theme="light"]) .menuButton:hover {
   border-color: #ff8800;
   background: rgba(255, 136, 0, 0.08);
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .logoArea h2 {
@@ -1334,7 +1334,7 @@
 }
 
 :global(html[data-theme="light"]) .logoArea h2 span {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .userIcon {
@@ -1342,7 +1342,7 @@
 }
 
 :global(html[data-theme="light"]) .userIcon:hover {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .sidebarOverlay {
@@ -1360,7 +1360,7 @@
 }
 
 :global(html[data-theme="light"]) .brandText strong {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .closeButton {
@@ -1371,7 +1371,7 @@
 
 :global(html[data-theme="light"]) .closeButton:hover {
   border-color: #ff8800;
-  color: #a85a00;
+  color: #ff8800;
   background: rgba(255, 136, 0, 0.08);
 }
 
@@ -1389,12 +1389,12 @@
 :global(html[data-theme="light"]) .sidebarNav a:hover,
 :global(html[data-theme="light"]) .sidebarBottom a:hover {
   background: rgba(255, 136, 0, 0.08);
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .sidebarNav a:hover svg,
 :global(html[data-theme="light"]) .sidebarBottom a:hover svg {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .sidebarNav a.active {
@@ -1425,7 +1425,7 @@
 }
 
 :global(html[data-theme="light"]) .pageTitle h1 span {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .pageTitle h1::after {
@@ -1450,7 +1450,7 @@
 :global(html[data-theme="light"]) .tabsContainer button:hover,
 :global(html[data-theme="light"]) .mainContent nav button:hover {
   border-color: #ff8800;
-  color: #a85a00;
+  color: #ff8800;
   background: rgba(255, 136, 0, 0.08);
 }
 
@@ -1475,7 +1475,7 @@
 :global(html[data-theme="light"]) .cardIcon {
   border: 1px solid rgba(255, 136, 0, 0.3);
   background: rgba(255, 136, 0, 0.08);
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .cardLabel {
@@ -1493,7 +1493,7 @@
 
 :global(html[data-theme="light"]) .infoIcon {
   background: rgba(255, 136, 0, 0.08);
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .infoItem span {
@@ -1507,7 +1507,7 @@
 :global(html[data-theme="light"]) .cancelButton {
   border: 1px solid #ff8800;
   background: transparent;
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .cancelButton:hover {
@@ -1561,7 +1561,7 @@
 }
 
 :global(html[data-theme="light"]) .statusPendente {
-  color: #b45309;
+  color: #ffb15c;
 }
 
 :global(html[data-theme="light"]) .modalOverlay {

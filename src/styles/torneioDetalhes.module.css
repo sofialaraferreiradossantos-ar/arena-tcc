@@ -1,4 +1,4 @@
-﻿.pageWrapper {
+.pageWrapper {
   min-height: 100vh;
 
   background: #000;
@@ -262,7 +262,7 @@
 }
 
 :global(html[data-theme="light"]) .voltar:hover {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .imagem {
@@ -278,7 +278,7 @@
 }
 
 :global(html[data-theme="light"]) .informacoes svg {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .informacoes span {
@@ -286,7 +286,7 @@
 }
 
 :global(html[data-theme="light"]) .informacoes strong {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .descricao {
@@ -294,7 +294,7 @@
 }
 
 :global(html[data-theme="light"]) .descricao h2 {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .descricao p {

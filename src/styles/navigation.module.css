@@ -383,7 +383,7 @@
 
 :global(html[data-theme="light"]) .trigger:hover {
   border-color: #ff8800;
-  color: #aa5500;
+  color: #ff9a35;
   background: #f9f7f4;
 }
 
@@ -396,7 +396,7 @@
 
 :global(html[data-theme="light"]) .themeToggle:hover {
   border-color: #ff8800;
-  color: #aa5500;
+  color: #ff9a35;
   background: #f9f7f4;
 }
 
@@ -414,7 +414,7 @@
 }
 
 :global(html[data-theme="light"]) .quickLink svg {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .quickLink:hover,
@@ -453,7 +453,7 @@
 }
 
 :global(html[data-theme="light"]) .dockBrand strong {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .overlay {
@@ -472,7 +472,7 @@
 }
 
 :global(html[data-theme="light"]) .brand span {
-  color: #a85a00;
+  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .label {
@@ -485,7 +485,7 @@
 }
 
 :global(html[data-theme="light"]) .sidebar a:hover {
-  color: #aa5500;
+  color: #ff9a35;
   background: rgba(255, 136, 0, 0.07);
 }
 

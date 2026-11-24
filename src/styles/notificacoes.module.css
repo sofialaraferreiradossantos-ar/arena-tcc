@@ -195,7 +195,7 @@
 }
 
 :global(html[data-theme="light"]) .marcarTodas {
-  color: #a85a00;
+  color: #ff9a35;
 }
 
 :global(html[data-theme="light"]) .texto span {
@@ -208,5 +208,5 @@
 }
 
 :global(html[data-theme="light"]) .icone {
-  color: #a85a00;
+  color: #ff8800;
 }
