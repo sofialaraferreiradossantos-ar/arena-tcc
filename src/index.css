@@ -528,7 +528,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: url("/arena-background.webp") center / cover no-repeat;
+  background: url("/arena-background.jpg") center / cover no-repeat;
   pointer-events: none;
 }
 
@@ -808,7 +808,7 @@ html[data-theme="light"] body {
 }
 
 html[data-theme="light"] body::before {
-  background: url("/arena-background.webp") center / cover no-repeat;
+  background: url("/arena-background.jpg") center / cover no-repeat;
 }
 
 html[data-theme="light"] body::after {
