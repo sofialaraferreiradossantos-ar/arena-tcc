@@ -61,16 +61,7 @@ function converter(t, fotosQuadras = []) {
         : `${vagasRestantes} de ${limite} vagas disponíveis`,
     aceitaInscricao:
       t.status_torn === "aberto" && (vagasRestantes === null || vagasRestantes > 0),
-<<<<<<< Updated upstream
     imagem: imagemDoTorneio(t, fotosQuadras),
-=======
-    // O banco não guarda foto do torneio: usa uma imagem da arena
-    imagem:
-      t.modalidade_torn === "Beach Tennis" ||
-      (!t.modalidade_torn && /tennis/i.test(`${t.nome_torn} ${t.desc_torn}`))
-        ? quadraBeachTennis
-        : quadraCoberta,
->>>>>>> Stashed changes
   };
 }
 
