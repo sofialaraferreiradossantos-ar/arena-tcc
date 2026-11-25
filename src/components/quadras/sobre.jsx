@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 
 export default function Sobre() {
@@ -56,10 +55,6 @@ export default function Sobre() {
 
             <p>Tupã, São Paulo — 17600-000</p>
           </div>
-
-          <Link to="/home" className={styles.sobreLink}>
-            Voltar
-          </Link>
         </div>
       </div>
     </div>

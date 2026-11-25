@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 
 export default function RecuperarSenha() {
@@ -26,9 +25,6 @@ export default function RecuperarSenha() {
             normalmente.
           </p>
         </div>
-        <p className={styles.authSwitch}>
-          <Link to="/login">← Voltar para o login</Link>
-        </p>
       </section>
     </main>
   );

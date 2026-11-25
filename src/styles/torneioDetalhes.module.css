@@ -32,24 +32,6 @@
   box-sizing: border-box;
 }
 
-/* VOLTAR */
-
-.voltar {
-  display: inline-block;
-
-  margin-bottom: 20px;
-
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 16px;
-}
-
-.voltar:hover {
-  color: #ff8800;
-}
-
 /* IMAGEM */
 
 .imagem {
@@ -255,14 +237,6 @@
 :global(html[data-theme="light"]) .container {
   background: #f4f6f9;
   border: 1px solid #ff8800;
-}
-
-:global(html[data-theme="light"]) .voltar {
-  color: #000000;
-}
-
-:global(html[data-theme="light"]) .voltar:hover {
-  color: #ff8800;
 }
 
 :global(html[data-theme="light"]) .imagem {

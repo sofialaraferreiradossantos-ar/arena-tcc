@@ -44,10 +44,6 @@ function TorneioDetalhes() {
               ? "Carregando torneio..."
               : erro || "Torneio não encontrado"}
           </h2>
-
-          <Link to="/torneios" className={styles.voltar}>
-            ← Voltar para torneios
-          </Link>
         </div>
       </div>
     );
@@ -56,12 +52,6 @@ function TorneioDetalhes() {
   return (
     <div className={styles.pageWrapper}>
       <main className={styles.container}>
-        {/* VOLTAR */}
-
-        <Link to="/torneios" className={styles.voltar}>
-          ← Voltar
-        </Link>
-
         {/* IMAGEM */}
 
         <img

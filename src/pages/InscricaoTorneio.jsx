@@ -103,7 +103,6 @@ function InscricaoTorneio() {
                 Inscrição no <span>Torneio</span>
               </h1>
               <p>{carregando ? "Carregando torneio..." : erro}</p>
-              {!carregando && <Link to="/torneios">← Voltar para torneios</Link>}
             </div>
           </div>
         </div>

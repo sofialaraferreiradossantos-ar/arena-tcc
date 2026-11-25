@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import {
   FaBorderAll,
   FaChartBar,
@@ -459,7 +459,6 @@ function ConteudoModulo({ modulo }) {
     <div className={styles.mainContent}>
       <main className={styles.modulePage}>
         <div className={styles.moduleTopline}>
-          <Link to="/administrador">← Voltar ao painel</Link>
           <span>PAINEL ADMINISTRATIVO</span>
         </div>
 

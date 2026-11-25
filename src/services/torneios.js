@@ -1,8 +1,12 @@
 // Torneios vindos do banco (GET /torneios), no formato usado pelas telas
 // de lista, detalhes e inscrição.
 import { requisicaoApi } from "./api.js";
-import quadraCoberta from "../mockup/imagens/quadraCoberta.jpg";
-import quadraBeachTennis from "../mockup/imagens/quadraBeachTennis.jpg";
+import quadra1 from "../mockup/imagens/quadra1.jpg";
+import quadra2 from "../mockup/imagens/quadra2.jpg";
+import quadra3 from "../mockup/imagens/quadra3.jpg";
+
+// Fotos da arena usadas quando não há foto de quadra cadastrada
+const FOTOS_ARENA = [quadra1, quadra2, quadra3];
 
 const STATUS_TEXTO = {
   aberto: "Inscrições abertas",
@@ -38,7 +42,7 @@ export function torneioCombina(torneio, minhaCategoria) {
   return torneio.categoria === "Misto" || torneio.categoria === minhaCategoria.genero;
 }
 
-function converter(t) {
+function converter(t, fotosQuadras = []) {
   const limite = t.limite_part_torn ? Number(t.limite_part_torn) : null;
   const inscritos = Number(t.inscritos || 0);
   const vagasRestantes = limite === null ? null : Math.max(0, limite - inscritos);
@@ -61,19 +65,41 @@ function converter(t) {
         : `${vagasRestantes} de ${limite} vagas disponíveis`,
     aceitaInscricao:
       t.status_torn === "aberto" && (vagasRestantes === null || vagasRestantes > 0),
-    // O banco não guarda foto do torneio: usa uma imagem da arena
-    imagem: /tennis/i.test(`${t.nome_torn} ${t.desc_torn}`)
-      ? quadraBeachTennis
-      : quadraCoberta,
+    imagem: imagemDoTorneio(t, fotosQuadras),
   };
+}
+
+// O banco não guarda foto do torneio: cada torneio recebe a foto de uma das
+// quadras cadastradas, em rodízio pelo id, para os cards não ficarem iguais.
+// Sem fotos de quadra, usa as fotos fixas da arena no mesmo rodízio.
+function imagemDoTorneio(t, fotosQuadras) {
+  const fotos = fotosQuadras.length > 0 ? fotosQuadras : FOTOS_ARENA;
+  return fotos[Number(t.id_torn) % fotos.length];
+}
+
+// Fotos das quadras (sem a imagem padrão de quadra sem foto). Se a busca
+// falhar, os torneios continuam aparecendo com as imagens fixas.
+async function buscarFotosQuadras() {
+  try {
+    const resultado = await requisicaoApi("/quadras?disponivel=todos&limit=100");
+    const fotos = resultado.dados
+      .map((q) => q.imagem)
+      .filter((url) => url && !url.includes("sem-imagem"));
+    return [...new Set(fotos)];
+  } catch {
+    return [];
+  }
 }
 
 // Torneios inativos (excluídos pelo administrador) não aparecem para o cliente
 export async function buscarTorneios() {
-  const resultado = await requisicaoApi("/torneios");
+  const [resultado, fotosQuadras] = await Promise.all([
+    requisicaoApi("/torneios"),
+    buscarFotosQuadras(),
+  ]);
   return resultado.dados
     .filter((t) => t.status_torn !== "inativo")
-    .map(converter);
+    .map((t) => converter(t, fotosQuadras));
 }
 
 export async function buscarTorneio(id) {

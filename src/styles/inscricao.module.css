@@ -374,6 +374,16 @@
   box-shadow: 0 5px 15px rgba(255, 136, 0, 0.2);
 }
 
+/* Quando o botão é um link (ex.: "Entrar na minha conta"), o <a> precisa
+   virar bloco para respeitar largura/altura e perder o sublinhado */
+a.confirmarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
 /* ================================
    CELULAR
 ================================ */

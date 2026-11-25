@@ -1,6 +1,8 @@
 // Torneios de exemplo, usados na lista, nos detalhes e na inscrição.
 // Troque por fetch("/api/torneios") quando o backend estiver pronto.
-import quadraCoberta from "./imagens/quadraCoberta.jpg";
+import quadra1 from "./imagens/quadra1.jpg";
+import quadra2 from "./imagens/quadra2.jpg";
+import quadra3 from "./imagens/quadra3.jpg";
 import quadraBeachTennis from "./imagens/quadraBeachTennis.jpg";
 
 // Níveis e categorias de jogador aceitos nos torneios. O cliente escolhe os
@@ -54,7 +56,7 @@ export const torneiosMckp = [
     premiacao: "R$ 1.000,00",
     participantes: "Até 16 duplas femininas",
     vagas: "16 vagas disponíveis",
-    imagem: quadraCoberta,
+    imagem: quadra1,
     descricao:
       "Torneio de Futevôlei Pro na categoria feminina, para atletas que querem competir e viver uma experiência esportiva completa.",
   },
@@ -70,7 +72,7 @@ export const torneiosMckp = [
     premiacao: "R$ 1.000,00",
     participantes: "Até 16 duplas masculinas",
     vagas: "16 vagas disponíveis",
-    imagem: quadraCoberta,
+    imagem: quadra2,
     descricao:
       "Torneio de Futevôlei Pro na categoria masculina, para atletas que querem competir e viver uma experiência esportiva completa.",
   },
@@ -86,7 +88,7 @@ export const torneiosMckp = [
     premiacao: "R$ 1.000,00",
     participantes: "Até 16 duplas mistas",
     vagas: "16 vagas disponíveis",
-    imagem: quadraCoberta,
+    imagem: quadra3,
     descricao:
       "Torneio de Futevôlei Pro na categoria mista, com duplas formadas por um homem e uma mulher.",
   },
@@ -118,7 +120,7 @@ export const torneiosMckp = [
     premiacao: "Troféu + kit esportivo",
     participantes: "Até 16 duplas masculinas",
     vagas: "16 vagas disponíveis",
-    imagem: quadraCoberta,
+    imagem: quadra1,
     descricao:
       "Torneio de fim de semana de beach tennis na categoria masculina, disputado na Quadra 1. Jogos rápidos e muita resenha entre as partidas.",
   },
