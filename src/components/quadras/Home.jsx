@@ -52,7 +52,7 @@ export default function Home() {
               <h3>
                 <FaPhoneAlt /> Contato
               </h3>
-              <p>(14) 99681-9354</p>
+              <p>(14) 90000-0000</p>
             </section>
             <section className={styles.section}>
               <h3>

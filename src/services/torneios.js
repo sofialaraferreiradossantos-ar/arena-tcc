@@ -26,17 +26,10 @@ export function formatarValor(valor) {
   return `R$ ${Number(valor).toFixed(2).replace(".", ",")}`;
 }
 
-// O banco não tem coluna de gênero do torneio: ele é lido do nome/descrição
-// ("feminino", "masculino", "misto"). Sem essa informação, vale para todos.
-function generoDoTorneio(t) {
-  const texto = `${t.nome_torn} ${t.desc_torn}`.toLowerCase();
-  if (texto.includes("mist")) return "Misto";
-  if (texto.includes("feminin")) return "Feminino";
-  if (texto.includes("masculin")) return "Masculino";
-  return null;
-}
+export const MODALIDADES = ["Futevôlei", "Beach Tennis"];
+export const CATEGORIAS_TORNEIO = ["Feminino", "Masculino", "Misto"];
 
-// Mesmo filtro de antes: torneios do gênero escolhido, mistos e os sem gênero
+// Torneios da categoria do cliente (Feminino/Masculino), mistos e os sem categoria
 export function torneioCombina(torneio, minhaCategoria) {
   if (!minhaCategoria?.genero || !torneio.categoria) return true;
   return torneio.categoria === "Misto" || torneio.categoria === minhaCategoria.genero;
@@ -50,7 +43,10 @@ function converter(t, fotosQuadras = []) {
   return {
     id: t.id_torn,
     nome: t.nome_torn,
-    categoria: generoDoTorneio(t),
+    // Colunas modalidade_torn, categoria_torn e local_torn (tabela TORNEIOS)
+    modalidade: t.modalidade_torn || null,
+    categoria: t.categoria_torn || null,
+    local: t.local_torn || "A definir",
     data: formatarData(t.dt_torn),
     descricao: t.desc_torn,
     status: t.status_torn,
@@ -65,7 +61,16 @@ function converter(t, fotosQuadras = []) {
         : `${vagasRestantes} de ${limite} vagas disponíveis`,
     aceitaInscricao:
       t.status_torn === "aberto" && (vagasRestantes === null || vagasRestantes > 0),
+<<<<<<< Updated upstream
     imagem: imagemDoTorneio(t, fotosQuadras),
+=======
+    // O banco não guarda foto do torneio: usa uma imagem da arena
+    imagem:
+      t.modalidade_torn === "Beach Tennis" ||
+      (!t.modalidade_torn && /tennis/i.test(`${t.nome_torn} ${t.desc_torn}`))
+        ? quadraBeachTennis
+        : quadraCoberta,
+>>>>>>> Stashed changes
   };
 }
 
@@ -107,16 +112,18 @@ export async function buscarTorneio(id) {
   return torneios.find((t) => t.id === Number(id)) || null;
 }
 
-// Grava a equipe e o cliente logado como participante. Nível e categoria do
-// jogador não têm coluna própria: ficam registrados na descrição da equipe.
-export function inscreverNoTorneio(id, { nome_equipe, desc_equipe, nivel, categoria }) {
-  const perfil = `Nível: ${nivel} · Categoria ${categoria}`;
-  const extra = String(desc_equipe || "").trim();
-  const descricao = (extra ? `${perfil} — ${extra}` : perfil).slice(0, 300);
-
+// Grava a equipe (equipes_torneio) e o cliente logado como participante
+// (participantes_equipe), com o telefone, o nível e a categoria dele.
+export function inscreverNoTorneio(id, { nome_equipe, desc_equipe, telefone, nivel, categoria }) {
   return requisicaoApi(`/torneios/${id}/inscricao`, {
     method: "POST",
     autenticado: true,
-    body: { nome_equipe, desc_equipe: descricao },
+    body: {
+      nome_equipe,
+      desc_equipe: String(desc_equipe || "").trim(),
+      telefone_part: telefone,
+      nivel_part: nivel,
+      categoria_part: categoria,
+    },
   });
 }

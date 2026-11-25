@@ -10,6 +10,9 @@ import {
   FaMoneyBillWave,
   FaLayerGroup,
   FaTags,
+  FaMapMarkerAlt,
+  FaVolleyballBall,
+  FaVenusMars,
 } from "react-icons/fa";
 
 import styles from "../styles/torneioDetalhes.module.css";
@@ -68,6 +71,36 @@ function TorneioDetalhes() {
 
         <div className={styles.informacoes}>
           <div>
+            <FaVolleyballBall />
+
+            <span>
+              <strong>Modalidade</strong>
+
+              {torneio.modalidade || "A definir"}
+            </span>
+          </div>
+
+          <div>
+            <FaVenusMars />
+
+            <span>
+              <strong>Categoria</strong>
+
+              {torneio.categoria || "Aberta a todos"}
+            </span>
+          </div>
+
+          <div>
+            <FaMapMarkerAlt />
+
+            <span>
+              <strong>Local</strong>
+
+              {torneio.local}
+            </span>
+          </div>
+
+          <div>
             <FaCalendarAlt />
 
             <span>
@@ -121,7 +154,7 @@ function TorneioDetalhes() {
             <FaLayerGroup />
 
             <span>
-              <strong>Níveis</strong>
+              <strong>Níveis dos jogadores</strong>
 
               {listarComE(NIVEIS)}
             </span>
@@ -131,7 +164,7 @@ function TorneioDetalhes() {
             <FaTags />
 
             <span>
-              <strong>Categorias</strong>
+              <strong>Categorias dos jogadores</strong>
 
               {listarComE(CATEGORIAS_CLIENTE)}
             </span>

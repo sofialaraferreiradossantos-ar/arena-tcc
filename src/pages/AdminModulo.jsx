@@ -95,9 +95,15 @@ function torneioParaLinha(torneio) {
   return {
     id: torneio.id_torn,
     name: torneio.nome_torn,
-    detail: `${dataBR(torneio.dt_torn)} · ${
-      torneio.valor_part === null ? "Gratuito" : reais(torneio.valor_part)
-    }`,
+    detail: [
+      dataBR(torneio.dt_torn),
+      torneio.modalidade_torn,
+      torneio.categoria_torn,
+      torneio.local_torn,
+      torneio.valor_part === null ? "Gratuito" : reais(torneio.valor_part),
+    ]
+      .filter(Boolean)
+      .join(" · "),
     role: limite
       ? `${torneio.inscritos} de ${limite} inscritos`
       : `${torneio.inscritos} inscritos`,
@@ -141,6 +147,9 @@ const CAMPOS = {
     { name: "nome_torn", placeholder: "Nome do torneio" },
     { name: "dt_torn", placeholder: "Data", type: "date" },
     { name: "desc_torn", placeholder: "Descrição" },
+    { name: "modalidade_torn", placeholder: "Modalidade", options: ["Futevôlei", "Beach Tennis"] },
+    { name: "categoria_torn", placeholder: "Categoria", options: ["Feminino", "Masculino", "Misto"] },
+    { name: "local_torn", placeholder: "Local (ex.: Quadra 1)", maxLength: 20 },
     { name: "limite_part_torn", placeholder: "Limite de participantes", type: "number" },
     { name: "premiacao_torn", placeholder: "Premiação" },
     { name: "valor_part", placeholder: "Valor da inscrição (R$)", type: "number" },
@@ -304,7 +313,7 @@ function ConteudoModulo({ modulo }) {
     if (modulo === "torneios") {
       caminho = "/torneios";
       dados.status_torn = "aberto";
-      ["limite_part_torn", "valor_part", "premiacao_torn"].forEach((campo) => {
+      ["limite_part_torn", "valor_part", "premiacao_torn", "modalidade_torn", "categoria_torn", "local_torn"].forEach((campo) => {
         if (dados[campo] === "" || dados[campo] === undefined) dados[campo] = null;
       });
     }
@@ -443,7 +452,10 @@ function ConteudoModulo({ modulo }) {
         {
           value: String(relatorio.clientesAtivos),
           label: "Clientes ativos",
-          detail: `${relatorio.clientesNovosMes} novos neste mês`,
+          detail:
+            Number(relatorio.clientesNovosMes) === 1
+              ? "1 novo cliente neste mês"
+              : `${relatorio.clientesNovosMes} novos clientes neste mês`,
         },
         {
           value: `${relatorio.quadrasDisponiveis} de ${relatorio.quadrasTotal}`,
@@ -601,9 +613,31 @@ function ConteudoModulo({ modulo }) {
                 style={{ flexWrap: "wrap" }}
                 onSubmit={handleAdd}
               >
-                {(CAMPOS[modulo] || []).map((campo) => (
+                {(CAMPOS[modulo] || []).map((campo) =>
+                  campo.options ? (
+                    <select
+                      key={campo.name}
+                      value={formDados[campo.name] ?? ""}
+                      onChange={(event) =>
+                        setFormDados((atual) => ({
+                          ...atual,
+                          [campo.name]: event.target.value,
+                        }))
+                      }
+                      aria-label={campo.placeholder}
+                      style={{ minWidth: "200px" }}
+                    >
+                      <option value="">{campo.placeholder}</option>
+                      {campo.options.map((opcao) => (
+                        <option key={opcao} value={opcao}>
+                          {opcao}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
                   <input
                     key={campo.name}
+                    maxLength={campo.maxLength}
                     type={campo.type || "text"}
                     step={campo.type === "number" ? "any" : undefined}
                     min={campo.type === "number" ? "0" : undefined}
@@ -618,7 +652,8 @@ function ConteudoModulo({ modulo }) {
                     aria-label={campo.placeholder}
                     style={{ minWidth: "200px" }}
                   />
-                ))}
+                  ),
+                )}
                 <button
                   type="submit"
                   className={styles.moduleButton}
@@ -733,13 +768,22 @@ function ConteudoModulo({ modulo }) {
                           >
                             <div>
                               <strong>{participante.nome}</strong>
-                              <span>{participante.email}</span>
+                              <span>
+                                {[participante.email, participante.telefone]
+                                  .filter(Boolean)
+                                  .join(" · ")}
+                              </span>
                             </div>
                             <span className={styles.recordRole}>
                               Equipe {equipe.nome}
-                              {equipe.descricao && (
+                              {(participante.nivel || participante.categoria) && (
                                 <small className={styles.recordRoleDetail}>
-                                  {equipe.descricao}
+                                  {[
+                                    participante.nivel,
+                                    participante.categoria && `Categoria ${participante.categoria}`,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(" · ")}
                                 </small>
                               )}
                             </span>

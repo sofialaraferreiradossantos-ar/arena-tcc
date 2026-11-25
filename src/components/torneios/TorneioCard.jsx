@@ -1,10 +1,10 @@
-import { FaCalendarAlt, FaUsers, FaTrophy } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaTrophy } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
 import styles from "../../styles/torneios.module.css";
 
-function TorneioCard({ id, nome, status, categoria, data, vagas, imagem }) {
+function TorneioCard({ id, nome, status, modalidade, categoria, data, local, vagas, imagem }) {
   return (
     <article className={styles.card}>
       {/* INFORMAÇÕES */}
@@ -17,7 +17,7 @@ function TorneioCard({ id, nome, status, categoria, data, vagas, imagem }) {
 
           <div>
             <span className={styles.cardLabel}>
-              {["TORNEIO", categoria, status]
+              {["TORNEIO", modalidade, categoria, status]
                 .filter(Boolean)
                 .join(" · ")
                 .toUpperCase()}
@@ -38,6 +38,20 @@ function TorneioCard({ id, nome, status, categoria, data, vagas, imagem }) {
             <span>Data</span>
 
             <strong>{data}</strong>
+          </div>
+        </div>
+
+        {/* LOCAL */}
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>
+            <FaMapMarkerAlt />
+          </div>
+
+          <div>
+            <span>Local</span>
+
+            <strong>{local}</strong>
           </div>
         </div>
 

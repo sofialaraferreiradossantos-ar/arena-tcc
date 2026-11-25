@@ -47,7 +47,7 @@ export default function Sobre() {
           <div className={styles.sobreSecao}>
             <h3>Suporte</h3>
 
-            <p>(14) 99681-9354</p>
+            <p>(14) 90000-0000</p>
           </div>
 
           <div className={styles.sobreSecao}>

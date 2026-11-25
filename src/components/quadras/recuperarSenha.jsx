@@ -16,7 +16,7 @@ export default function RecuperarSenha() {
               depois de confirmar quem é o cliente. */}
           <p>
             Entre em contato com a administração da Arena Beach pelo telefone{" "}
-            <strong>(14) 99681-9354</strong>, informando o e-mail da sua conta.
+            <strong>(14) 90000-0000</strong>, informando o e-mail da sua conta.
             Depois de confirmar seus dados, a equipe da arena redefine o seu
             acesso.
           </p>

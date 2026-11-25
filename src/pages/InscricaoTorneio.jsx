@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
-  FaFlag,
+  FaMapMarkerAlt,
   FaRegCalendarAlt,
   FaTrophy,
   FaUsers,
@@ -57,6 +57,7 @@ function InscricaoTorneio() {
     return {
       nome_equipe: "",
       desc_equipe: "",
+      telefone: "",
       nivel: minhaCategoria?.nivel ?? "",
       categoria: minhaCategoria?.categoria ?? "",
     };
@@ -72,8 +73,14 @@ function InscricaoTorneio() {
     e.preventDefault();
     setErro("");
 
-    if (!form.nome_equipe.trim() || !form.nivel || !form.categoria) {
-      setErro("Preencha o nome da equipe, o nível e a categoria.");
+    if (!form.nome_equipe.trim() || !form.telefone.trim() || !form.nivel || !form.categoria) {
+      setErro("Preencha o nome da equipe, o telefone, o nível e a categoria.");
+      return;
+    }
+
+    const digitos = form.telefone.replace(/\D/g, "");
+    if (digitos.length < 10 || digitos.length > 11) {
+      setErro("Informe o telefone com DDD, por exemplo (14) 99999-0000.");
       return;
     }
 
@@ -181,7 +188,7 @@ function InscricaoTorneio() {
             <h1>
               Inscrição no <span>Torneio</span>
             </h1>
-            <p>Preencha seus dados para garantir sua vaga.</p>
+            <p>Crie a sua equipe e preencha seus dados para garantir a vaga.</p>
           </div>
         </div>
 
@@ -201,11 +208,11 @@ function InscricaoTorneio() {
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
                 <span>
-                  <FaFlag />
+                  <FaMapMarkerAlt />
                 </span>
                 <div>
-                  <small>Situação</small>
-                  <strong>{torneio.statusTexto}</strong>
+                  <small>Local</small>
+                  <strong>{torneio.local}</strong>
                 </div>
               </div>
 
@@ -266,6 +273,22 @@ function InscricaoTorneio() {
                       value={form.nome_equipe}
                       onChange={handleChange}
                       placeholder="Ex.: Areia Quente"
+                    />
+                  </div>
+
+                  <div
+                    className={styles.inputGroup}
+                    style={{ gridColumn: "1 / -1" }}
+                  >
+                    <label htmlFor="telefone">Telefone</label>
+                    <input
+                      id="telefone"
+                      name="telefone"
+                      type="tel"
+                      maxLength={20}
+                      value={form.telefone}
+                      onChange={handleChange}
+                      placeholder="(00) 00000-0000"
                     />
                   </div>
 

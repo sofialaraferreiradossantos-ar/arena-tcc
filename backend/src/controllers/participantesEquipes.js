@@ -11,10 +11,30 @@ const SQL_BUSCAR_VINCULO = `
         id_equipe,
         id_usu,
         DATE_FORMAT(dt_part, '%Y-%m-%d') AS dt_part,
-        status_part
+        status_part,
+        telefone_part,
+        nivel_part,
+        categoria_part
     FROM participantes_equipe
     WHERE id_part = ?;
 `;
+
+const NIVEIS = ["Iniciante", "Intermediário", "Avançado"];
+const CATEGORIAS = ["A", "B", "C", "D"];
+
+// Telefone, nível e categoria são opcionais aqui (aceitam nulo no banco)
+function validarDadosParticipante(dados) {
+    if (dados.telefone_part !== undefined && dados.telefone_part !== null && String(dados.telefone_part).trim().length > 20) {
+        return "O telefone deve ter no máximo 20 caracteres.";
+    }
+    if (dados.nivel_part !== undefined && dados.nivel_part !== null && !NIVEIS.includes(dados.nivel_part)) {
+        return `O nível deve ser: ${NIVEIS.join(", ")}.`;
+    }
+    if (dados.categoria_part !== undefined && dados.categoria_part !== null && !CATEGORIAS.includes(dados.categoria_part)) {
+        return `A categoria deve ser: ${CATEGORIAS.join(", ")}.`;
+    }
+    return null;
+}
 
 module.exports = {
 
@@ -29,8 +49,11 @@ module.exports = {
                     id_part,
                     id_equipe,
                     id_usu,
-                    dt_part,
-                    status_part
+                    DATE_FORMAT(dt_part, '%Y-%m-%d') AS dt_part,
+                    status_part,
+                    telefone_part,
+                    nivel_part,
+                    categoria_part
                 FROM participantes_equipe
                 ORDER BY id_part;
             `;
@@ -66,8 +89,16 @@ module.exports = {
                 id_equipe,
                 id_usu,
                 dt_part = new Date().toLocaleDateString("sv-SE"),
-                status_part = "pendente"
+                status_part = "pendente",
+                telefone_part = null,
+                nivel_part = null,
+                categoria_part = null
             } = request.body || {};
+
+            const erroDados = validarDadosParticipante({ telefone_part, nivel_part, categoria_part });
+            if (erroDados) {
+                return response.status(400).json({ sucesso: false, mensagem: erroDados, dados: null });
+            }
 
             // Validação manual dos dados
             if (!id_equipe || !id_usu) {
@@ -165,12 +196,12 @@ module.exports = {
             // Inserir registro
             const sql = `
                 INSERT INTO participantes_equipe
-                    (id_equipe, id_usu, dt_part, status_part)
+                    (id_equipe, id_usu, dt_part, status_part, telefone_part, nivel_part, categoria_part)
                 VALUES
-                    (?, ?, ?, ?);
+                    (?, ?, ?, ?, ?, ?, ?);
             `;
 
-            const [resultado] = await db.query(sql, [id_equipe, id_usu, dt_part, status_part]);
+            const [resultado] = await db.query(sql, [id_equipe, id_usu, dt_part, status_part, telefone_part, nivel_part, categoria_part]);
 
             // Avisa os administradores sobre a nova inscrição
             // (um erro aqui não desfaz a inscrição, que já foi gravada)
@@ -207,7 +238,10 @@ module.exports = {
                     id_equipe: Number(id_equipe),
                     id_usu: Number(id_usu),
                     dt_part,
-                    status_part
+                    status_part,
+                    telefone_part,
+                    nivel_part,
+                    categoria_part
                 }
             });
 
@@ -280,15 +314,23 @@ module.exports = {
                 });
             }
 
+            const erroDados = validarDadosParticipante(dados);
+            if (erroDados) {
+                return response.status(400).json({ sucesso: false, mensagem: erroDados, dados: null });
+            }
+
             const { setClauses, values } = montarUpdate(dados, {
                 status_part: "status_part",
-                dt_part: "dt_part"
+                dt_part: "dt_part",
+                telefone_part: "telefone_part",
+                nivel_part: "nivel_part",
+                categoria_part: "categoria_part"
             });
 
             if (setClauses.length === 0) {
                 return response.status(400).json({
                     sucesso: false,
-                    mensagem: "Nenhum campo válido enviado. Campos permitidos: status_part e dt_part.",
+                    mensagem: "Nenhum campo válido enviado. Campos permitidos: status_part, dt_part, telefone_part, nivel_part e categoria_part.",
                     dados: null
                 });
             }

@@ -223,8 +223,10 @@ function Torneios() {
                 id={torneio.id}
                 nome={torneio.nome}
                 status={torneio.statusTexto}
+                modalidade={torneio.modalidade}
                 categoria={torneio.categoria}
                 data={torneio.data}
+                local={torneio.local}
                 vagas={torneio.vagasTexto}
                 imagem={torneio.imagem}
               />

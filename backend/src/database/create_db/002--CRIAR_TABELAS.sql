@@ -103,6 +103,12 @@ CREATE TABLE torneios (
     premiacao_torn    VARCHAR(300)  NULL,
     dt_cad            DATE          NOT NULL,
     valor_part        DECIMAL(10,2) NULL,
+    -- 'Futevôlei' ou 'Beach Tennis'
+    modalidade_torn   VARCHAR(20)   NULL,
+    -- 'Feminino', 'Masculino' ou 'Misto'
+    categoria_torn    VARCHAR(20)   NULL,
+    -- Quadra onde o torneio acontece (ex.: 'Quadra 1')
+    local_torn        VARCHAR(20)   NULL,
     PRIMARY KEY (id_torn)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -131,6 +137,12 @@ CREATE TABLE participantes_equipe (
     id_usu       INT(11)     NOT NULL,
     dt_part      DATE        NOT NULL,
     status_part  VARCHAR(20) NOT NULL,
+    -- Dados informados na inscrição pelo site
+    telefone_part  VARCHAR(20) NULL,
+    -- 'Iniciante', 'Intermediário' ou 'Avançado'
+    nivel_part     VARCHAR(20) NULL,
+    -- 'A', 'B', 'C' ou 'D'
+    categoria_part VARCHAR(20) NULL,
     PRIMARY KEY (id_part),
     CONSTRAINT fk_participantes_equipe
         FOREIGN KEY (id_equipe) REFERENCES equipes_torneio (id_equipe)

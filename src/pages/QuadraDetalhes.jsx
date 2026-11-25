@@ -197,7 +197,7 @@ function QuadraDetalhes() {
 
           <div className={styles.horario}>
             <strong>Horário de Funcionamento:</strong> segunda a sexta, das 08h
-            às 21h; sábado, das 08h às 18h
+            às 22h; sábado e domingo, das 08h às 18h
           </div>
 
           {quadraSelecionada.available ? (

@@ -4,6 +4,11 @@ const montarUpdate = require("../utils/montarUpdate");
 const { notificarAdmins } = require("../utils/notificacoes");
 
 const STATUS_TORNEIO = ["aberto", "em breve", "em andamento", "encerrado", "inativo"];
+const MODALIDADES = ["Futevôlei", "Beach Tennis"];
+const CATEGORIAS_TORNEIO = ["Feminino", "Masculino", "Misto"];
+// Dados do participante pedidos na inscrição pelo site
+const NIVEIS = ["Iniciante", "Intermediário", "Avançado"];
+const CATEGORIAS_PARTICIPANTE = ["A", "B", "C", "D"];
 
 // Valida só os campos presentes (serve para cadastro e edição).
 // Retorna a mensagem de erro ou null se estiver tudo certo.
@@ -32,6 +37,15 @@ function validarCamposTorneio(dados) {
         const valor = Number.parseFloat(dados.valor_part);
         if (!Number.isFinite(valor) || valor < 0) return "O valor de participação deve ser um número maior ou igual a zero.";
     }
+    if (dados.modalidade_torn !== undefined && dados.modalidade_torn !== null && !MODALIDADES.includes(dados.modalidade_torn)) {
+        return `A modalidade deve ser: ${MODALIDADES.join(" ou ")}.`;
+    }
+    if (dados.categoria_torn !== undefined && dados.categoria_torn !== null && !CATEGORIAS_TORNEIO.includes(dados.categoria_torn)) {
+        return `A categoria do torneio deve ser: ${CATEGORIAS_TORNEIO.join(", ")}.`;
+    }
+    if (dados.local_torn !== undefined && dados.local_torn !== null && tamanho(dados.local_torn) > 20) {
+        return "O local deve ter no máximo 20 caracteres.";
+    }
     return null;
 }
 
@@ -55,6 +69,9 @@ module.exports = {
                     t.premiacao_torn,
                     DATE_FORMAT(t.dt_cad, '%Y-%m-%d') AS dt_cad,
                     t.valor_part,
+                    t.modalidade_torn,
+                    t.categoria_torn,
+                    t.local_torn,
                     (
                         SELECT COUNT(*)
                         FROM participantes_equipe pe
@@ -99,7 +116,10 @@ module.exports = {
                 status_torn = "aberto",
                 limite_part_torn = null,
                 premiacao_torn = null,
-                valor_part = null
+                valor_part = null,
+                modalidade_torn = null,
+                categoria_torn = null,
+                local_torn = null
             } = request.body || {};
 
             // Data de cadastro definida pelo servidor
@@ -113,7 +133,7 @@ module.exports = {
                 });
             }
 
-            const erro = validarCamposTorneio({ nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao_torn, valor_part });
+            const erro = validarCamposTorneio({ nome_torn, dt_torn, desc_torn, status_torn, limite_part_torn, premiacao_torn, valor_part, modalidade_torn, categoria_torn, local_torn });
             if (erro) {
                 return response.status(400).json({
                     sucesso: false,
@@ -132,10 +152,13 @@ module.exports = {
                         limite_part_torn,
                         premiacao_torn,
                         dt_cad,
-                        valor_part
+                        valor_part,
+                        modalidade_torn,
+                        categoria_torn,
+                        local_torn
                     )
                 VALUES
-                    (?, ?, ?, ?, ?, ?, ?, ?);
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
             `;
 
             const valores = [
@@ -146,7 +169,10 @@ module.exports = {
                 limite_part_torn,
                 premiacao_torn,
                 dt_cad,
-                valor_part
+                valor_part,
+                modalidade_torn,
+                categoria_torn,
+                local_torn
             ];
 
             const [resultado] = await db.query(sql, valores);
@@ -163,7 +189,10 @@ module.exports = {
                     limite_part_torn,
                     premiacao_torn,
                     dt_cad,
-                    valor_part
+                    valor_part,
+                    modalidade_torn,
+                    categoria_torn,
+                    local_torn
                 }
             });
 
@@ -213,7 +242,10 @@ module.exports = {
                 status_torn: "status_torn",
                 limite_part_torn: "limite_part_torn",
                 premiacao_torn: "premiacao_torn",
-                valor_part: "valor_part"
+                valor_part: "valor_part",
+                modalidade_torn: "modalidade_torn",
+                categoria_torn: "categoria_torn",
+                local_torn: "local_torn"
             });
 
             if (setClauses.length === 0) {
@@ -314,12 +346,24 @@ module.exports = {
         const id_usu = request.usuario.id_usu;
         const nome_equipe = String(request.body?.nome_equipe ?? "").trim();
         const desc_equipe = String(request.body?.desc_equipe ?? "").trim() || "Equipe inscrita pelo site.";
+        const telefone_part = String(request.body?.telefone_part ?? "").trim();
+        const nivel_part = String(request.body?.nivel_part ?? "").trim();
+        const categoria_part = String(request.body?.categoria_part ?? "").trim();
 
         const erro = (status, mensagem) => response.status(status).json({ sucesso: false, mensagem, dados: null });
 
         if (!validarId(id)) return erro(400, "O id do torneio deve ser numérico.");
         if (!nome_equipe || nome_equipe.length > 100) return erro(400, "Informe o nome da equipe (até 100 caracteres).");
         if (desc_equipe.length > 300) return erro(400, "A descrição da equipe deve ter no máximo 300 caracteres.");
+        // Telefone com DDD: 10 ou 11 dígitos, aceitando ( ) - e espaços
+        const digitosTelefone = telefone_part.replace(/\D/g, "");
+        if (telefone_part.length > 20 || digitosTelefone.length < 10 || digitosTelefone.length > 11) {
+            return erro(400, "Informe um telefone com DDD, por exemplo (14) 99999-0000.");
+        }
+        if (!NIVEIS.includes(nivel_part)) return erro(400, `O nível deve ser: ${NIVEIS.join(", ")}.`);
+        if (!CATEGORIAS_PARTICIPANTE.includes(categoria_part)) {
+            return erro(400, `A categoria deve ser: ${CATEGORIAS_PARTICIPANTE.join(", ")}.`);
+        }
 
         const conexao = await db.getConnection();
         let torneio;
@@ -395,9 +439,13 @@ module.exports = {
             );
             id_equipe = equipe.insertId;
 
+            // "pendente" até o pagamento da inscrição na arena; o administrador
+            // muda para "confirmado" depois de receber o valor
             const [participante] = await conexao.query(
-                "INSERT INTO participantes_equipe (id_equipe, id_usu, dt_part, status_part) VALUES (?, ?, ?, 'pendente');",
-                [id_equipe, id_usu, dt_part]
+                `INSERT INTO participantes_equipe
+                    (id_equipe, id_usu, dt_part, status_part, telefone_part, nivel_part, categoria_part)
+                 VALUES (?, ?, ?, 'pendente', ?, ?, ?);`,
+                [id_equipe, id_usu, dt_part, telefone_part, nivel_part, categoria_part]
             );
             id_part = participante.insertId;
 
@@ -428,7 +476,10 @@ module.exports = {
                 nome_equipe,
                 id_part,
                 dt_part,
-                status_part: "pendente"
+                status_part: "pendente",
+                telefone_part,
+                nivel_part,
+                categoria_part
             }
         });
     },
@@ -438,7 +489,8 @@ module.exports = {
         try {
             const { id } = request.params;
             const [torneios] = await db.query(`
-                SELECT id_torn, nome_torn, dt_torn, status_torn, limite_part_torn
+                SELECT id_torn, nome_torn, dt_torn, status_torn, limite_part_torn,
+                       modalidade_torn, categoria_torn, local_torn
                 FROM torneios
                 WHERE id_torn = ?;
             `, [id]);
@@ -458,7 +510,10 @@ module.exports = {
                     u.nome_usu AS nome_usuario,
                     u.email_usu AS email_usuario,
                     pe.dt_part AS data_participacao,
-                    pe.status_part AS status_participacao
+                    pe.status_part AS status_participacao,
+                    pe.telefone_part AS telefone,
+                    pe.nivel_part AS nivel,
+                    pe.categoria_part AS categoria
                 FROM equipes_torneio e
                 INNER JOIN participantes_equipe pe ON pe.id_equipe = e.id_equipe
                 INNER JOIN usuarios u ON u.id_usu = pe.id_usu
@@ -485,7 +540,10 @@ module.exports = {
                     nome: row.nome_usuario,
                     email: row.email_usuario,
                     dataParticipacao: row.data_participacao,
-                    status: row.status_participacao
+                    status: row.status_participacao,
+                    telefone: row.telefone,
+                    nivel: row.nivel,
+                    categoria: row.categoria
                 });
             }
 
