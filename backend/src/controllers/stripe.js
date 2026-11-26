@@ -108,11 +108,48 @@ async function marcarComoPago(pagamento, forma) {
     );
 
     if (resultado.affectedRows > 0) {
+        if (pagamento.id_part) {
+            // Inscrição em torneio: o pagamento confirma a participação
+            await db.query(
+                "UPDATE participantes_equipe SET status_part = 'confirmado' WHERE id_part = ? AND status_part = 'pendente';",
+                [pagamento.id_part]
+            );
+            await avisarInscricaoPaga(pagamento, forma);
+            return;
+        }
         await db.query(
             "UPDATE agendamentos SET status_agend = 'confirmado' WHERE id_agend = ? AND status_agend = 'pendente';",
             [pagamento.id_agend]
         );
         await avisarNovaReserva(pagamento, forma);
+    }
+}
+
+// Avisa os administradores que uma inscrição em torneio foi paga
+async function avisarInscricaoPaga(pagamento, forma) {
+    try {
+        const [[inscricao]] = await db.query(
+            `
+                SELECT u.nome_usu, e.nome_equipe, t.nome_torn
+                FROM participantes_equipe pe
+                INNER JOIN usuarios u ON u.id_usu = pe.id_usu
+                INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                INNER JOIN torneios t ON t.id_torn = e.id_torn
+                WHERE pe.id_part = ?;
+            `,
+            [pagamento.id_part]
+        );
+        if (!inscricao) return;
+
+        await notificarAdmins({
+            tipo: "inscricao_torneio",
+            titulo: "Inscrição em torneio paga",
+            mensagem: `${inscricao.nome_usu} pagou a inscrição no ${inscricao.nome_torn} (equipe ${inscricao.nome_equipe}) via ${forma}.`,
+            link: "/administrador/torneios",
+            chave: `inscricao-paga-${pagamento.id_pag}`
+        });
+    } catch (error) {
+        console.error("[notificacoes] Erro ao avisar inscrição paga:", error.message);
     }
 }
 
@@ -156,8 +193,15 @@ async function cancelarPendente(pagamento) {
         [pagamento.id_pag]
     );
 
-    // Libera o horário da quadra
+    // Libera o horário da quadra ou a vaga na equipe do torneio
     if (resultado.affectedRows > 0) {
+        if (pagamento.id_part) {
+            await db.query(
+                "UPDATE participantes_equipe SET status_part = 'cancelado' WHERE id_part = ? AND status_part = 'pendente';",
+                [pagamento.id_part]
+            );
+            return;
+        }
         await db.query(
             "UPDATE agendamentos SET status_agend = 'cancelado' WHERE id_agend = ? AND status_agend = 'pendente';",
             [pagamento.id_agend]
@@ -168,7 +212,7 @@ async function cancelarPendente(pagamento) {
 // Busca a sessão direto na API do Stripe (fonte confiável) e atualiza o banco.
 async function sincronizarSessao(idSessao, { falhou = false } = {}) {
     const [rows] = await db.query(
-        "SELECT id_pag, id_agend, valor_pag, status_pag FROM pagamentos WHERE stripe_session_id = ?;",
+        "SELECT id_pag, id_agend, id_part, valor_pag, status_pag FROM pagamentos WHERE stripe_session_id = ?;",
         [idSessao]
     );
 
@@ -197,7 +241,7 @@ async function sincronizarSessao(idSessao, { falhou = false } = {}) {
     }
 
     const [atualizado] = await db.query(
-        "SELECT id_pag, id_agend, valor_pag, status_pag FROM pagamentos WHERE id_pag = ?;",
+        "SELECT id_pag, id_agend, id_part, valor_pag, status_pag FROM pagamentos WHERE id_pag = ?;",
         [pagamento.id_pag]
     );
     return atualizado[0];
@@ -269,7 +313,7 @@ async function sincronizarEstorno(cobranca) {
     // Pagamentos de fatura não têm id_pag no metadata: são tratados no Dashboard
     if (!id_pag) return;
 
-    const [rows] = await db.query("SELECT id_pag, id_agend FROM pagamentos WHERE id_pag = ?;", [id_pag]);
+    const [rows] = await db.query("SELECT id_pag, id_agend, id_part FROM pagamentos WHERE id_pag = ?;", [id_pag]);
     if (rows.length === 0) return;
 
     const [resultado] = await db.query(
@@ -280,6 +324,13 @@ async function sincronizarEstorno(cobranca) {
     // Mesma regra do cancelamento feito pelo admin (pagamentos.js):
     // pagamento estornado -> agendamento volta a aguardar pagamento
     if (resultado.affectedRows > 0) {
+        if (rows[0].id_part) {
+            await db.query(
+                "UPDATE participantes_equipe SET status_part = 'pendente' WHERE id_part = ? AND status_part = 'confirmado';",
+                [rows[0].id_part]
+            );
+            return;
+        }
         await db.query(
             "UPDATE agendamentos SET status_agend = 'pendente' WHERE id_agend = ? AND status_agend = 'confirmado';",
             [rows[0].id_agend]
@@ -294,19 +345,27 @@ async function buscarPagamentoDoUsuario(idSessao, id_usu) {
             SELECT
                 p.id_pag,
                 p.id_agend,
+                p.id_part,
                 p.valor_pag,
                 p.forma_pag,
                 p.status_pag,
-                a.id_usu,
+                COALESCE(a.id_usu, pe.id_usu) AS id_usu,
                 a.status_agend,
                 DATE_FORMAT(a.dt_agend, '%Y-%m-%d') AS dt_agend,
                 TIME_FORMAT(a.hora_inicio, '%H:%i') AS hora_inicio,
                 TIME_FORMAT(a.hora_fim, '%H:%i') AS hora_fim,
                 q.nome_qd,
-                q.tipo_qd
+                q.tipo_qd,
+                pe.status_part,
+                e.nome_equipe,
+                t.nome_torn,
+                DATE_FORMAT(t.dt_torn, '%Y-%m-%d') AS dt_torn
             FROM pagamentos p
-            INNER JOIN agendamentos a ON a.id_agend = p.id_agend
-            INNER JOIN quadras q ON q.id_qd = a.id_qd
+            LEFT JOIN agendamentos a ON a.id_agend = p.id_agend
+            LEFT JOIN quadras q ON q.id_qd = a.id_qd
+            LEFT JOIN participantes_equipe pe ON pe.id_part = p.id_part
+            LEFT JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+            LEFT JOIN torneios t ON t.id_torn = e.id_torn
             WHERE p.stripe_session_id = ?;
         `,
         [idSessao]
@@ -318,8 +377,25 @@ async function buscarPagamentoDoUsuario(idSessao, id_usu) {
 }
 
 function respostaPagamento(pagamento) {
+    if (pagamento.id_part) {
+        return {
+            id_pag: pagamento.id_pag,
+            tipo: "inscricao",
+            status_pag: pagamento.status_pag,
+            forma_pag: pagamento.forma_pag,
+            valor_pag: Number(pagamento.valor_pag).toFixed(2),
+            inscricao: {
+                id_part: pagamento.id_part,
+                status: pagamento.status_part,
+                torneio: pagamento.nome_torn,
+                equipe: pagamento.nome_equipe,
+                data: pagamento.dt_torn
+            }
+        };
+    }
     return {
         id_pag: pagamento.id_pag,
+        tipo: "reserva",
         status_pag: pagamento.status_pag,
         forma_pag: pagamento.forma_pag,
         valor_pag: Number(pagamento.valor_pag).toFixed(2),
@@ -538,6 +614,154 @@ module.exports = {
             sucesso: true,
             mensagem: "Sessão de pagamento criada.",
             dados: { url: sessao.url, id_pag, id_agend }
+        });
+    },
+
+
+    // =====================================================
+    // PAGAR INSCRIÇÃO - POST /pagamentos/stripe/checkout-inscricao
+    // Body: { id_part }  (participação "pendente" do próprio cliente)
+    // O valor vem do torneio (valor_part), nunca do navegador.
+    // =====================================================
+    async criarCheckoutInscricao(request, response) {
+        const cliente = stripe();
+        if (!cliente) return stripeNaoConfigurado(response);
+
+        const usuario = request.usuario;
+        const { id_part } = request.body || {};
+        const erro = (status, mensagem) => response.status(status).json({ sucesso: false, mensagem, dados: null });
+
+        if (!validarId(id_part)) return erro(400, "Inscrição inválida.");
+
+        let inscricao;
+        let id_pag;
+        const conexao = await db.getConnection();
+
+        try {
+            await conexao.beginTransaction();
+
+            [[inscricao]] = await conexao.query(
+                `
+                    SELECT pe.id_part, pe.id_usu, pe.status_part, e.nome_equipe,
+                           t.nome_torn, t.valor_part, DATE_FORMAT(t.dt_torn, '%Y-%m-%d') AS dt_torn
+                    FROM participantes_equipe pe
+                    INNER JOIN equipes_torneio e ON e.id_equipe = pe.id_equipe
+                    INNER JOIN torneios t ON t.id_torn = e.id_torn
+                    WHERE pe.id_part = ?
+                    FOR UPDATE;
+                `,
+                [id_part]
+            );
+
+            if (!inscricao || Number(inscricao.id_usu) !== Number(usuario.id_usu)) {
+                await conexao.rollback();
+                return erro(404, "Inscrição não encontrada.");
+            }
+            if (inscricao.status_part !== "pendente") {
+                await conexao.rollback();
+                return erro(400, inscricao.status_part === "confirmado"
+                    ? "Esta inscrição já está paga e confirmada."
+                    : "Esta inscrição foi cancelada. Faça uma nova inscrição.");
+            }
+            if (paraCentavos(inscricao.valor_part) < 50) {
+                await conexao.rollback();
+                return erro(400, "Este torneio não tem um valor válido para pagamento on-line.");
+            }
+
+            // Já existe um pagamento aberto para esta inscrição? Reaproveita.
+            const [[aberto]] = await conexao.query(
+                "SELECT id_pag, stripe_session_id FROM pagamentos WHERE id_part = ? AND status_pag = 'pendente' LIMIT 1;",
+                [id_part]
+            );
+
+            if (aberto?.stripe_session_id) {
+                await conexao.commit();
+                const sessaoAberta = await cliente.checkout.sessions.retrieve(aberto.stripe_session_id);
+                if (sessaoAberta.status === "open") {
+                    return response.status(200).json({
+                        sucesso: true,
+                        mensagem: "Sessão de pagamento já aberta.",
+                        dados: { url: sessaoAberta.url, id_pag: aberto.id_pag, id_part: Number(id_part) }
+                    });
+                }
+                return erro(409, "O prazo para pagar esta inscrição terminou. Faça uma nova inscrição.");
+            }
+
+            const [pagamento] = await conexao.query(
+                `INSERT INTO pagamentos (id_agend, id_part, valor_pag, forma_pag, status_pag)
+                 VALUES (NULL, ?, ?, 'Online', 'pendente');`,
+                [id_part, inscricao.valor_part]
+            );
+            id_pag = pagamento.insertId;
+
+            await conexao.commit();
+        } catch (error) {
+            await conexao.rollback().catch(() => {});
+            return response.status(500).json({ sucesso: false, mensagem: "Erro na requisição.", dados: error.message });
+        } finally {
+            conexao.release();
+        }
+
+        let identificacaoCliente;
+        try {
+            identificacaoCliente = { customer: await obterCustomer(usuario.id_usu) };
+        } catch (error) {
+            console.error("[stripe] Não foi possível obter o Customer:", error.message);
+            identificacaoCliente = { customer_email: usuario.email_usu };
+        }
+
+        const dadosSessao = {
+            mode: "payment",
+            client_reference_id: String(id_pag),
+            ...identificacaoCliente,
+            line_items: [
+                {
+                    quantity: 1,
+                    price_data: {
+                        currency: "brl",
+                        unit_amount: paraCentavos(inscricao.valor_part),
+                        product_data: {
+                            name: `Inscrição - ${inscricao.nome_torn}`,
+                            description: `Equipe ${inscricao.nome_equipe} - torneio em ${dataBR(inscricao.dt_torn)}`
+                        }
+                    }
+                }
+            ],
+            metadata: { id_pag: String(id_pag), id_part: String(id_part) },
+            payment_intent_data: { metadata: { id_pag: String(id_pag), id_part: String(id_part) } },
+            payment_method_options: { pix: { expires_after_seconds: MINUTOS_PARA_PAGAR * 60 } },
+            expires_at: Math.floor(Date.now() / 1000) + MINUTOS_PARA_PAGAR * 60,
+            success_url: `${urlFrontend()}/pagamento/retorno?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${urlFrontend()}/pagamento/retorno?session_id={CHECKOUT_SESSION_ID}&cancelado=1`
+        };
+
+        let sessao;
+        try {
+            try {
+                sessao = await cliente.checkout.sessions.create(dadosSessao, {
+                    idempotencyKey: `checkout-pagamento-${id_pag}`
+                });
+            } catch (error) {
+                if (!String(error.param || "").startsWith("payment_method_options")) throw error;
+                delete dadosSessao.payment_method_options;
+                sessao = await cliente.checkout.sessions.create(dadosSessao, {
+                    idempotencyKey: `checkout-pagamento-${id_pag}-sem-pix`
+                });
+            }
+
+            await db.query("UPDATE pagamentos SET stripe_session_id = ? WHERE id_pag = ?;", [sessao.id, id_pag]);
+        } catch (error) {
+            // Não abriu o pagamento: cancela só o pagamento; a inscrição
+            // continua pendente e o cliente pode tentar pagar de novo.
+            await db.query("UPDATE pagamentos SET status_pag = 'cancelado' WHERE id_pag = ? AND status_pag = 'pendente';", [id_pag]).catch(() => {});
+            console.error("[stripe] Erro ao criar Checkout da inscrição:", error.message);
+            return erro(502, "Não foi possível iniciar o pagamento no Stripe. Tente novamente.");
+        }
+
+        return response.status(201).json({
+            sucesso: true,
+            mensagem: "Sessão de pagamento criada.",
+            dados: { url: sessao.url, id_pag, id_part: Number(id_part) }
         });
     },
 

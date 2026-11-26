@@ -16,8 +16,11 @@ CREATE TABLE usuarios (
     tipo_usu    VARCHAR(20)  NOT NULL DEFAULT 'cliente',
     status_usu  VARCHAR(20)  NOT NULL,
     dt_cad      DATE         NOT NULL,
+    -- Cliente no Stripe (criado no primeiro pagamento on-line)
+    stripe_customer_id VARCHAR(255) NULL,
     PRIMARY KEY (id_usu),
-    UNIQUE KEY uq_usuarios_email (email_usu)
+    UNIQUE KEY uq_usuarios_email (email_usu),
+    UNIQUE KEY uq_usuarios_stripe_customer (stripe_customer_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------
@@ -75,22 +78,6 @@ CREATE TABLE agendamentos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------
--- PAGAMENTOS
--- --------------------------------------------------
-CREATE TABLE pagamentos (
-    id_pag      INT(11)       NOT NULL AUTO_INCREMENT,
-    id_agend    INT(11)       NOT NULL,
-    valor_pag   DECIMAL(10,2) NOT NULL,
-    forma_pag   VARCHAR(50)   NOT NULL,
-    status_pag  VARCHAR(20)   NOT NULL,
-    PRIMARY KEY (id_pag),
-    CONSTRAINT fk_pagamentos_agendamento
-        FOREIGN KEY (id_agend) REFERENCES agendamentos (id_agend)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------
 -- TORNEIOS
 -- --------------------------------------------------
 CREATE TABLE torneios (
@@ -100,15 +87,17 @@ CREATE TABLE torneios (
     desc_torn         VARCHAR(300)  NOT NULL,
     status_torn       VARCHAR(20)   NOT NULL,
     limite_part_torn  INT(11)       NULL,
+    -- Integrantes por equipe, definido pelo administrador (2 = duplas)
+    integrantes_torn  INT(11)       NOT NULL DEFAULT 2,
     premiacao_torn    VARCHAR(300)  NULL,
     dt_cad            DATE          NOT NULL,
     valor_part        DECIMAL(10,2) NULL,
     -- 'Futevôlei' ou 'Beach Tennis'
-    modalidade_torn   VARCHAR(20)   NULL,
+    modalidade_torn   VARCHAR(20)   NOT NULL,
     -- 'Feminino', 'Masculino' ou 'Misto'
-    categoria_torn    VARCHAR(20)   NULL,
+    categoria_torn    VARCHAR(20)   NOT NULL,
     -- Quadra onde o torneio acontece (ex.: 'Quadra 1')
-    local_torn        VARCHAR(20)   NULL,
+    local_torn        VARCHAR(20)   NOT NULL,
     PRIMARY KEY (id_torn)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -138,11 +127,11 @@ CREATE TABLE participantes_equipe (
     dt_part      DATE        NOT NULL,
     status_part  VARCHAR(20) NOT NULL,
     -- Dados informados na inscrição pelo site
-    telefone_part  VARCHAR(20) NULL,
+    telefone_part  VARCHAR(20) NOT NULL,
     -- 'Iniciante', 'Intermediário' ou 'Avançado'
-    nivel_part     VARCHAR(20) NULL,
+    nivel_part     VARCHAR(20) NOT NULL,
     -- 'A', 'B', 'C' ou 'D'
-    categoria_part VARCHAR(20) NULL,
+    categoria_part VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_part),
     CONSTRAINT fk_participantes_equipe
         FOREIGN KEY (id_equipe) REFERENCES equipes_torneio (id_equipe)
@@ -152,4 +141,35 @@ CREATE TABLE participantes_equipe (
         FOREIGN KEY (id_usu) REFERENCES usuarios (id_usu)
         ON UPDATE CASCADE
         ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------
+-- PAGAMENTOS
+-- Reserva de quadra (id_agend) OU inscrição em torneio (id_part):
+-- sempre um dos dois, nunca os dois (regra conferida também no back-end)
+-- Banco novo: este arquivo já cria tudo. Os scripts 011, 012, 014, 015 e 016
+-- servem só para atualizar um banco criado com a versão antiga do 002.
+-- --------------------------------------------------
+CREATE TABLE pagamentos (
+    id_pag            INT(11)       NOT NULL AUTO_INCREMENT,
+    id_agend          INT(11)       NULL,
+    id_part           INT(11)       NULL,
+    valor_pag         DECIMAL(10,2) NOT NULL,
+    forma_pag         VARCHAR(50)   NOT NULL,
+    status_pag        VARCHAR(20)   NOT NULL,
+    stripe_session_id VARCHAR(255)  NULL,
+    stripe_invoice_id VARCHAR(255)  NULL,
+    PRIMARY KEY (id_pag),
+    UNIQUE KEY uq_pagamentos_stripe_session (stripe_session_id),
+    KEY ix_pagamentos_stripe_invoice (stripe_invoice_id),
+    CONSTRAINT fk_pagamentos_agendamento
+        FOREIGN KEY (id_agend) REFERENCES agendamentos (id_agend)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_pagamentos_participacao
+        FOREIGN KEY (id_part) REFERENCES participantes_equipe (id_part)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT ck_pagamentos_origem
+        CHECK ((id_agend IS NOT NULL AND id_part IS NULL) OR (id_agend IS NULL AND id_part IS NOT NULL))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/home.module.css";
 import { horarioFim } from "../mockup/horarios.js";
 import { requisicaoApi } from "../services/api.js";
+import { pagarInscricao } from "../services/torneios.js";
 
 function formatarValor(valor) {
   const numero = Number(valor);
@@ -58,30 +59,91 @@ export default function Pagamento() {
     }
   };
 
-  // Inscrição de torneio: já foi gravada no banco (status pendente). Ainda não
-  // existe cobrança online para inscrições: o valor é pago na arena.
+  // Inscrição em torneio: a participação foi gravada como "pendente" e é
+  // paga aqui pelo Stripe; o pagamento aprovado confirma a participação.
+  const pagarInscricaoComStripe = async () => {
+    if (!localStorage.getItem("token_sessao")) {
+      setPrecisaLogin(true);
+      setErro("Entre na sua conta para pagar a inscrição.");
+      return;
+    }
+
+    setCarregando(true);
+    setErro("");
+
+    try {
+      window.location.assign(await pagarInscricao(inscricao.id_part));
+    } catch (error) {
+      if (error.precisaLogin) setPrecisaLogin(true);
+      setErro(error.message);
+      setCarregando(false);
+    }
+  };
+
   if (!agendamento && inscricao) {
+    const confirmada = inscricao.status === "confirmado";
+
     return (
       <div className={styles.container}>
         <main className={`${styles.app} ${styles.paymentPage}`}>
           <header className={styles.paymentHeading}>
-            <span>INSCRIÇÃO EM TORNEIO</span>
-            <h1>{inscricao.torneio}</h1>
-            <p>Valor da inscrição: {formatarValor(inscricao.valor)}</p>
+            <span>{confirmada ? "INSCRIÇÃO CONFIRMADA" : "PAGAMENTO DA INSCRIÇÃO"}</span>
+            <h1>{confirmada ? "Inscrição confirmada!" : "Pagamento seguro"}</h1>
+            <p>
+              {confirmada
+                ? "Este torneio não cobra inscrição. Sua vaga já está garantida."
+                : "Você será levado ao ambiente seguro do Stripe para pagar com cartão ou Pix. Os dados do seu cartão não passam pelos nossos servidores."}
+            </p>
           </header>
 
-          <p className={styles.pagamentoAviso}>
-            Sua inscrição foi registrada e está pendente. O valor deve ser pago
-            diretamente na arena; depois disso, o administrador confirma a sua
-            participação.
-          </p>
+          <div className={`${styles.quadraCard} ${styles.pagamentoCard}`}>
+            <div className={styles.pixArea}>
+              <div>
+                <h4>Resumo da inscrição</h4>
+                <p>{inscricao.torneio}</p>
+                <p>Equipe {inscricao.equipe}</p>
+                <p>{inscricao.data}</p>
+              </div>
 
-          <Link
-            to="/torneios"
-            className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
-          >
-            Voltar aos torneios
-          </Link>
+              <div className={styles.valorArea}>
+                <h3>Valor Total:</h3>
+                <p>{confirmada ? "Gratuito" : formatarValor(inscricao.valor)}</p>
+              </div>
+            </div>
+          </div>
+
+          {!confirmada && (
+            <p className={styles.pagamentoAviso}>
+              🔒 Aceitamos cartão de crédito/débito e Pix. Você tem 30 minutos
+              para concluir o pagamento; depois disso a vaga na equipe é
+              liberada.
+            </p>
+          )}
+
+          {erro && (
+            <p className={styles.pagamentoErro} role="alert">
+              {erro}{" "}
+              {precisaLogin && <Link to="/login">Fazer login</Link>}
+            </p>
+          )}
+
+          {confirmada ? (
+            <Link
+              to="/torneios"
+              className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
+            >
+              Voltar aos torneios
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className={`${styles.activeBtn} ${styles.confirmarPagamento}`}
+              onClick={pagarInscricaoComStripe}
+              disabled={carregando}
+            >
+              {carregando ? "Abrindo pagamento seguro..." : "Pagar com Stripe"}
+            </button>
+          )}
         </main>
       </div>
     );

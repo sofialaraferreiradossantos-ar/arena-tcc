@@ -84,18 +84,22 @@ router.get(
     DisponibilidadesController.listarDisponibilidades
 );
 
+// Cadastrar, editar e apagar horários: só administrador
 router.post(
     "/disponibilidades",
+    exigirAdmin,
     DisponibilidadesController.cadastrarDisponibilidades
 );
 
 router.patch(
     "/disponibilidades/:id",
+    exigirAdmin,
     DisponibilidadesController.editarDisponibilidades
 );
 
 router.delete(
     "/disponibilidades/:id",
+    exigirAdmin,
     DisponibilidadesController.apagarDisponibilidades
 );
 
@@ -110,18 +114,15 @@ router.get(
 );
 
 router.post(
-    "/equipesTorneios",
-    EquipesTorneiosController.cadastrarEquipesTorneios
+    "/equipesTorneios", exigirAdmin, EquipesTorneiosController.cadastrarEquipesTorneios
 );
 
 router.patch(
-    "/equipesTorneios/:id",
-    EquipesTorneiosController.editarEquipesTorneios
+    "/equipesTorneios/:id", exigirAdmin, EquipesTorneiosController.editarEquipesTorneios
 );
 
 router.delete(
-    "/equipesTorneios/:id",
-    EquipesTorneiosController.apagarEquipesTorneios
+    "/equipesTorneios/:id", exigirAdmin, EquipesTorneiosController.apagarEquipesTorneios
 );
 
 
@@ -131,6 +132,8 @@ router.delete(
 
 // Pagamento online (cliente logado)
 router.post("/pagamentos/stripe/checkout", exigirUsuario, StripeController.criarCheckout);
+// Pagamento da inscrição em torneio (participação "pendente" do cliente)
+router.post("/pagamentos/stripe/checkout-inscricao", exigirUsuario, StripeController.criarCheckoutInscricao);
 router.get("/pagamentos/stripe/sessao/:sessionId", exigirUsuario, StripeController.consultarSessao);
 router.post("/pagamentos/stripe/sessao/:sessionId/cancelar", exigirUsuario, StripeController.cancelarSessao);
 
@@ -154,23 +157,19 @@ router.post("/faturas", exigirAdmin, FaturasController.criarFatura);
 // =====================================================
 
 router.get(
-    "/participantesEquipes",
-    ParticipantesEquipesController.listarParticipantesEquipes
+    "/participantesEquipes", exigirAdmin, ParticipantesEquipesController.listarParticipantesEquipes
 );
 
 router.post(
-    "/participantesEquipes",
-    ParticipantesEquipesController.cadastrarParticipantesEquipes
+    "/participantesEquipes", exigirAdmin, ParticipantesEquipesController.cadastrarParticipantesEquipes
 );
 
 router.patch(
-    "/participantesEquipes/:id",
-    ParticipantesEquipesController.editarParticipantesEquipes
+    "/participantesEquipes/:id", exigirAdmin, ParticipantesEquipesController.editarParticipantesEquipes
 );
 
 router.delete(
-    "/participantesEquipes/:id",
-    ParticipantesEquipesController.apagarParticipantesEquipes
+    "/participantesEquipes/:id", exigirAdmin, ParticipantesEquipesController.apagarParticipantesEquipes
 );
 
 
@@ -191,8 +190,12 @@ router.delete("/quadras/:id", QuadrasController.apagarQuadras);
 // =====================================================
 
 router.get("/torneios", TorneiosController.listarTorneios);
-router.get("/torneios/:id/participantes", TorneiosController.listarParticipantesDoTorneio);
-// Inscrição pelo site: o cliente logado cria a equipe e entra nela
+// Público: equipes do torneio e vagas de cada uma (sem dados pessoais)
+router.get("/torneios/:id/equipes", TorneiosController.listarEquipesDoTorneio);
+// Admin: cadastra as equipes (duplas) e vê os inscritos com telefone/e-mail
+router.post("/torneios/:id/equipes", exigirAdmin, TorneiosController.cadastrarEquipeDoTorneio);
+router.get("/torneios/:id/participantes", exigirAdmin, TorneiosController.listarParticipantesDoTorneio);
+// Inscrição pelo site: o cliente logado escolhe uma equipe e entra nela
 router.post("/torneios/:id/inscricao", exigirUsuario, TorneiosController.inscreverNoTorneio);
 router.post("/torneios", TorneiosController.cadastrarTorneios);
 router.patch("/torneios/:id", TorneiosController.editarTorneios);

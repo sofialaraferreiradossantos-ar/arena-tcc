@@ -94,8 +94,28 @@ export default function PagamentoRetorno() {
     };
   }, [sessionId, cancelado, token]);
 
-  const textos = TEXTOS[pagamento?.status_pag] || TEXTOS.pendente;
+  const ehInscricao = pagamento?.tipo === "inscricao";
+  const textosBase = TEXTOS[pagamento?.status_pag] || TEXTOS.pendente;
+  // Mesmos textos, ajustados quando o pagamento é de inscrição em torneio
+  const textos = !ehInscricao
+    ? textosBase
+    : {
+        ...textosBase,
+        titulo:
+          pagamento.status_pag === "pago"
+            ? "Inscrição confirmada!"
+            : pagamento.status_pag === "cancelado"
+              ? "A inscrição foi cancelada"
+              : textosBase.titulo,
+        texto:
+          pagamento.status_pag === "pago"
+            ? "Recebemos o pagamento da inscrição. Bom torneio!"
+            : pagamento.status_pag === "cancelado"
+              ? "O pagamento não foi concluído e a vaga na equipe foi liberada. Nenhum valor foi cobrado."
+              : textosBase.texto,
+      };
   const agendamento = pagamento?.agendamento;
+  const inscricao = pagamento?.inscricao;
 
   return (
     <div className={styles.container}>
@@ -126,14 +146,23 @@ export default function PagamentoRetorno() {
 
             <div className={`${styles.quadraCard} ${styles.pagamentoCard}`}>
               <div className={styles.pixArea}>
-                <div>
-                  <h4>Resumo do agendamento</h4>
-                  <p>{agendamento.quadra}</p>
-                  <p>{formatarData(agendamento.data)}</p>
-                  <p>
-                    {agendamento.horaInicio} - {agendamento.horaFim}
-                  </p>
-                </div>
+                {ehInscricao ? (
+                  <div>
+                    <h4>Resumo da inscrição</h4>
+                    <p>{inscricao.torneio}</p>
+                    <p>Equipe {inscricao.equipe}</p>
+                    <p>{formatarData(inscricao.data)}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <h4>Resumo do agendamento</h4>
+                    <p>{agendamento.quadra}</p>
+                    <p>{formatarData(agendamento.data)}</p>
+                    <p>
+                      {agendamento.horaInicio} - {agendamento.horaFim}
+                    </p>
+                  </div>
+                )}
 
                 <div className={styles.valorArea}>
                   <h3>Valor:</h3>
@@ -147,16 +176,25 @@ export default function PagamentoRetorno() {
           </>
         )}
 
-        <Link
-          to={
-            pagamento?.status_pag === "pago" ? "/agendamentos" : "/agendar-horario"
-          }
-          className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
-        >
-          {pagamento?.status_pag === "pago"
-            ? "Ver meus agendamentos"
-            : "Escolher outro horário"}
-        </Link>
+        {ehInscricao ? (
+          <Link
+            to="/torneios"
+            className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
+          >
+            Voltar aos torneios
+          </Link>
+        ) : (
+          <Link
+            to={
+              pagamento?.status_pag === "pago" ? "/agendamentos" : "/agendar-horario"
+            }
+            className={`${styles.activeBtn} ${styles.confirmarPagamento} ${styles.pagamentoLink}`}
+          >
+            {pagamento?.status_pag === "pago"
+              ? "Ver meus agendamentos"
+              : "Escolher outro horário"}
+          </Link>
+        )}
       </main>
     </div>
   );

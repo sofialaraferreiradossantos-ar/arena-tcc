@@ -18,7 +18,11 @@ import {
 import styles from "../styles/torneioDetalhes.module.css";
 
 import { CATEGORIAS_CLIENTE, NIVEIS } from "../mockup/torneios.js";
-import { buscarTorneio, formatarValor } from "../services/torneios.js";
+import {
+  buscarEquipes,
+  buscarTorneio,
+  formatarValor,
+} from "../services/torneios.js";
 
 const listarComE = (itens) =>
   `${itens.slice(0, -1).join(", ")} e ${itens[itens.length - 1]}`;
@@ -30,13 +34,20 @@ function TorneioDetalhes() {
   const [torneio, setTorneio] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
+  // Equipes cadastradas pelo administrador
+  const [equipes, setEquipes] = useState([]);
 
   useEffect(() => {
-    buscarTorneio(id)
-      .then(setTorneio)
+    Promise.all([buscarTorneio(id), buscarEquipes(id)])
+      .then(([encontrado, lista]) => {
+        setTorneio(encontrado);
+        setEquipes(lista);
+      })
       .catch((error) => setErro(error.message))
       .finally(() => setCarregando(false));
   }, [id]);
+
+  const temEquipeComVaga = equipes.some((equipe) => equipe.vagas > 0);
 
   if (carregando || erro || !torneio) {
     return (
@@ -126,7 +137,8 @@ function TorneioDetalhes() {
             <span>
               <strong>Vagas</strong>
 
-              {torneio.vagasTexto}
+              {torneio.vagasTexto} · equipes de {torneio.integrantesPorEquipe}{" "}
+              {torneio.integrantesPorEquipe === 1 ? "integrante" : "integrantes"}
             </span>
           </div>
 
@@ -179,9 +191,32 @@ function TorneioDetalhes() {
           <p>{torneio.descricao}</p>
         </section>
 
+        {/* EQUIPES */}
+
+        <section className={styles.descricao}>
+          <h2>Equipes</h2>
+
+          {equipes.length === 0 ? (
+            <p>A organização ainda não cadastrou as equipes deste torneio.</p>
+          ) : (
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "8px" }}>
+              {equipes.map((equipe) => (
+                <li key={equipe.id_equipe}>
+                  <strong>{equipe.nome_equipe}</strong>
+                  {" — "}
+                  {equipe.integrantes} de {equipe.limite} integrantes
+                  {equipe.vagas > 0
+                    ? ` (${equipe.vagas} ${equipe.vagas === 1 ? "vaga" : "vagas"})`
+                    : " (completa)"}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
         {/* BOTÃO */}
 
-        {torneio.aceitaInscricao ? (
+        {torneio.aceitaInscricao && temEquipeComVaga ? (
           <Link
             to={`/inscricao/${torneio.id}`}
             className={styles.inscrever}
@@ -190,7 +225,11 @@ function TorneioDetalhes() {
           </Link>
         ) : (
           <span className={styles.inscrever} aria-disabled="true" style={{ opacity: 0.6, cursor: "not-allowed" }}>
-            {torneio.status === "aberto" ? "Vagas esgotadas" : "Inscrições fechadas"}
+            {torneio.status !== "aberto"
+              ? "Inscrições fechadas"
+              : equipes.length === 0
+                ? "Equipes ainda não cadastradas"
+                : "Vagas esgotadas"}
           </span>
         )}
       </main>

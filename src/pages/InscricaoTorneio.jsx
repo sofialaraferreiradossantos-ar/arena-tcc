@@ -13,6 +13,7 @@ import {
   carregarMinhaCategoria,
 } from "../mockup/torneios.js";
 import {
+  buscarEquipes,
   buscarTorneio,
   formatarValor,
   inscreverNoTorneio,
@@ -40,23 +41,25 @@ function InscricaoTorneio() {
   const [erro, setErro] = useState("");
   const [precisaLogin, setPrecisaLogin] = useState(!usuario);
   const [enviando, setEnviando] = useState(false);
+  // Equipes cadastradas pelo administrador
+  const [equipes, setEquipes] = useState([]);
 
   useEffect(() => {
-    buscarTorneio(id)
-      .then((encontrado) => {
+    Promise.all([buscarTorneio(id), buscarEquipes(id)])
+      .then(([encontrado, lista]) => {
         if (!encontrado) setErro("Torneio não encontrado.");
         setTorneio(encontrado);
+        setEquipes(lista);
       })
       .catch((error) => setErro(error.message))
       .finally(() => setCarregando(false));
   }, [id]);
 
-  // Campos da equipe; nível e categoria já vêm de "Minha categoria", se houver
+  // Nível e categoria já vêm de "Minha categoria", se houver
   const [form, setForm] = useState(() => {
     const minhaCategoria = carregarMinhaCategoria();
     return {
-      nome_equipe: "",
-      desc_equipe: "",
+      id_equipe: "",
       telefone: "",
       nivel: minhaCategoria?.nivel ?? "",
       categoria: minhaCategoria?.categoria ?? "",
@@ -68,13 +71,14 @@ function InscricaoTorneio() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Grava a equipe e o cliente como participante (POST /torneios/:id/inscricao)
+  // Grava o cliente como participante da equipe escolhida
+  // (POST /torneios/:id/inscricao) e segue para o pagamento
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErro("");
 
-    if (!form.nome_equipe.trim() || !form.telefone.trim() || !form.nivel || !form.categoria) {
-      setErro("Preencha o nome da equipe, o telefone, o nível e a categoria.");
+    if (!form.id_equipe || !form.telefone.trim() || !form.nivel || !form.categoria) {
+      setErro("Escolha a equipe e preencha o telefone, o nível e a categoria.");
       return;
     }
 
@@ -86,11 +90,18 @@ function InscricaoTorneio() {
 
     setEnviando(true);
     try {
-      await inscreverNoTorneio(id, form);
-      // Mostra o valor da inscrição (pago na arena)
+      const resultado = await inscreverNoTorneio(id, form);
+      const inscricao = resultado.dados;
       navigate("/pagamento", {
         state: {
-          inscricao: { torneioId: id, torneio: torneio.nome, valor: torneio.valor },
+          inscricao: {
+            id_part: inscricao.id_part,
+            status: inscricao.status_part,
+            torneio: torneio.nome,
+            equipe: inscricao.nome_equipe,
+            data: torneio.data,
+            valor: torneio.valor,
+          },
         },
       });
     } catch (error) {
@@ -116,6 +127,8 @@ function InscricaoTorneio() {
       </div>
     );
   }
+
+  const temVaga = torneio.aceitaInscricao && equipes.some((equipe) => equipe.vagas > 0);
 
   return (
     <div className={styles.pageWrapper}>
@@ -188,7 +201,7 @@ function InscricaoTorneio() {
             <h1>
               Inscrição no <span>Torneio</span>
             </h1>
-            <p>Crie a sua equipe e preencha seus dados para garantir a vaga.</p>
+            <p>Escolha a sua equipe e preencha seus dados para garantir a vaga.</p>
           </div>
         </div>
 
@@ -240,7 +253,7 @@ function InscricaoTorneio() {
 
           {/* FORMULÁRIO */}
           <form className={styles.formSection} onSubmit={handleSubmit}>
-            <h2>Dados da equipe</h2>
+            <h2>Dados do participante</h2>
             <p>
               {usuario
                 ? `Inscrição em nome de ${usuario.nome_usu} (${usuario.email_usu}).`
@@ -251,11 +264,13 @@ function InscricaoTorneio() {
               <Link to="/login" className={styles.confirmarButton}>
                 Entrar na minha conta
               </Link>
-            ) : !torneio.aceitaInscricao ? (
+            ) : !temVaga ? (
               <p role="alert">
-                {torneio.status === "aberto"
-                  ? "Não há mais vagas neste torneio."
-                  : "As inscrições deste torneio não estão abertas."}
+                {torneio.status !== "aberto"
+                  ? "As inscrições deste torneio não estão abertas."
+                  : equipes.length === 0
+                    ? "A organização ainda não cadastrou as equipes deste torneio."
+                    : "Não há mais vagas neste torneio."}
               </p>
             ) : (
               <>
@@ -264,16 +279,24 @@ function InscricaoTorneio() {
                     className={styles.inputGroup}
                     style={{ gridColumn: "1 / -1" }}
                   >
-                    <label htmlFor="nome_equipe">Nome da equipe</label>
-                    <input
-                      id="nome_equipe"
-                      name="nome_equipe"
-                      type="text"
-                      maxLength={100}
-                      value={form.nome_equipe}
+                    <label htmlFor="id_equipe">Equipe</label>
+                    <select
+                      id="id_equipe"
+                      name="id_equipe"
+                      value={form.id_equipe}
                       onChange={handleChange}
-                      placeholder="Ex.: Areia Quente"
-                    />
+                    >
+                      <option value="">Selecione a sua equipe</option>
+                      {equipes.map((equipe) => (
+                        <option
+                          key={equipe.id_equipe}
+                          value={equipe.id_equipe}
+                          disabled={equipe.vagas === 0}
+                        >
+                          {`${equipe.nome_equipe} (${equipe.integrantes} de ${equipe.limite} integrantes${equipe.vagas === 0 ? ", completa" : ""})`}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div
@@ -310,7 +333,7 @@ function InscricaoTorneio() {
                   </div>
 
                   <div className={styles.inputGroup}>
-                    <label htmlFor="categoria">Categoria</label>
+                    <label htmlFor="categoria">Categoria do jogador</label>
                     <select
                       id="categoria"
                       name="categoria"
@@ -324,22 +347,6 @@ function InscricaoTorneio() {
                         </option>
                       ))}
                     </select>
-                  </div>
-
-                  <div
-                    className={styles.inputGroup}
-                    style={{ gridColumn: "1 / -1" }}
-                  >
-                    <label htmlFor="desc_equipe">Descrição da equipe (opcional)</label>
-                    <input
-                      id="desc_equipe"
-                      name="desc_equipe"
-                      type="text"
-                      maxLength={300}
-                      value={form.desc_equipe}
-                      onChange={handleChange}
-                      placeholder="Ex.: dupla formada por atletas de Tupã"
-                    />
                   </div>
                 </div>
 
@@ -366,7 +373,7 @@ function InscricaoTorneio() {
                   className={styles.confirmarButton}
                   disabled={enviando}
                 >
-                  {enviando ? "Enviando..." : "Confirmar Inscrição"}
+                  {enviando ? "Enviando..." : "Inscrever-se e ir para o pagamento"}
                 </button>
               </>
             )}

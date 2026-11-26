@@ -29,6 +29,7 @@ module.exports = {
                 SELECT
                     id_pag,
                     id_agend,
+                    id_part,
                     valor_pag,
                     forma_pag,
                     status_pag,

@@ -107,7 +107,8 @@ function torneioParaLinha(torneio) {
     role: limite
       ? `${torneio.inscritos} de ${limite} inscritos`
       : `${torneio.inscritos} inscritos`,
-    roleDetail: torneio.premiacao_torn || "",
+    roleDetail: [`Equipes de ${torneio.integrantes_torn}`, torneio.premiacao_torn].filter(Boolean).join(" · "),
+    integrantes: Number(torneio.integrantes_torn),
     status: STATUS_TORNEIO[torneio.status_torn] || torneio.status_torn,
     statusBanco: torneio.status_torn,
   };
@@ -144,12 +145,13 @@ const CAMPOS = {
     { name: "senha_usu", placeholder: "Senha inicial (6 a 20 caracteres)", type: "password" },
   ],
   torneios: [
-    { name: "nome_torn", placeholder: "Nome do torneio" },
-    { name: "dt_torn", placeholder: "Data", type: "date" },
-    { name: "desc_torn", placeholder: "Descrição" },
-    { name: "modalidade_torn", placeholder: "Modalidade", options: ["Futevôlei", "Beach Tennis"] },
-    { name: "categoria_torn", placeholder: "Categoria", options: ["Feminino", "Masculino", "Misto"] },
-    { name: "local_torn", placeholder: "Local (ex.: Quadra 1)", maxLength: 20 },
+    { name: "nome_torn", placeholder: "Nome do torneio", required: true },
+    { name: "dt_torn", placeholder: "Data", type: "date", required: true },
+    { name: "desc_torn", placeholder: "Descrição", required: true },
+    { name: "modalidade_torn", placeholder: "Modalidade", options: ["Futevôlei", "Beach Tennis"], required: true },
+    { name: "categoria_torn", placeholder: "Categoria", options: ["Feminino", "Masculino", "Misto"], required: true },
+    { name: "local_torn", placeholder: "Local (ex.: Quadra 1)", maxLength: 20, required: true },
+    { name: "integrantes_torn", placeholder: "Integrantes por equipe (ex.: 2)", type: "number", required: true },
     { name: "limite_part_torn", placeholder: "Limite de participantes", type: "number" },
     { name: "premiacao_torn", placeholder: "Premiação" },
     { name: "valor_part", placeholder: "Valor da inscrição (R$)", type: "number" },
@@ -316,6 +318,9 @@ function ConteudoModulo({ modulo }) {
       ["limite_part_torn", "valor_part", "premiacao_torn", "modalidade_torn", "categoria_torn", "local_torn"].forEach((campo) => {
         if (dados[campo] === "" || dados[campo] === undefined) dados[campo] = null;
       });
+      // Integrantes por equipe (o administrador define em cada torneio)
+      if (dados.integrantes_torn === "" || dados.integrantes_torn === undefined) delete dados.integrantes_torn;
+      else dados.integrantes_torn = Number(dados.integrantes_torn);
     }
     await executar(
       "novo",
@@ -378,8 +383,29 @@ function ConteudoModulo({ modulo }) {
 
   // Torneios: lista as equipes e participantes (GET /torneios/:id/participantes)
   const carregarInscritos = async (idTorneio) => {
-    const resultado = await requisicaoApi(`/torneios/${idTorneio}/participantes`);
+    const resultado = await requisicaoApi(`/torneios/${idTorneio}/participantes`, {
+      autenticado: "admin",
+    });
     setEquipes(resultado.dados.equipes);
+  };
+
+  // Torneios: cadastra uma equipe no torneio (POST /torneios/:id/equipes)
+  const adicionarEquipe = (row) => {
+    const nome = window.prompt(`Nome da nova equipe do ${row.name} (${row.integrantes} integrantes):`);
+    if (!nome || !nome.trim()) return;
+    executar(
+      `e${row.id}`,
+      async () => {
+        await requisicaoApi(`/torneios/${row.id}/equipes`, {
+          method: "POST",
+          body: { nome_equipe: nome.trim() },
+          autenticado: "admin",
+        });
+        await carregarInscritos(row.id);
+        setInscritosDe(row.id);
+      },
+      `Equipe ${nome.trim()} cadastrada.`,
+    );
   };
 
   const verInscritos = async (row) => {
@@ -394,22 +420,6 @@ function ConteudoModulo({ modulo }) {
     } catch (error) {
       setErroBanco(mensagemErro(error));
     }
-  };
-
-  // Confirma a inscrição depois do pagamento na arena (PATCH /participantesEquipes/:id)
-  const confirmarInscricao = (participante) => {
-    executar(
-      `p${participante.idParticipacao}`,
-      async () => {
-        await requisicaoApi(`/participantesEquipes/${participante.idParticipacao}`, {
-          method: "PATCH",
-          body: { status_part: "confirmado" },
-          autenticado: "admin",
-        });
-        await carregarInscritos(inscritosDe);
-      },
-      `Inscrição de ${participante.nome} confirmada.`,
-    );
   };
 
   // Quadras: deixa a quadra disponível ou indisponível (PATCH /quadras/:id)
@@ -513,7 +523,7 @@ function ConteudoModulo({ modulo }) {
                   </h2>
                   <p>
                     {relatorio.inscricoesConfirmadas} inscrições confirmadas e{" "}
-                    {relatorio.inscricoesPendentes} aguardando confirmação.
+                    {relatorio.inscricoesPendentes} aguardando pagamento.
                   </p>
                 </div>
                 <span className={styles.reportTrend}>
@@ -625,6 +635,7 @@ function ConteudoModulo({ modulo }) {
                         }))
                       }
                       aria-label={campo.placeholder}
+                      required={campo.required}
                       style={{ minWidth: "200px" }}
                     >
                       <option value="">{campo.placeholder}</option>
@@ -638,6 +649,7 @@ function ConteudoModulo({ modulo }) {
                   <input
                     key={campo.name}
                     maxLength={campo.maxLength}
+                    required={campo.required}
                     type={campo.type || "text"}
                     step={campo.type === "number" ? "any" : undefined}
                     min={campo.type === "number" ? "0" : undefined}
@@ -721,7 +733,15 @@ function ConteudoModulo({ modulo }) {
                           className={styles.rowButton}
                           onClick={() => verInscritos(row)}
                         >
-                          {inscritosDe === row.id ? "Fechar inscritos" : "Ver inscritos"}
+                          {inscritosDe === row.id ? "Fechar equipes" : "Ver equipes"}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.rowButton}
+                          onClick={() => adicionarEquipe(row)}
+                          disabled={salvandoId === `e${row.id}`}
+                        >
+                          Adicionar equipe
                         </button>
                         <button
                           type="button"
@@ -757,11 +777,21 @@ function ConteudoModulo({ modulo }) {
                     <div className={styles.recordsList} style={{ paddingLeft: "18px" }}>
                       {equipes.length === 0 && (
                         <p className={styles.recordsEmpty}>
-                          Nenhuma inscrição neste torneio ainda.
+                          Nenhuma equipe cadastrada neste torneio. Use
+                          "Adicionar equipe".
                         </p>
                       )}
-                      {equipes.map((equipe) =>
-                        equipe.participantes.map((participante) => (
+                      {equipes.map((equipe) => [
+                        <p
+                          key={`eq${equipe.id}`}
+                          className={styles.recordsEmpty}
+                          style={{ margin: "6px 0 0", textAlign: "left" }}
+                        >
+                          <strong>Equipe {equipe.nome}</strong> —{" "}
+                          {equipe.participantes.filter((p) => p.status !== "cancelado").length} de{" "}
+                          {row.integrantes} integrantes
+                        </p>,
+                        ...equipe.participantes.map((participante) => (
                           <article
                             className={styles.recordRow}
                             key={participante.idParticipacao}
@@ -791,24 +821,14 @@ function ConteudoModulo({ modulo }) {
                               className={`${styles.status} ${getStatusClass(participante.status)}`}
                             >
                               {participante.status === "confirmado"
-                                ? "Confirmado"
+                                ? "Pago e confirmado"
                                 : participante.status === "cancelado"
                                   ? "Cancelado"
-                                  : "Pendente"}
+                                  : "Aguardando pagamento"}
                             </span>
-                            {participante.status === "pendente" && (
-                              <button
-                                type="button"
-                                className={styles.rowButton}
-                                onClick={() => confirmarInscricao(participante)}
-                                disabled={salvandoId === `p${participante.idParticipacao}`}
-                              >
-                                Confirmar inscrição
-                              </button>
-                            )}
                           </article>
                         )),
-                      )}
+                      ])}
                     </div>
                   )}
                 </div>

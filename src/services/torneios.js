@@ -55,6 +55,8 @@ function converter(t, fotosQuadras = []) {
     valor: t.valor_part === null ? null : Number(t.valor_part),
     limite,
     inscritos,
+    // Integrantes por equipe, definido pelo administrador (integrantes_torn)
+    integrantesPorEquipe: Number(t.integrantes_torn || 2),
     vagasTexto:
       limite === null
         ? "Sem limite de vagas"
@@ -103,18 +105,34 @@ export async function buscarTorneio(id) {
   return torneios.find((t) => t.id === Number(id)) || null;
 }
 
-// Grava a equipe (equipes_torneio) e o cliente logado como participante
-// (participantes_equipe), com o telefone, o nível e a categoria dele.
-export function inscreverNoTorneio(id, { nome_equipe, desc_equipe, telefone, nivel, categoria }) {
+// Equipes cadastradas pelo administrador, com as vagas de cada uma
+// (o limite de cada equipe vem do torneio: campo integrantes_torn)
+export async function buscarEquipes(idTorneio) {
+  const resultado = await requisicaoApi(`/torneios/${idTorneio}/equipes`);
+  return resultado.dados;
+}
+
+// O cliente logado entra na equipe escolhida (participantes_equipe), com o
+// telefone, o nível e a categoria dele.
+export function inscreverNoTorneio(id, { id_equipe, telefone, nivel, categoria }) {
   return requisicaoApi(`/torneios/${id}/inscricao`, {
     method: "POST",
     autenticado: true,
     body: {
-      nome_equipe,
-      desc_equipe: String(desc_equipe || "").trim(),
+      id_equipe: Number(id_equipe),
       telefone_part: telefone,
       nivel_part: nivel,
       categoria_part: categoria,
     },
   });
+}
+
+// Abre o pagamento da inscrição no Stripe e devolve a URL do Checkout
+export async function pagarInscricao(id_part) {
+  const resultado = await requisicaoApi("/pagamentos/stripe/checkout-inscricao", {
+    method: "POST",
+    autenticado: true,
+    body: { id_part },
+  });
+  return resultado.dados.url;
 }

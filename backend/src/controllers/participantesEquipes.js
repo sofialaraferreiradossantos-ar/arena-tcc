@@ -22,15 +22,15 @@ const SQL_BUSCAR_VINCULO = `
 const NIVEIS = ["Iniciante", "Intermediário", "Avançado"];
 const CATEGORIAS = ["A", "B", "C", "D"];
 
-// Telefone, nível e categoria são opcionais aqui (aceitam nulo no banco)
+// Telefone, nível e categoria (obrigatórios: NOT NULL no banco)
 function validarDadosParticipante(dados) {
-    if (dados.telefone_part !== undefined && dados.telefone_part !== null && String(dados.telefone_part).trim().length > 20) {
-        return "O telefone deve ter no máximo 20 caracteres.";
+    if (dados.telefone_part !== undefined && (String(dados.telefone_part ?? "").trim().length === 0 || String(dados.telefone_part).trim().length > 20)) {
+        return "Informe o telefone (até 20 caracteres).";
     }
-    if (dados.nivel_part !== undefined && dados.nivel_part !== null && !NIVEIS.includes(dados.nivel_part)) {
+    if (dados.nivel_part !== undefined && !NIVEIS.includes(dados.nivel_part)) {
         return `O nível deve ser: ${NIVEIS.join(", ")}.`;
     }
-    if (dados.categoria_part !== undefined && dados.categoria_part !== null && !CATEGORIAS.includes(dados.categoria_part)) {
+    if (dados.categoria_part !== undefined && !CATEGORIAS.includes(dados.categoria_part)) {
         return `A categoria deve ser: ${CATEGORIAS.join(", ")}.`;
     }
     return null;
@@ -94,6 +94,15 @@ module.exports = {
                 nivel_part = null,
                 categoria_part = null
             } = request.body || {};
+
+            // Obrigatórios no banco (NOT NULL)
+            if (!String(telefone_part ?? "").trim() || !nivel_part || !categoria_part) {
+                return response.status(400).json({
+                    sucesso: false,
+                    mensagem: "Campos obrigatórios: telefone_part, nivel_part e categoria_part.",
+                    dados: null
+                });
+            }
 
             const erroDados = validarDadosParticipante({ telefone_part, nivel_part, categoria_part });
             if (erroDados) {
